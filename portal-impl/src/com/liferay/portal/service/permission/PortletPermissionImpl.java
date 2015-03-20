@@ -435,14 +435,6 @@ public class PortletPermissionImpl implements PortletPermission {
 		boolean access = contains(
 			permissionChecker, scopeGroupId, layout, portlet, ActionKeys.VIEW);
 
-		if (access && !PropsValues.TCK_URL &&
-			portletMode.equals(PortletMode.EDIT)) {
-
-			access = contains(
-				permissionChecker, scopeGroupId, layout, portlet,
-				ActionKeys.PREFERENCES);
-		}
-
 		return access;
 	}
 
