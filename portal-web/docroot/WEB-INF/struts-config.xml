@@ -718,14 +718,6 @@
 			<forward name="portlet.invitation.view" path="portlet.invitation.view" />
 		</action>
 
-		<!-- Journal Content Search -->
-
-		<action path="/journal_content_search/search" type="com.liferay.portlet.journalcontentsearch.action.SearchAction">
-			<forward name="portlet.journal_content_search.search" path="portlet.journal_content_search.search" />
-		</action>
-
-		<action path="/journal_content_search/view" forward="portlet.journal_content_search.view" />
-
 		<!-- Layout Prototypes -->
 
 		<action path="/layout_prototypes/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
@@ -880,11 +872,6 @@
 		<action path="/login/create_anonymous_account" type="com.liferay.portlet.login.action.CreateAnonymousAccountAction">
 			<forward name="portlet.login.create_anonymous_account" path="portlet.login.create_anonymous_account" />
 			<forward name="portlet.login.login" path="portlet.login.login" />
-		</action>
-
-		<action path="/login/facebook_connect_oauth" type="com.liferay.portlet.login.action.FacebookConnectAction">
-			<forward name="portlet.login.login" path="portlet.login.login" />
-			<forward name="portlet.login.update_account" path="portlet.login.update_account" />
 		</action>
 
 		<action path="/login/forgot_password" type="com.liferay.portlet.login.action.ForgotPasswordAction">
