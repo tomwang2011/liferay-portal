@@ -14,8 +14,6 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.util.PropsValues;
-
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -124,23 +122,12 @@ public class PortletPreferencesWrapper
 
 	@Override
 	public void store() throws IOException, ValidatorException {
-		if (PropsValues.TCK_URL) {
-
-			// Be strict to pass the TCK
-
-			if (_lifecycle.equals(PortletRequest.ACTION_PHASE)) {
-				_portletPreferences.store();
-			}
-			else {
-				throw new IllegalStateException(
-					"Preferences cannot be stored inside a render call");
-			}
+		if (_lifecycle.equals(PortletRequest.ACTION_PHASE)) {
+			_portletPreferences.store();
 		}
 		else {
-
-			// Relax so that poorly written portlets can still work
-
-			_portletPreferences.store();
+			throw new IllegalStateException(
+				"Preferences cannot be stored inside a render call");
 		}
 	}
 
