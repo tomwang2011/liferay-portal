@@ -41,9 +41,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ResourceBundleTracker implements Closeable {
 
-	public ResourceBundleTracker(ClassLoader classLoader, Portlet portlet) {
+	public ResourceBundleTracker(
+		ClassLoader classLoader, String resourceBundle) {
+
 		_classLoader = classLoader;
-		_portlet = portlet;
+		_resourceBundle = resourceBundle;
 
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -104,12 +106,12 @@ public class ResourceBundleTracker implements Closeable {
 		}
 
 		return ResourceBundle.getBundle(
-			_portlet.getResourceBundle(), LocaleUtil.fromLanguageId(languageId),
+			_resourceBundle, LocaleUtil.fromLanguageId(languageId),
 			_classLoader, UTF8Control.INSTANCE);
 	}
 
 	private final ClassLoader _classLoader;
-	private final Portlet _portlet;
+	private final String _resourceBundle;
 	private final Map<ServiceReference<ResourceBundle>, ResourceBundle>
 		_resourceBundles = new ConcurrentHashMap<>();
 	private final StringServiceRegistrationMap<ResourceBundle>
