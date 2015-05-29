@@ -266,7 +266,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		VerifyProperties verifyProperties = new VerifyProperties() {
+		return new VerifyProperties() {
 
 			@Override
 			protected Properties loadPortalProperties() {
@@ -280,8 +280,6 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			}
 
 		};
-
-		return verifyProperties;
 	}
 
 	private static String _verifyPortalProperty;
