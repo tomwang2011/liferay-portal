@@ -25,6 +25,7 @@ import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
@@ -47,10 +48,22 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testMigratedPortalProperty() throws Exception {
-		String[][] migratedPortalKeys = ReflectionTestUtil.getFieldValue(
-			getVerifyProcess(), "_MIGRATED_PORTAL_KEYS");
+		VerifyProperties verifyProperties = getVerifyProcess();
 
-		_verifyPortalProperty = migratedPortalKeys[0][0];
+		String[][] originalMigratedPortalKeys =
+			ReflectionTestUtil.getFieldValue(
+				VerifyProperties.class, "_MIGRATED_PORTAL_KEYS");
+
+		Properties properties = verifyProperties.loadPortalProperties();
+
+		Set<Object> migratedPortalKeys = properties.keySet();
+
+		String migratedPortalKey = (String)migratedPortalKeys.iterator().next();
+
+		ReflectionTestUtil.setFieldValue(
+			VerifyProperties.class, "_MIGRATED_PORTAL_KEYS",
+			new String[][] {
+				new String[] {migratedPortalKey, migratedPortalKey}});
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
@@ -64,13 +77,15 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
-				"Portal property \"" + _verifyPortalProperty +
+				"Portal property \"" + migratedPortalKey +
 					"\" was migrated to the system property \"" +
-						migratedPortalKeys[0][1] + "\"",
+						migratedPortalKey + "\"",
 				loggingEvent.getMessage());
 		}
 		finally {
-			_verifyPortalProperty = null;
+			ReflectionTestUtil.setFieldValue(
+				VerifyProperties.class, "_MIGRATED_PORTAL_KEYS",
+				originalMigratedPortalKeys);
 		}
 	}
 
@@ -265,21 +280,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 	}
 
 	@Override
-	protected VerifyProcess getVerifyProcess() {
-		return new VerifyProperties() {
-
-			@Override
-			protected Properties loadPortalProperties() {
-				Properties properties = super.loadPortalProperties();
-
-				if (_verifyPortalProperty != null) {
-					properties.setProperty(_verifyPortalProperty, "true");
-				}
-
-				return properties;
-			}
-
-		};
+	protected VerifyProperties getVerifyProcess() {
+		return new VerifyProperties();
 	}
 
 	private static String _verifyPortalProperty;
