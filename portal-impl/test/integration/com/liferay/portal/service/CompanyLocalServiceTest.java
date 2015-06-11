@@ -49,6 +49,8 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.persistence.PasswordPolicyUtil;
 import com.liferay.portal.service.persistence.PortalPreferencesUtil;
 import com.liferay.portal.service.persistence.PortletUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalInstances;
@@ -58,6 +60,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.File;
@@ -70,6 +73,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -190,9 +196,29 @@ public class CompanyLocalServiceTest {
 		serviceContext.setScopeGroupId(guestGroup.getGroupId());
 		serviceContext.setUserId(userId);
 
-		DLAppLocalServiceUtil.addFileEntry(
-			userId, guestGroup.getGroupId(), 0, "test.xml", "text/xml",
-			"test.xml", "", "", "test".getBytes(), serviceContext);
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					DDMImpl.class.getName(), Level.ERROR)) {
+
+			DLAppLocalServiceUtil.addFileEntry(
+				userId, guestGroup.getGroupId(), 0, "test.xml", "text/xml",
+				"test.xml", "", "", "test".getBytes(), serviceContext);
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(2, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Unable to parse date ", loggingEvent.getMessage());
+
+			loggingEvent = loggingEvents.get(1);
+
+			Assert.assertEquals(
+				"Unable to parse date ", loggingEvent.getMessage());
+		}
 
 		CompanyLocalServiceUtil.deleteCompany(companyId);
 	}
