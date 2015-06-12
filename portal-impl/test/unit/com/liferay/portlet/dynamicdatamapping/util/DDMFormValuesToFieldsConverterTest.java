@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.dynamicdatamapping.util;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -34,6 +37,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
@@ -158,21 +162,75 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 
 		ddmFormValues.addDDMFormFieldValue(integerDDMFormFieldValue);
 
-		Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
-			ddmStructure, ddmFormValues);
+		try (CaptureHandler captureHandler =
+				JDKLoggerTestUtil.configureJDKLogger(
+					LocaleUtil.class.getName(), Level.WARNING)) {
 
-		Assert.assertNotNull(fields);
+			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+				ddmStructure, ddmFormValues);
 
-		Field integerField = fields.get("Integer");
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				ddmStructure.getDefinition());
 
-		testField(
-			integerField, createValuesList(""), createValuesList(""),
-			_availableLocales, LocaleUtil.US);
+			JSONArray jsonArray = jsonObject.getJSONArray(
+				"availableLanguageIds");
 
-		Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-		Assert.assertEquals(
-			"Integer_INSTANCE_rztm", fieldsDisplayField.getValue());
+			int jsonArraySize = jsonArray.length();
+
+			Assert.assertEquals(jsonArraySize*2+1, logRecords.size());
+
+			Iterator<LogRecord>logIterator = logRecords.iterator();
+
+			for (int i = 0; i < jsonArraySize; i++) {
+				LogRecord logRecord = logIterator.next();
+
+				Assert.assertEquals(
+					jsonArray.getString(i) + " is not a valid language id",
+					logRecord.getMessage());
+			}
+
+			String jsonString = jsonObject.getString("defaultLanguageId");
+
+			LogRecord logRecord = logIterator.next();
+
+			Assert.assertEquals(
+				jsonString + " is not a valid language id",
+				logRecord.getMessage());
+
+			jsonArray = jsonObject.getJSONArray("fields");
+
+			jsonObject = jsonArray.getJSONObject(0);
+
+			JSONObject jsonObject_1 = JSONFactoryUtil.createJSONObject(
+				jsonObject.getString("label"));
+
+			Iterator<String> itr = jsonObject_1.keys();
+
+			while (itr.hasNext()) {
+				String languageId = itr.next();
+
+				logRecord = logIterator.next();
+
+				Assert.assertEquals(
+					languageId + " is not a valid language id",
+					logRecord.getMessage());
+			}
+
+			Assert.assertNotNull(fields);
+
+			Field integerField = fields.get("Integer");
+
+			testField(
+				integerField, createValuesList(""), createValuesList(""),
+				_availableLocales, LocaleUtil.US);
+
+			Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+
+			Assert.assertEquals(
+				"Integer_INSTANCE_rztm", fieldsDisplayField.getValue());
+		}
 	}
 
 	@Test
