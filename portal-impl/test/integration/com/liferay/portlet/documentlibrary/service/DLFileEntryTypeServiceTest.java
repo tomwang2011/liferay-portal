@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
@@ -44,10 +46,14 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
 import java.util.List;
 import java.util.Locale;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -189,32 +195,53 @@ public class DLFileEntryTypeServiceTest {
 		String name = "Test.txt";
 		byte[] bytes = _CONTENT.getBytes();
 
-		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			_group.getGroupId(), _folder.getFolderId(), name,
-			ContentTypes.TEXT_PLAIN, name, "", "", bytes,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					DDMImpl.class.getName(), Level.ERROR)) {
 
-		assertFileEntryType(fileEntry, _contractDLFileEntryType);
+			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+				_group.getGroupId(), _folder.getFolderId(), name,
+				ContentTypes.TEXT_PLAIN, name, "", "", bytes,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		// Add file to subfolder
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
 
-		fileEntry = DLAppServiceUtil.addFileEntry(
-			_group.getGroupId(), _subfolder.getFolderId(), name,
-			ContentTypes.TEXT_PLAIN, name, "", "", bytes,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			Assert.assertEquals(2, loggingEvents.size());
 
-		assertFileEntryType(fileEntry, _contractDLFileEntryType);
+			LoggingEvent loggingEvent = loggingEvents.get(0);
 
-		// Configure subfolder
+			Assert.assertEquals(
+				"Unable to parse date ", loggingEvent.getMessage());
 
-		DLAppLocalServiceUtil.updateFolder(
-			_subfolder.getFolderId(), _subfolder.getParentFolderId(),
-			_subfolder.getName(), _subfolder.getDescription(),
-			_getFolderServiceContext(_basicDocumentDLFileEntryType));
+			loggingEvent = loggingEvents.get(1);
 
-		fileEntry = DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId());
+			Assert.assertEquals(
+				"Unable to parse date ", loggingEvent.getMessage());
 
-		assertFileEntryType(fileEntry, _basicDocumentDLFileEntryType);
+			assertFileEntryType(fileEntry, _contractDLFileEntryType);
+
+			// Add file to subfolder
+
+			fileEntry = DLAppServiceUtil.addFileEntry(
+				_group.getGroupId(), _subfolder.getFolderId(), name,
+				ContentTypes.TEXT_PLAIN, name, "", "", bytes,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+			assertFileEntryType(fileEntry, _contractDLFileEntryType);
+
+			// Configure subfolder
+
+			DLAppLocalServiceUtil.updateFolder(
+				_subfolder.getFolderId(), _subfolder.getParentFolderId(),
+				_subfolder.getName(), _subfolder.getDescription(),
+				_getFolderServiceContext(_basicDocumentDLFileEntryType));
+
+			fileEntry = DLAppServiceUtil.getFileEntry(
+				fileEntry.getFileEntryId());
+
+			assertFileEntryType(fileEntry, _basicDocumentDLFileEntryType);
+		}
 	}
 
 	@Test
