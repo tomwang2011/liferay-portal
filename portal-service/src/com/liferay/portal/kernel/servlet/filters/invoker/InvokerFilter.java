@@ -112,6 +112,8 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 			invokerFilterChain.setContextClassLoader(contextClassLoader);
 
+			System.out.println("###:[" + Thread.currentThread().getName() + "]: " + requestURL);
+
 			invokerFilterChain.doFilter(request, response);
 		}
 		finally {
