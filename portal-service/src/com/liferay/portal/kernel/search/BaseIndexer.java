@@ -432,10 +432,17 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
-		return GetterUtil.getBoolean(
-			portletPreferences.getValue(
-				getClassName() + "_indexerEnabled", null),
-			true);
+		String indexerEnabled = portletPreferences.getValue(
+			getClassName() + "_indexerEnabled", null);
+
+		if (indexerEnabled == null) {
+			indexerEnabled = PropsUtil.get(
+				PropsKeys.INDEXER_ENABLED,
+				new com.liferay.portal.kernel.configuration.Filter(
+					getClassName()));
+		}
+
+		return GetterUtil.getBoolean(indexerEnabled, true);
 	}
 
 	@Override
