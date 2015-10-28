@@ -17,21 +17,20 @@ package com.liferay.blogs.web.messaging;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.blogs.configuration.BlogsConfiguration;
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -40,8 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.blogs.configuration.BlogsConfiguration",
-	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS},
-	service = SchedulerEntry.class
+	immediate = true, service = CheckEntryMessageListener.class
 )
 public class CheckEntryMessageListener
 	extends BaseSchedulerEntryMessageListener {
@@ -56,11 +54,25 @@ public class CheckEntryMessageListener
 			TriggerFactoryUtil.createTrigger(
 				getEventListenerClass(), getEventListenerClass(),
 				_blogsConfiguration.entryCheckInterval(), TimeUnit.MINUTE));
+
+		_schedulerEngineHelper.register(this, schedulerEntryImpl);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_schedulerEngineHelper.unregister(this);
 	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		BlogsEntryLocalServiceUtil.checkEntries();
+		_blogsEntryLocalService.checkEntries();
+	}
+
+	@Reference(unbind = "-")
+	protected void setBlogsEntryLocalService(
+		BlogsEntryLocalService blogsEntryLocalService) {
+
+		_blogsEntryLocalService = blogsEntryLocalService;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -68,8 +80,11 @@ public class CheckEntryMessageListener
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")
-	protected void setPortlet(Portlet portlet) {
+	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -77,5 +92,7 @@ public class CheckEntryMessageListener
 	}
 
 	private volatile BlogsConfiguration _blogsConfiguration;
+	private BlogsEntryLocalService _blogsEntryLocalService;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

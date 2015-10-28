@@ -17,21 +17,20 @@ package com.liferay.message.boards.web.messaging;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.message.boards.configuration.MBConfiguration;
-import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBBanLocalService;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -39,11 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael Young
  * @author Tina Tian
  */
-@Component(
-	immediate = true,
-	property = {"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS},
-	service = SchedulerEntry.class
-)
+@Component(immediate = true, service = ExpireBanMessageListener.class)
 public class ExpireBanMessageListener
 	extends BaseSchedulerEntryMessageListener {
 
@@ -57,11 +52,23 @@ public class ExpireBanMessageListener
 			TriggerFactoryUtil.createTrigger(
 				getEventListenerClass(), getEventListenerClass(),
 				_mbConfiguration.expireBanJobInterval(), TimeUnit.MINUTE));
+
+		_schedulerEngineHelper.register(this, schedulerEntryImpl);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_schedulerEngineHelper.unregister(this);
 	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		MBBanLocalServiceUtil.expireBans();
+		_mbBanLocalService.expireBans();
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBBanLocalService(MBBanLocalService mbBanLocalService) {
+		_mbBanLocalService = mbBanLocalService;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
@@ -69,17 +76,19 @@ public class ExpireBanMessageListener
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(
-		target = "(javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS + ")",
-		unbind = "-"
-	)
-	protected void setPortlet(Portlet portlet) {
+	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
 	@Reference(unbind = "-")
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
+	private MBBanLocalService _mbBanLocalService;
 	private volatile MBConfiguration _mbConfiguration;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

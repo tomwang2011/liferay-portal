@@ -17,15 +17,13 @@ package com.liferay.blogs.web.messaging;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.blogs.configuration.BlogsConfiguration;
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
@@ -34,6 +32,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -41,10 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alexander Chow
  * @author Tina Tian
  */
-@Component(
-	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS},
-	service = SchedulerEntry.class
-)
+@Component(immediate = true, service = LinkbackMessageListener.class)
 public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 
 	@Activate
@@ -57,6 +53,13 @@ public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 			TriggerFactoryUtil.createTrigger(
 				getEventListenerClass(), getEventListenerClass(),
 				_blogsConfiguration.linkbackJobInterval(), TimeUnit.MINUTE));
+
+		_schedulerEngineHelper.register(this, schedulerEntryImpl);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_schedulerEngineHelper.unregister(this);
 	}
 
 	@Override
@@ -71,8 +74,11 @@ public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")
-	protected void setPortlet(Portlet portlet) {
+	@Reference(unbind = "-")
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
 	@Reference(unbind = "-")
@@ -82,5 +88,6 @@ public class LinkbackMessageListener extends BaseSchedulerEntryMessageListener {
 	private volatile BlogsConfiguration _blogsConfiguration;
 	private final LinkbackConsumer _linkbackConsumer =
 		LinkbackConsumerUtil.getLinkbackConsumer();
+	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }
