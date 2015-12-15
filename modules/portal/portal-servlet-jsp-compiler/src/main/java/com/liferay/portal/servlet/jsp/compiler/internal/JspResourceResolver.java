@@ -48,6 +48,7 @@ import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.util.tracker.ServiceTracker;
 
+import org.phidias.compile.Constants;
 import org.phidias.compile.ResourceResolver;
 
 /**
@@ -271,12 +272,10 @@ public class JspResourceResolver implements ResourceResolver {
 	protected boolean isExportsPackage(
 		BundleWiring bundleWiring, String packageName) {
 
-		List<BundleWire> bundleWires = bundleWiring.getProvidedWires(
-			"osgi.wiring.package");
+		List<BundleCapability> bundleCapabilities =
+			bundleWiring.getCapabilities("osgi.wiring.package");
 
-		for (BundleWire bundleWire : bundleWires) {
-			BundleCapability bundleCapability = bundleWire.getCapability();
-
+		for (BundleCapability bundleCapability : bundleCapabilities) {
 			Map<String, Object> attributes = bundleCapability.getAttributes();
 
 			if (packageName.equals(attributes.get("osgi.wiring.package"))) {
