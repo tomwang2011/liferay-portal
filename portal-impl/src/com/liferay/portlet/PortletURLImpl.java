@@ -46,7 +46,6 @@ import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PublicRenderParameter;
-import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.security.auth.AuthTokenWhitelistUtil;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
@@ -99,8 +98,6 @@ public class PortletURLImpl
 		String lifecycle) {
 
 		this(request, portletId, null, layout.getPlid(), lifecycle);
-
-		_layout = layout;
 	}
 
 	public PortletURLImpl(
@@ -117,8 +114,6 @@ public class PortletURLImpl
 		this(
 			PortalUtil.getHttpServletRequest(portletRequest), portletId,
 			portletRequest, layout.getPlid(), lifecycle);
-
-		_layout = layout;
 	}
 
 	public PortletURLImpl(
@@ -152,20 +147,20 @@ public class PortletURLImpl
 	}
 
 	public Layout getLayout() {
-		if (_layout == null) {
-			try {
-				if (_plid > 0) {
-					_layout = LayoutLocalServiceUtil.getLayout(_plid);
-				}
+		try {
+			if (_plid > 0) {
+				return LayoutLocalServiceUtil.getLayout(_plid);
 			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Layout cannot be found for " + _plid);
-				}
-			}
-		}
 
-		return _layout;
+			return null;
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Layout cannot be found for " + _plid);
+			}
+
+			return null;
+		}
 	}
 
 	public String getLayoutFriendlyURL() {
@@ -778,14 +773,6 @@ public class PortletURLImpl
 				portletApp.getContainerRuntimeOptions(),
 				LiferayPortletConfig.RUNTIME_OPTION_ESCAPE_XML,
 				PropsValues.PORTLET_URL_ESCAPE_XML);
-		}
-
-		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
-
-		if ((layout != null) && (layout.getPlid() == _plid) &&
-			(layout instanceof VirtualLayout)) {
-
-			_layout = layout;
 		}
 	}
 
@@ -1447,7 +1434,6 @@ public class PortletURLImpl
 	private String _doAsUserLanguageId;
 	private boolean _encrypt;
 	private boolean _escapeXml = PropsValues.PORTLET_URL_ESCAPE_XML;
-	private Layout _layout;
 	private String _layoutFriendlyURL;
 	private String _lifecycle;
 	private String _namespace;
