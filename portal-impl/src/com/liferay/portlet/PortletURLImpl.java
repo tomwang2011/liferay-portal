@@ -258,10 +258,6 @@ public class PortletURLImpl
 		return PortletModeFactory.getPortletMode(_portletModeString);
 	}
 
-	public PortletRequest getPortletRequest() {
-		return _portletRequest;
-	}
-
 	@Override
 	public Set<String> getRemovedParameterNames() {
 		return _removedParameterNames;
@@ -432,18 +428,14 @@ public class PortletURLImpl
 					PORTLET + ", or " + PAGE);
 		}
 
-		if (_portletRequest instanceof ResourceRequest) {
-			ResourceRequest resourceRequest = (ResourceRequest)_portletRequest;
-
-			String parentCacheability = resourceRequest.getCacheability();
-
-			if (parentCacheability.equals(FULL)) {
+		if (_parentCacheability != null) {
+			if (_parentCacheability.equals(FULL)) {
 				if (!cacheability.equals(FULL)) {
 					throw new IllegalStateException(
 						"Unable to set a weaker cacheability " + cacheability);
 				}
 			}
-			else if (parentCacheability.equals(PORTLET)) {
+			else if (_parentCacheability.equals(PORTLET)) {
 				if (!cacheability.equals(FULL) &&
 					!cacheability.equals(PORTLET)) {
 
@@ -614,12 +606,11 @@ public class PortletURLImpl
 	public void setPortletMode(PortletMode portletMode)
 		throws PortletModeException {
 
-		if (_portletRequest != null) {
+		if (_responseContentType != null) {
 			Portlet portlet = getPortlet();
 
 			if ((portlet != null) &&
-				!portlet.hasPortletMode(
-					_portletRequest.getResponseContentType(), portletMode)) {
+				!portlet.hasPortletMode(_responseContentType, portletMode)) {
 
 				throw new PortletModeException(
 					portletMode.toString(), portletMode);
@@ -683,11 +674,8 @@ public class PortletURLImpl
 	public void setWindowState(WindowState windowState)
 		throws WindowStateException {
 
-		if (_portletRequest != null) {
-			if (!_portletRequest.isWindowStateAllowed(windowState)) {
-				throw new WindowStateException(
-					windowState.toString(), windowState);
-			}
+		if (!PortalContextImpl.isSupportedWindowState(windowState)) {
+			throw new WindowStateException(windowState.toString(), windowState);
 		}
 
 		if (LiferayWindowState.isWindowStatePreserved(
@@ -738,7 +726,6 @@ public class PortletURLImpl
 
 		_request = request;
 		_portletId = portletId;
-		_portletRequest = portletRequest;
 		_plid = plid;
 		_lifecycle = lifecycle;
 		_parametersIncludedInPath = new LinkedHashSet<>();
@@ -746,6 +733,25 @@ public class PortletURLImpl
 		_removePublicRenderParameters = new LinkedHashMap<>();
 		_secure = PortalUtil.isSecure(request);
 		_wsrp = ParamUtil.getBoolean(request, "wsrp");
+
+		String parentCacheability = null;
+
+		String responseContentType = null;
+
+		if (portletRequest != null) {
+			if (portletRequest instanceof ResourceRequest) {
+				ResourceRequest resourceRequest =
+					(ResourceRequest)portletRequest;
+
+				parentCacheability = resourceRequest.getCacheability();
+			}
+
+			responseContentType = portletRequest.getResponseContentType();
+		}
+
+		_parentCacheability = parentCacheability;
+
+		_responseContentType = responseContentType;
 
 		Portlet portlet = getPortlet();
 
@@ -1437,10 +1443,10 @@ public class PortletURLImpl
 	private String _namespace;
 	private final Set<String> _parametersIncludedInPath;
 	private Map<String, String[]> _params;
+	private final String _parentCacheability;
 	private long _plid;
 	private String _portletId;
 	private String _portletModeString;
-	private final PortletRequest _portletRequest;
 	private long _refererGroupId;
 	private long _refererPlid;
 	private Set<String> _removedParameterNames;
@@ -1448,6 +1454,7 @@ public class PortletURLImpl
 	private final HttpServletRequest _request;
 	private Map<String, String> _reservedParameters;
 	private String _resourceID;
+	private final String _responseContentType;
 	private boolean _secure;
 	private String _toString;
 	private boolean _windowStateRestoreCurrentView;
