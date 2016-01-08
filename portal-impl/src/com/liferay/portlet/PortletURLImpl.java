@@ -207,17 +207,15 @@ public class PortletURLImpl
 	}
 
 	public Portlet getPortlet() {
-		if (_portlet == null) {
-			try {
-				_portlet = PortletLocalServiceUtil.getPortletById(
-					PortalUtil.getCompanyId(_request), _portletId);
-			}
-			catch (SystemException se) {
-				_log.error(se.getMessage());
-			}
+		try {
+			return PortletLocalServiceUtil.getPortletById(
+				PortalUtil.getCompanyId(_request), _portletId);
 		}
+		catch (SystemException se) {
+			_log.error(se.getMessage());
 
-		return _portlet;
+			return null;
+		}
 	}
 
 	public String getPortletFriendlyURLPath() {
@@ -1440,7 +1438,6 @@ public class PortletURLImpl
 	private final Set<String> _parametersIncludedInPath;
 	private Map<String, String[]> _params;
 	private long _plid;
-	private Portlet _portlet;
 	private String _portletId;
 	private String _portletModeString;
 	private final PortletRequest _portletRequest;
