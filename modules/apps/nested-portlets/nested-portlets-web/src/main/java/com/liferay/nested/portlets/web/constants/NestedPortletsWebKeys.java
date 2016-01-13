@@ -12,26 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.struts;
-
-import java.util.Map;
+package com.liferay.nested.portlets.web.constants;
 
 /**
- * @author     Brian Wing Shun Chan
- * @deprecated As of 6.1.0, replaced by {@link
- *             com.liferay.portal.kernel.struts.LastPath}
+ * @author Jürgen Kappler
  */
-@Deprecated
-public class LastPath extends com.liferay.portal.kernel.struts.LastPath {
+public class NestedPortletsWebKeys {
 
-	public LastPath(String contextPath, String path) {
-		super(contextPath, path);
-	}
+	public static final String TEMPLATE_CONTENT = "TEMPLATE_CONTENT";
 
-	public LastPath(
-		String contextPath, String path, Map<String, String[]> parameterMap) {
-
-		super(contextPath, path, parameterMap);
-	}
+	public static final String TEMPLATE_ID = "TEMPLATE_ID";
 
 }
