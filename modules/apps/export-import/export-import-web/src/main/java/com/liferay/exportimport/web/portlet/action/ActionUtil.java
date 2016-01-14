@@ -38,7 +38,7 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.portletconfiguration.util.ConfigurationActionRequest;
 import com.liferay.portlet.portletconfiguration.util.ConfigurationRenderRequest;
 import com.liferay.portlet.portletconfiguration.util.ConfigurationResourceRequest;
-import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
+import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletPreferences;

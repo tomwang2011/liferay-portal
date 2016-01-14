@@ -60,7 +60,7 @@ import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletConfigImpl;
 import com.liferay.portlet.configuration.web.upgrade.PortletConfigurationWebUpgrade;
 import com.liferay.portlet.portletconfiguration.action.ActionUtil;
-import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
+import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
 import com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration;
 
 import java.io.IOException;
