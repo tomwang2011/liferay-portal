@@ -27,8 +27,8 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutSetLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.layoutsadmin.util.SitemapURLProvider;
-import com.liferay.portlet.layoutsadmin.util.SitemapUtil;
+import com.liferay.layouts.admin.kernel.util.SitemapURLProvider;
+import com.liferay.layouts.admin.kernel.util.SitemapUtil;
 
 import java.util.HashSet;
 import java.util.List;
