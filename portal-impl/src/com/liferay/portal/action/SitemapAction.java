@@ -34,7 +34,7 @@ import com.liferay.portal.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.layoutsadmin.util.SitemapUtil;
+import com.liferay.layouts.admin.kernel.util.SitemapUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
