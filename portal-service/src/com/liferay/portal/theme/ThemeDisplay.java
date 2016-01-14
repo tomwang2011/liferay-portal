@@ -49,7 +49,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.admin.util.PortalMyAccountApplicationType;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
-import com.liferay.portlet.mobiledevicerules.MDRRuleGroupInstance;
+import com.liferay.mobile.device.rules.kernel.MDRRuleGroupInstance;
 
 import java.io.Serializable;
 
