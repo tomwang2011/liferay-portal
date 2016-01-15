@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.layoutconfiguration.util.RuntimePageUtil;
+import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil;
 import com.liferay.portal.model.LayoutTemplateConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Theme;
