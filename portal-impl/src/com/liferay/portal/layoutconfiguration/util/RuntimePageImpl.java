@@ -14,6 +14,7 @@
 
 package com.liferay.portal.layoutconfiguration.util;
 
+import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePage;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
