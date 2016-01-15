@@ -89,7 +89,7 @@ import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetEntryQueryProcessor;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
-import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
+import com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.IOException;
