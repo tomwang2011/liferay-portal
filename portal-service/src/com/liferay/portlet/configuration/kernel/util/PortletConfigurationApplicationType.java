@@ -12,23 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.layoutconfiguration.util.xml;
+package com.liferay.portlet.configuration.kernel.util;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Juergen Kappler
  */
-public abstract class RuntimeLogic {
+public class PortletConfigurationApplicationType {
 
-	public static final String CLOSE_2_TAG = "/>";
+	public interface PortletConfiguration {
 
-	public abstract String getClose1Tag();
+		public static final String CLASS_NAME =
+			"com.liferay.portlet.portletconfiguration.util." +
+				"PortletConfigurationApplicationType$PortletConfiguration";
 
-	public String getClose2Tag() {
-		return CLOSE_2_TAG;
 	}
-
-	public abstract String getOpenTag();
-
-	public abstract String processXML(String xml) throws Exception;
 
 }
