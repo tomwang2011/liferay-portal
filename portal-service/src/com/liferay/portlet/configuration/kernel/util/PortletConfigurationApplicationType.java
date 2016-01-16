@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.portletconfiguration.util;
+package com.liferay.portlet.configuration.kernel.util;
 
 /**
  * @author Juergen Kappler
