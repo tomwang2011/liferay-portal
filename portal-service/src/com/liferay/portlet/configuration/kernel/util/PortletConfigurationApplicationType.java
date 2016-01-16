@@ -12,25 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.util;
-
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.theme.ThemeDisplay;
+package com.liferay.portlet.configuration.kernel.util;
 
 /**
- * @author Eduardo Garcia
+ * @author Juergen Kappler
  */
-@ProviderType
-public interface SitemapURLProvider {
+public class PortletConfigurationApplicationType {
 
-	public String getClassName();
+	public interface PortletConfiguration {
 
-	public void visitLayout(
-			Element element, Layout layout, ThemeDisplay themeDisplay)
-		throws PortalException;
+		public static final String CLASS_NAME =
+			"com.liferay.portlet.portletconfiguration.util." +
+				"PortletConfigurationApplicationType$PortletConfiguration";
+
+	}
 
 }
