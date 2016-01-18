@@ -12,24 +12,31 @@
  * details.
  */
 
-package com.liferay.site.navigation.menu.web.configuration;
+package com.liferay.gradle.plugins.extensions;
 
-import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.gradle.plugins.util.FileUtil;
+import com.liferay.gradle.util.GradleUtil;
 
-import com.liferay.configuration.admin.ConfigurationAdmin;
+import java.io.File;
+
+import org.gradle.api.Project;
 
 /**
- * @author Juergen Kappler
+ * @author Manuel de la Peña
  */
-@ConfigurationAdmin(category = "web-experience-management")
-@Meta.OCD(
-	id = "com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebConfiguration",
-	localization = "content/Language",
-	name = "%site.navigation.menu.web.configuration.name"
-)
-public interface SiteNavigationMenuWebConfiguration {
+public class JOnASAppServer extends AppServer {
 
-	@Meta.AD(deflt = "navbar-blank-ftl", required = false)
-	public String ddmTemplateKeyDefault();
+	public JOnASAppServer(Project project) {
+		super("jonas", project);
+	}
+
+	@Override
+	public void addAdditionalDependencies(String configurationName) {
+		File dir = new File(getDir(), "lib/endorsed");
+
+		GradleUtil.addDependency(
+			project, configurationName,
+			FileUtil.getJarsFileTree(project, dir));
+	}
 
 }
