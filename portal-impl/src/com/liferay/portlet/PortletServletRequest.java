@@ -62,9 +62,8 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 		super(request);
 
 		_request = request;
-		_portletRequest = portletRequest;
 		_portletRequestImpl = PortletRequestImpl.getPortletRequestImpl(
-			_portletRequest);
+			portletRequest);
 		_pathInfo = pathInfo;
 		_queryString = queryString;
 		_requestURI = GetterUtil.getString(requestURI);
@@ -90,7 +89,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 				return null;
 			}
 			else {
-				return _portletRequest.getContextPath();
+				return _portletRequestImpl.getContextPath();
 			}
 		}
 
@@ -181,7 +180,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public String getContextPath() {
-		return _portletRequest.getContextPath();
+		return _portletRequestImpl.getContextPath();
 	}
 
 	@Override
@@ -241,12 +240,12 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public Locale getLocale() {
-		return _portletRequest.getLocale();
+		return _portletRequestImpl.getLocale();
 	}
 
 	@Override
 	public Enumeration<Locale> getLocales() {
-		return _portletRequest.getLocales();
+		return _portletRequestImpl.getLocales();
 	}
 
 	@Override
@@ -280,22 +279,22 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public String getParameter(String name) {
-		return _portletRequest.getParameter(name);
+		return _portletRequestImpl.getParameter(name);
 	}
 
 	@Override
 	public Map<String, String[]> getParameterMap() {
-		return _portletRequest.getParameterMap();
+		return _portletRequestImpl.getParameterMap();
 	}
 
 	@Override
 	public Enumeration<String> getParameterNames() {
-		return _portletRequest.getParameterNames();
+		return _portletRequestImpl.getParameterNames();
 	}
 
 	@Override
 	public String[] getParameterValues(String name) {
-		return _portletRequest.getParameterValues(name);
+		return _portletRequestImpl.getParameterValues(name);
 	}
 
 	@Override
@@ -358,7 +357,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public String getRemoteUser() {
-		return _portletRequest.getRemoteUser();
+		return _portletRequestImpl.getRemoteUser();
 	}
 
 	@Override
@@ -368,7 +367,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public String getRequestedSessionId() {
-		return _portletRequest.getRequestedSessionId();
+		return _portletRequestImpl.getRequestedSessionId();
 	}
 
 	@Override
@@ -383,17 +382,17 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public String getScheme() {
-		return _portletRequest.getScheme();
+		return _portletRequestImpl.getScheme();
 	}
 
 	@Override
 	public String getServerName() {
-		return _portletRequest.getServerName();
+		return _portletRequestImpl.getServerName();
 	}
 
 	@Override
 	public int getServerPort() {
-		return _portletRequest.getServerPort();
+		return _portletRequestImpl.getServerPort();
 	}
 
 	@Override
@@ -430,7 +429,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public Principal getUserPrincipal() {
-		return _portletRequest.getUserPrincipal();
+		return _portletRequestImpl.getUserPrincipal();
 	}
 
 	@Override
@@ -454,27 +453,27 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public boolean isRequestedSessionIdValid() {
-		return _portletRequest.isRequestedSessionIdValid();
+		return _portletRequestImpl.isRequestedSessionIdValid();
 	}
 
 	@Override
 	public boolean isSecure() {
-		return _portletRequest.isSecure();
+		return _portletRequestImpl.isSecure();
 	}
 
 	@Override
 	public boolean isUserInRole(String role) {
-		return _portletRequest.isUserInRole(role);
+		return _portletRequestImpl.isUserInRole(role);
 	}
 
 	@Override
 	public void removeAttribute(String name) {
-		_portletRequest.removeAttribute(name);
+		_portletRequestImpl.removeAttribute(name);
 	}
 
 	@Override
 	public void setAttribute(String name, Object obj) {
-		_portletRequest.setAttribute(name, obj);
+		_portletRequestImpl.setAttribute(name, obj);
 	}
 
 	@Override
@@ -509,11 +508,11 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 	}
 
 	private ClientDataRequest _getClientDataRequest() {
-		return (ClientDataRequest)_portletRequest;
+		return (ClientDataRequest)_portletRequestImpl;
 	}
 
 	private EventRequest _getEventRequest() {
-		return (EventRequest)_portletRequest;
+		return (EventRequest)_portletRequestImpl;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -523,7 +522,6 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 	private final String _lifecycle;
 	private final boolean _named;
 	private final String _pathInfo;
-	private final PortletRequest _portletRequest;
 	private final PortletRequestImpl _portletRequestImpl;
 	private final String _queryString;
 	private final HttpServletRequest _request;
