@@ -1700,6 +1700,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							lineCount);
 				}
 
+				checkChaining(trimmedLine, fileName, lineCount);
+
 				checkStringBundler(trimmedLine, fileName, lineCount);
 
 				checkEmptyCollection(trimmedLine, fileName, lineCount);
@@ -3311,15 +3313,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		List<String> fileNames = new ArrayList<>();
 
-		String moduleRootDirLocation =
-			sourceFormatterArgs.getBaseDirName() + "modules/";
+		String moduleRootDirLocation = "modules/";
 
 		for (int i = 0; i < 6; i++) {
-			File file = new File(moduleRootDirLocation);
+			File file = new File(
+				sourceFormatterArgs.getBaseDirName() + moduleRootDirLocation);
 
 			if (file.exists()) {
 				fileNames = getFileNames(
-					moduleRootDirLocation, null, new String[0], getIncludes());
+					sourceFormatterArgs.getBaseDirName() +
+						moduleRootDirLocation,
+					null, new String[0], getIncludes());
 
 				break;
 			}
