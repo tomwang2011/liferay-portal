@@ -3448,6 +3448,8 @@ else.
 
 `com.liferay.portal.layoutconfiguration.util.xml` renamed to `com.liferay.portal.kernel.layoutconfiguration.util.xml`
 
+`com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil` renamed to `com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil`
+
 `com.liferay.portal.repository.proxy` renamed to `com.liferay.portal.kernel.repository.proxy`
 
 `com.liferay.portal.webserver` renamed to `com.liferay.portal.kernel.webserver`
