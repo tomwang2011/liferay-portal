@@ -3444,6 +3444,8 @@ else.
 
 `com.liferay.portal.jdbc.pool.metrics` renamed to `com.liferay.portal.kernel.jdbc.pool.metrics`
 
+`com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil` renamed to `com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil`
+
 `com.liferay.portal.webserver` renamed to `com.liferay.portal.kernel.webserver`
 
 `com.liferay.portlet.backgroundtask` renamed to `com.liferay.background.task.kernel`
