@@ -16,20 +16,15 @@ package com.liferay.portal.servlet.jsp.compiler.internal;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.JspTag;
 import javax.servlet.jsp.tagext.Tag;
 
 import org.apache.jasper.Constants;
 import org.apache.jasper.runtime.TagHandlerPool;
-
-import org.glassfish.jsp.api.ResourceInjector;
 
 /**
  * @author Shuyang Zhou
@@ -42,78 +37,64 @@ public class JspTagHandlerPool extends TagHandlerPool {
 	public <T extends JspTag> JspTag get(Class<T> jspTagClass)
 		throws JspException {
 
-		JspTag jspTag = _jspTags.poll();
+		int index = _counter.decrementAndGet();
 
-		if (jspTag == null) {
-			try {
-				if (_resourceInjector == null) {
-					jspTag = jspTagClass.newInstance();
-				}
-				else {
-					jspTag = _resourceInjector.createTagHandlerInstance(
-						jspTagClass);
-				}
-			}
-			catch (Exception e) {
-				throw new JspException(e);
-			}
-		}
-		else {
-			_counter.getAndDecrement();
+		if (index >= 0) {
+			return _jspTags[index];
 		}
 
-		return jspTag;
+		_counter.incrementAndGet();
+
+		try {
+			return jspTagClass.newInstance();
+		}
+		catch (Exception e) {
+			throw new JspException(e);
+		}
 	}
 
 	@Override
 	public void release() {
-		JspTag jspTag = null;
+		for (int i = 0; i < _counter.get(); i++) {
+			JspTag jspTag = _jspTags[i];
 
-		while ((jspTag = _jspTags.poll()) != null) {
 			if (jspTag instanceof Tag) {
 				Tag tag = (Tag)jspTag;
 
 				tag.release();
 			}
-
-			if (_resourceInjector != null) {
-				_resourceInjector.preDestroy(jspTag);
-			}
 		}
+
+		_jspTags = null;
 	}
 
 	@Override
 	public void reuse(JspTag jspTag) {
-		if (_counter.get() < _maxSize) {
-			_counter.getAndIncrement();
+		int index = _counter.getAndIncrement();
 
-			_jspTags.offer(jspTag);
+		if (index < _jspTags.length) {
+			_jspTags[index] = jspTag;
 		}
-		else if (jspTag instanceof Tag) {
-			Tag tag = (Tag)jspTag;
+		else {
+			_counter.decrementAndGet();
 
-			tag.release();
+			if (jspTag instanceof Tag) {
+				Tag tag = (Tag)jspTag;
 
-			if (_resourceInjector != null) {
-				_resourceInjector.preDestroy(jspTag);
+				tag.release();
 			}
 		}
 	}
 
 	@Override
 	protected void init(ServletConfig config) {
-		_maxSize = GetterUtil.getInteger(
+		int maxSize = GetterUtil.getInteger(
 			getOption(config, OPTION_MAXSIZE, null), Constants.MAX_POOL_SIZE);
 
-		ServletContext servletContext = config.getServletContext();
-
-		_resourceInjector = (ResourceInjector)servletContext.getAttribute(
-			Constants.JSP_RESOURCE_INJECTOR_CONTEXT_ATTRIBUTE);
+		_jspTags = new JspTag[maxSize];
 	}
 
 	private final AtomicInteger _counter = new AtomicInteger();
-	private final Queue<JspTag> _jspTags = new ConcurrentLinkedQueue<>();
-	private int _maxSize;
-	private ResourceInjector _resourceInjector;
+	private JspTag[] _jspTags;
 
 }
