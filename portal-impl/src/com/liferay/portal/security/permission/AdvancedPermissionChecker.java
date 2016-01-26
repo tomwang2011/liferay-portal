@@ -214,7 +214,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		try {
 			ResourceBlockIdsBag resourceBlockIdsBag = getResourceBlockIdsBag(
-				companyId, groupId, userId, name);
+				companyId, groupId, name, getRoleIds(getUserId(), groupId));
 
 			return ResourceBlockLocalServiceUtil.getResourceBlockIds(
 				resourceBlockIdsBag, name, actionId);
@@ -229,32 +229,30 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	}
 
 	public ResourceBlockIdsBag getResourceBlockIdsBag(
-			long companyId, long groupId, long userId, String name)
+			long companyId, long groupId, String name, long[] roleIds)
 		throws Exception {
 
 		ResourceBlockIdsBag resourceBlockIdsBag =
 			PermissionCacheUtil.getResourceBlockIdsBag(
-				companyId, groupId, userId, name);
+				companyId, groupId, getUserId(), name);
 
 		if (resourceBlockIdsBag != null) {
 			return resourceBlockIdsBag;
 		}
 
 		try {
-			long[] roleIds = getRoleIds(userId, groupId);
-
 			resourceBlockIdsBag =
 				ResourceBlockLocalServiceUtil.getResourceBlockIdsBag(
 					getCompanyId(), groupId, name, roleIds);
 
 			PermissionCacheUtil.putResourceBlockIdsBag(
-				companyId, groupId, userId, name, resourceBlockIdsBag);
+				companyId, groupId, getUserId(), name, resourceBlockIdsBag);
 
 			return resourceBlockIdsBag;
 		}
 		catch (Exception e) {
 			PermissionCacheUtil.removeResourceBlockIdsBag(
-				companyId, groupId, userId, name);
+				companyId, groupId, getUserId(), name);
 
 			throw e;
 		}
@@ -374,6 +372,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			_log.error(e, e);
 		}
 
+		long[] roleIds = getRoleIds(getUserId(), groupId);
+
 		Boolean value = PermissionCacheUtil.getPermission(
 			user.getUserId(), signedIn, groupId, name, primKey, actionId);
 
@@ -382,7 +382,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		try {
-			value = hasPermissionImpl(groupId, name, primKey, actionId);
+			value = hasPermissionImpl(
+				groupId, name, primKey, roleIds, actionId);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -532,14 +533,14 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 	protected boolean doCheckPermission(
 			long companyId, long groupId, String name, String primKey,
-			String actionId, StopWatch stopWatch)
+			long[] roleIds, String actionId, StopWatch stopWatch)
 		throws Exception {
 
 		logHasUserPermission(groupId, name, primKey, actionId, stopWatch, 1);
 
 		if (ResourceBlockLocalServiceUtil.isSupported(name)) {
 			ResourceBlockIdsBag resourceBlockIdsBag = getResourceBlockIdsBag(
-				companyId, groupId, getUserId(), name);
+				companyId, groupId, name, roleIds);
 
 			boolean value = ResourceBlockLocalServiceUtil.hasPermission(
 				name, GetterUtil.getLong(primKey), actionId,
@@ -562,8 +563,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		// the company that the class belongs to.
 
 		boolean value = ResourceLocalServiceUtil.hasUserPermissions(
-			user.getUserId(), groupId, resources, actionId,
-			getRoleIds(user.getUserId(), groupId));
+			user.getUserId(), groupId, resources, actionId, roleIds);
 
 		logHasUserPermission(groupId, name, primKey, actionId, stopWatch, 4);
 
@@ -811,7 +811,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	}
 
 	protected boolean hasPermissionImpl(
-		long groupId, String name, String primKey, String actionId) {
+		long groupId, String name, String primKey, long[] roleIds,
+		String actionId) {
 
 		try {
 			if (!signedIn) {
@@ -820,11 +821,11 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			if (ResourceBlockLocalServiceUtil.isSupported(name)) {
 				return hasUserPermissionImpl(
-					groupId, name, primKey, actionId);
+					groupId, name, primKey, roleIds, actionId);
 			}
 
 			return hasUserPermissionImpl(
-				groupId, name, primKey, actionId);
+				groupId, name, primKey, roleIds, actionId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -834,7 +835,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	}
 
 	protected boolean hasUserPermissionImpl(
-			long groupId, String name, String primKey, String actionId)
+			long groupId, String name, String primKey, long[] roleIds,
+			String actionId)
 		throws Exception {
 
 		StopWatch stopWatch = new StopWatch();
@@ -884,7 +886,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		return doCheckPermission(
-			companyId, groupId, name, primKey, actionId, stopWatch);
+			companyId, groupId, name, primKey, roleIds, actionId, stopWatch);
 	}
 
 	protected boolean isCompanyAdminImpl(long companyId) throws Exception {
@@ -1021,10 +1023,13 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			while (!group.isRoot()) {
 				Group parentGroup = group.getParentGroup();
 
+				long[] roleIds = getRoleIds(
+					getUserId(), parentGroup.getGroupId());
+
 				if (doCheckPermission(
 						parentGroup.getCompanyId(), parentGroup.getGroupId(),
 						Group.class.getName(),
-						String.valueOf(parentGroup.getGroupId()),
+						String.valueOf(parentGroup.getGroupId()), roleIds,
 						ActionKeys.MANAGE_SUBGROUPS, stopWatch)) {
 
 					return true;
@@ -1101,11 +1106,15 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 				Group parentGroup = parentOrganization.getGroup();
 
+				long[] roleIds = getRoleIds(
+					getUserId(), parentGroup.getGroupId());
+
 				if (doCheckPermission(
 						parentGroup.getCompanyId(), parentGroup.getGroupId(),
 						Organization.class.getName(),
 						String.valueOf(parentOrganization.getOrganizationId()),
-						ActionKeys.MANAGE_SUBORGANIZATIONS, stopWatch)) {
+						roleIds, ActionKeys.MANAGE_SUBORGANIZATIONS,
+						stopWatch)) {
 
 					return true;
 				}
