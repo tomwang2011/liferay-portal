@@ -20,7 +20,7 @@ import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.service.base.ExpandoColumnServiceBaseImpl;
-import com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil;
+import com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil;
 
 /**
  * @author Brian Wing Shun Chan
