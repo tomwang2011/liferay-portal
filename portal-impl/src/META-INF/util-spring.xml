@@ -566,17 +566,17 @@
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil">
+	<bean id="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil" class="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil">
 		<property name="expandoColumnPermission">
 			<bean class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" class="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil">
+	<bean id="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil" class="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil">
 		<property name="expandoBridgeFactory">
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil" class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil">
+	<bean id="com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil" class="com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil">
 		<property name="expandoBridgeIndexer">
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>
