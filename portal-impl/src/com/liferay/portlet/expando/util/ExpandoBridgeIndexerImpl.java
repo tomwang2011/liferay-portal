@@ -28,13 +28,13 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.portlet.expando.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
-import com.liferay.portlet.expando.model.ExpandoValue;
+import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
-import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
-import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;

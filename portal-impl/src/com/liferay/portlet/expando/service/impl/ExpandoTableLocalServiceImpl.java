@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.expando.kernel.exception.DuplicateTableNameException;
 import com.liferay.expando.kernel.exception.TableNameException;
-import com.liferay.portlet.expando.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.portlet.expando.service.base.ExpandoTableLocalServiceBaseImpl;
 

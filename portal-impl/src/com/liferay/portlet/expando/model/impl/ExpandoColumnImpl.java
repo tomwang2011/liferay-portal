@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.portlet.expando.model.ExpandoValue;
+import com.liferay.expando.kernel.model.ExpandoValue;
 
 import java.io.IOException;
 import java.io.Serializable;

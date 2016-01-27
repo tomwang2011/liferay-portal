@@ -21,11 +21,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.expando.kernel.exception.ColumnNameException;
 import com.liferay.expando.kernel.exception.ColumnTypeException;
 import com.liferay.expando.kernel.exception.DuplicateColumnNameException;
-import com.liferay.portlet.expando.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.portlet.expando.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
-import com.liferay.portlet.expando.model.ExpandoValue;
+import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 import com.liferay.portlet.expando.service.base.ExpandoColumnLocalServiceBaseImpl;
 

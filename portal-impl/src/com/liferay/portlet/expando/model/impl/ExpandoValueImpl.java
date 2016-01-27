@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.expando.kernel.exception.ValueDataException;
-import com.liferay.portlet.expando.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 
 import java.io.Serializable;
 
