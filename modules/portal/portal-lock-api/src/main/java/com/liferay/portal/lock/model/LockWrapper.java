@@ -184,7 +184,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _lock.getExpandoBridge();
 	}
 
@@ -396,7 +396,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_lock.setExpandoBridgeAttributes(expandoBridge);
 	}
 

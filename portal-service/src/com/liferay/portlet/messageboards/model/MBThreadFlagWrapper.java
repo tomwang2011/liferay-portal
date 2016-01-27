@@ -164,7 +164,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _mbThreadFlag.getExpandoBridge();
 	}
 
@@ -331,7 +331,7 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_mbThreadFlag.setExpandoBridgeAttributes(expandoBridge);
 	}
 

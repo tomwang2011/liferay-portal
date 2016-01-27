@@ -129,7 +129,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _clusterGroup.getExpandoBridge();
 	}
 
@@ -245,7 +245,7 @@ public class ClusterGroupWrapper implements ClusterGroup,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_clusterGroup.setExpandoBridgeAttributes(expandoBridge);
 	}
 

@@ -333,7 +333,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _mdrAction.getExpandoBridge();
 	}
 
@@ -704,7 +704,7 @@ public class MDRActionWrapper implements MDRAction, ModelWrapper<MDRAction> {
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_mdrAction.setExpandoBridgeAttributes(expandoBridge);
 	}
 
