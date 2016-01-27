@@ -35,6 +35,7 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.portlet.expando.model.impl.ExpandoValueImpl;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
+import com.liferay.expando.kernel.util.ExpandoBridgeIndexer;
 
 import java.util.ArrayList;
 import java.util.List;
