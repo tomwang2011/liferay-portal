@@ -207,6 +207,10 @@
 	<bean id="com.liferay.portal.kernel.portlet.PortletContainerUtil" class="com.liferay.portal.kernel.portlet.PortletContainerUtil">
 		<property name="portletContainer" ref="com.liferay.portlet.RestrictPortletContainerWrapper" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.portletfilerepository.PortletFileRepository" class="com.liferay.portal.portletfilerepository.PortletFileRepositoryImpl" />
+	<bean id="com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil" class="com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil">
+		<property name="portletFileRepository" ref="com.liferay.portal.kernel.portletfilerepository.PortletFileRepository" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil" class="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil">
 		<property name="sPIRegistry">
 			<bean class="com.liferay.portal.resiliency.spi.SPIRegistryImpl">
@@ -408,10 +412,6 @@
 	</bean>
 	<bean id="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" class="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" />
 	<bean id="com.liferay.portal.plugin.PluginPackageIndexer" class="com.liferay.portal.plugin.PluginPackageIndexer" />
-	<bean id="com.liferay.portal.portletfilerepository.PortletFileRepository" class="com.liferay.portal.portletfilerepository.PortletFileRepositoryImpl" />
-	<bean id="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" class="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil">
-		<property name="portletFileRepository" ref="com.liferay.portal.portletfilerepository.PortletFileRepository" />
-	</bean>
 	<bean id="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" class="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" factory-method="createPortalResiliencyPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.PortletContainerImpl" />
 	</bean>
@@ -566,17 +566,17 @@
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil">
+	<bean id="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil" class="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil">
 		<property name="expandoColumnPermission">
 			<bean class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" class="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil">
+	<bean id="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil" class="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil">
 		<property name="expandoBridgeFactory">
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil" class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil">
+	<bean id="com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil" class="com.liferay.expando.kernel.util.ExpandoBridgeIndexerUtil">
 		<property name="expandoBridgeIndexer">
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>

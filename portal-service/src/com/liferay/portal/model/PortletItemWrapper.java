@@ -187,7 +187,7 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _portletItem.getExpandoBridge();
 	}
 
@@ -368,7 +368,7 @@ public class PortletItemWrapper implements PortletItem,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_portletItem.setExpandoBridgeAttributes(expandoBridge);
 	}
 

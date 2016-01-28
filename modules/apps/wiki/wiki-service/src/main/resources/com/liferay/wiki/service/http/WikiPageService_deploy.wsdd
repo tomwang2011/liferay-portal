@@ -114,6 +114,9 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="nodeId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.wiki.liferay.com" xmlns:rtns="http://model.wiki.liferay.com" name="getPage" qname="operNS:getPage" returnQName="getPageReturn" returnType="rtns:WikiPageSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pageId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.wiki.liferay.com" xmlns:rtns="http://model.wiki.liferay.com" name="getPage" qname="operNS:getPage" returnQName="getPageReturn" returnType="rtns:WikiPageSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="nodeId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="title" type="tns:string"></parameter>

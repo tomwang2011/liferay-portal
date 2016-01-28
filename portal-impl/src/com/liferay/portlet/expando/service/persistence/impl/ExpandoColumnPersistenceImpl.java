@@ -16,6 +16,10 @@ package com.liferay.portlet.expando.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.expando.kernel.exception.NoSuchColumnException;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.service.persistence.ExpandoColumnPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -25,11 +29,9 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -42,11 +44,8 @@ import com.liferay.portal.service.persistence.CompanyProvider;
 import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
-import com.liferay.portlet.expando.exception.NoSuchColumnException;
-import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.impl.ExpandoColumnImpl;
 import com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl;
-import com.liferay.portlet.expando.service.persistence.ExpandoColumnPersistence;
 
 import java.io.Serializable;
 
@@ -69,7 +68,7 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see ExpandoColumnPersistence
- * @see com.liferay.portlet.expando.service.persistence.ExpandoColumnUtil
+ * @see com.liferay.expando.kernel.service.persistence.ExpandoColumnUtil
  * @generated
  */
 @ProviderType
@@ -288,7 +287,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 * @param tableId the table ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching expando column
-	 * @throws NoSuchColumnException if a matching expando column could not be found
+	 * @throws com.liferay.portlet.expando.exception.NoSuchColumnException if a matching expando column could not be found
 	 */
 	@Override
 	public ExpandoColumn findByTableId_First(long tableId,
@@ -339,7 +338,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 * @param tableId the table ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching expando column
-	 * @throws NoSuchColumnException if a matching expando column could not be found
+	 * @throws com.liferay.portlet.expando.exception.NoSuchColumnException if a matching expando column could not be found
 	 */
 	@Override
 	public ExpandoColumn findByTableId_Last(long tableId,
@@ -397,7 +396,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	 * @param tableId the table ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next expando column
-	 * @throws NoSuchColumnException if a expando column with the primary key could not be found
+	 * @throws com.liferay.portlet.expando.exception.NoSuchColumnException if a expando column with the primary key could not be found
 	 */
 	@Override
 	public ExpandoColumn[] findByTableId_PrevAndNext(long columnId,
@@ -536,316 +535,6 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	}
 
 	/**
-	 * Returns all the expando columns that the user has permission to view where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @return the matching expando columns that the user has permission to view
-	 */
-	@Override
-	public List<ExpandoColumn> filterFindByTableId(long tableId) {
-		return filterFindByTableId(tableId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the expando columns that the user has permission to view where tableId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExpandoColumnModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param start the lower bound of the range of expando columns
-	 * @param end the upper bound of the range of expando columns (not inclusive)
-	 * @return the range of matching expando columns that the user has permission to view
-	 */
-	@Override
-	public List<ExpandoColumn> filterFindByTableId(long tableId, int start,
-		int end) {
-		return filterFindByTableId(tableId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando columns that the user has permissions to view where tableId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExpandoColumnModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param start the lower bound of the range of expando columns
-	 * @param end the upper bound of the range of expando columns (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching expando columns that the user has permission to view
-	 */
-	@Override
-	public List<ExpandoColumn> filterFindByTableId(long tableId, int start,
-		int end, OrderByComparator<ExpandoColumn> orderByComparator) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByTableId(tableId, start, end, orderByComparator);
-		}
-
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(3 +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_EXPANDOCOLUMN_WHERE);
-		}
-		else {
-			query.append(_FILTER_SQL_SELECT_EXPANDOCOLUMN_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_TABLEID_TABLEID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_EXPANDOCOLUMN_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			if (getDB().isSupportsInlineDistinct()) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator, true);
-			}
-			else {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_TABLE,
-					orderByComparator, true);
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(ExpandoColumnModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(ExpandoColumnModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				ExpandoColumn.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			if (getDB().isSupportsInlineDistinct()) {
-				q.addEntity(_FILTER_ENTITY_ALIAS, ExpandoColumnImpl.class);
-			}
-			else {
-				q.addEntity(_FILTER_ENTITY_TABLE, ExpandoColumnImpl.class);
-			}
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(tableId);
-
-			return (List<ExpandoColumn>)QueryUtil.list(q, getDialect(), start,
-				end);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns the expando columns before and after the current expando column in the ordered set of expando columns that the user has permission to view where tableId = &#63;.
-	 *
-	 * @param columnId the primary key of the current expando column
-	 * @param tableId the table ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next expando column
-	 * @throws NoSuchColumnException if a expando column with the primary key could not be found
-	 */
-	@Override
-	public ExpandoColumn[] filterFindByTableId_PrevAndNext(long columnId,
-		long tableId, OrderByComparator<ExpandoColumn> orderByComparator)
-		throws NoSuchColumnException {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return findByTableId_PrevAndNext(columnId, tableId,
-				orderByComparator);
-		}
-
-		ExpandoColumn expandoColumn = findByPrimaryKey(columnId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			ExpandoColumn[] array = new ExpandoColumnImpl[3];
-
-			array[0] = filterGetByTableId_PrevAndNext(session, expandoColumn,
-					tableId, orderByComparator, true);
-
-			array[1] = expandoColumn;
-
-			array[2] = filterGetByTableId_PrevAndNext(session, expandoColumn,
-					tableId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected ExpandoColumn filterGetByTableId_PrevAndNext(Session session,
-		ExpandoColumn expandoColumn, long tableId,
-		OrderByComparator<ExpandoColumn> orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		if (getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_EXPANDOCOLUMN_WHERE);
-		}
-		else {
-			query.append(_FILTER_SQL_SELECT_EXPANDOCOLUMN_NO_INLINE_DISTINCT_WHERE_1);
-		}
-
-		query.append(_FINDER_COLUMN_TABLEID_TABLEID_2);
-
-		if (!getDB().isSupportsInlineDistinct()) {
-			query.append(_FILTER_SQL_SELECT_EXPANDOCOLUMN_NO_INLINE_DISTINCT_WHERE_2);
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				if (getDB().isSupportsInlineDistinct()) {
-					query.append(_ORDER_BY_ENTITY_ALIAS);
-				}
-				else {
-					query.append(_ORDER_BY_ENTITY_TABLE);
-				}
-
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			if (getDB().isSupportsInlineDistinct()) {
-				query.append(ExpandoColumnModelImpl.ORDER_BY_JPQL);
-			}
-			else {
-				query.append(ExpandoColumnModelImpl.ORDER_BY_SQL);
-			}
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				ExpandoColumn.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		if (getDB().isSupportsInlineDistinct()) {
-			q.addEntity(_FILTER_ENTITY_ALIAS, ExpandoColumnImpl.class);
-		}
-		else {
-			q.addEntity(_FILTER_ENTITY_TABLE, ExpandoColumnImpl.class);
-		}
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(tableId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(expandoColumn);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<ExpandoColumn> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
 	 * Removes all the expando columns where tableId = &#63; from the database.
 	 *
 	 * @param tableId the table ID
@@ -907,54 +596,6 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		}
 
 		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of expando columns that the user has permission to view where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @return the number of matching expando columns that the user has permission to view
-	 */
-	@Override
-	public int filterCountByTableId(long tableId) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByTableId(tableId);
-		}
-
-		StringBundler query = new StringBundler(2);
-
-		query.append(_FILTER_SQL_COUNT_EXPANDOCOLUMN_WHERE);
-
-		query.append(_FINDER_COLUMN_TABLEID_TABLEID_2);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				ExpandoColumn.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME,
-				com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(tableId);
-
-			Long count = (Long)q.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	private static final String _FINDER_COLUMN_TABLEID_TABLEID_2 = "expandoColumn.tableId = ?";
@@ -1218,12 +859,12 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	}
 
 	/**
-	 * Returns the expando column where tableId = &#63; and name = &#63; or throws a {@link NoSuchColumnException} if it could not be found.
+	 * Returns the expando column where tableId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.expando.exception.NoSuchColumnException} if it could not be found.
 	 *
 	 * @param tableId the table ID
 	 * @param name the name
 	 * @return the matching expando column
-	 * @throws NoSuchColumnException if a matching expando column could not be found
+	 * @throws com.liferay.portlet.expando.exception.NoSuchColumnException if a matching expando column could not be found
 	 */
 	@Override
 	public ExpandoColumn findByT_N(long tableId, String name)
@@ -1549,164 +1190,6 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		}
 
 		return count.intValue();
-	}
-
-	/**
-	 * Returns the number of expando columns that the user has permission to view where tableId = &#63; and name = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param name the name
-	 * @return the number of matching expando columns that the user has permission to view
-	 */
-	@Override
-	public int filterCountByT_N(long tableId, String name) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByT_N(tableId, name);
-		}
-
-		StringBundler query = new StringBundler(3);
-
-		query.append(_FILTER_SQL_COUNT_EXPANDOCOLUMN_WHERE);
-
-		query.append(_FINDER_COLUMN_T_N_TABLEID_2);
-
-		boolean bindName = false;
-
-		if (name == null) {
-			query.append(_FINDER_COLUMN_T_N_NAME_1);
-		}
-		else if (name.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_T_N_NAME_3);
-		}
-		else {
-			bindName = true;
-
-			query.append(_FINDER_COLUMN_T_N_NAME_2);
-		}
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				ExpandoColumn.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME,
-				com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(tableId);
-
-			if (bindName) {
-				qPos.add(name);
-			}
-
-			Long count = (Long)q.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	/**
-	 * Returns the number of expando columns that the user has permission to view where tableId = &#63; and name = any &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param names the names
-	 * @return the number of matching expando columns that the user has permission to view
-	 */
-	@Override
-	public int filterCountByT_N(long tableId, String[] names) {
-		if (!InlineSQLHelperUtil.isEnabled()) {
-			return countByT_N(tableId, names);
-		}
-
-		if (names == null) {
-			names = new String[0];
-		}
-		else if (names.length > 1) {
-			names = ArrayUtil.distinct(names, NULL_SAFE_STRING_COMPARATOR);
-
-			Arrays.sort(names, NULL_SAFE_STRING_COMPARATOR);
-		}
-
-		StringBundler query = new StringBundler();
-
-		query.append(_FILTER_SQL_COUNT_EXPANDOCOLUMN_WHERE);
-
-		query.append(_FINDER_COLUMN_T_N_TABLEID_2);
-
-		if (names.length > 0) {
-			query.append(StringPool.OPEN_PARENTHESIS);
-
-			for (int i = 0; i < names.length; i++) {
-				String name = names[i];
-
-				if (name == null) {
-					query.append(_FINDER_COLUMN_T_N_NAME_1);
-				}
-				else if (name.equals(StringPool.BLANK)) {
-					query.append(_FINDER_COLUMN_T_N_NAME_3);
-				}
-				else {
-					query.append(_FINDER_COLUMN_T_N_NAME_2);
-				}
-
-				if ((i + 1) < names.length) {
-					query.append(WHERE_OR);
-				}
-			}
-
-			query.append(StringPool.CLOSE_PARENTHESIS);
-		}
-
-		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
-			query.index() - 1);
-
-		String sql = InlineSQLHelperUtil.replacePermissionCheck(query.toString(),
-				ExpandoColumn.class.getName(),
-				_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			SQLQuery q = session.createSynchronizedSQLQuery(sql);
-
-			q.addScalar(COUNT_COLUMN_NAME,
-				com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			qPos.add(tableId);
-
-			for (String name : names) {
-				if ((name != null) && !name.isEmpty()) {
-					qPos.add(name);
-				}
-			}
-
-			Long count = (Long)q.uniqueResult();
-
-			return count.intValue();
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
 	}
 
 	private static final String _FINDER_COLUMN_T_N_TABLEID_2 = "expandoColumn.tableId = ? AND ";
@@ -2472,17 +1955,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	private static final String _SQL_SELECT_EXPANDOCOLUMN_WHERE = "SELECT expandoColumn FROM ExpandoColumn expandoColumn WHERE ";
 	private static final String _SQL_COUNT_EXPANDOCOLUMN = "SELECT COUNT(expandoColumn) FROM ExpandoColumn expandoColumn";
 	private static final String _SQL_COUNT_EXPANDOCOLUMN_WHERE = "SELECT COUNT(expandoColumn) FROM ExpandoColumn expandoColumn WHERE ";
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "expandoColumn.columnId";
-	private static final String _FILTER_SQL_SELECT_EXPANDOCOLUMN_WHERE = "SELECT DISTINCT {expandoColumn.*} FROM ExpandoColumn expandoColumn WHERE ";
-	private static final String _FILTER_SQL_SELECT_EXPANDOCOLUMN_NO_INLINE_DISTINCT_WHERE_1 =
-		"SELECT {ExpandoColumn.*} FROM (SELECT DISTINCT expandoColumn.columnId FROM ExpandoColumn expandoColumn WHERE ";
-	private static final String _FILTER_SQL_SELECT_EXPANDOCOLUMN_NO_INLINE_DISTINCT_WHERE_2 =
-		") TEMP_TABLE INNER JOIN ExpandoColumn ON TEMP_TABLE.columnId = ExpandoColumn.columnId";
-	private static final String _FILTER_SQL_COUNT_EXPANDOCOLUMN_WHERE = "SELECT COUNT(DISTINCT expandoColumn.columnId) AS COUNT_VALUE FROM ExpandoColumn expandoColumn WHERE ";
-	private static final String _FILTER_ENTITY_ALIAS = "expandoColumn";
-	private static final String _FILTER_ENTITY_TABLE = "ExpandoColumn";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "expandoColumn.";
-	private static final String _ORDER_BY_ENTITY_TABLE = "ExpandoColumn.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ExpandoColumn exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ExpandoColumn exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(ExpandoColumnPersistenceImpl.class);

@@ -268,7 +268,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _bookmarksFolder.getExpandoBridge();
 	}
 
@@ -697,7 +697,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_bookmarksFolder.setExpandoBridgeAttributes(expandoBridge);
 	}
 

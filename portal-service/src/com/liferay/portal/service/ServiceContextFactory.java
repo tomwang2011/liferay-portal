@@ -33,7 +33,7 @@ import com.liferay.portal.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
 import java.io.Serializable;
 

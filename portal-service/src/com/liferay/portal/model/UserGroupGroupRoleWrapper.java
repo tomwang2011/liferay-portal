@@ -115,7 +115,7 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _userGroupGroupRole.getExpandoBridge();
 	}
 
@@ -239,7 +239,7 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_userGroupGroupRole.setExpandoBridgeAttributes(expandoBridge);
 	}
 
