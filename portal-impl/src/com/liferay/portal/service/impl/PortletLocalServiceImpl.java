@@ -88,7 +88,7 @@ import com.liferay.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletQNameUtil;
 import com.liferay.portlet.UndeployedPortlet;
-import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.util.ContentUtil;
 
 import java.net.URL;
@@ -859,7 +859,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 				_portletsMap.put(entry.getKey(), portlet);
 
-				portletBagFactory.create(portlet);
+				portletBagFactory.create(portlet, true);
 			}
 
 			// Sprite images

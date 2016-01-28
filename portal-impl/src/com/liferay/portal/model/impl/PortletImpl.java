@@ -66,7 +66,7 @@ import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.DefaultControlPanelEntryFactory;
 import com.liferay.portlet.PortletQNameUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
@@ -1292,21 +1292,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public String getPortletDataHandlerClass() {
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		if (portletBag == null) {
-			return _portletDataHandlerClass;
-		}
-
-		PortletDataHandler portletDataHandler = getPortletDataHandlerInstance();
-
-		if (portletDataHandler == null) {
-			return _portletDataHandlerClass;
-		}
-
-		Class<?> clazz = portletDataHandler.getClass();
-
-		return clazz.getName();
+		return _portletDataHandlerClass;
 	}
 
 	/**

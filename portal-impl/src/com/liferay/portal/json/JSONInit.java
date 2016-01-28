@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.portlet.PortletDisplayModel;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
-import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import java.io.File;
 import java.io.InputStream;
