@@ -43,7 +43,7 @@ Import-Package:\
 	com.liferay.portlet.asset,\
 	com.liferay.portlet.asset.model,\
 	com.liferay.portlet.asset.service,\
-	com.liferay.portlet.expando.model,\
+	com.liferay.expando.kernel.model,\
 	com.liferay.portlet.exportimport.lar,\
 	com.liferay.portlet.social.model,\
 	com.liferay.portlet.trash.model,\
