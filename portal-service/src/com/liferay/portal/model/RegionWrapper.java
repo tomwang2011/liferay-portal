@@ -130,7 +130,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _region.getExpandoBridge();
 	}
 
@@ -251,7 +251,7 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_region.setExpandoBridgeAttributes(expandoBridge);
 	}
 

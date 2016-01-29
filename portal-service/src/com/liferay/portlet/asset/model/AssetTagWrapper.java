@@ -179,7 +179,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _assetTag.getExpandoBridge();
 	}
 
@@ -356,7 +356,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_assetTag.setExpandoBridgeAttributes(expandoBridge);
 	}
 

@@ -421,7 +421,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _mbMessage.getExpandoBridge();
 	}
 
@@ -976,7 +976,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_mbMessage.setExpandoBridgeAttributes(expandoBridge);
 	}
 

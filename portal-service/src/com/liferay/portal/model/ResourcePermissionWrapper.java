@@ -173,7 +173,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _resourcePermission.getExpandoBridge();
 	}
 
@@ -366,7 +366,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_resourcePermission.setExpandoBridgeAttributes(expandoBridge);
 	}
 

@@ -315,7 +315,7 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _calEvent.getExpandoBridge();
 	}
 
@@ -647,7 +647,7 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_calEvent.setExpandoBridgeAttributes(expandoBridge);
 	}
 

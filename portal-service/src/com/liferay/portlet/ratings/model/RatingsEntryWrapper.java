@@ -204,7 +204,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _ratingsEntry.getExpandoBridge();
 	}
 
@@ -376,7 +376,7 @@ public class RatingsEntryWrapper implements RatingsEntry,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_ratingsEntry.setExpandoBridgeAttributes(expandoBridge);
 	}
 

@@ -133,7 +133,7 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _shoppingItemField.getExpandoBridge();
 	}
 
@@ -255,7 +255,7 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_shoppingItemField.setExpandoBridgeAttributes(expandoBridge);
 	}
 

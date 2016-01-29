@@ -275,7 +275,7 @@ public class KaleoTaskAssignmentWrapper implements KaleoTaskAssignment,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _kaleoTaskAssignment.getExpandoBridge();
 	}
 
@@ -514,7 +514,7 @@ public class KaleoTaskAssignmentWrapper implements KaleoTaskAssignment,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_kaleoTaskAssignment.setExpandoBridgeAttributes(expandoBridge);
 	}
 
