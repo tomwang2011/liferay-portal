@@ -128,7 +128,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _resourceBlock.getExpandoBridge();
 	}
 
@@ -254,7 +254,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_resourceBlock.setExpandoBridgeAttributes(expandoBridge);
 	}
 

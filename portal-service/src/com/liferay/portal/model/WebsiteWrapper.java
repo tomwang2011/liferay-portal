@@ -219,7 +219,7 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _website.getExpandoBridge();
 	}
 
@@ -446,7 +446,7 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_website.setExpandoBridgeAttributes(expandoBridge);
 	}
 

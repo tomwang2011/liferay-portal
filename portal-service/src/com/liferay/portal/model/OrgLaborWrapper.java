@@ -211,7 +211,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _orgLabor.getExpandoBridge();
 	}
 
@@ -463,7 +463,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_orgLabor.setExpandoBridgeAttributes(expandoBridge);
 	}
 

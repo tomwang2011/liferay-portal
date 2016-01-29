@@ -296,7 +296,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _address.getExpandoBridge();
 	}
 
@@ -597,7 +597,7 @@ public class AddressWrapper implements Address, ModelWrapper<Address> {
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_address.setExpandoBridgeAttributes(expandoBridge);
 	}
 

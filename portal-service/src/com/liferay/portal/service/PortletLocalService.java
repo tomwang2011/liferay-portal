@@ -218,7 +218,7 @@ public interface PortletLocalService extends BaseLocalService,
 
 	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.expando.model.CustomAttributesDisplay> getCustomAttributesDisplays();
+	public java.util.List<com.liferay.expando.kernel.model.CustomAttributesDisplay> getCustomAttributesDisplays();
 
 	@com.liferay.portal.kernel.spring.aop.Skip
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

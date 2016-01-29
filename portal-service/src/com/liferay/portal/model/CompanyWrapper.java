@@ -207,7 +207,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _company.getExpandoBridge();
 	}
 
@@ -485,7 +485,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_company.setExpandoBridgeAttributes(expandoBridge);
 	}
 

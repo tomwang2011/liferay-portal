@@ -202,7 +202,7 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _userGroup.getExpandoBridge();
 	}
 
@@ -444,7 +444,7 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_userGroup.setExpandoBridgeAttributes(expandoBridge);
 	}
 

@@ -166,7 +166,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _layoutBranch.getExpandoBridge();
 	}
 
@@ -352,7 +352,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_layoutBranch.setExpandoBridgeAttributes(expandoBridge);
 	}
 
