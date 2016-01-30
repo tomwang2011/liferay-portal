@@ -217,7 +217,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _workflowDefinitionLink.getExpandoBridge();
 	}
 
@@ -418,7 +418,7 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_workflowDefinitionLink.setExpandoBridgeAttributes(expandoBridge);
 	}
 

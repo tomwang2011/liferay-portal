@@ -438,7 +438,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	* @return the custom attribute display instances of the portlet
 	*/
 	@Override
-	public java.util.List<com.liferay.portlet.expando.model.CustomAttributesDisplay> getCustomAttributesDisplayInstances() {
+	public java.util.List<com.liferay.expando.kernel.model.CustomAttributesDisplay> getCustomAttributesDisplayInstances() {
 		return _portlet.getCustomAttributesDisplayInstances();
 	}
 
@@ -483,7 +483,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _portlet.getExpandoBridge();
 	}
 
@@ -2453,7 +2453,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_portlet.setExpandoBridgeAttributes(expandoBridge);
 	}
 

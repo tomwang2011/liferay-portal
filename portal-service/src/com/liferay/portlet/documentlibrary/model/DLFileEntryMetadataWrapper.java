@@ -150,7 +150,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _dlFileEntryMetadata.getExpandoBridge();
 	}
 
@@ -283,7 +283,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_dlFileEntryMetadata.setExpandoBridgeAttributes(expandoBridge);
 	}
 

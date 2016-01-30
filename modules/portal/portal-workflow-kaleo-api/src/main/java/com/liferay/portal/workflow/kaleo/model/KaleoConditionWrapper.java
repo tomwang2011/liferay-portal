@@ -177,7 +177,7 @@ public class KaleoConditionWrapper implements KaleoCondition,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _kaleoCondition.getExpandoBridge();
 	}
 
@@ -364,7 +364,7 @@ public class KaleoConditionWrapper implements KaleoCondition,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_kaleoCondition.setExpandoBridgeAttributes(expandoBridge);
 	}
 

@@ -140,7 +140,7 @@ public class SocialRelationWrapper implements SocialRelation,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _socialRelation.getExpandoBridge();
 	}
 
@@ -267,7 +267,7 @@ public class SocialRelationWrapper implements SocialRelation,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_socialRelation.setExpandoBridgeAttributes(expandoBridge);
 	}
 

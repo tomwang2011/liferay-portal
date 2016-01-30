@@ -276,7 +276,7 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _organization.getExpandoBridge();
 	}
 
@@ -620,7 +620,7 @@ public class OrganizationWrapper implements Organization,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_organization.setExpandoBridgeAttributes(expandoBridge);
 	}
 

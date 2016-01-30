@@ -14,6 +14,7 @@
 
 package com.liferay.portlet;
 
+import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -62,7 +63,6 @@ import com.liferay.portal.util.JavaFieldsParser;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
@@ -93,6 +93,12 @@ import javax.servlet.ServletContext;
 public class PortletBagFactory {
 
 	public PortletBag create(Portlet portlet) throws Exception {
+		return create(portlet, false);
+	}
+
+	public PortletBag create(Portlet portlet, boolean destroyPrevious)
+		throws Exception {
+
 		validate();
 
 		javax.portlet.Portlet portletInstance = getPortletInstance(portlet);
@@ -209,7 +215,8 @@ public class PortletBagFactory {
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
 
 		try {
-			PortletInstanceFactoryUtil.create(portlet, _servletContext);
+			PortletInstanceFactoryUtil.create(
+				portlet, _servletContext, destroyPrevious);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

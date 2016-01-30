@@ -43,7 +43,7 @@ Import-Package:\
 	com.liferay.portlet.asset,\
 	com.liferay.portlet.asset.model,\
 	com.liferay.portlet.asset.service,\
-	com.liferay.portlet.expando.model,\
+	com.liferay.expando.kernel.model,\
 	com.liferay.portlet.exportimport.lar,\
 	com.liferay.portlet.social.model,\
 	com.liferay.portlet.trash.model,\
@@ -69,7 +69,7 @@ Import-Package:\
 Include-Resource:\
 	@../../../../util-java/util-java.jar!/com/liferay/util/bean/PortletBeanLocatorUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class
-JS-Config: /META-INF/resources/bookmarks/js/config.js
+Liferay-JS-Config: /META-INF/resources/bookmarks/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Bookmarks
 Web-ContextPath: /bookmarks-web

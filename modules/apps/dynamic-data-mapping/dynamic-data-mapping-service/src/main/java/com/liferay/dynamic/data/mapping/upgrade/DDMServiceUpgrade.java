@@ -19,6 +19,9 @@ import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeCompanyId;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeDynamicDataMapping;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeLastPublishDate;
 import com.liferay.dynamic.data.mapping.upgrade.v1_0_0.UpgradeSchema;
+import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.service.ResourceActionLocalService;
@@ -56,6 +59,27 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 			getUpgradeSteps("1.0.0"));
 	}
 
+	@Reference(unbind = "-")
+	public void setExpandoRowLocalService(
+		ExpandoRowLocalService expandoRowLocalService) {
+
+		_expandoRowLocalService = expandoRowLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setExpandoTableLocalService(
+		ExpandoTableLocalService expandoTableLocalService) {
+
+		_expandoTableLocalService = expandoTableLocalService;
+	}
+
+	@Reference(unbind = "-")
+	public void setExpandoValueLocalService(
+		ExpandoValueLocalService expandoValueLocalService) {
+
+		_expandoValueLocalService = expandoValueLocalService;
+	}
+
 	@Activate
 	protected void activate() {
 		_upgradeStepsMap = new HashMap<>();
@@ -68,7 +92,8 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 				new UpgradeDynamicDataMapping(
 					_assetEntryLocalService, _dlFileEntryLocalService,
 					_dlFileVersionLocalService, _dlFolderLocalService,
-					_resourceActionLocalService,
+					_expandoRowLocalService, _expandoTableLocalService,
+					_expandoValueLocalService, _resourceActionLocalService,
 					_resourcePermissionLocalService),
 				new UpgradeLastPublishDate()
 			});
@@ -125,6 +150,9 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 	private DLFolderLocalService _dlFolderLocalService;
+	private ExpandoRowLocalService _expandoRowLocalService;
+	private ExpandoTableLocalService _expandoTableLocalService;
+	private ExpandoValueLocalService _expandoValueLocalService;
 	private ResourceActionLocalService _resourceActionLocalService;
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 	private Map<String, UpgradeStep[]> _upgradeStepsMap;
