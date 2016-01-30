@@ -217,7 +217,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _ddlRecordVersion.getExpandoBridge();
 	}
 
@@ -536,7 +536,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_ddlRecordVersion.setExpandoBridgeAttributes(expandoBridge);
 	}
 

@@ -144,7 +144,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _announcementsFlag.getExpandoBridge();
 	}
 
@@ -271,7 +271,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_announcementsFlag.setExpandoBridgeAttributes(expandoBridge);
 	}
 

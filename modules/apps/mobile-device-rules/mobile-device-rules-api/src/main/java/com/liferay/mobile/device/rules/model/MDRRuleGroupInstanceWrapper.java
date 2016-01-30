@@ -221,7 +221,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _mdrRuleGroupInstance.getExpandoBridge();
 	}
 
@@ -429,7 +429,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_mdrRuleGroupInstance.setExpandoBridgeAttributes(expandoBridge);
 	}
 

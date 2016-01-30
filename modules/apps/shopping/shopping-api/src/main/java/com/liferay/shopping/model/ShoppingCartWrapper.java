@@ -209,7 +209,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _shoppingCart.getExpandoBridge();
 	}
 
@@ -406,7 +406,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_shoppingCart.setExpandoBridgeAttributes(expandoBridge);
 	}
 

@@ -218,7 +218,7 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _exportImportConfiguration.getExpandoBridge();
 	}
 
@@ -601,7 +601,7 @@ public class ExportImportConfigurationWrapper
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_exportImportConfiguration.setExpandoBridgeAttributes(expandoBridge);
 	}
 

@@ -344,7 +344,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+	public com.liferay.expando.kernel.model.ExpandoBridge getExpandoBridge() {
 		return _dlFileVersion.getExpandoBridge();
 	}
 
@@ -803,7 +803,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 
 	@Override
 	public void setExpandoBridgeAttributes(
-		com.liferay.portlet.expando.model.ExpandoBridge expandoBridge) {
+		com.liferay.expando.kernel.model.ExpandoBridge expandoBridge) {
 		_dlFileVersion.setExpandoBridgeAttributes(expandoBridge);
 	}
 
