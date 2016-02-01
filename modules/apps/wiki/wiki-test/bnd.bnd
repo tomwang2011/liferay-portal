@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.wiki.test
 Bundle-Version: 1.0.0
 Import-Package:\
 	!org.junit.experimental.theories,\
+	!com.liferay.portlet.expando.util.test,\
 	*
 Include-Resource: test-classes/integration
 Liferay-Releng-Module-Group-Description:
