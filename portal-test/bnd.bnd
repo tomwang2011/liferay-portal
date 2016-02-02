@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Portal Test
 Bundle-Version: 7.0.0
 Export-Package:\
+	com.liferay.expando.kernel.util.test,\
 	com.liferay.portal.kernel.test,\
 	com.liferay.portal.kernel.test.context,\
 	com.liferay.portal.kernel.test.junit,\
@@ -12,7 +13,6 @@ Export-Package:\
 	com.liferay.portlet.asset.service.persistence.test,\
 	com.liferay.portlet.blogs.util.test,\
 	com.liferay.portlet.dynamicdatamapping.util.test,\
-	com.liferay.expando.kernel.util.test,\
 	com.liferay.portlet.messageboards.util.test,\
 	com.liferay.portlet.ratings.test,\
 	com.liferay.portlet.ratings.util.test,\
