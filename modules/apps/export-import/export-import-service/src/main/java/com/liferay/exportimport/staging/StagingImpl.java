@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -95,7 +96,6 @@ import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.service.http.ClassNameServiceHttp;
 import com.liferay.portal.service.http.GroupServiceHttp;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -2043,6 +2043,21 @@ public class StagingImpl implements Staging {
 			GetterUtil.getLong(group.getTypeSettingsProperty(param)));
 	}
 
+	protected boolean getPrivateLayout(PortletRequest portletRequest) {
+		String tabs1 = ParamUtil.getString(portletRequest, "tabs1");
+
+		if (Validator.isNotNull(tabs1)) {
+			if (tabs1.equals("public-pages")) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
+
+		return ParamUtil.getBoolean(portletRequest, "privateLayout", true);
+	}
+
 	protected long getRecentLayoutBranchId(
 			long userId, long layoutSetBranchId, long plid)
 		throws PortalException {
@@ -2164,13 +2179,7 @@ public class StagingImpl implements Staging {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String tabs1 = ParamUtil.getString(portletRequest, "tabs1");
-
-		boolean privateLayout = true;
-
-		if (tabs1.equals("public-pages")) {
-			privateLayout = false;
-		}
+		boolean privateLayout = getPrivateLayout(portletRequest);
 
 		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(
 			portletRequest, targetGroupId);
@@ -2217,15 +2226,9 @@ public class StagingImpl implements Staging {
 			PortletRequest portletRequest, boolean schedule)
 		throws PortalException {
 
-		String tabs1 = ParamUtil.getString(portletRequest, "tabs1");
-
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 
-		boolean privateLayout = true;
-
-		if (tabs1.equals("public-pages")) {
-			privateLayout = false;
-		}
+		boolean privateLayout = getPrivateLayout(portletRequest);
 
 		Map<Long, Boolean> layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(
 			portletRequest);

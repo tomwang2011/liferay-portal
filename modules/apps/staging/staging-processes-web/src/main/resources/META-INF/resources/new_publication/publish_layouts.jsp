@@ -278,7 +278,7 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 
 				<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" disableInputs="<%= configuredPublish %>" />
 
-				<liferay-staging:permissions disableInputs="<%= configuredPublish %>" global="<%= group.isCompany() %>" parameterMap="<%= parameterMap %>" />
+				<liferay-staging:permissions action="publish" descriptionCSSClass="permissions-description" disableInputs="<%= configuredPublish %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" parameterMap="<%= parameterMap %>" />
 
 				<c:if test="<%= !localPublishing %>">
 					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">
@@ -293,7 +293,7 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 
 			<aui:button cssClass="btn-lg" id="publishButton" type="submit" value="<%= LanguageUtil.get(request, publishMessageKey) %>" />
 
-			<aui:button cssClass="btn-lg" href="<%= basePortletURL %>" type="reset" value="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= basePortletURL %>" type="cancel" />
 		</aui:button-row>
 	</div>
 </aui:form>

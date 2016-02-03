@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.LayoutService;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.exception.FileSizeException;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
@@ -217,11 +217,15 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 				validateFile(
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME);
+
+				hideDefaultSuccessMessage(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE_TEMP)) {
 				deleteTempFileEntry(
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME);
+
+				hideDefaultSuccessMessage(actionRequest);
 			}
 			else if (cmd.equals(Constants.IMPORT)) {
 				hideDefaultSuccessMessage(actionRequest);

@@ -340,7 +340,7 @@ public class JournalArticleWrapper implements JournalArticle,
 
 	@Override
 	public java.lang.String getArticleImageURL(
-		com.liferay.portal.theme.ThemeDisplay themeDisplay) {
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 		return _journalArticle.getArticleImageURL(themeDisplay);
 	}
 
@@ -874,7 +874,7 @@ public class JournalArticleWrapper implements JournalArticle,
 	* @return the trash entry created when this journal article was moved to the Recycle Bin
 	*/
 	@Override
-	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
+	public com.liferay.trash.kernel.model.TrashEntry getTrashEntry()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticle.getTrashEntry();
 	}

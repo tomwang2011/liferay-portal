@@ -93,10 +93,6 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-export") : LanguageUtil.format(request, "new-export-based-on-x", exportImportConfiguration.getName(), false));
 %>
 
-<liferay-util:include page="/export/new_export/navigation.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="processName" value="<%= StringPool.BLANK %>" />
-</liferay-util:include>
-
 <div class="container-fluid-1280">
 	<portlet:actionURL name="editExportConfiguration" var="restoreTrashEntriesURL">
 		<portlet:param name="mvcRenderCommandName" value="exportLayouts" />
@@ -164,7 +160,7 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-expor
 
 					<liferay-staging:content cmd="<%= Constants.EXPORT %>" disableInputs="<%= configuredExport %>" parameterMap="<%= parameterMap %>" type="<%= Constants.EXPORT %>" />
 
-					<liferay-staging:permissions disableInputs="<%= configuredExport %>" global="<%= group.isCompany() %>" parameterMap="<%= parameterMap %>" />
+					<liferay-staging:permissions action="export" descriptionCSSClass="permissions-description" disableInputs="<%= configuredExport %>" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" parameterMap="<%= parameterMap %>" />
 				</aui:fieldset-group>
 			</div>
 

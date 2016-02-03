@@ -233,6 +233,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 				<aui:input name="layoutSetBranchName" type="hidden" value="<%= layoutSetBranchName %>" />
 				<aui:input name="lastImportUserName" type="hidden" value="<%= user.getFullName() %>" />
 				<aui:input name="lastImportUserUuid" type="hidden" value="<%= String.valueOf(user.getUserUuid()) %>" />
+				<aui:input name="treeId" type="hidden" value="<%= treeId %>" />
 				<aui:input name="<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>" type="hidden" value="<%= true %>" />
 				<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="hidden" value="<%= true %>" />
 				<aui:input name="<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>" type="hidden" value="<%= true %>" />
@@ -328,7 +329,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 								%>
 
 								<aui:fieldset>
-									<aui:input name="name" />
+									<aui:input name="name" placeholder="process-name-placeholder" />
 								</aui:fieldset>
 
 								<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="date">
@@ -358,11 +359,9 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 							<c:if test="<%= !quickPublish %>">
 								<liferay-staging:deletions cmd="<%= Constants.PUBLISH %>" />
-							</c:if>
 
-							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="permissions">
-								<aui:input helpMessage='<%= group.isCompany() ? "publish-global-permissions-help" : "export-import-permissions-help" %>' label="permissions" name="<%= PortletDataHandlerKeys.PERMISSIONS %>" type="toggle-switch" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PERMISSIONS, false) %>" />
-							</aui:fieldset>
+								<liferay-staging:permissions action="publish" descriptionCSSClass="permissions-description" global="<%= group.isCompany() %>" labelCSSClass="permissions-label" parameterMap="<%= parameterMap %>" />
+							</c:if>
 
 							<c:if test="<%= !localPublishing %>">
 								<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" cssClass="options-group" label="remote-live-connection-settings">

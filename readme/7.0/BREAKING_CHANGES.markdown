@@ -3229,13 +3229,11 @@ Portal by means of an OSGi container.
 #### What changed?
 
 The `${theme}` variable previously injected in the FreeMarker context providing
-access to various tags and utilities no longer provides them. Only the
-`${theme.include}` method is preserved for performance reasons.
+access to various tags and utilities is no longer available.
 
 #### Who is affected?
 
-This affects FreeMarker templates that are using the `${theme}` variable to
-access tags.
+This affects FreeMarker templates that are using the `${theme}` variable.
 
 #### How should I update my code?
 
@@ -3447,7 +3445,7 @@ else.
 
 - `com.liferay.portal.layoutconfiguration.util.xml` &rarr; `com.liferay.portal.kernel.layoutconfiguration.util.xml`
 
-- `com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil` &rarr; `com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil`
+- `com.liferay.portal.portletfilerepository` &rarr; `com.liferay.portal.kernel.portletfilerepository`
 
 - `com.liferay.portal.repository.proxy` &rarr; `com.liferay.portal.kernel.repository.proxy`
 
@@ -3467,13 +3465,21 @@ else.
 
 - `com.liferay.portal.security.xml` &rarr; `com.liferay.portal.kernel.security.xml`
 
+- `com.liferay.portal.theme` &rarr; `com.liferay.portal.kernel.theme`
+
+- `com.liferay.portal.verify.model` &rarr; `com.liferay.portal.kernel.verify.model`
+
 - `com.liferay.portal.webserver` &rarr; `com.liferay.portal.kernel.webserver`
+
+- `com.liferay.portlet.announcements` &rarr; `com.liferay.announcements.kernel`
 
 - `com.liferay.portlet.backgroundtask` &rarr; `com.liferay.background.task.kernel`
 
 - `com.liferay.portlet.dynamicdatamapping` &rarr; `com.liferay.dynamic.data.mapping.kernel`
 
 - `com.liferay.portlet.imagegallerydisplay.display.context` &rarr; `com.liferay.image.gallery.display.kernel.display.context`
+
+- `com.liferay.portlet.journal.util` &rarr; `com.liferay.journal.kernel.util`
 
 - `com.liferay.portlet.layoutsadmin.util` &rarr; `com.liferay.layouts.admin.kernel.util`
 

@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -95,7 +96,6 @@ import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -103,8 +103,8 @@ import com.liferay.portlet.asset.exception.AssetCategoryException;
 import com.liferay.portlet.asset.exception.AssetTagException;
 import com.liferay.portlet.documentlibrary.exception.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.exception.FileSizeException;
-import com.liferay.portlet.trash.service.TrashEntryService;
-import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.trash.kernel.service.TrashEntryService;
+import com.liferay.trash.kernel.util.TrashUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -335,9 +335,9 @@ public class JournalPortlet extends MVCPortlet {
 					themeDisplay.getScopeGroupId(),
 					HtmlUtil.unescape(articleId), newFolderId, serviceContext);
 			}
-			catch (InvalidDDMStructureException idse) {
+			catch (InvalidDDMStructureException iddmse) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(idse.getMessage());
+					_log.warn(iddmse.getMessage());
 				}
 
 				invalidArticleIds.add(articleId);

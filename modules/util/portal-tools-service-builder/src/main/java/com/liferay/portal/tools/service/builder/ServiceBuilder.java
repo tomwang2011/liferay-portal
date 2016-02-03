@@ -1302,6 +1302,30 @@ public class ServiceBuilder {
 		return StringPool.BLANK;
 	}
 
+	public String getPrimitiveType(String type) {
+		if (type.equals("Boolean")) {
+			return "boolean";
+		}
+		else if (type.equals("Double")) {
+			return "double";
+		}
+		else if (type.equals("Float")) {
+			return "float";
+		}
+		else if (type.equals("Integer")) {
+			return "int";
+		}
+		else if (type.equals("Long")) {
+			return "long";
+		}
+		else if (type.equals("Short")) {
+			return "short";
+		}
+		else {
+			return type;
+		}
+	}
+
 	public String getReturnType(JavaMethod method) {
 		Type returnType = method.getReturnType();
 
@@ -1684,7 +1708,7 @@ public class ServiceBuilder {
 			if (parameterTypeName.equals(
 					"com.liferay.portal.kernel.util.UnicodeProperties") ||
 				parameterTypeName.equals(
-					"com.liferay.portal.theme.ThemeDisplay") ||
+					"com.liferay.portal.kernel.theme.ThemeDisplay") ||
 				parameterTypeName.equals(
 					"com.liferay.portlet.PortletPreferencesImpl") ||
 				parameterTypeName.equals(
@@ -2435,6 +2459,12 @@ public class ServiceBuilder {
 				_outputPath + "/model/impl/" + superClassValue + ".java");
 
 			for (JavaMethod method : _getMethods(javaClass)) {
+				String methodName = method.getName();
+
+				if (methodName.equals("hasSetModifiedDate")) {
+					continue;
+				}
+
 				methods.remove(method.getDeclarationSignature(false));
 			}
 
