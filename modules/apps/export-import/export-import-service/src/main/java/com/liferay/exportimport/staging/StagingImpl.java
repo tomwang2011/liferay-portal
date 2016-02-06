@@ -14,6 +14,10 @@
 
 package com.liferay.exportimport.staging;
 
+import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
+import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.exception.FileNameException;
+import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
@@ -69,6 +73,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -120,14 +125,9 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.service.http.ClassNameServiceHttp;
 import com.liferay.portal.service.http.GroupServiceHttp;
-import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.exception.DuplicateFileEntryException;
-import com.liferay.portlet.documentlibrary.exception.FileExtensionException;
-import com.liferay.portlet.documentlibrary.exception.FileNameException;
-import com.liferay.portlet.documentlibrary.exception.FileSizeException;
 import com.liferay.portlet.exportimport.staging.ProxiedLayoutsThreadLocal;
 
 import java.io.Serializable;

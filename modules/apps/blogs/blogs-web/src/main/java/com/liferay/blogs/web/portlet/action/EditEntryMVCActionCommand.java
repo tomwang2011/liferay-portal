@@ -14,6 +14,8 @@
 
 package com.liferay.blogs.web.portlet.action;
 
+import com.liferay.asset.kernel.exception.AssetCategoryException;
+import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.blogs.kernel.exception.EntryContentException;
 import com.liferay.blogs.kernel.exception.EntryCoverImageCropException;
 import com.liferay.blogs.kernel.exception.EntryDescriptionException;
@@ -26,6 +28,7 @@ import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
 import com.liferay.blogs.kernel.service.BlogsEntryService;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -66,12 +69,9 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLImpl;
-import com.liferay.portlet.asset.exception.AssetCategoryException;
-import com.liferay.portlet.asset.exception.AssetTagException;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryHelper;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference;
 import com.liferay.portlet.blogs.BlogsEntryImageSelectorHelper;
-import com.liferay.portlet.documentlibrary.exception.FileSizeException;
 import com.liferay.trash.kernel.service.TrashEntryService;
 import com.liferay.trash.kernel.util.TrashUtil;
 

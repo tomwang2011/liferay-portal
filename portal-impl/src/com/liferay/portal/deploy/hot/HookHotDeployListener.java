@@ -14,6 +14,11 @@
 
 package com.liferay.portal.deploy.hot;
 
+import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
+import com.liferay.document.library.kernel.antivirus.AntivirusScannerUtil;
+import com.liferay.document.library.kernel.antivirus.AntivirusScannerWrapper;
+import com.liferay.document.library.kernel.util.DLProcessor;
+import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.portal.captcha.CaptchaImpl;
 import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
@@ -43,6 +48,7 @@ import com.liferay.portal.kernel.lock.LockListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.security.auth.AuthFailure;
@@ -115,13 +121,7 @@ import com.liferay.portal.util.JavaScriptBundleUtil;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.ControlPanelEntry;
-import com.liferay.portlet.documentlibrary.antivirus.AntivirusScanner;
-import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
-import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerWrapper;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
-import com.liferay.portlet.documentlibrary.util.DLProcessor;
-import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;

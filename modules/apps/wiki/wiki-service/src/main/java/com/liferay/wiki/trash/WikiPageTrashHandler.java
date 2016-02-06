@@ -14,7 +14,9 @@
 
 package com.liferay.wiki.trash;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -32,8 +34,6 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.model.TrashEntryConstants;
