@@ -632,6 +632,10 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="com.liferay.portal.service.impl.PortletPreferencesLocalServiceImpl">
+		<priority value="DEBUG" />
+	</category>
+
 	<category name="com.liferay.portal.service.impl.ThemeServiceImpl">
 		<priority value="ERROR" />
 	</category>

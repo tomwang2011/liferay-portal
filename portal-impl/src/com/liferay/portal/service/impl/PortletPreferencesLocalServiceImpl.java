@@ -84,7 +84,7 @@ public class PortletPreferencesLocalServiceImpl
 			sb.append(defaultPreferences);
 			sb.append("}");
 
-			_log.debug(sb.toString());
+			_log.debug(sb.toString(), new Throwable());
 		}
 
 		try {
