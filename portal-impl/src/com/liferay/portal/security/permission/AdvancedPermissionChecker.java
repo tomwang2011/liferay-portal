@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -375,6 +374,24 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			_log.error(e, e);
 		}
 
+		long companyId = getCompanyId();
+
+		if (group != null) {
+			companyId = group.getCompanyId();
+		}
+		else if (name.equals(User.class.getName())) {
+			User user = UserLocalServiceUtil.fetchUser(
+				GetterUtil.getLong(primKey));
+
+			if (user != null) {
+				companyId = user.getCompanyId();
+			}
+		}
+
+		if (isAdmin(companyId, groupId, name, primKey, actionId)) {
+			return true;
+		}
+
 		long[] roleIds = getRoleIds(getUserId(), groupId);
 
 		Boolean value = PermissionCacheUtil.getPermission(
@@ -392,7 +409,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			if ((value == null) || !value) {
 				value = hasPermissionImpl(
-					groupId, name, primKey, roleIds, actionId);
+					companyId, groupId, name, primKey, roleIds, actionId);
 			}
 
 			if (_log.isDebugEnabled()) {
@@ -824,8 +841,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	}
 
 	protected boolean hasPermissionImpl(
-		long groupId, String name, String primKey, long[] roleIds,
-		String actionId) {
+		long companyId, long groupId, String name, String primKey,
+		long[] roleIds, String actionId) {
+
+		StopWatch stopWatch = new StopWatch();
+
+		stopWatch.start();
 
 		try {
 			if (!signedIn) {
@@ -833,12 +854,14 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			}
 
 			if (ResourceBlockLocalServiceUtil.isSupported(name)) {
-				return hasUserPermissionImpl(
-					groupId, name, primKey, roleIds, actionId);
+				return doCheckPermission(
+					companyId, groupId, name, primKey, roleIds, actionId,
+					stopWatch);
 			}
 
-			return hasUserPermissionImpl(
-				groupId, name, primKey, roleIds, actionId);
+			return doCheckPermission(
+				companyId, groupId, name, primKey, roleIds, actionId,
+				stopWatch);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -847,59 +870,48 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 	}
 
-	protected boolean hasUserPermissionImpl(
-			long groupId, String name, String primKey, long[] roleIds,
-			String actionId)
-		throws Exception {
+	protected boolean isAdmin(
+		long companyId, long groupId, String name, String primKey,
+		String actionId) {
 
-		StopWatch stopWatch = new StopWatch();
-
-		stopWatch.start();
-
-		long companyId = user.getCompanyId();
-
-		if (groupId > 0) {
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			companyId = group.getCompanyId();
-		}
-		else if (name.equals(User.class.getName())) {
-			User user = UserLocalServiceUtil.fetchUser(
-				GetterUtil.getLong(primKey));
-
-			if (user != null) {
-				companyId = user.getCompanyId();
-			}
+		if (!signedIn) {
+			return false;
 		}
 
-		boolean hasLayoutManagerPermission = true;
-
-		// Check if the layout manager has permission to do this action for the
-		// current portlet
-
-		if (Validator.isNotNull(name) && Validator.isNotNull(primKey) &&
-			primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
-
-			hasLayoutManagerPermission =
-				PortletPermissionUtil.hasLayoutManagerPermission(
-					name, actionId);
-		}
-
-		if (isCompanyAdminImpl(companyId)) {
-			return true;
-		}
-
-		if (name.equals(Organization.class.getName())) {
-			if (isOrganizationAdminImpl(GetterUtil.getLong(primKey))) {
+		try {
+			if (isCompanyAdminImpl(companyId)) {
 				return true;
 			}
-		}
-		else if (isGroupAdminImpl(groupId) && hasLayoutManagerPermission) {
-			return true;
-		}
 
-		return doCheckPermission(
-			companyId, groupId, name, primKey, roleIds, actionId, stopWatch);
+			boolean hasLayoutManagerPermission = true;
+
+			// Check if the layout manager has permission to do this action for
+			// the current portlet
+
+			if ((name != null) && (primKey != null) &&
+				primKey.contains(PortletConstants.LAYOUT_SEPARATOR)) {
+
+				hasLayoutManagerPermission =
+					PortletPermissionUtil.hasLayoutManagerPermission(
+						name, actionId);
+			}
+
+			if ((name != null) && name.equals(Organization.class.getName())) {
+				if (isOrganizationAdminImpl(GetterUtil.getLong(primKey))) {
+					return true;
+				}
+			}
+			else if (isGroupAdminImpl(groupId) && hasLayoutManagerPermission) {
+				return true;
+			}
+
+			return false;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			return false;
+		}
 	}
 
 	protected boolean isCompanyAdminImpl(long companyId) throws Exception {
