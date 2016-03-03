@@ -15,6 +15,8 @@
 package com.liferay.dynamic.data.mapping.util;
 
 import java.lang.annotation.Annotation;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Leonardo Barros
@@ -30,10 +32,20 @@ public class DDMFormLayoutFactory {
 		}
 
 		DDMFormLayoutFactoryHelper ddmFormLayoutFactoryHelper =
-			new DDMFormLayoutFactoryHelper(clazz);
+			_ddmFormLayoutFactoryHelpers.get(clazz);
+
+		if (ddmFormLayoutFactoryHelper == null) {
+			ddmFormLayoutFactoryHelper = new DDMFormLayoutFactoryHelper(clazz);
+
+			_ddmFormLayoutFactoryHelpers.put(clazz, ddmFormLayoutFactoryHelper);
+		}
 
 		return ddmFormLayoutFactoryHelper.createDDMFormLayout();
 	}
+
+	private static final Map<Class<?>, DDMFormLayoutFactoryHelper>
+		_ddmFormLayoutFactoryHelpers =
+			new HashMap<>();
 
 	private static final Class<? extends Annotation>
 		_DDM_FORM_LAYOUT_ANNOTATION =
