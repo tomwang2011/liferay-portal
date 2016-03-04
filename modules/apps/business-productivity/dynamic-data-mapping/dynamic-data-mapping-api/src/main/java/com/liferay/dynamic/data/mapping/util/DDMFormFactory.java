@@ -17,6 +17,8 @@ package com.liferay.dynamic.data.mapping.util;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 
 import java.lang.annotation.Annotation;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Marcellus Tavares
@@ -29,11 +31,20 @@ public class DDMFormFactory {
 				"Unsupported class " + clazz.getName());
 		}
 
-		DDMFormFactoryHelper ddmFormFactoryHelper = new DDMFormFactoryHelper(
-			clazz);
+		DDMFormFactoryHelper ddmFormFactoryHelper = _ddmFormFactoryHelpers.get(clazz);
+
+		if (ddmFormFactoryHelper == null) {
+			ddmFormFactoryHelper = new DDMFormFactoryHelper(clazz);
+
+			_ddmFormFactoryHelpers.put(clazz, ddmFormFactoryHelper);
+		}
 
 		return ddmFormFactoryHelper.createDDMForm();
 	}
+
+	private static final Map<Class<?>, DDMFormFactoryHelper>
+		_ddmFormFactoryHelpers =
+			new HashMap<>();
 
 	private static final Class<? extends Annotation> _DDM_FORM_ANNOTATION =
 		com.liferay.dynamic.data.mapping.annotations.DDMForm.class;
