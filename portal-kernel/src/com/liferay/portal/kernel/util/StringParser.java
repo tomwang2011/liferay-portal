@@ -242,7 +242,7 @@ public class StringParser {
 	 * @param pattern the pattern string
 	 */
 	protected StringParser(String pattern) {
-		String regex = escapeRegex(pattern);
+		String regex = pattern;
 
 		Matcher matcher = _fragmentPattern.matcher(pattern);
 
@@ -256,19 +256,19 @@ public class StringParser {
 
 			_stringParserFragments.add(stringParserFragment);
 
-			pattern = StringUtil.replace(
-				pattern, chunk, stringParserFragment.getToken());
-
 			regex = StringUtil.replace(
-				regex, escapeRegex(chunk),
+				pattern, chunk,
 				StringPool.OPEN_PARENTHESIS.concat(
 					stringParserFragment.getPattern().concat(
 						StringPool.CLOSE_PARENTHESIS)));
+
+			pattern = StringUtil.replace(
+				pattern, chunk, stringParserFragment.getToken());
 		}
 
 		_builder = pattern;
 
-		_pattern = Pattern.compile(regex);
+		_pattern = Pattern.compile(escapeRegex(regex));
 	}
 
 	private static final Pattern _escapeRegexPattern = Pattern.compile(
