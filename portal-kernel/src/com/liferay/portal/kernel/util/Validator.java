@@ -758,26 +758,15 @@ public class Validator {
 			return false;
 		}
 
-		int[] months = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+		int monthMax = _MONTHS[month];
 
-		if (month == 1) {
-			int febMax = 28;
+		if ((month == 1) &&
+			((year % 4) == 0) && (((year % 100) != 0) || ((year % 400) == 0))) {
 
-			if (((year % 4) == 0) && ((year % 100) != 0) ||
-				((year % 400) == 0)) {
-
-				febMax = 29;
-			}
-
-			if ((day < 1) || (day > febMax)) {
-				return false;
-			}
-		}
-		else if ((day < 1) || (day > months[month])) {
-			return false;
+			monthMax = 29;
 		}
 
-		return true;
+		return ((1 <= day) && (day <= monthMax));
 	}
 
 	/**
@@ -919,24 +908,13 @@ public class Validator {
 			return false;
 		}
 
-		int[] months = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+		int monthMax = _MONTHS[month];
 
-		if (month == 1) {
-			int febMax = 28;
-
-			if ((year % 4) == 0) {
-				febMax = 29;
-			}
-
-			if ((day < 1) || (day > febMax)) {
-				return false;
-			}
-		}
-		else if ((day < 1) || (day > months[month])) {
-			return false;
+		if ((month == 1) && ((year % 4) == 0)) {
+			monthMax = 29;
 		}
 
-		return true;
+		return ((1 <= day) && (day <= monthMax));
 	}
 
 	/**
@@ -957,32 +935,20 @@ public class Validator {
 		int total = 0;
 
 		for (int i = 0; i < number.length(); i++) {
-			int x = 0;
+			int x = GetterUtil.getInteger(number.substring(i, i + 1));
 
 			if (((i + 1) % 2) == 0) {
-				x = GetterUtil.getInteger(number.substring(i, i + 1)) * 2;
+				x = x * 2;
 
 				if (x >= 10) {
-					String s = String.valueOf(x);
-
-					x =
-						GetterUtil.getInteger(s.substring(0, 1)) +
-							GetterUtil.getInteger(s.substring(1, 2));
+					x = (x / 10) + (x % 10);
 				}
-			}
-			else {
-				x = GetterUtil.getInteger(number.substring(i, i + 1));
 			}
 
 			total = total + x;
 		}
 
-		if ((total % 10) == 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return ((total % 10) == 0);
 	}
 
 	/**
@@ -1344,6 +1310,10 @@ public class Validator {
 		'_', '`', '{', '|', '}', '~'
 	};
 
+	private static final int[] _MONTHS = new int[] {
+		31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+	};
+
 	private static final String _VARIABLE_TERM_BEGIN = "[$";
 
 	private static final String _VARIABLE_TERM_END = "$]";
@@ -1357,9 +1327,7 @@ public class Validator {
 			"(?:[a-zA-Z0-9](?:-*[a-zA-Z0-9])?\\.*)+");
 	private static final Pattern _ipv4AddressPattern = Pattern.compile(
 		"^" +
-		"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
-		"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
-		"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
+		"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.{3}" +
 		"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)" +
 		"$");
 	private static final Pattern _ipv6AddressPattern = Pattern.compile(
