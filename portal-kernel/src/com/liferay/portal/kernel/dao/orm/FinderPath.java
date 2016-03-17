@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Brian Wing Shun Chan
@@ -77,26 +79,38 @@ public class FinderPath {
 	}
 
 	public Serializable encodeCacheKey(Object[] arguments) {
-		StringBundler sb = new StringBundler(arguments.length * 2 + 1);
+		StringBundler sb = cacheKeySbCache.get(arguments);
 
-		sb.append(_cacheKeyPrefix);
+		if (sb == null) {
+			sb = new StringBundler(arguments.length * 2 + 1);
 
-		for (Object arg : arguments) {
-			sb.append(StringPool.PERIOD);
-			sb.append(StringUtil.toHexString(arg));
+			sb.append(_cacheKeyPrefix);
+
+			for (Object arg : arguments) {
+				sb.append(StringPool.PERIOD);
+				sb.append(StringUtil.toHexString(arg));
+			}
+
+			cacheKeySbCache.put(arguments, sb);
 		}
 
 		return _getCacheKey(sb);
 	}
 
 	public Serializable encodeLocalCacheKey(Object[] arguments) {
-		StringBundler sb = new StringBundler(arguments.length * 2 + 1);
+		StringBundler sb = localCacheKeySbCache.get(arguments);
 
-		sb.append(_localCacheKeyPrefix);
+		if (sb == null) {
+			sb = new StringBundler(arguments.length * 2 + 1);
 
-		for (Object arg : arguments) {
-			sb.append(StringPool.PERIOD);
-			sb.append(StringUtil.toHexString(arg));
+			sb.append(_localCacheKeyPrefix);
+
+			for (Object arg : arguments) {
+				sb.append(StringPool.PERIOD);
+				sb.append(StringUtil.toHexString(arg));
+			}
+
+			localCacheKeySbCache.put(arguments, sb);
 		}
 
 		return _getCacheKey(sb);
@@ -153,6 +167,11 @@ public class FinderPath {
 		_localCacheKeyPrefix = _cacheName.concat(StringPool.PERIOD).concat(
 			_cacheKeyPrefix);
 	}
+
+	private static final Map<Object[], StringBundler> cacheKeySbCache =
+		new ConcurrentHashMap<>();
+	private static final Map<Object[], StringBundler> localCacheKeySbCache =
+		new ConcurrentHashMap<>();
 
 	private static final String _ARGS_SEPARATOR = "_A_";
 
