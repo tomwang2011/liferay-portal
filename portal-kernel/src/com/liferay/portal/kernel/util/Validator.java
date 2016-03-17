@@ -40,12 +40,7 @@ public class Validator {
 	 *         otherwise
 	 */
 	public static boolean equals(boolean boolean1, boolean boolean2) {
-		if (boolean1 == boolean2) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (boolean1 == boolean2);
 	}
 
 	/**
@@ -57,12 +52,7 @@ public class Validator {
 	 *         otherwise
 	 */
 	public static boolean equals(byte byte1, byte byte2) {
-		if (byte1 == byte2) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (byte1 == byte2);
 	}
 
 	/**
@@ -74,12 +64,7 @@ public class Validator {
 	 *         otherwise
 	 */
 	public static boolean equals(char char1, char char2) {
-		if (char1 == char2) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (char1 == char2);
 	}
 
 	/**
@@ -91,12 +76,7 @@ public class Validator {
 	 *         otherwise
 	 */
 	public static boolean equals(double double1, double double2) {
-		if (Double.compare(double1, double2) == 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (Double.compare(double1, double2) == 0);
 	}
 
 	/**
@@ -108,12 +88,7 @@ public class Validator {
 	 *         otherwise
 	 */
 	public static boolean equals(float float1, float float2) {
-		if (Float.compare(float1, float2) == 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (Float.compare(float1, float2) == 0);
 	}
 
 	/**
@@ -125,12 +100,7 @@ public class Validator {
 	 *         otherwise
 	 */
 	public static boolean equals(int int1, int int2) {
-		if (int1 == int2) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (int1 == int2);
 	}
 
 	/**
@@ -142,12 +112,7 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean equals(long long1, long long2) {
-		if (long1 == long2) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (long1 == long2);
 	}
 
 	/**
@@ -180,12 +145,7 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean equals(short short1, short short2) {
-		if (short1 == short2) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (short1 == short2);
 	}
 
 	/**
@@ -441,12 +401,7 @@ public class Validator {
 	public static boolean isAscii(char c) {
 		int i = c;
 
-		if ((i >= 32) && (i <= 126)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return ((i >= 32) && (i <= 126));
 	}
 
 	public static boolean isBlank(String s) {
@@ -454,11 +409,7 @@ public class Validator {
 			return true;
 		}
 
-		if (s.length() == 0) {
-			return true;
-		}
-
-		return false;
+		return (s.length() == 0);
 	}
 
 	public static boolean isBoolean(String value) {
@@ -476,13 +427,8 @@ public class Validator {
 	public static boolean isChar(char c) {
 		int x = c;
 
-		if (((x >= _CHAR_LOWER_CASE_BEGIN) && (x <= _CHAR_LOWER_CASE_END)) ||
-			((x >= _CHAR_UPPER_CASE_BEGIN) && (x <= _CHAR_UPPER_CASE_END))) {
-
-			return true;
-		}
-
-		return false;
+		return (((x >= _CHAR_LC_BEGIN) && (x <= _CHAR_LC_END)) ||
+			((x >= _CHAR_UC_BEGIN) && (x <= _CHAR_UC_END)));
 	}
 
 	/**
@@ -516,13 +462,8 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isContent(String s) {
-		if (isNotNull(
-				StringUtil.removeChars(s, CharPool.NEW_LINE, CharPool.TAB))) {
-
-			return true;
-		}
-
-		return false;
+		return isNotNull(
+			StringUtil.removeChars(s, CharPool.NEW_LINE, CharPool.TAB));
 	}
 
 	/**
@@ -734,14 +675,9 @@ public class Validator {
 			return false;
 		}
 
-		if (normalizedPath.contains(
-				StringPool.SLASH.concat(
-					StringPool.DOUBLE_PERIOD).concat(StringPool.SLASH))) {
-
-			return false;
-		}
-
-		return true;
+		return !normalizedPath.contains(
+			StringPool.SLASH.concat(
+				StringPool.DOUBLE_PERIOD).concat(StringPool.SLASH));
 	}
 
 	/**
@@ -780,11 +716,7 @@ public class Validator {
 	 * @see    #isNull(String)
 	 */
 	public static boolean isHex(String s) {
-		if (isNull(s)) {
-			return false;
-		}
-
-		return true;
+		return !isNull(s);
 	}
 
 	/**
@@ -833,13 +765,8 @@ public class Validator {
 			return false;
 		}
 
-		if ((s.contains("<html>") || s.contains("<HTML>")) &&
-			(s.contains("</html>") || s.contains("</HTML>"))) {
-
-			return true;
-		}
-
-		return false;
+		return ((s.contains("<html>") || s.contains("<HTML>")) &&
+			(s.contains("</html>") || s.contains("</HTML>")));
 	}
 
 	/**
@@ -851,11 +778,7 @@ public class Validator {
 	 *         address; <code>false</code> otherwise
 	 */
 	public static boolean isIPAddress(String ipAddress) {
-		if (isIPv4Address(ipAddress) || isIPv6Address(ipAddress)) {
-			return true;
-		}
-
-		return false;
+		return (isIPv4Address(ipAddress) || isIPv6Address(ipAddress));
 	}
 
 	/**
@@ -1022,12 +945,7 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isNull(Long l) {
-		if ((l == null) || (l.longValue() == 0)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return ((l == null) || (l == 0));
 	}
 
 	/**
@@ -1046,12 +964,8 @@ public class Validator {
 		else if (obj instanceof String) {
 			return isNull((String)obj);
 		}
-		else if (obj == null) {
-			return true;
-		}
-		else {
-			return false;
-		}
+
+		return (obj == null);
 	}
 
 	/**
@@ -1100,11 +1014,7 @@ public class Validator {
 			counter++;
 		}
 
-		if ((counter == 0) || (counter == 4)) {
-			return true;
-		}
-
-		return false;
+		return ((counter == 0) || (counter == 4));
 	}
 
 	/**
@@ -1223,12 +1133,7 @@ public class Validator {
 
 		Matcher matcher = _variableNamePattern.matcher(variableName);
 
-		if (matcher.matches()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return matcher.matches();
 	}
 
 	/**
@@ -1240,14 +1145,8 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isVariableTerm(String s) {
-		if (s.startsWith(_VARIABLE_TERM_BEGIN) &&
-			s.endsWith(_VARIABLE_TERM_END)) {
-
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (s.startsWith(_VARIABLE_TERM_BEGIN) &&
+			 s.endsWith(_VARIABLE_TERM_END));
 	}
 
 	/**
@@ -1262,12 +1161,7 @@ public class Validator {
 	public static boolean isWhitespace(char c) {
 		int i = c;
 
-		if ((i == 0) || Character.isWhitespace(c)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return ((i == 0) || Character.isWhitespace(c));
 	}
 
 	/**
@@ -1283,23 +1177,19 @@ public class Validator {
 		if (isNull(s)) {
 			return false;
 		}
-		else if (s.startsWith(_XML_BEGIN) || s.startsWith(_XML_EMPTY)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+
+		return (s.startsWith(_XML_BEGIN) || s.startsWith(_XML_EMPTY));
 	}
 
 	private static final String[] _BOOLEANS = {"false", "on", "off", "true"};
 
-	private static final int _CHAR_LOWER_CASE_BEGIN = 97;
+	private static final int _CHAR_LC_BEGIN = 97;
 
-	private static final int _CHAR_LOWER_CASE_END = 122;
+	private static final int _CHAR_LC_END = 122;
 
-	private static final int _CHAR_UPPER_CASE_BEGIN = 65;
+	private static final int _CHAR_UC_BEGIN = 65;
 
-	private static final int _CHAR_UPPER_CASE_END = 90;
+	private static final int _CHAR_UC_END = 90;
 
 	private static final int _DIGIT_BEGIN = 48;
 

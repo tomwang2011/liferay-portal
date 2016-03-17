@@ -31,12 +31,7 @@ public class Validator {
 	 *         otherwise
 	 */
 	public static boolean equals(boolean boolean1, boolean boolean2) {
-		if (boolean1 == boolean2) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (boolean1 == boolean2);
 	}
 
 	/**
@@ -48,12 +43,7 @@ public class Validator {
 	 *         otherwise
 	 */
 	public static boolean equals(byte byte1, byte byte2) {
-		if (byte1 == byte2) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (byte1 == byte2);
 	}
 
 	/**
@@ -65,12 +55,7 @@ public class Validator {
 	 *         otherwise
 	 */
 	public static boolean equals(char char1, char char2) {
-		if (char1 == char2) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (char1 == char2);
 	}
 
 	/**
@@ -82,12 +67,7 @@ public class Validator {
 	 *         otherwise
 	 */
 	public static boolean equals(double double1, double double2) {
-		if (Double.compare(double1, double2) == 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (Double.compare(double1, double2) == 0);
 	}
 
 	/**
@@ -99,12 +79,7 @@ public class Validator {
 	 *         otherwise
 	 */
 	public static boolean equals(float float1, float float2) {
-		if (Float.compare(float1, float2) == 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (Float.compare(float1, float2) == 0);
 	}
 
 	/**
@@ -116,12 +91,7 @@ public class Validator {
 	 *         otherwise
 	 */
 	public static boolean equals(int int1, int int2) {
-		if (int1 == int2) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (int1 == int2);
 	}
 
 	/**
@@ -133,12 +103,7 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean equals(long long1, long long2) {
-		if (long1 == long2) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (long1 == long2);
 	}
 
 	/**
@@ -171,12 +136,7 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean equals(short short1, short short2) {
-		if (short1 == short2) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (short1 == short2);
 	}
 
 	public static boolean isBlank(String s) {
@@ -184,11 +144,7 @@ public class Validator {
 			return true;
 		}
 
-		if (s.length() == 0) {
-			return true;
-		}
-
-		return false;
+		return (s.length() == 0);
 	}
 
 	/**
@@ -202,13 +158,8 @@ public class Validator {
 	public static boolean isChar(char c) {
 		int x = c;
 
-		if (((x >= _CHAR_LOWER_CASE_BEGIN) && (x <= _CHAR_LOWER_CASE_END)) ||
-			((x >= _CHAR_UPPER_CASE_BEGIN) && (x <= _CHAR_UPPER_CASE_END))) {
-
-			return true;
-		}
-
-		return false;
+		return (((x >= _CHAR_LC_BEGIN) && (x <= _CHAR_LC_END)) ||
+			((x >= _CHAR_UC_BEGIN) && (x <= _CHAR_UC_END)));
 	}
 
 	/**
@@ -222,11 +173,7 @@ public class Validator {
 	public static boolean isDigit(char c) {
 		int x = c;
 
-		if ((x >= _DIGIT_BEGIN) && (x <= _DIGIT_END)) {
-			return true;
-		}
-
-		return false;
+		return ((x >= _DIGIT_BEGIN) && (x <= _DIGIT_END));
 	}
 
 	/**
@@ -293,12 +240,7 @@ public class Validator {
 		else if (obj instanceof String) {
 			return isNull((String)obj);
 		}
-		else if (obj == null) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (obj == null);
 	}
 
 	/**
@@ -346,20 +288,16 @@ public class Validator {
 			counter++;
 		}
 
-		if ((counter == 0) || (counter == 4)) {
-			return true;
-		}
-
-		return false;
+		return ((counter == 0) || (counter == 4));
 	}
 
-	private static final int _CHAR_LOWER_CASE_BEGIN = 97;
+	private static final int _CHAR_LC_BEGIN = 97;
 
-	private static final int _CHAR_LOWER_CASE_END = 122;
+	private static final int _CHAR_LC_END = 122;
 
-	private static final int _CHAR_UPPER_CASE_BEGIN = 65;
+	private static final int _CHAR_UC_BEGIN = 65;
 
-	private static final int _CHAR_UPPER_CASE_END = 90;
+	private static final int _CHAR_UC_END = 90;
 
 	private static final int _DIGIT_BEGIN = 48;
 
