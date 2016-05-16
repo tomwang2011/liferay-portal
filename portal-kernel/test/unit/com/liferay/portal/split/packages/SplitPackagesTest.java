@@ -112,23 +112,41 @@ public class SplitPackagesTest {
 
 			Path modulePath = entry.getKey();
 
-			if (!modulePackageNames.isEmpty() &&
-				modulePath.equals(Paths.get("portal-impl"))) {
+			if (!modulePackageNames.isEmpty()) {
 
-				String buildGradleContent = new String(
-					Files.readAllBytes(dirPath.resolve("build.gradle")));
+				if (modulePath.equals(Paths.get("portal-impl"))) {
 
-				if (buildGradleContent.contains(
-						"deployDir = new File(appServerPortalDir, " +
-							"\"WEB-INF/lib\")")) {
+					String buildGradleContent = new String(
+						Files.readAllBytes(dirPath.resolve("build.gradle")));
 
-					Set<String> portalImplPackages = entry.getValue();
+					if (buildGradleContent.contains(
+							"deployDir = new File(appServerPortalDir, " +
+								"\"WEB-INF/lib\")")) {
 
-					portalImplPackages.addAll(packageNames);
+						Set<String> portalImplPackages = entry.getValue();
 
-					addedToImpl = true;
+						portalImplPackages.addAll(packageNames);
 
-					modulePackageNames.clear();
+						addedToImpl = true;
+
+						modulePackageNames.clear();
+					}
+				}
+
+				if (dirPath.endsWith("portal-impl")) {
+					String buildGradleContent = new String(
+						Files.readAllBytes(
+							portalPath.resolve(
+								modulePath.resolve("build.gradle"))));
+
+					if (buildGradleContent.contains(
+							"deployDir = new File(appServerPortalDir, " +
+								"\"WEB-INF/lib\")")) {
+
+						packageNames.addAll(modulePackageNames);
+
+						modulePackageNames.clear();
+					}
 				}
 			}
 
