@@ -378,6 +378,13 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 				int status = message.getInteger("status");
 
+				if ((status != BackgroundTaskConstants.STATUS_CANCELLED) &&
+					(status != BackgroundTaskConstants.STATUS_FAILED) &&
+					(status != BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
+
+					return;
+				}
+
 				try {
 					BackgroundTask backgroundTask =
 						_backgroundTaskManager.getBackgroundTask(
@@ -395,29 +402,23 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 					if (status != BackgroundTaskConstants.STATUS_SUCCESSFUL) {
 						throw new MessageListenerException(pe);
 					}
-				}
 
-				if ((status == BackgroundTaskConstants.STATUS_CANCELLED) ||
-					(status == BackgroundTaskConstants.STATUS_FAILED) ||
-					(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
+				PortletSession portletSession =
+					actionRequest.getPortletSession();
 
-					PortletSession portletSession =
-						actionRequest.getPortletSession();
+				long lastAccessedTime =
+					portletSession.getLastAccessedTime();
+				int maxInactiveInterval =
+					portletSession.getMaxInactiveInterval();
 
-					long lastAccessedTime =
-						portletSession.getLastAccessedTime();
-					int maxInactiveInterval =
-						portletSession.getMaxInactiveInterval();
+				int extendedMaxInactiveIntervalTime =
+					(int)(System.currentTimeMillis() - lastAccessedTime +
+						maxInactiveInterval);
 
-					int extendedMaxInactiveIntervalTime =
-						(int)(System.currentTimeMillis() - lastAccessedTime +
-							maxInactiveInterval);
+				portletSession.setMaxInactiveInterval(
+					extendedMaxInactiveIntervalTime);
 
-					portletSession.setMaxInactiveInterval(
-						extendedMaxInactiveIntervalTime);
-
-					countDownLatch.countDown();
-				}
+				countDownLatch.countDown();
 			}
 
 		};
