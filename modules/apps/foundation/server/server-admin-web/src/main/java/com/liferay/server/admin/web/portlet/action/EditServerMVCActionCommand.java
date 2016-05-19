@@ -376,6 +376,15 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			public void receive(Message message)
 				throws MessageListenerException {
 
+				int status = message.getInteger("status");
+
+				if ((status != BackgroundTaskConstants.STATUS_CANCELLED) &&
+					(status != BackgroundTaskConstants.STATUS_FAILED) &&
+					(status != BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
+
+					return;
+				}
+
 				try {
 					BackgroundTask backgroundTask =
 						_backgroundTaskManager.getBackgroundTask(
@@ -390,32 +399,26 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 					}
 				}
 				catch (PortalException pe) {
-					throw new MessageListenerException(pe);
-				}
+					if (status != BackgroundTaskConstants.STATUS_SUCCESSFUL) {
+						throw new MessageListenerException(pe);
+					}
 
-				int status = message.getInteger("status");
+				PortletSession portletSession =
+					actionRequest.getPortletSession();
 
-				if ((status == BackgroundTaskConstants.STATUS_CANCELLED) ||
-					(status == BackgroundTaskConstants.STATUS_FAILED) ||
-					(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
+				long lastAccessedTime =
+					portletSession.getLastAccessedTime();
+				int maxInactiveInterval =
+					portletSession.getMaxInactiveInterval();
 
-					PortletSession portletSession =
-						actionRequest.getPortletSession();
+				int extendedMaxInactiveIntervalTime =
+					(int)(System.currentTimeMillis() - lastAccessedTime +
+						maxInactiveInterval);
 
-					long lastAccessedTime =
-						portletSession.getLastAccessedTime();
-					int maxInactiveInterval =
-						portletSession.getMaxInactiveInterval();
+				portletSession.setMaxInactiveInterval(
+					extendedMaxInactiveIntervalTime);
 
-					int extendedMaxInactiveIntervalTime =
-						(int)(System.currentTimeMillis() - lastAccessedTime +
-							maxInactiveInterval);
-
-					portletSession.setMaxInactiveInterval(
-						extendedMaxInactiveIntervalTime);
-
-					countDownLatch.countDown();
-				}
+				countDownLatch.countDown();
 			}
 
 		};
