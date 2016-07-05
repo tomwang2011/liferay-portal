@@ -1785,7 +1785,7 @@ wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 			src="${app.server.parent.dir}/${app.server.tomcat.zip.name}"
 		>
 			<patternset
-				excludes="apache-tomcat-${app.server.tomcat.version}/webapps/**"
+				excludes="apache-tomcat-${app.server.tomcat.version}/webapps/**, apache-tomcat-${app.server.tomcat.version}/lib/tomcat-websocket.jar, apache-tomcat-${app.server.tomcat.version}/lib/websocket-api.jar"
 			/>
 			<mapper
 				type="glob"
