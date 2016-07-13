@@ -11,9 +11,7 @@
 
 #set ($css_class = $css_class + " " + $htmlUtil.escape($theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam")
 
-#if ($layout)
-	#set ($page_group = $layout.getGroup())
-#end
+#set ($page_group = $layout.getGroup())
 
 #if ($layoutTypePortlet.hasStateMax())
 	#set ($css_class = $css_class + " page-maximized")
@@ -120,85 +118,81 @@
 #set ($page_javascript_2 = "")
 #set ($page_javascript_3 = "")
 
-#if ($layout)
-	#set ($page = $layout)
+#set ($page = $layout)
 
-	#set ($is_first_child = $page.isFirstChild())
-	#set ($is_first_parent = $page.isFirstParent())
+#set ($is_first_child = $page.isFirstChild())
+#set ($is_first_parent = $page.isFirstParent())
 
-	#set ($the_title = $languageUtil.get($locale, $the_title, $page.getName($locale)))
+#set ($the_title = $languageUtil.get($locale, $the_title, $page.getName($locale)))
 
-	#set ($is_portlet_page = false)
+#set ($is_portlet_page = false)
 
-	#if ($page.getType().equals("portlet"))
-		#set ($is_portlet_page = true)
-	#end
+#if ($page.getType().equals("portlet"))
+	#set ($is_portlet_page = true)
+#end
 
-	#set ($typeSettingsProperties = $layout.getTypeSettingsProperties())
+#set ($typeSettingsProperties = $layout.getTypeSettingsProperties())
 
-	#if ($typeSettingsProperties)
-		#set ($page_javascript = $typeSettingsProperties.getProperty("javascript"))
-	#end
+#set ($page_javascript = $typeSettingsProperties.getProperty("javascript"))
 
-	#set ($site_name = $htmlUtil.escape($page_group.getDescriptiveName()))
+#set ($site_name = $htmlUtil.escape($page_group.getDescriptiveName()))
 
-	#set ($community_name = $site_name)
+#set ($community_name = $site_name)
 
-	#set ($is_guest_group = $page_group.isGuest())
+#set ($is_guest_group = $page_group.isGuest())
 
-	#if ($is_guest_group)
-		#set ($css_class = $css_class + " guest-site")
-	#end
+#if ($is_guest_group)
+	#set ($css_class = $css_class + " guest-site")
+#end
 
-	#if ($is_signed_in)
-		#set ($css_class = $css_class + " signed-in")
-	#else
-		#set ($css_class = $css_class + " signed-out")
-	#end
+#if ($is_signed_in)
+	#set ($css_class = $css_class + " signed-in")
+#else
+	#set ($css_class = $css_class + " signed-out")
+#end
 
-	#if ($layout.isPublicLayout())
-		#set ($css_class = $css_class + " public-page")
-	#else
-		#set ($css_class = $css_class + " private-page")
-	#end
+#if ($layout.isPublicLayout())
+	#set ($css_class = $css_class + " public-page")
+#else
+	#set ($css_class = $css_class + " private-page")
+#end
 
-	#if ($page_group.isLayoutPrototype())
-		#set ($css_class = $css_class + " page-template")
-	#end
+#if ($page_group.isLayoutPrototype())
+	#set ($css_class = $css_class + " page-template")
+#end
 
-	#if ($page_group.isLayoutSetPrototype())
-		#set ($css_class = $css_class + " site-template")
-	#end
+#if ($page_group.isLayoutSetPrototype())
+	#set ($css_class = $css_class + " site-template")
+#end
 
-	#if ($page_group.isCompany())
-		#set ($site_type = "company-site")
-	#elseif ($page_group.isOrganization())
-		#set ($site_type = "organization-site")
-	#elseif ($page_group.isUser())
-		#set ($site_type = "user-site")
-	#else
-		#set ($site_type = "site")
-	#end
+#if ($page_group.isCompany())
+	#set ($site_type = "company-site")
+#elseif ($page_group.isOrganization())
+	#set ($site_type = "organization-site")
+#elseif ($page_group.isUser())
+	#set ($site_type = "user-site")
+#else
+	#set ($site_type = "site")
+#end
 
-	#set ($css_class = $css_class + " " + $site_type)
+#set ($css_class = $css_class + " " + $site_type)
 
-	#set ($site_default_public_url = $htmlUtil.escape($page_group.getDisplayURL($theme_display, false)))
+#set ($site_default_public_url = $htmlUtil.escape($page_group.getDisplayURL($theme_display, false)))
 
-	#set ($community_default_public_url = $site_default_public_url)
+#set ($community_default_public_url = $site_default_public_url)
 
-	#set ($site_default_private_url = $htmlUtil.escape($page_group.getDisplayURL($theme_display, true)))
+#set ($site_default_private_url = $htmlUtil.escape($page_group.getDisplayURL($theme_display, true)))
 
-	#set ($community_default_private_url = $site_default_private_url)
+#set ($community_default_private_url = $site_default_private_url)
 
-	#set ($site_default_url = $site_default_public_url)
+#set ($site_default_url = $site_default_public_url)
+
+#set ($community_default_url = $site_default_url)
+
+#if ($layout.isPrivateLayout())
+	#set ($site_default_url = $site_default_private_url)
 
 	#set ($community_default_url = $site_default_url)
-
-	#if ($layout.isPrivateLayout())
-		#set ($site_default_url = $site_default_private_url)
-
-		#set ($community_default_url = $site_default_url)
-	#end
 #end
 
 #set ($the_title = "")
@@ -264,12 +258,8 @@
 
 ## ---------- Navigation ---------- ##
 
-#set ($has_navigation = false)
-
-#if ($navItems)
-	#set ($nav_items = $navItems)
-	#set ($has_navigation = ($nav_items && $nav_items.size() > 0))
-#end
+#set ($nav_items = $navItems)
+#set ($has_navigation = ($nav_items && $nav_items.size() > 0))
 
 #set ($nav_css_class = "sort-pages modify-pages")
 
