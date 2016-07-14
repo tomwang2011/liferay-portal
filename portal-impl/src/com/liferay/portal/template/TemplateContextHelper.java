@@ -298,6 +298,11 @@ public class TemplateContextHelper {
 			contextObjects.put("timeZone", themeDisplay.getTimeZone());
 			contextObjects.put("user", themeDisplay.getUser());
 
+			contextObjects.put(
+				"themeInitContextHelper",
+				new ThemeInitContextHelper(
+					request, themeDisplay, contextObjects));
+
 			// Navigation items
 
 			List<NavItem> navItems = NavItem.fromLayouts(
