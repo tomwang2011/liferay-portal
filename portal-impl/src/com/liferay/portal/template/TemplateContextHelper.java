@@ -298,14 +298,17 @@ public class TemplateContextHelper {
 			contextObjects.put("timeZone", themeDisplay.getTimeZone());
 			contextObjects.put("user", themeDisplay.getUser());
 
+			contextObjects.put(
+				"themeInitContextHelper",
+				new ThemeInitContextHelper(
+					request, themeDisplay, contextObjects));
+
 			// Navigation items
 
-			if (layout != null) {
-				List<NavItem> navItems = NavItem.fromLayouts(
-					request, layouts, contextObjects);
+			List<NavItem> navItems = NavItem.fromLayouts(
+				request, layouts, contextObjects);
 
-				contextObjects.put("navItems", navItems);
-			}
+			contextObjects.put("navItems", navItems);
 
 			// Deprecated
 
