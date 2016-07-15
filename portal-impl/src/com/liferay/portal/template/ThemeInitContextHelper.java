@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil_IW;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -222,33 +220,10 @@ public class ThemeInitContextHelper {
 		_contextObjects.put("the_year", dateFormat.format(currentTime));
 	}
 
-	private void _addDeprecatedContextObjects() throws PortalException {
+	private void _addDeprecatedContextObjects() {
 		User user = _themeDisplay.getUser();
 
-		Contact contact = user.getContact();
-
-		_contextObjects.put("is_default_user", user.isDefaultUser());
-		_contextObjects.put("is_female", !contact.isMale());
-		_contextObjects.put("is_male", contact.isMale());
-		_contextObjects.put("is_setup_complete", user.isSetupComplete());
-		_contextObjects.put("language", _themeDisplay.getLocale());
-		_contextObjects.put("language_id", user.getLanguageId());
 		_contextObjects.put("time_zone", user.getTimeZoneId());
-		_contextObjects.put("user_birthday", contact.getBirthday());
-		_contextObjects.put("user_comments", user.getComments());
-		_contextObjects.put("user_email_address", user.getEmailAddress());
-		_contextObjects.put("user_first_name", user.getFirstName());
-		_contextObjects.put(
-			"user_greeting", HtmlUtil.escape(user.getGreeting()));
-		_contextObjects.put("user_id", user.getUserId());
-		_contextObjects.put("user_last_login_ip", user.getLastLoginIP());
-		_contextObjects.put("user_last_name", user.getLastName());
-		_contextObjects.put("user_login_ip", user.getLoginIP());
-		_contextObjects.put("user_middle_name", user.getMiddleName());
-		_contextObjects.put("user_name", user.getFullName());
-		_contextObjects.put(
-			"w3c_language_id",
-			LocaleUtil.toW3cLanguageId(_themeDisplay.getLanguageId()));
 		_contextObjects.put(
 			"is_login_redirect_required",
 			PortalUtil.isLoginRedirectRequired(_request));
