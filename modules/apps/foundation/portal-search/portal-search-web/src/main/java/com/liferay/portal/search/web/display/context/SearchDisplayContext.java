@@ -86,57 +86,12 @@ public class SearchDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_portletPreferences = portletPreferences;
+		_portal = portal;
+		_html = html;
+		_language = language;
+		_facetedSearcherManager = facetedSearcherManager;
 		_indexSearchPropsValues = indexSearchPropsValues;
 		_portletURLFactory = portletURLFactory;
-
-		String keywords = getKeywords();
-
-		if (keywords == null) {
-			_hits = null;
-			_searchContext = null;
-			_searchContainer = null;
-
-			return;
-		}
-
-		HttpServletRequest request = portal.getHttpServletRequest(
-			_renderRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String emptyResultMessage = language.format(
-			request, "no-results-were-found-that-matched-the-keywords-x",
-			"<strong>" + html.escape(keywords) + "</strong>", false);
-
-		SearchContainer<Document> searchContainer = new SearchContainer<>(
-			_renderRequest, getPortletURL(), null, emptyResultMessage);
-
-		FacetedSearcher facetedSearcher =
-			facetedSearcherManager.createFacetedSearcher();
-
-		SearchContext searchContext = SearchContextFactory.getInstance(request);
-
-		searchContext.setAttribute("paginationType", "more");
-		searchContext.setEnd(searchContainer.getEnd());
-		searchContext.setQueryConfig(getQueryConfig());
-		searchContext.setStart(searchContainer.getStart());
-
-		addAssetEntriesFacet(searchContext);
-
-		addScopeFacet(searchContext);
-
-		addEnabledSearchFacets(themeDisplay.getCompanyId(), searchContext);
-
-		Hits hits = facetedSearcher.search(searchContext);
-
-		searchContainer.setTotal(hits.getLength());
-		searchContainer.setResults(hits.toList());
-		searchContainer.setSearch(true);
-
-		_hits = hits;
-		_searchContext = searchContext;
-		_searchContainer = searchContainer;
 	}
 
 	public String checkViewURL(String viewURL, String currentURL) {
@@ -199,6 +154,8 @@ public class SearchDisplayContext {
 	}
 
 	public Hits getHits() throws Exception {
+		_initSearchContainer();
+
 		return _hits;
 	}
 
@@ -303,10 +260,14 @@ public class SearchDisplayContext {
 	}
 
 	public SearchContainer<Document> getSearchContainer() throws Exception {
+		_initSearchContainer();
+
 		return _searchContainer;
 	}
 
 	public SearchContext getSearchContext() throws Exception {
+		_initSearchContainer();
+
 		return _searchContext;
 	}
 
@@ -560,6 +521,57 @@ public class SearchDisplayContext {
 		return (ThemeDisplay)_renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 	}
 
+	private void _initSearchContainer() throws Exception {
+		if (_searchContainer != null) {
+			return;
+		}
+
+		String keywords = getKeywords();
+
+		if (keywords == null) {
+			return;
+		}
+
+		HttpServletRequest request = _portal.getHttpServletRequest(
+			_renderRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String emptyResultMessage = _language.format(
+			request, "no-results-were-found-that-matched-the-keywords-x",
+			"<strong>" + _html.escape(keywords) + "</strong>", false);
+
+		SearchContainer<Document> searchContainer = new SearchContainer<>(
+			_renderRequest, getPortletURL(), null, emptyResultMessage);
+
+		FacetedSearcher facetedSearcher =
+			_facetedSearcherManager.createFacetedSearcher();
+
+		SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+		searchContext.setAttribute("paginationType", "more");
+		searchContext.setEnd(searchContainer.getEnd());
+		searchContext.setQueryConfig(getQueryConfig());
+		searchContext.setStart(searchContainer.getStart());
+
+		addAssetEntriesFacet(searchContext);
+
+		addScopeFacet(searchContext);
+
+		addEnabledSearchFacets(themeDisplay.getCompanyId(), searchContext);
+
+		Hits hits = facetedSearcher.search(searchContext);
+
+		searchContainer.setTotal(hits.getLength());
+		searchContainer.setResults(hits.toList());
+		searchContainer.setSearch(true);
+
+		_hits = hits;
+		_searchContext = searchContext;
+		_searchContainer = searchContainer;
+	}
+
 	private Integer _collatedSpellCheckResultDisplayThreshold;
 	private Boolean _collatedSpellCheckResultEnabled;
 	private Boolean _displayMainQuery;
@@ -567,9 +579,13 @@ public class SearchDisplayContext {
 	private Boolean _displayResultsInDocumentForm;
 	private Boolean _dlLinkToViewURL;
 	private List<SearchFacet> _enabledSearchFacets;
-	private final Hits _hits;
+	private final FacetedSearcherManager _facetedSearcherManager;
+	private Hits _hits;
+	private final Html _html;
 	private Boolean _includeSystemPortlets;
 	private final IndexSearchPropsValues _indexSearchPropsValues;
+	private final Language _language;
+	private final Portal _portal;
 	private final PortletPreferences _portletPreferences;
 	private final PortletURLFactory _portletURLFactory;
 	private QueryConfig _queryConfig;
@@ -581,8 +597,8 @@ public class SearchDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private String _searchConfiguration;
-	private final SearchContainer<Document> _searchContainer;
-	private final SearchContext _searchContext;
+	private SearchContainer<Document> _searchContainer;
+	private SearchContext _searchContext;
 	private String _searchScopePreferenceString;
 	private Boolean _viewInContext;
 
