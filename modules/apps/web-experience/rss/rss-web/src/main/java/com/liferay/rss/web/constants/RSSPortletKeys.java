@@ -12,15 +12,13 @@
  * details.
  */
 
-package com.liferay.product.navigation.simulation.web.internal.constants;
+package com.liferay.rss.web.constants;
 
 /**
- * @author Eduardo Garcia
+ * @author Eudaldo Alonso
  */
-public class ProductNavigationSimulationPortletKeys {
+public class RSSPortletKeys {
 
-	public static final String PRODUCT_NAVIGATION_SIMULATION =
-		"com_liferay_product_navigation_simulation_web_portlet_" +
-			"SimulationPortlet";
+	public static final String RSS = "com_liferay_rss_web_portlet_RSSPortlet";
 
 }

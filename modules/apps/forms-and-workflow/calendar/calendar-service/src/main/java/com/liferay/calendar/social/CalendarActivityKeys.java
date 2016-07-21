@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.social.activities.web.internal.constants;
+package com.liferay.calendar.social;
 
 /**
- * @author Eudaldo Alonso
+ * @author Marcellus Tavares
  */
-public class SocialActivitiesPortletKeys {
+public class CalendarActivityKeys {
 
-	public static final String SOCIAL_ACTIVITIES =
-		"com_liferay_social_activities_web_portlet_SocialActivitiesPortlet";
+	public static final int ADD_CALENDAR_BOOKING = 1;
+
+	public static final int UPDATE_CALENDAR_BOOKING = 2;
 
 }

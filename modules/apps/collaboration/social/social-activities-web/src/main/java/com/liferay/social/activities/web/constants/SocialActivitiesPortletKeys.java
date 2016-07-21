@@ -12,20 +12,14 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.constants;
+package com.liferay.social.activities.web.constants;
 
 /**
- * @author Sergio González
+ * @author Eudaldo Alonso
  */
-public class DLPortletKeys {
+public class SocialActivitiesPortletKeys {
 
-	public static final String DOCUMENT_LIBRARY =
-		"com_liferay_document_library_web_portlet_DLPortlet";
-
-	public static final String DOCUMENT_LIBRARY_ADMIN =
-		"com_liferay_document_library_web_portlet_DLAdminPortlet";
-
-	public static final String MEDIA_GALLERY_DISPLAY =
-		"com_liferay_document_library_web_portlet_IGDisplayPortlet";
+	public static final String SOCIAL_ACTIVITIES =
+		"com_liferay_social_activities_web_portlet_SocialActivitiesPortlet";
 
 }

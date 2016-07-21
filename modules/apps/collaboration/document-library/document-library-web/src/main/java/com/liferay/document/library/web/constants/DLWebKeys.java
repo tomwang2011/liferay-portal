@@ -12,15 +12,20 @@
  * details.
  */
 
-package com.liferay.calendar.internal.social;
+package com.liferay.document.library.web.constants;
 
 /**
- * @author Marcellus Tavares
+ * @author Brian Wing Shun Chan
  */
-public class CalendarActivityKeys {
+public class DLWebKeys {
 
-	public static final int ADD_CALENDAR_BOOKING = 1;
+	public static final String DOCUMENT_LIBRARY_GROUP_SERVICE_SETTINGS =
+		"DOCUMENT_LIBRARY_GROUP_SERVICE_SETTINGS";
 
-	public static final int UPDATE_CALENDAR_BOOKING = 2;
+	public static final String DOCUMENT_LIBRARY_PORTLET_INSTANCE_SETTINGS =
+		"DOCUMENT_LIBRARY_PORTLET_INSTANCE_SETTINGS";
+
+	public static final String DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR =
+		"DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR";
 
 }
