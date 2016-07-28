@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.text;
+package com.liferay.dynamic.data.mapping.type.key.value.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -35,25 +35,16 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest({PortalClassLoaderUtil.class, ResourceBundleUtil.class})
 @RunWith(PowerMockRunner.class)
-public class TextDDMFormFieldTypeSettingsTest
+public class KeyValueDDMFormFieldTypeSettingsTest
 	extends BaseDDMFormFieldTypeSettingsTest {
 
 	@Test
-	public void testCreateTextDDMFormFieldTypeSettingsDDMForm() {
+	public void testCreateKeyValueDDMFormFieldTypeSettingsDDMForm() {
 		DDMForm ddmForm = DDMFormFactory.create(
-			TextDDMFormFieldTypeSettings.class);
+			KeyValueDDMFormFieldTypeSettings.class);
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
-
-		DDMFormField displayStyleDDMFormField = ddmFormFieldsMap.get(
-			"displayStyle");
-
-		Assert.assertNotNull(displayStyleDDMFormField);
-		Assert.assertNotNull(displayStyleDDMFormField.getLabel());
-		Assert.assertEquals(
-			"true", displayStyleDDMFormField.getProperty("inline"));
-		Assert.assertEquals("radio", displayStyleDDMFormField.getType());
 
 		DDMFormField placeholderDDMFormField = ddmFormFieldsMap.get(
 			"placeholder");
