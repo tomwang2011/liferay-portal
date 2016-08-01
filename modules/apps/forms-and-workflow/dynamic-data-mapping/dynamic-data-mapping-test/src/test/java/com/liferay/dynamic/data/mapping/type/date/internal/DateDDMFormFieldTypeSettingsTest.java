@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.key.value;
+package com.liferay.dynamic.data.mapping.type.date.internal;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -31,33 +31,39 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
- * @author Leonardo Barros
+ * @author Bruno Basto
  */
 @PrepareForTest({PortalClassLoaderUtil.class, ResourceBundleUtil.class})
 @RunWith(PowerMockRunner.class)
-public class KeyValueDDMFormFieldTypeSettingsTest
+public class DateDDMFormFieldTypeSettingsTest
 	extends BaseDDMFormFieldTypeSettingsTest {
 
 	@Test
-	public void testCreateKeyValueDDMFormFieldTypeSettingsDDMForm() {
+	public void testCreateDateDDMFormFieldTypeSettingsDDMForm() {
 		DDMForm ddmForm = DDMFormFactory.create(
-			KeyValueDDMFormFieldTypeSettings.class);
+			DateDDMFormFieldTypeSettings.class);
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(false);
 
-		DDMFormField placeholderDDMFormField = ddmFormFieldsMap.get(
-			"placeholder");
+		DDMFormField predefinedValueDDMFormField = ddmFormFieldsMap.get(
+			"predefinedValue");
 
-		Assert.assertNotNull(placeholderDDMFormField);
-		Assert.assertEquals("string", placeholderDDMFormField.getDataType());
-		Assert.assertEquals("text", placeholderDDMFormField.getType());
-
-		DDMFormField tooltipDDMFormField = ddmFormFieldsMap.get("tooltip");
-
-		Assert.assertNotNull(tooltipDDMFormField);
+		Assert.assertNotNull(predefinedValueDDMFormField);
 		Assert.assertEquals(
-			"FALSE", tooltipDDMFormField.getVisibilityExpression());
+			"string", predefinedValueDDMFormField.getDataType());
+		Assert.assertEquals("date", predefinedValueDDMFormField.getType());
+		Assert.assertEquals(true, predefinedValueDDMFormField.isLocalizable());
+
+		DDMFormField validationDDMFormField = ddmFormFieldsMap.get(
+			"validation");
+
+		Assert.assertNotNull(validationDDMFormField);
+		Assert.assertEquals(
+			"ddm-validation", validationDDMFormField.getDataType());
+		Assert.assertEquals("validation", validationDDMFormField.getType());
+		Assert.assertEquals(
+			"FALSE", validationDDMFormField.getVisibilityExpression());
 	}
 
 }
