@@ -230,7 +230,7 @@ public class LPKGDeployerTest {
 				}
 			}
 
-			if (!symbolicName.equals("static")) {
+			if (!symbolicName.contains("Static")) {
 				Collections.sort(actualAppBundles);
 
 				Assert.assertEquals(
