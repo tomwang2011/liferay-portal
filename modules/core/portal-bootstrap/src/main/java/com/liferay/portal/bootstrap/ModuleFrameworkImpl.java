@@ -819,8 +819,28 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 						FrameworkWiring frameworkWiring = _framework.adapt(
 							FrameworkWiring.class);
 
+						final DefaultNoticeableFuture<FrameworkEvent>
+							defaultNoticeableFuture =
+								new DefaultNoticeableFuture<>();
+
 						frameworkWiring.refreshBundles(
-							Collections.singletonList(bundle));
+							Collections.singletonList(bundle),
+							new FrameworkListener() {
+
+								@Override
+								public void frameworkEvent(FrameworkEvent fe) {
+									defaultNoticeableFuture.set(fe);
+								}
+
+							});
+
+						FrameworkEvent frameworkEvent =
+							defaultNoticeableFuture.get();
+
+						if (frameworkEvent.getType() == FrameworkEvent.ERROR) {
+							ReflectionUtil.throwException(
+								frameworkEvent.getThrowable());
+						}
 
 						return null;
 					}
@@ -1321,15 +1341,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		List<String> hostBundleSymbolicNames = new ArrayList<>();
 
 		for (Bundle bundle : installedBundles) {
-			BundleStartLevel bundleStartLevel = bundle.adapt(
-				BundleStartLevel.class);
-
-			if (bundleStartLevel.getStartLevel() !=
-					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL) {
-
-				continue;
-			}
-
 			Dictionary<String, String> headers = bundle.getHeaders();
 
 			String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
