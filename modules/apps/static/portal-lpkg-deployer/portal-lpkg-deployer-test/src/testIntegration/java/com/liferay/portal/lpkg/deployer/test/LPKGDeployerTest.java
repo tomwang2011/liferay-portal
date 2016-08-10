@@ -24,7 +24,10 @@ import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,8 +38,12 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.jar.Attributes;
+import java.util.jar.JarInputStream;
+import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -47,6 +54,7 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.Version;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -230,7 +238,7 @@ public class LPKGDeployerTest {
 				}
 			}
 
-			if (!symbolicName.equals("static")) {
+			if (!symbolicName.contains("Static")) {
 				Collections.sort(actualAppBundles);
 
 				Assert.assertEquals(
@@ -239,7 +247,69 @@ public class LPKGDeployerTest {
 							actualAppBundles,
 					expectedAppBundles, actualAppBundles);
 			}
+			else {
+				testStaticLPKG(lpkgBundle, lpkgFile);
+			}
 		}
+	}
+
+	protected void testStaticLPKG(Bundle lpkgBundle, File lpkgFile)
+		throws IOException {
+
+		FileSystem fileSystem = FileSystems.newFileSystem(
+			lpkgFile.toPath(), null);
+
+		ZipFile zipFile = new ZipFile(lpkgFile);
+
+		Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
+
+		Map<String, Version> actualAppBundles = new HashMap<>();
+
+		while (enumeration.hasMoreElements()) {
+			ZipEntry zipEntry = enumeration.nextElement();
+
+			String zipName = zipEntry.getName();
+
+			if (zipName.endsWith(".jar")) {
+				Path testPath = fileSystem.getPath(zipName);
+
+				InputStream inputStream = Files.newInputStream(testPath);
+				JarInputStream jarInputStream = new JarInputStream(inputStream);
+
+				Manifest manifest = jarInputStream.getManifest();
+
+				Attributes attributes = manifest.getMainAttributes();
+
+				Version version = new Version(
+					attributes.getValue("Bundle-Version"));
+
+				String symbolicNameString = attributes.getValue(
+					"Bundle-SymbolicName");
+
+				actualAppBundles.put(symbolicNameString, version);
+			}
+		}
+
+		BundleContext bundleContext = lpkgBundle.getBundleContext();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			String symbolicNameString = bundle.getSymbolicName();
+
+			if (actualAppBundles.containsKey(symbolicNameString)) {
+				Version bundleVersion = bundle.getVersion();
+
+				Version actualVersion = actualAppBundles.remove(
+					symbolicNameString);
+
+				Assert.assertEquals(
+					"Version mismatch for " + symbolicNameString, bundleVersion,
+					actualVersion);
+			}
+		}
+
+		Assert.assertTrue(
+			"Jars that are not in the bundle: " + actualAppBundles.entrySet(),
+			actualAppBundles.isEmpty());
 	}
 
 }
