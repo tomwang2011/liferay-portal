@@ -239,6 +239,7 @@ public class ActionRequestPortletContainerTest
 
 		String url = portletURL.toString();
 
+		System.out.println("response-body: " + response.getBody());
 		url = HttpUtil.setParameter(url, "p_auth", response.getBody());
 
 		response = PortletContainerTestUtil.request(
@@ -333,6 +334,7 @@ public class ActionRequestPortletContainerTest
 
 		Map<String, List<String>> headers = new HashMap<>();
 
+		System.out.println("response-body: " + response.getBody());
 		headers.put("Cookie", response.getCookies());
 		headers.put(
 			"X-CSRF-Token", Collections.singletonList(response.getBody()));
