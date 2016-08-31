@@ -1561,6 +1561,9 @@ public abstract class BaseAssetSearchTestCase {
 						List<AssetEntry> assetEntries = search(
 							assetEntryQuery, searchContext);
 
+						System.out.println("assetEntries: " + ArrayUtils.toString(getTitles(assetEntries, locale)));
+						System.out.println("orderedTitleMaps: " + ArrayUtils.toString(getOrderedTitles(orderedTitleMaps, locale)));
+
 						Assert.assertEquals(
 							ArrayUtils.toString(
 								getOrderedTitles(orderedTitleMaps, locale)),
