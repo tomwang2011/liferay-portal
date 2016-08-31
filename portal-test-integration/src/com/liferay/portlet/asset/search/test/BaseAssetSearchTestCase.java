@@ -1008,6 +1008,9 @@ public abstract class BaseAssetSearchTestCase {
 			orderedTitleMaps.add(titleMap);
 		}
 
+		System.out.println("titleMaps: " + titleMaps);
+		System.out.println("orderedMaps: " + orderedTitleMaps);
+
 		testOrderByTitle(
 			assetEntryQuery, "asc", titleMaps, orderedTitleMaps,
 			new Locale[] {LocaleUtil.getDefault(), LocaleUtil.FRANCE});
