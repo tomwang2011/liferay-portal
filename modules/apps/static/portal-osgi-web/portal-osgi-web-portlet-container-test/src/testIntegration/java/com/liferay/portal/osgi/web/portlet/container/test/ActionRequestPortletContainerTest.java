@@ -229,6 +229,10 @@ public class ActionRequestPortletContainerTest
 		Response response = PortletContainerTestUtil.getPortalAuthentication(
 			httpServletRequest, layout, TEST_PORTLET_ID);
 
+		System.out.println("response after PortletContainerTestUtil.getPortalAuthentication");
+		System.out.println("response code: " + response.getCode());
+		System.out.println("response body: " + response.getBody());
+
 		testPortlet.reset();
 
 		// Make an action request using the portal authentication token
@@ -239,6 +243,7 @@ public class ActionRequestPortletContainerTest
 
 		String url = portletURL.toString();
 
+		System.out.println("response-body: " + response.getBody());
 		url = HttpUtil.setParameter(url, "p_auth", response.getBody());
 
 		response = PortletContainerTestUtil.request(
@@ -319,6 +324,10 @@ public class ActionRequestPortletContainerTest
 		Response response = PortletContainerTestUtil.getPortalAuthentication(
 			httpServletRequest, layout, TEST_PORTLET_ID);
 
+		System.out.println("response after PortletContainerTestUtil.getPortalAuthentication");
+		System.out.println("response code: " + response.getCode());
+		System.out.println("response body: " + response.getBody());
+
 		testPortlet.reset();
 
 		// Make an action request using the portal authentication token
@@ -333,6 +342,7 @@ public class ActionRequestPortletContainerTest
 
 		Map<String, List<String>> headers = new HashMap<>();
 
+		System.out.println("response-body: " + response.getBody());
 		headers.put("Cookie", response.getCookies());
 		headers.put(
 			"X-CSRF-Token", Collections.singletonList(response.getBody()));
@@ -355,13 +365,19 @@ public class ActionRequestPortletContainerTest
 
 			PortletURL portletURL = resourceResponse.createActionURL();
 
+			System.out.println("portletURL: " + portletURL);
+
 			String queryString = HttpUtil.getQueryString(portletURL.toString());
+
+			System.out.println("queryString: " + queryString);
 
 			Map<String, String[]> parameterMap = HttpUtil.getParameterMap(
 				queryString);
 
 			String portalAuthenticationToken = MapUtil.getString(
 				parameterMap, "p_auth");
+
+			System.out.println("portalAuthenticationToken: " + portalAuthenticationToken);
 
 			printWriter.write(portalAuthenticationToken);
 		}
