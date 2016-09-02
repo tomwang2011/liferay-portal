@@ -1008,6 +1008,9 @@ public abstract class BaseAssetSearchTestCase {
 			orderedTitleMaps.add(titleMap);
 		}
 
+		System.out.println("titleMaps: " + titleMaps);
+		System.out.println("orderedMaps: " + orderedTitleMaps);
+
 		testOrderByTitle(
 			assetEntryQuery, "asc", titleMaps, orderedTitleMaps,
 			new Locale[] {LocaleUtil.getDefault(), LocaleUtil.FRANCE});
@@ -1557,6 +1560,9 @@ public abstract class BaseAssetSearchTestCase {
 					public Void call() throws Exception {
 						List<AssetEntry> assetEntries = search(
 							assetEntryQuery, searchContext);
+
+						System.out.println("assetEntries: " + ArrayUtils.toString(getTitles(assetEntries, locale)));
+						System.out.println("orderedTitleMaps: " + ArrayUtils.toString(getOrderedTitles(orderedTitleMaps, locale)));
 
 						Assert.assertEquals(
 							ArrayUtils.toString(
