@@ -342,7 +342,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 				String.format(
 					"User %s is not allowed to access URL %s and portlet %s",
 					PortalUtil.getUserId(request), url,
-					portlet.getPortletId()));
+					portlet.getPortletId()), pe);
 		}
 
 		return ActionResult.EMPTY_ACTION_RESULT;
