@@ -317,6 +317,11 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			PropsUtil.get(
 				PropsKeys.DATABASE_ORDER_BY_MAX_COLUMNS,
 				new Filter(dbType.getName())));
+
+		_databaseInMaxParameters = GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.DATABASE_ORDER_BY_MAX_COLUMNS,
+				new Filter(dbType.getName())));
 	}
 
 	@Override
@@ -537,6 +542,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	 */
 	@Deprecated
 	protected ModelListener<T>[] listeners = new ModelListener[0];
+
+	protected int _databaseInMaxParameters;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePersistenceImpl.class);
