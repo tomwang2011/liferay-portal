@@ -1635,15 +1635,15 @@ that may or may not be enforced with a unique index at the database level. Case
 				list = new ArrayList();
 
 				try {
-					if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) <#list finderColsList as finderCol>
+					if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (_databaseInMaxParameters > 0) <#list finderColsList as finderCol>
 							<#if finderCol.hasArrayableOperator()>
-								&& (${finderCol.names}.length > PAGE_SIZE)
+								&& (${finderCol.names}.length > _databaseInMaxParameters)
 							</#if>
 						</#list>) {
 
 						<#list finderColsList as finderCol>
 							<#if finderCol.hasArrayableOperator()>
-								${finderCol.type}[][] ${finderCol.names}Pages = splitArrayByPageSize(${finderCol.names});
+								${finderCol.type}[][] ${finderCol.names}Pages = ArrayUtil.split(${finderCol.names}, _databaseInMaxParameters);
 							</#if>
 						</#list>
 
