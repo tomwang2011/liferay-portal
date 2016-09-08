@@ -1447,6 +1447,177 @@ public class ArrayUtil {
 		}
 	}
 
+	public static boolean[][] split(boolean[] array, int splitSize) {
+		int count = array.length % splitSize;
+
+		boolean[][] newArray = new boolean[count][];
+
+		if (count == 1) {
+			newArray[0] = array;
+
+			return newArray;
+		}
+
+
+		for (int i = 0; i < count; i++) {
+			newArray[i] = ArrayUtil.subset(
+				array, (splitSize * i),
+				Math.min(array.length, splitSize * (i + 1)));
+		}
+
+		return newArray;
+	}
+
+	public static char[][] split(char[] array, int splitSize) {
+		int count = array.length % splitSize;
+
+		char[][] newArray = new char[count][];
+
+		if (count == 1) {
+			newArray[0] = array;
+
+			return newArray;
+		}
+
+
+		for (int i = 0; i < count; i++) {
+			newArray[i] = ArrayUtil.subset(
+				array, (splitSize * i),
+				Math.min(array.length, splitSize * (i + 1)));
+		}
+
+		return newArray;
+	}
+
+	public static double[][] split(double[] array, int splitSize) {
+		int count = array.length % splitSize;
+
+		double[][] newArray = new double[count][];
+
+		if (count == 1) {
+			newArray[0] = array;
+
+			return newArray;
+		}
+
+
+		for (int i = 0; i < count; i++) {
+			newArray[i] = ArrayUtil.subset(
+				array, (splitSize * i),
+				Math.min(array.length, splitSize * (i + 1)));
+		}
+
+		return newArray;
+	}
+
+	public static float[][] split(float[] array, int splitSize) {
+		int count = array.length % splitSize;
+
+		float[][] newArray = new float[count][];
+
+		if (count == 1) {
+			newArray[0] = array;
+
+			return newArray;
+		}
+
+
+		for (int i = 0; i < count; i++) {
+			newArray[i] = ArrayUtil.subset(
+				array, (splitSize * i),
+				Math.min(array.length, splitSize * (i + 1)));
+		}
+
+		return newArray;
+	}
+
+	public static int[][] split(int[] array, int splitSize) {
+		int count = array.length % splitSize;
+
+		int[][] newArray = new int[count][];
+
+		if (count == 1) {
+			newArray[0] = array;
+
+			return newArray;
+		}
+
+
+		for (int i = 0; i < count; i++) {
+			newArray[i] = ArrayUtil.subset(
+				array, (splitSize * i),
+				Math.min(array.length, splitSize * (i + 1)));
+		}
+
+		return newArray;
+	}
+
+	public static long[][] split(long[] array, int splitSize) {
+		int count = array.length % splitSize;
+
+		long[][] newArray = new long[count][];
+
+		if (count == 1) {
+			newArray[0] = array;
+
+			return newArray;
+		}
+
+
+		for (int i = 0; i < count; i++) {
+			newArray[i] = ArrayUtil.subset(
+				array, (splitSize * i),
+				Math.min(array.length, splitSize * (i + 1)));
+		}
+
+		return newArray;
+	}
+
+	public static short[][] split(short[] array, int splitSize) {
+		int count = array.length % splitSize;
+
+		short[][] newArray = new short[count][];
+
+		if (count == 1) {
+			newArray[0] = array;
+
+			return newArray;
+		}
+
+
+		for (int i = 0; i < count; i++) {
+			newArray[i] = ArrayUtil.subset(
+				array, (splitSize * i),
+				Math.min(array.length, splitSize * (i + 1)));
+		}
+
+		return newArray;
+	}
+
+	public static <T> T[][] split(T[] array, int splitSize) {
+		int count = array.length % splitSize;
+
+		Class<?> clazz = array.getClass();
+
+		T[][] newArray = (T[][])Array.newInstance(
+			clazz.getComponentType(), count);
+
+		if (count == 1) {
+			newArray[0] = array;
+
+			return newArray;
+		}
+
+
+		for (int i = 0; i < count; i++) {
+			newArray[i] = ArrayUtil.subset(
+				array, (splitSize * i),
+				Math.min(array.length, splitSize * (i + 1)));
+		}
+
+		return newArray;
+	}
+
 	public static boolean[] subset(boolean[] array, int start, int end) {
 		if ((start < 0) || (end < 0) || ((end - start) < 0)) {
 			return array;
