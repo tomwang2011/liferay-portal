@@ -50,6 +50,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -2528,54 +2529,27 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 		}
 
 		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_DDMDATAPROVIDERINSTANCE_WHERE);
-
-			if (groupIds.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_GROUPID_GROUPID_7);
-
-				query.append(StringUtil.merge(groupIds));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
+			list = new ArrayList();
 
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+						(_databaseInMaxParameters > 0) &&
+						(groupIds.length > _databaseInMaxParameters)) {
+					long[][] groupIdsPages = ArrayUtil.split(groupIds,
+							_databaseInMaxParameters);
 
-				Query q = session.createQuery(sql);
+					for (long[] groupIdsPage : groupIdsPages) {
+						list.addAll(_findByGroupId(groupIdsPage, start, end,
+								orderByComparator, pagination));
+					}
 
-				if (!pagination) {
-					list = (List<DDMDataProviderInstance>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
+					Collections.sort(list, orderByComparator);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<DDMDataProviderInstance>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = _findByGroupId(groupIds, start, end,
+							orderByComparator, pagination);
 				}
 
 				cacheResult(list);
@@ -2589,9 +2563,72 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return list;
+	}
+
+	private List<DDMDataProviderInstance> _findByGroupId(long[] groupIds,
+		int start, int end,
+		OrderByComparator<DDMDataProviderInstance> orderByComparator,
+		boolean pagination) {
+		List<DDMDataProviderInstance> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_DDMDATAPROVIDERINSTANCE_WHERE);
+
+		if (groupIds.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_GROUPID_GROUPID_7);
+
+			query.append(StringUtil.merge(groupIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+				orderByComparator);
+		}
+		else
+		 if (pagination) {
+			query.append(DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			if (!pagination) {
+				list = (List<DDMDataProviderInstance>)QueryUtil.list(q,
+						getDialect(), start, end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
 			}
+			else {
+				list = (List<DDMDataProviderInstance>)QueryUtil.list(q,
+						getDialect(), start, end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
