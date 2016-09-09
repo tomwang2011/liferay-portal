@@ -41,6 +41,7 @@ import com.liferay.push.notifications.service.persistence.PushNotificationsDevic
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -960,76 +961,27 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 		}
 
 		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_PUSHNOTIFICATIONSDEVICE_WHERE);
-
-			if (userIds.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_U_P_USERID_7);
-
-				query.append(StringUtil.merge(userIds));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(WHERE_AND);
-			}
-
-			boolean bindPlatform = false;
-
-			if (platform == null) {
-				query.append(_FINDER_COLUMN_U_P_PLATFORM_1);
-			}
-			else if (platform.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_U_P_PLATFORM_3);
-			}
-			else {
-				bindPlatform = true;
-
-				query.append(_FINDER_COLUMN_U_P_PLATFORM_2);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(PushNotificationsDeviceModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
+			list = new ArrayList();
 
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+						(_databaseInMaxParameters > 0) &&
+						(userIds.length > _databaseInMaxParameters)) {
+					long[][] userIdsPages = ArrayUtil.split(userIds,
+							_databaseInMaxParameters);
 
-				Query q = session.createQuery(sql);
+					for (long[] userIdsPage : userIdsPages) {
+						list.addAll(_findByU_P(userIdsPage, platform, start,
+								end, orderByComparator, pagination));
+					}
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (bindPlatform) {
-					qPos.add(platform);
-				}
-
-				if (!pagination) {
-					list = (List<PushNotificationsDevice>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
+					Collections.sort(list, orderByComparator);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<PushNotificationsDevice>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = _findByU_P(userIds, platform, start, end,
+							orderByComparator, pagination);
 				}
 
 				cacheResult(list);
@@ -1043,9 +995,94 @@ public class PushNotificationsDevicePersistenceImpl extends BasePersistenceImpl<
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return list;
+	}
+
+	private List<PushNotificationsDevice> _findByU_P(long[] userIds,
+		String platform, int start, int end,
+		OrderByComparator<PushNotificationsDevice> orderByComparator,
+		boolean pagination) {
+		List<PushNotificationsDevice> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_PUSHNOTIFICATIONSDEVICE_WHERE);
+
+		if (userIds.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_U_P_USERID_7);
+
+			query.append(StringUtil.merge(userIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		boolean bindPlatform = false;
+
+		if (platform == null) {
+			query.append(_FINDER_COLUMN_U_P_PLATFORM_1);
+		}
+		else if (platform.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_U_P_PLATFORM_3);
+		}
+		else {
+			bindPlatform = true;
+
+			query.append(_FINDER_COLUMN_U_P_PLATFORM_2);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+				orderByComparator);
+		}
+		else
+		 if (pagination) {
+			query.append(PushNotificationsDeviceModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			if (bindPlatform) {
+				qPos.add(platform);
 			}
+
+			if (!pagination) {
+				list = (List<PushNotificationsDevice>)QueryUtil.list(q,
+						getDialect(), start, end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
+			}
+			else {
+				list = (List<PushNotificationsDevice>)QueryUtil.list(q,
+						getDialect(), start, end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
