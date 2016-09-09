@@ -1126,78 +1126,27 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		}
 
 		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_EXPANDOCOLUMN_WHERE);
-
-			query.append(_FINDER_COLUMN_T_N_TABLEID_2);
-
-			if (names.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				for (int i = 0; i < names.length; i++) {
-					String name = names[i];
-
-					if (name == null) {
-						query.append(_FINDER_COLUMN_T_N_NAME_1);
-					}
-					else if (name.equals(StringPool.BLANK)) {
-						query.append(_FINDER_COLUMN_T_N_NAME_3);
-					}
-					else {
-						query.append(_FINDER_COLUMN_T_N_NAME_2);
-					}
-
-					if ((i + 1) < names.length) {
-						query.append(WHERE_OR);
-					}
-				}
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(ExpandoColumnModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
+			list = new ArrayList();
 
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+						(_databaseInMaxParameters > 0) &&
+						(names.length > _databaseInMaxParameters)) {
+					String[][] namesPages = ArrayUtil.split(names,
+							_databaseInMaxParameters);
 
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(tableId);
-
-				for (String name : names) {
-					if ((name != null) && !name.isEmpty()) {
-						qPos.add(name);
+					for (String[] namesPage : namesPages) {
+						list.addAll(_findByT_N(tableId, namesPage, start, end,
+								orderByComparator, pagination));
 					}
-				}
 
-				if (!pagination) {
-					list = (List<ExpandoColumn>)QueryUtil.list(q, getDialect(),
-							start, end, false);
-
-					Collections.sort(list);
+					Collections.sort(list, orderByComparator);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<ExpandoColumn>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = _findByT_N(tableId, names, start, end,
+							orderByComparator, pagination);
 				}
 
 				cacheResult(list);
@@ -1211,9 +1160,95 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return list;
+	}
+
+	private List<ExpandoColumn> _findByT_N(long tableId, String[] names,
+		int start, int end, OrderByComparator<ExpandoColumn> orderByComparator,
+		boolean pagination) {
+		List<ExpandoColumn> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_EXPANDOCOLUMN_WHERE);
+
+		query.append(_FINDER_COLUMN_T_N_TABLEID_2);
+
+		if (names.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			for (int i = 0; i < names.length; i++) {
+				String name = names[i];
+
+				if (name == null) {
+					query.append(_FINDER_COLUMN_T_N_NAME_1);
+				}
+				else if (name.equals(StringPool.BLANK)) {
+					query.append(_FINDER_COLUMN_T_N_NAME_3);
+				}
+				else {
+					query.append(_FINDER_COLUMN_T_N_NAME_2);
+				}
+
+				if ((i + 1) < names.length) {
+					query.append(WHERE_OR);
+				}
 			}
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+				orderByComparator);
+		}
+		else
+		 if (pagination) {
+			query.append(ExpandoColumnModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(tableId);
+
+			for (String name : names) {
+				if ((name != null) && !name.isEmpty()) {
+					qPos.add(name);
+				}
+			}
+
+			if (!pagination) {
+				list = (List<ExpandoColumn>)QueryUtil.list(q, getDialect(),
+						start, end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
+			}
+			else {
+				list = (List<ExpandoColumn>)QueryUtil.list(q, getDialect(),
+						start, end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
