@@ -2458,68 +2458,28 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		}
 
 		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_SUBSCRIPTION_WHERE);
-
-			query.append(_FINDER_COLUMN_C_U_C_C_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_U_C_C_USERID_2);
-
-			query.append(_FINDER_COLUMN_C_U_C_C_CLASSNAMEID_2);
-
-			if (classPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_C_U_C_C_CLASSPK_7);
-
-				query.append(StringUtil.merge(classPKs));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(SubscriptionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
+			list = new ArrayList();
 
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+						(_databaseInMaxParameters > 0) &&
+						(classPKs.length > _databaseInMaxParameters)) {
+					long[][] classPKsPages = ArrayUtil.split(classPKs,
+							_databaseInMaxParameters);
 
-				Query q = session.createQuery(sql);
+					for (long[] classPKsPage : classPKsPages) {
+						list.addAll(_findByC_U_C_C(companyId, userId,
+								classNameId, classPKsPage, start, end,
+								orderByComparator, pagination));
+					}
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(userId);
-
-				qPos.add(classNameId);
-
-				if (!pagination) {
-					list = (List<Subscription>)QueryUtil.list(q, getDialect(),
-							start, end, false);
-
-					Collections.sort(list);
+					Collections.sort(list, orderByComparator);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<Subscription>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = _findByC_U_C_C(companyId, userId, classNameId,
+							classPKs, start, end, orderByComparator, pagination);
 				}
 
 				cacheResult(list);
@@ -2533,9 +2493,85 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return list;
+	}
+
+	private List<Subscription> _findByC_U_C_C(long companyId, long userId,
+		long classNameId, long[] classPKs, int start, int end,
+		OrderByComparator<Subscription> orderByComparator, boolean pagination) {
+		List<Subscription> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_SUBSCRIPTION_WHERE);
+
+		query.append(_FINDER_COLUMN_C_U_C_C_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_U_C_C_USERID_2);
+
+		query.append(_FINDER_COLUMN_C_U_C_C_CLASSNAMEID_2);
+
+		if (classPKs.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_C_U_C_C_CLASSPK_7);
+
+			query.append(StringUtil.merge(classPKs));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+				orderByComparator);
+		}
+		else
+		 if (pagination) {
+			query.append(SubscriptionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(userId);
+
+			qPos.add(classNameId);
+
+			if (!pagination) {
+				list = (List<Subscription>)QueryUtil.list(q, getDialect(),
+						start, end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
 			}
+			else {
+				list = (List<Subscription>)QueryUtil.list(q, getDialect(),
+						start, end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
