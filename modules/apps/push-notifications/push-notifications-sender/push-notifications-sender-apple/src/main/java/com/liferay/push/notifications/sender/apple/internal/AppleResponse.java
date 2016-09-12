@@ -18,7 +18,6 @@ import com.liferay.push.notifications.sender.BaseResponse;
 
 import com.notnoop.apns.ApnsNotification;
 import com.notnoop.apns.DeliveryError;
-import com.notnoop.exceptions.ApnsDeliveryErrorException;
 
 /**
  * @author Bruno Farache
@@ -38,15 +37,14 @@ public class AppleResponse extends BaseResponse {
 
 		this(apnsNotification);
 
-		if (throwable instanceof ApnsDeliveryErrorException) {
-			ApnsDeliveryErrorException apnsDeliveryErrorException =
-				(ApnsDeliveryErrorException)throwable;
+		status = throwable.getMessage();
+	}
 
-			DeliveryError deliveryError =
-				apnsDeliveryErrorException.getDeliveryError();
+	public AppleResponse(int identifier, DeliveryError deliveryError) {
+		this(null);
 
-			status = deliveryError.name();
-		}
+		id = String.valueOf(identifier);
+		status = deliveryError.name();
 	}
 
 	public int getExpiry() {
