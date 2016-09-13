@@ -48,6 +48,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -5195,60 +5196,27 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		}
 
 		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_CALENDARBOOKING_WHERE);
-
-			query.append(_FINDER_COLUMN_C_S_CALENDARID_2);
-
-			if (statuses.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_C_S_STATUS_7);
-
-				query.append(StringUtil.merge(statuses));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(CalendarBookingModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
+			list = new ArrayList();
 
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+						(databaseInMaxParameters > 0) &&
+						(statuses.length > databaseInMaxParameters)) {
+					int[][] statusesPages = ArrayUtil.split(statuses,
+							databaseInMaxParameters);
 
-				Query q = session.createQuery(sql);
+					for (int[] statusesPage : statusesPages) {
+						list.addAll(_findByC_S(calendarId, statusesPage, start,
+								end, orderByComparator, pagination));
+					}
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(calendarId);
-
-				if (!pagination) {
-					list = (List<CalendarBooking>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
+					Collections.sort(list, orderByComparator);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CalendarBooking>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = _findByC_S(calendarId, statuses, start, end,
+							orderByComparator, pagination);
 				}
 
 				cacheResult(list);
@@ -5262,9 +5230,77 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return list;
+	}
+
+	private List<CalendarBooking> _findByC_S(long calendarId, int[] statuses,
+		int start, int end,
+		OrderByComparator<CalendarBooking> orderByComparator, boolean pagination) {
+		List<CalendarBooking> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_CALENDARBOOKING_WHERE);
+
+		query.append(_FINDER_COLUMN_C_S_CALENDARID_2);
+
+		if (statuses.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_C_S_STATUS_7);
+
+			query.append(StringUtil.merge(statuses));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+				orderByComparator);
+		}
+		else
+		 if (pagination) {
+			query.append(CalendarBookingModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(calendarId);
+
+			if (!pagination) {
+				list = (List<CalendarBooking>)QueryUtil.list(q, getDialect(),
+						start, end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
 			}
+			else {
+				list = (List<CalendarBooking>)QueryUtil.list(q, getDialect(),
+						start, end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
@@ -5366,41 +5402,22 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_COUNT_CALENDARBOOKING_WHERE);
-
-			query.append(_FINDER_COLUMN_C_S_CALENDARID_2);
-
-			if (statuses.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_C_S_STATUS_7);
-
-				query.append(StringUtil.merge(statuses));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			String sql = query.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((databaseInMaxParameters > 0) &&
+						(statuses.length > databaseInMaxParameters)) {
+					count = Long.valueOf(0);
 
-				Query q = session.createQuery(sql);
+					int[][] statusesPages = ArrayUtil.split(statuses,
+							databaseInMaxParameters);
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(calendarId);
-
-				count = (Long)q.uniqueResult();
+					for (int[] statusesPage : statusesPages) {
+						count += Long.valueOf(_countByC_S(calendarId,
+								statusesPage));
+					}
+				}
+				else {
+					count = Long.valueOf(_countByC_S(calendarId, statuses));
+				}
 
 				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_S,
 					finderArgs, count);
@@ -5411,9 +5428,55 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
-			}
+		}
+
+		return count.intValue();
+	}
+
+	private int _countByC_S(long calendarId, int[] statuses) {
+		Long count = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_COUNT_CALENDARBOOKING_WHERE);
+
+		query.append(_FINDER_COLUMN_C_S_CALENDARID_2);
+
+		if (statuses.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_C_S_STATUS_7);
+
+			query.append(StringUtil.merge(statuses));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(calendarId);
+
+			count = (Long)q.uniqueResult();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return count.intValue();

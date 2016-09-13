@@ -64,6 +64,7 @@ import java.util.Set;
 /**
  * @generated
  */
+
 @Ignore
 @RunWith(Arquillian.class)
 public class WSRPProducerPersistenceTest {
