@@ -60,6 +60,7 @@ import com.liferay.portlet.messageboards.model.impl.MBMessageModelImpl;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -8251,60 +8252,27 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		}
 
 		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_MBMESSAGE_WHERE);
-
-			query.append(_FINDER_COLUMN_U_C_USERID_2);
-
-			if (classNameIds.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_7);
-
-				query.append(StringUtil.merge(classNameIds));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(MBMessageModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
+			list = new ArrayList();
 
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+						(databaseInMaxParameters > 0) &&
+						(classNameIds.length > databaseInMaxParameters)) {
+					long[][] classNameIdsPages = ArrayUtil.split(classNameIds,
+							databaseInMaxParameters);
 
-				Query q = session.createQuery(sql);
+					for (long[] classNameIdsPage : classNameIdsPages) {
+						list.addAll(_findByU_C(userId, classNameIdsPage, start,
+								end, orderByComparator, pagination));
+					}
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(userId);
-
-				if (!pagination) {
-					list = (List<MBMessage>)QueryUtil.list(q, getDialect(),
-							start, end, false);
-
-					Collections.sort(list);
+					Collections.sort(list, orderByComparator);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<MBMessage>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = _findByU_C(userId, classNameIds, start, end,
+							orderByComparator, pagination);
 				}
 
 				cacheResult(list);
@@ -8318,9 +8286,77 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return list;
+	}
+
+	private List<MBMessage> _findByU_C(long userId, long[] classNameIds,
+		int start, int end, OrderByComparator<MBMessage> orderByComparator,
+		boolean pagination) {
+		List<MBMessage> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_MBMESSAGE_WHERE);
+
+		query.append(_FINDER_COLUMN_U_C_USERID_2);
+
+		if (classNameIds.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_7);
+
+			query.append(StringUtil.merge(classNameIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+				orderByComparator);
+		}
+		else
+		 if (pagination) {
+			query.append(MBMessageModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userId);
+
+			if (!pagination) {
+				list = (List<MBMessage>)QueryUtil.list(q, getDialect(), start,
+						end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
 			}
+			else {
+				list = (List<MBMessage>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
@@ -8422,41 +8458,22 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_COUNT_MBMESSAGE_WHERE);
-
-			query.append(_FINDER_COLUMN_U_C_USERID_2);
-
-			if (classNameIds.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_7);
-
-				query.append(StringUtil.merge(classNameIds));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			String sql = query.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((databaseInMaxParameters > 0) &&
+						(classNameIds.length > databaseInMaxParameters)) {
+					count = Long.valueOf(0);
 
-				Query q = session.createQuery(sql);
+					long[][] classNameIdsPages = ArrayUtil.split(classNameIds,
+							databaseInMaxParameters);
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(userId);
-
-				count = (Long)q.uniqueResult();
+					for (long[] classNameIdsPage : classNameIdsPages) {
+						count += Long.valueOf(_countByU_C(userId,
+								classNameIdsPage));
+					}
+				}
+				else {
+					count = Long.valueOf(_countByU_C(userId, classNameIds));
+				}
 
 				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C,
 					finderArgs, count);
@@ -8467,9 +8484,55 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
-			}
+		}
+
+		return count.intValue();
+	}
+
+	private int _countByU_C(long userId, long[] classNameIds) {
+		Long count = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_COUNT_MBMESSAGE_WHERE);
+
+		query.append(_FINDER_COLUMN_U_C_USERID_2);
+
+		if (classNameIds.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_U_C_CLASSNAMEID_7);
+
+			query.append(StringUtil.merge(classNameIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userId);
+
+			count = (Long)q.uniqueResult();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return count.intValue();
@@ -15350,66 +15413,28 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		}
 
 		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_MBMESSAGE_WHERE);
-
-			query.append(_FINDER_COLUMN_U_C_S_USERID_2);
-
-			if (classNameIds.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_U_C_S_CLASSNAMEID_7);
-
-				query.append(StringUtil.merge(classNameIds));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_U_C_S_STATUS_2);
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(MBMessageModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
+			list = new ArrayList();
 
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+						(databaseInMaxParameters > 0) &&
+						(classNameIds.length > databaseInMaxParameters)) {
+					long[][] classNameIdsPages = ArrayUtil.split(classNameIds,
+							databaseInMaxParameters);
 
-				Query q = session.createQuery(sql);
+					for (long[] classNameIdsPage : classNameIdsPages) {
+						list.addAll(_findByU_C_S(userId, classNameIdsPage,
+								status, start, end, orderByComparator,
+								pagination));
+					}
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(userId);
-
-				qPos.add(status);
-
-				if (!pagination) {
-					list = (List<MBMessage>)QueryUtil.list(q, getDialect(),
-							start, end, false);
-
-					Collections.sort(list);
+					Collections.sort(list, orderByComparator);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<MBMessage>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = _findByU_C_S(userId, classNameIds, status, start,
+							end, orderByComparator, pagination);
 				}
 
 				cacheResult(list);
@@ -15423,9 +15448,83 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return list;
+	}
+
+	private List<MBMessage> _findByU_C_S(long userId, long[] classNameIds,
+		int status, int start, int end,
+		OrderByComparator<MBMessage> orderByComparator, boolean pagination) {
+		List<MBMessage> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_MBMESSAGE_WHERE);
+
+		query.append(_FINDER_COLUMN_U_C_S_USERID_2);
+
+		if (classNameIds.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_U_C_S_CLASSNAMEID_7);
+
+			query.append(StringUtil.merge(classNameIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_U_C_S_STATUS_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+				orderByComparator);
+		}
+		else
+		 if (pagination) {
+			query.append(MBMessageModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userId);
+
+			qPos.add(status);
+
+			if (!pagination) {
+				list = (List<MBMessage>)QueryUtil.list(q, getDialect(), start,
+						end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
 			}
+			else {
+				list = (List<MBMessage>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
@@ -15534,47 +15633,23 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_COUNT_MBMESSAGE_WHERE);
-
-			query.append(_FINDER_COLUMN_U_C_S_USERID_2);
-
-			if (classNameIds.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_U_C_S_CLASSNAMEID_7);
-
-				query.append(StringUtil.merge(classNameIds));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_U_C_S_STATUS_2);
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			String sql = query.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((databaseInMaxParameters > 0) &&
+						(classNameIds.length > databaseInMaxParameters)) {
+					count = Long.valueOf(0);
 
-				Query q = session.createQuery(sql);
+					long[][] classNameIdsPages = ArrayUtil.split(classNameIds,
+							databaseInMaxParameters);
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(userId);
-
-				qPos.add(status);
-
-				count = (Long)q.uniqueResult();
+					for (long[] classNameIdsPage : classNameIdsPages) {
+						count += Long.valueOf(_countByU_C_S(userId,
+								classNameIdsPage, status));
+					}
+				}
+				else {
+					count = Long.valueOf(_countByU_C_S(userId, classNameIds,
+								status));
+				}
 
 				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_U_C_S,
 					finderArgs, count);
@@ -15585,9 +15660,61 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
-			}
+		}
+
+		return count.intValue();
+	}
+
+	private int _countByU_C_S(long userId, long[] classNameIds, int status) {
+		Long count = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_COUNT_MBMESSAGE_WHERE);
+
+		query.append(_FINDER_COLUMN_U_C_S_USERID_2);
+
+		if (classNameIds.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_U_C_S_CLASSNAMEID_7);
+
+			query.append(StringUtil.merge(classNameIds));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_U_C_S_STATUS_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(userId);
+
+			qPos.add(status);
+
+			count = (Long)q.uniqueResult();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return count.intValue();

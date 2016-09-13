@@ -48,6 +48,7 @@ import java.io.Serializable;
 
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -2276,60 +2277,29 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		}
 
 		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSPK_7);
-
-				query.append(StringUtil.merge(creatorClassPKs));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
+			list = new ArrayList();
 
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+						(databaseInMaxParameters > 0) &&
+						(creatorClassPKs.length > databaseInMaxParameters)) {
+					long[][] creatorClassPKsPages = ArrayUtil.split(creatorClassPKs,
+							databaseInMaxParameters);
 
-				Query q = session.createQuery(sql);
+					for (long[] creatorClassPKsPage : creatorClassPKsPages) {
+						list.addAll(_findByCCNI_CCPK(creatorClassNameId,
+								creatorClassPKsPage, start, end,
+								orderByComparator, pagination));
+					}
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(creatorClassNameId);
-
-				if (!pagination) {
-					list = (List<MicroblogsEntry>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
+					Collections.sort(list, orderByComparator);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<MicroblogsEntry>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = _findByCCNI_CCPK(creatorClassNameId,
+							creatorClassPKs, start, end, orderByComparator,
+							pagination);
 				}
 
 				cacheResult(list);
@@ -2343,9 +2313,77 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return list;
+	}
+
+	private List<MicroblogsEntry> _findByCCNI_CCPK(long creatorClassNameId,
+		long[] creatorClassPKs, int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator, boolean pagination) {
+		List<MicroblogsEntry> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSNAMEID_2);
+
+		if (creatorClassPKs.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSPK_7);
+
+			query.append(StringUtil.merge(creatorClassPKs));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+				orderByComparator);
+		}
+		else
+		 if (pagination) {
+			query.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(creatorClassNameId);
+
+			if (!pagination) {
+				list = (List<MicroblogsEntry>)QueryUtil.list(q, getDialect(),
+						start, end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
 			}
+			else {
+				list = (List<MicroblogsEntry>)QueryUtil.list(q, getDialect(),
+						start, end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
@@ -2448,41 +2486,23 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSPK_7);
-
-				query.append(StringUtil.merge(creatorClassPKs));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			String sql = query.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((databaseInMaxParameters > 0) &&
+						(creatorClassPKs.length > databaseInMaxParameters)) {
+					count = Long.valueOf(0);
 
-				Query q = session.createQuery(sql);
+					long[][] creatorClassPKsPages = ArrayUtil.split(creatorClassPKs,
+							databaseInMaxParameters);
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(creatorClassNameId);
-
-				count = (Long)q.uniqueResult();
+					for (long[] creatorClassPKsPage : creatorClassPKsPages) {
+						count += Long.valueOf(_countByCCNI_CCPK(
+								creatorClassNameId, creatorClassPKsPage));
+					}
+				}
+				else {
+					count = Long.valueOf(_countByCCNI_CCPK(creatorClassNameId,
+								creatorClassPKs));
+				}
 
 				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CCNI_CCPK,
 					finderArgs, count);
@@ -2493,9 +2513,56 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
-			}
+		}
+
+		return count.intValue();
+	}
+
+	private int _countByCCNI_CCPK(long creatorClassNameId,
+		long[] creatorClassPKs) {
+		Long count = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSNAMEID_2);
+
+		if (creatorClassPKs.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_CCNI_CCPK_CREATORCLASSPK_7);
+
+			query.append(StringUtil.merge(creatorClassPKs));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(creatorClassNameId);
+
+			count = (Long)q.uniqueResult();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return count.intValue();
@@ -4273,64 +4340,29 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		}
 
 		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_C_CCNI_CCPK_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSPK_7);
-
-				query.append(StringUtil.merge(creatorClassPKs));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
+			list = new ArrayList();
 
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+						(databaseInMaxParameters > 0) &&
+						(creatorClassPKs.length > databaseInMaxParameters)) {
+					long[][] creatorClassPKsPages = ArrayUtil.split(creatorClassPKs,
+							databaseInMaxParameters);
 
-				Query q = session.createQuery(sql);
+					for (long[] creatorClassPKsPage : creatorClassPKsPages) {
+						list.addAll(_findByC_CCNI_CCPK(companyId,
+								creatorClassNameId, creatorClassPKsPage, start,
+								end, orderByComparator, pagination));
+					}
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(creatorClassNameId);
-
-				if (!pagination) {
-					list = (List<MicroblogsEntry>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
+					Collections.sort(list, orderByComparator);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<MicroblogsEntry>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = _findByC_CCNI_CCPK(companyId, creatorClassNameId,
+							creatorClassPKs, start, end, orderByComparator,
+							pagination);
 				}
 
 				cacheResult(list);
@@ -4344,9 +4376,81 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return list;
+	}
+
+	private List<MicroblogsEntry> _findByC_CCNI_CCPK(long companyId,
+		long creatorClassNameId, long[] creatorClassPKs, int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator, boolean pagination) {
+		List<MicroblogsEntry> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_C_CCNI_CCPK_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSNAMEID_2);
+
+		if (creatorClassPKs.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSPK_7);
+
+			query.append(StringUtil.merge(creatorClassPKs));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+				orderByComparator);
+		}
+		else
+		 if (pagination) {
+			query.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(creatorClassNameId);
+
+			if (!pagination) {
+				list = (List<MicroblogsEntry>)QueryUtil.list(q, getDialect(),
+						start, end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
 			}
+			else {
+				list = (List<MicroblogsEntry>)QueryUtil.list(q, getDialect(),
+						start, end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
@@ -4461,45 +4565,23 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_C_CCNI_CCPK_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSPK_7);
-
-				query.append(StringUtil.merge(creatorClassPKs));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			String sql = query.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((databaseInMaxParameters > 0) &&
+						(creatorClassPKs.length > databaseInMaxParameters)) {
+					count = Long.valueOf(0);
 
-				Query q = session.createQuery(sql);
+					long[][] creatorClassPKsPages = ArrayUtil.split(creatorClassPKs,
+							databaseInMaxParameters);
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(creatorClassNameId);
-
-				count = (Long)q.uniqueResult();
+					for (long[] creatorClassPKsPage : creatorClassPKsPages) {
+						count += Long.valueOf(_countByC_CCNI_CCPK(companyId,
+								creatorClassNameId, creatorClassPKsPage));
+					}
+				}
+				else {
+					count = Long.valueOf(_countByC_CCNI_CCPK(companyId,
+								creatorClassNameId, creatorClassPKs));
+				}
 
 				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_CCNI_CCPK,
 					finderArgs, count);
@@ -4510,9 +4592,60 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
-			}
+		}
+
+		return count.intValue();
+	}
+
+	private int _countByC_CCNI_CCPK(long companyId, long creatorClassNameId,
+		long[] creatorClassPKs) {
+		Long count = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_C_CCNI_CCPK_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSNAMEID_2);
+
+		if (creatorClassPKs.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_C_CCNI_CCPK_CREATORCLASSPK_7);
+
+			query.append(StringUtil.merge(creatorClassPKs));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(creatorClassNameId);
+
+			count = (Long)q.uniqueResult();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return count.intValue();
@@ -5782,66 +5915,29 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		}
 
 		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSPK_7);
-
-				query.append(StringUtil.merge(creatorClassPKs));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_CCNI_CCPK_T_TYPE_2);
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
+			list = new ArrayList();
 
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+						(databaseInMaxParameters > 0) &&
+						(creatorClassPKs.length > databaseInMaxParameters)) {
+					long[][] creatorClassPKsPages = ArrayUtil.split(creatorClassPKs,
+							databaseInMaxParameters);
 
-				Query q = session.createQuery(sql);
+					for (long[] creatorClassPKsPage : creatorClassPKsPages) {
+						list.addAll(_findByCCNI_CCPK_T(creatorClassNameId,
+								creatorClassPKsPage, type, start, end,
+								orderByComparator, pagination));
+					}
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(creatorClassNameId);
-
-				qPos.add(type);
-
-				if (!pagination) {
-					list = (List<MicroblogsEntry>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
+					Collections.sort(list, orderByComparator);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<MicroblogsEntry>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = _findByCCNI_CCPK_T(creatorClassNameId,
+							creatorClassPKs, type, start, end,
+							orderByComparator, pagination);
 				}
 
 				cacheResult(list);
@@ -5855,9 +5951,83 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return list;
+	}
+
+	private List<MicroblogsEntry> _findByCCNI_CCPK_T(long creatorClassNameId,
+		long[] creatorClassPKs, int type, int start, int end,
+		OrderByComparator<MicroblogsEntry> orderByComparator, boolean pagination) {
+		List<MicroblogsEntry> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
+
+		if (creatorClassPKs.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSPK_7);
+
+			query.append(StringUtil.merge(creatorClassPKs));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_CCNI_CCPK_T_TYPE_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+				orderByComparator);
+		}
+		else
+		 if (pagination) {
+			query.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(creatorClassNameId);
+
+			qPos.add(type);
+
+			if (!pagination) {
+				list = (List<MicroblogsEntry>)QueryUtil.list(q, getDialect(),
+						start, end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
 			}
+			else {
+				list = (List<MicroblogsEntry>)QueryUtil.list(q, getDialect(),
+						start, end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
@@ -5972,47 +6142,23 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSPK_7);
-
-				query.append(StringUtil.merge(creatorClassPKs));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_CCNI_CCPK_T_TYPE_2);
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			String sql = query.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((databaseInMaxParameters > 0) &&
+						(creatorClassPKs.length > databaseInMaxParameters)) {
+					count = Long.valueOf(0);
 
-				Query q = session.createQuery(sql);
+					long[][] creatorClassPKsPages = ArrayUtil.split(creatorClassPKs,
+							databaseInMaxParameters);
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(creatorClassNameId);
-
-				qPos.add(type);
-
-				count = (Long)q.uniqueResult();
+					for (long[] creatorClassPKsPage : creatorClassPKsPages) {
+						count += Long.valueOf(_countByCCNI_CCPK_T(
+								creatorClassNameId, creatorClassPKsPage, type));
+					}
+				}
+				else {
+					count = Long.valueOf(_countByCCNI_CCPK_T(
+								creatorClassNameId, creatorClassPKs, type));
+				}
 
 				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CCNI_CCPK_T,
 					finderArgs, count);
@@ -6023,9 +6169,62 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
-			}
+		}
+
+		return count.intValue();
+	}
+
+	private int _countByCCNI_CCPK_T(long creatorClassNameId,
+		long[] creatorClassPKs, int type) {
+		Long count = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
+
+		if (creatorClassPKs.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_CCNI_CCPK_T_CREATORCLASSPK_7);
+
+			query.append(StringUtil.merge(creatorClassPKs));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_CCNI_CCPK_T_TYPE_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(creatorClassNameId);
+
+			qPos.add(type);
+
+			count = (Long)q.uniqueResult();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return count.intValue();
@@ -6738,70 +6937,29 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 		}
 
 		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSPK_7);
-
-				query.append(StringUtil.merge(creatorClassPKs));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_TYPE_2);
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
+			list = new ArrayList();
 
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+						(databaseInMaxParameters > 0) &&
+						(creatorClassPKs.length > databaseInMaxParameters)) {
+					long[][] creatorClassPKsPages = ArrayUtil.split(creatorClassPKs,
+							databaseInMaxParameters);
 
-				Query q = session.createQuery(sql);
+					for (long[] creatorClassPKsPage : creatorClassPKsPages) {
+						list.addAll(_findByC_CCNI_CCPK_T(companyId,
+								creatorClassNameId, creatorClassPKsPage, type,
+								start, end, orderByComparator, pagination));
+					}
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(creatorClassNameId);
-
-				qPos.add(type);
-
-				if (!pagination) {
-					list = (List<MicroblogsEntry>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
+					Collections.sort(list, orderByComparator);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<MicroblogsEntry>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = _findByC_CCNI_CCPK_T(companyId, creatorClassNameId,
+							creatorClassPKs, type, start, end,
+							orderByComparator, pagination);
 				}
 
 				cacheResult(list);
@@ -6815,9 +6973,88 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return list;
+	}
+
+	private List<MicroblogsEntry> _findByC_CCNI_CCPK_T(long companyId,
+		long creatorClassNameId, long[] creatorClassPKs, int type, int start,
+		int end, OrderByComparator<MicroblogsEntry> orderByComparator,
+		boolean pagination) {
+		List<MicroblogsEntry> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_MICROBLOGSENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
+
+		if (creatorClassPKs.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSPK_7);
+
+			query.append(StringUtil.merge(creatorClassPKs));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_TYPE_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+				orderByComparator);
+		}
+		else
+		 if (pagination) {
+			query.append(MicroblogsEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(creatorClassNameId);
+
+			qPos.add(type);
+
+			if (!pagination) {
+				list = (List<MicroblogsEntry>)QueryUtil.list(q, getDialect(),
+						start, end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
 			}
+			else {
+				list = (List<MicroblogsEntry>)QueryUtil.list(q, getDialect(),
+						start, end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
@@ -6940,51 +7177,23 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
-
-			if (creatorClassPKs.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSPK_7);
-
-				query.append(StringUtil.merge(creatorClassPKs));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_TYPE_2);
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			String sql = query.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((databaseInMaxParameters > 0) &&
+						(creatorClassPKs.length > databaseInMaxParameters)) {
+					count = Long.valueOf(0);
 
-				Query q = session.createQuery(sql);
+					long[][] creatorClassPKsPages = ArrayUtil.split(creatorClassPKs,
+							databaseInMaxParameters);
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(creatorClassNameId);
-
-				qPos.add(type);
-
-				count = (Long)q.uniqueResult();
+					for (long[] creatorClassPKsPage : creatorClassPKsPages) {
+						count += Long.valueOf(_countByC_CCNI_CCPK_T(companyId,
+								creatorClassNameId, creatorClassPKsPage, type));
+					}
+				}
+				else {
+					count = Long.valueOf(_countByC_CCNI_CCPK_T(companyId,
+								creatorClassNameId, creatorClassPKs, type));
+				}
 
 				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_CCNI_CCPK_T,
 					finderArgs, count);
@@ -6995,9 +7204,66 @@ public class MicroblogsEntryPersistenceImpl extends BasePersistenceImpl<Microblo
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
-			}
+		}
+
+		return count.intValue();
+	}
+
+	private int _countByC_CCNI_CCPK_T(long companyId, long creatorClassNameId,
+		long[] creatorClassPKs, int type) {
+		Long count = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_COUNT_MICROBLOGSENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSNAMEID_2);
+
+		if (creatorClassPKs.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_CREATORCLASSPK_7);
+
+			query.append(StringUtil.merge(creatorClassPKs));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(WHERE_AND);
+		}
+
+		query.append(_FINDER_COLUMN_C_CCNI_CCPK_T_TYPE_2);
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(creatorClassNameId);
+
+			qPos.add(type);
+
+			count = (Long)q.uniqueResult();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return count.intValue();
