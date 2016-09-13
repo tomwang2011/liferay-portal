@@ -48,6 +48,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -4833,64 +4834,28 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		}
 
 		if (list == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_SELECT_KBCOMMENT_WHERE);
-
-			query.append(_FINDER_COLUMN_C_C_S_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_C_C_S_CLASSPK_2);
-
-			if (statuses.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_C_C_S_STATUS_7);
-
-				query.append(StringUtil.merge(statuses));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(KBCommentModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
+			list = new ArrayList();
 
 			try {
-				session = openSession();
+				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+						(_databaseInMaxParameters > 0) &&
+						(statuses.length > _databaseInMaxParameters)) {
+					int[][] statusesPages = ArrayUtil.split(statuses,
+							_databaseInMaxParameters);
 
-				Query q = session.createQuery(sql);
+					for (int[] statusesPage : statusesPages) {
+						list.addAll(_findByC_C_S(classNameId, classPK,
+								statusesPage, start, end, orderByComparator,
+								pagination));
+					}
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				if (!pagination) {
-					list = (List<KBComment>)QueryUtil.list(q, getDialect(),
-							start, end, false);
-
-					Collections.sort(list);
+					Collections.sort(list, orderByComparator);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<KBComment>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = _findByC_C_S(classNameId, classPK, statuses, start,
+							end, orderByComparator, pagination);
 				}
 
 				cacheResult(list);
@@ -4904,9 +4869,81 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
+		}
+
+		return list;
+	}
+
+	private List<KBComment> _findByC_C_S(long classNameId, long classPK,
+		int[] statuses, int start, int end,
+		OrderByComparator<KBComment> orderByComparator, boolean pagination) {
+		List<KBComment> list = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_SELECT_KBCOMMENT_WHERE);
+
+		query.append(_FINDER_COLUMN_C_C_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_C_C_S_CLASSPK_2);
+
+		if (statuses.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_C_C_S_STATUS_7);
+
+			query.append(StringUtil.merge(statuses));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		if (orderByComparator != null) {
+			appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+				orderByComparator);
+		}
+		else
+		 if (pagination) {
+			query.append(KBCommentModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(classNameId);
+
+			qPos.add(classPK);
+
+			if (!pagination) {
+				list = (List<KBComment>)QueryUtil.list(q, getDialect(), start,
+						end, false);
+
+				Collections.sort(list);
+
+				list = Collections.unmodifiableList(list);
 			}
+			else {
+				list = (List<KBComment>)QueryUtil.list(q, getDialect(), start,
+						end);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return list;
@@ -5015,45 +5052,23 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 				finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler();
-
-			query.append(_SQL_COUNT_KBCOMMENT_WHERE);
-
-			query.append(_FINDER_COLUMN_C_C_S_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_C_C_S_CLASSPK_2);
-
-			if (statuses.length > 0) {
-				query.append(StringPool.OPEN_PARENTHESIS);
-
-				query.append(_FINDER_COLUMN_C_C_S_STATUS_7);
-
-				query.append(StringUtil.merge(statuses));
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-
-				query.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			query.setStringAt(removeConjunction(query.stringAt(query.index() -
-						1)), query.index() - 1);
-
-			String sql = query.toString();
-
-			Session session = null;
-
 			try {
-				session = openSession();
+				if ((_databaseInMaxParameters > 0) &&
+						(statuses.length > _databaseInMaxParameters)) {
+					count = Long.valueOf(0);
 
-				Query q = session.createQuery(sql);
+					int[][] statusesPages = ArrayUtil.split(statuses,
+							_databaseInMaxParameters);
 
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				count = (Long)q.uniqueResult();
+					for (int[] statusesPage : statusesPages) {
+						count += Long.valueOf(_countByC_C_S(classNameId,
+								classPK, statusesPage));
+					}
+				}
+				else {
+					count = Long.valueOf(_countByC_C_S(classNameId, classPK,
+								statuses));
+				}
 
 				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_C_S,
 					finderArgs, count);
@@ -5064,9 +5079,59 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 
 				throw processException(e);
 			}
-			finally {
-				closeSession(session);
-			}
+		}
+
+		return count.intValue();
+	}
+
+	private int _countByC_C_S(long classNameId, long classPK, int[] statuses) {
+		Long count = null;
+
+		StringBundler query = new StringBundler();
+
+		query.append(_SQL_COUNT_KBCOMMENT_WHERE);
+
+		query.append(_FINDER_COLUMN_C_C_S_CLASSNAMEID_2);
+
+		query.append(_FINDER_COLUMN_C_C_S_CLASSPK_2);
+
+		if (statuses.length > 0) {
+			query.append(StringPool.OPEN_PARENTHESIS);
+
+			query.append(_FINDER_COLUMN_C_C_S_STATUS_7);
+
+			query.append(StringUtil.merge(statuses));
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+
+			query.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		query.setStringAt(removeConjunction(query.stringAt(query.index() - 1)),
+			query.index() - 1);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(classNameId);
+
+			qPos.add(classPK);
+
+			count = (Long)q.uniqueResult();
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
 		}
 
 		return count.intValue();

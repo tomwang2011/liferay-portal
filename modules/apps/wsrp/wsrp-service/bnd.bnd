@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.wsrp.service
 Bundle-Version: 1.0.4
 Export-Package:\
 	com.liferay.wsrp.model.impl,\
+	com.liferay.wsrp.service,\
 	com.liferay.wsrp.util
 Import-Package:\
 	!junit.framework.*,\
