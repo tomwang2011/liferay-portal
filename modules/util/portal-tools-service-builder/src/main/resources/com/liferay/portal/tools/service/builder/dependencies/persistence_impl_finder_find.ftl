@@ -1629,8 +1629,6 @@ that may or may not be enforced with a unique index at the database level. Case
 			}
 
 			if (list == null) {
-				list = new ArrayList<${entity.name}>();
-
 				try {
 					if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (databaseInMaxParameters > 0) && (<#list finderArrayableColsList as arrayablefinderCol>
 							(${arrayablefinderCol.names}.length > databaseInMaxParameters)
@@ -1639,6 +1637,8 @@ that may or may not be enforced with a unique index at the database level. Case
 								||
 							</#if>
 						</#list>)) {
+
+						list = new ArrayList<${entity.name}>();
 
 						<#list finderArrayableColsList as arrayablefinderCol>
 							${arrayablefinderCol.type}[][] ${arrayablefinderCol.names}Pages = (${arrayablefinderCol.type}[][])ArrayUtil.split(${arrayablefinderCol.names}, databaseInMaxParameters);
