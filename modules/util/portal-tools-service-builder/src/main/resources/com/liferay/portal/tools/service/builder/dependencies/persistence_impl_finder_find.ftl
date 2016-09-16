@@ -1633,7 +1633,7 @@ that may or may not be enforced with a unique index at the database level. Case
 			}
 
 			if (list == null) {
-				list = new ArrayList();
+				list = new ArrayList<${entity.name}>();
 
 				try {
 					if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (databaseInMaxParameters > 0) && (<#list finderArrayableColsList as arrayablefinderCol>
