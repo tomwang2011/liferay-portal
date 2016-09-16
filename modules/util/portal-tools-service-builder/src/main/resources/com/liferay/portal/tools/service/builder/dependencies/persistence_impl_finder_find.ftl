@@ -1,4 +1,5 @@
 <#assign finderColsList = finder.getColumns() />
+<#assign finderArrayableColsList = finder.getArrayableColumns() />
 
 <#--
 Basic Cases Table:
@@ -1550,11 +1551,7 @@ that may or may not be enforced with a unique index at the database level. Case
 						return Collections.emptyList();
 					}
 					else {
-						List<${entity.name}> list = new ArrayList<${entity.name}>(1);
-
-						list.add(${entity.varName});
-
-						return list;
+						return Collections.singletonList(${entity.varName});
 					}
 				<#else>
 					return findBy${finder.name}(
@@ -1632,38 +1629,57 @@ that may or may not be enforced with a unique index at the database level. Case
 			}
 
 			if (list == null) {
-				<#assign checkPagination = true />
-
-				<#include "persistence_impl_find_by_arrayable_query.ftl">
-
-				<#assign checkPagination = false />
-
-				String sql = query.toString();
-
-				Session session = null;
-
 				try {
-					session = openSession();
+					if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (databaseInMaxParameters > 0) && (<#list finderArrayableColsList as arrayablefinderCol>
+							(${arrayablefinderCol.names}.length > databaseInMaxParameters)
 
-					Query q = session.createQuery(sql);
+							<#if arrayablefinderCol_has_next>
+								||
+							</#if>
+						</#list>)) {
 
-					<#if bindParameter(finderColsList)>
-						QueryPos qPos = QueryPos.getInstance(q);
-					</#if>
+						list = new ArrayList<${entity.name}>();
 
-					<@finderQPos
-						_arrayable=true
-					/>
+						<#list finderArrayableColsList as arrayablefinderCol>
+							${arrayablefinderCol.type}[][] ${arrayablefinderCol.names}Pages = (${arrayablefinderCol.type}[][])ArrayUtil.split(${arrayablefinderCol.names}, databaseInMaxParameters);
+						</#list>
 
-					if (!pagination) {
-						list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end, false);
 
-						Collections.sort(list);
+						<#list finderArrayableColsList as arrayablefinderCol>
+							for (${arrayablefinderCol.type}[] ${arrayablefinderCol.names}Page : ${arrayablefinderCol.names}Pages) {
+						</#list>
+
+							list.addAll(_findBy${finder.name}(
+
+							<#list finderColsList as finderCol>
+								<#if finderCol.hasArrayableOperator()>
+									${finderCol.names}Page,
+								<#else>
+									${finderCol.name},
+								</#if>
+							</#list>
+
+							start, end, orderByComparator, pagination));
+						<#list finderArrayableColsList as arrayablefinderCol>
+							}
+						</#list>
+
+						Collections.sort(list, orderByComparator);
 
 						list = Collections.unmodifiableList(list);
 					}
 					else {
-						list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+						list = _findBy${finder.name}(
+
+						<#list finderColsList as finderCol>
+							<#if finderCol.hasArrayableOperator()>
+								${finderCol.names},
+							<#else>
+								${finderCol.name},
+							</#if>
+						</#list>
+
+						start, end, orderByComparator, pagination);
 					}
 
 					cacheResult(list);
@@ -1675,9 +1691,63 @@ that may or may not be enforced with a unique index at the database level. Case
 
 					throw processException(e);
 				}
-				finally {
-					closeSession(session);
+			}
+
+			return list;
+		}
+
+		private List<${entity.name}> _findBy${finder.name}(
+
+		<#list finderColsList as finderCol>
+			<#if finderCol.hasArrayableOperator()>
+				${finderCol.type}[] ${finderCol.names},
+			<#else>
+				${finderCol.type} ${finderCol.name},
+			</#if>
+		</#list>
+
+		int start, int end, OrderByComparator<${entity.name}> orderByComparator, boolean pagination) {
+			List<${entity.name}> list = null;
+
+			<#assign checkPagination = true />
+
+			<#include "persistence_impl_find_by_arrayable_query.ftl">
+
+			<#assign checkPagination = false />
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				<#if bindParameter(finderColsList)>
+					QueryPos qPos = QueryPos.getInstance(q);
+				</#if>
+
+				<@finderQPos
+					_arrayable=true
+				/>
+
+				if (!pagination) {
+					list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
 				}
+				else {
+					list = (List<${entity.name}>)QueryUtil.list(q, getDialect(), start, end);
+				}
+			}
+			catch (Exception e) {
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
 			}
 
 			return list;
