@@ -168,6 +168,14 @@ public class RuntimeTag extends TagSupport {
 				instanceId);
 		}
 
+		Stack<String> embeddedPortletIds = _embeddedPortletIds.get();
+
+		if (embeddedPortletIds == null) {
+			embeddedPortletIds = new Stack<>();
+
+			_embeddedPortletIds.set(embeddedPortletIds);
+		}
+
 		RestrictPortletServletRequest restrictPortletServletRequest =
 			new RestrictPortletServletRequest(
 				PortalUtil.getOriginalServletRequest(request));
@@ -197,14 +205,6 @@ public class RuntimeTag extends TagSupport {
 			Portlet portlet = getPortlet(
 				themeDisplay.getCompanyId(),
 				portletInstance.getPortletInstanceKey());
-
-			Stack<String> embeddedPortletIds = _embeddedPortletIds.get();
-
-			if (embeddedPortletIds == null) {
-				embeddedPortletIds = new Stack<>();
-
-				_embeddedPortletIds.set(embeddedPortletIds);
-			}
 
 			if (embeddedPortletIds.search(portlet.getPortletId()) > -1) {
 				String errorMessage = LanguageUtil.get(
