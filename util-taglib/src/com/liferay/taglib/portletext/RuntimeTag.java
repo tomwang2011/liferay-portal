@@ -170,15 +170,19 @@ public class RuntimeTag extends TagSupport {
 
 		Stack<String> embeddedPortletIds = _embeddedPortletIds.get();
 
+		boolean usingRestrictPortletServletRequest = false;
+
 		if (embeddedPortletIds == null) {
 			embeddedPortletIds = new Stack<>();
 
 			_embeddedPortletIds.set(embeddedPortletIds);
 		}
-
-		RestrictPortletServletRequest restrictPortletServletRequest =
-			new RestrictPortletServletRequest(
+		else if (!embeddedPortletIds.isEmpty()) {
+			request = new RestrictPortletServletRequest(
 				PortalUtil.getOriginalServletRequest(request));
+
+			usingRestrictPortletServletRequest = true;
+		}
 
 		queryString = PortletParameterUtil.addNamespace(
 			portletInstance.getPortletInstanceKey(), queryString);
@@ -194,7 +198,7 @@ public class RuntimeTag extends TagSupport {
 		}
 
 		request = DynamicServletRequest.addQueryString(
-			restrictPortletServletRequest, parameterMap, queryString, false);
+			request, parameterMap, queryString, false);
 
 		try {
 			request.setAttribute(WebKeys.RENDER_PORTLET_RESOURCE, Boolean.TRUE);
@@ -301,7 +305,15 @@ public class RuntimeTag extends TagSupport {
 			}
 		}
 		finally {
-			restrictPortletServletRequest.mergeSharedAttributes();
+			if (usingRestrictPortletServletRequest) {
+				RestrictPortletServletRequest restrictPortletServletRequest =
+					(RestrictPortletServletRequest)request;
+
+				restrictPortletServletRequest.mergeSharedAttributes();
+			}
+			else {
+				request.removeAttribute(WebKeys.RENDER_PORTLET_RESOURCE);
+			}
 		}
 	}
 
