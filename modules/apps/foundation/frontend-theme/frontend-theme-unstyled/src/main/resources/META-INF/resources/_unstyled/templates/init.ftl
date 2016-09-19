@@ -351,4 +351,4 @@
 
 <#-- ---------- Custom init ---------- -->
 
-<#include "${full_templates_path}/init_custom.ftl" />
+<#include "${full_templates_path}/init_custom.ftl" ignore_missing=true />
