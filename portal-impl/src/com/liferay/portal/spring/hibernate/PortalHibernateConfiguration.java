@@ -17,6 +17,7 @@ package com.liferay.portal.spring.hibernate;
 import com.liferay.portal.dao.orm.hibernate.event.MVCCSynchronizerPostUpdateEventListener;
 import com.liferay.portal.dao.orm.hibernate.event.NestableAutoFlushEventListener;
 import com.liferay.portal.dao.orm.hibernate.event.NestableFlushEventListener;
+import com.liferay.portal.dao.orm.hibernate.event.MergeEventListener;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -183,6 +184,10 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 				eventListeners.setPostUpdateEventListeners(
 					new PostUpdateEventListener[] {
 						MVCCSynchronizerPostUpdateEventListener.INSTANCE
+					});
+				eventListeners.setMergeEventListeners(
+					new MergeEventListener[] {
+						MergeEventListener.INSTANCE
 					});
 			}
 		}
