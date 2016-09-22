@@ -17,6 +17,7 @@ package com.liferay.portal.dao.orm.hibernate.event;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
+import com.liferay.portal.kernel.util.StringBundler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,44 +34,30 @@ import org.hibernate.event.def.DefaultMergeEventListener;
 /**
  * @author Tom Wang
  */
-public class MergeEventListener extends DefaultMergeEventListener {
-	public static final MergeEventListener INSTANCE =
-		new MergeEventListener();
+public class CIMergeEventListener extends DefaultMergeEventListener {
+	public static final CIMergeEventListener INSTANCE =
+		new CIMergeEventListener();
 
-	public void MergeEventListener() {
-//		if (System.getenv("JENKINS_HOME") == null) {
-//			_enabled = false;
-//		}
-//		else {
-			_enabled = true;
+	public CIMergeEventListener() {
+		try {
+			_tempFile = File.createTempFile("mvcc-log", null);
 
-			try {
-				_tempFile = File.createTempFile("mvcc-log", null);
-
-				_tempFile.deleteOnExit();
-			}
-			catch (IOException ioe) {
-				throw new UncheckedIOException(ioe);
-			}
-//		}
+			_tempFile.deleteOnExit();
+		}
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
+		}
 	}
 
 	@Override
 	public void onMerge(MergeEvent event) throws HibernateException {
 		try {
-			if (_enabled) {
-				_logEvent(event);
-			}
-
 			super.onMerge(event);
+
+			_logEvent(event);
 		}
 		catch (StaleObjectStateException sose) {
-			if (!_enabled) {
-				throw sose;
-			}
-
-			throw new HibernateException(
-				_findStaleObjectStateExceptionCause(event));
+			_findStaleObjectStateExceptionCause(event);
 		}
 	}
 
@@ -94,13 +81,13 @@ public class MergeEventListener extends DefaultMergeEventListener {
 		try (UnsyncPrintWriter unsyncPrintWriter = new UnsyncPrintWriter(
 				new FileOutputStream(_tempFile, true))) {
 
+			unsyncPrintWriter.write("{entityName=");
 			unsyncPrintWriter.write(entityName);
-			unsyncPrintWriter.write('-');
+			unsyncPrintWriter.write(", primaryKey=");
 			unsyncPrintWriter.write(primaryKey.toString());
-			unsyncPrintWriter.write('-');
-			unsyncPrintWriter.write("mvccVersion=");
+			unsyncPrintWriter.write(", mvccVersion=");
 			unsyncPrintWriter.write(String.valueOf(version));
-			unsyncPrintWriter.write('\n');
+			unsyncPrintWriter.write("}\n");
 
 			Exception exception = new Exception();
 
@@ -111,56 +98,71 @@ public class MergeEventListener extends DefaultMergeEventListener {
 		}
 	}
 
-	private String _findStaleObjectStateExceptionCause(MergeEvent event) {
+	private void _findStaleObjectStateExceptionCause(MergeEvent event) {
 		Object object = event.getEntity();
 
 		if (!(object instanceof MVCCModel)) {
-			return null;
+			return;
 		}
 
 		MVCCModel mvccModel = (MVCCModel)object;
 
 		long version = mvccModel.getMvccVersion();
 
+		BaseModel<?> baseModel = (BaseModel<?>)object;
+
+		Serializable primaryKey = baseModel.getPrimaryKeyObj();
+
+		String entityName = event.getEntityName();
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{entityName=");
+		sb.append(entityName);
+		sb.append(", primaryKey=");
+		sb.append(primaryKey.toString());
+		sb.append(", mvccVersion=");
+		sb.append(version);
+		sb.append("}");
+
 		try {
-			return _extractConflictVersionLog(version);
+			_extractConflictVersionLog(sb.toString());
 		}
 		catch (IOException ioe) {
 			throw new UncheckedIOException(ioe);
 		}
 	}
 
-	private String _extractConflictVersionLog(long version) throws IOException {
-		InputStreamReader inputStreamReader = new InputStreamReader(
-			Files.newInputStream(_tempFile.toPath()));
+	private void _extractConflictVersionLog(String search) throws IOException {
+		try (InputStreamReader inputStreamReader = new InputStreamReader(
+				Files.newInputStream(_tempFile.toPath()));
+			BufferedReader bufferedReader = new BufferedReader(
+				inputStreamReader)) {
 
-		BufferedReader bufferedReader = new BufferedReader(
-			inputStreamReader);
+			String line = null;
 
-		String line = null;
+			while ((line = bufferedReader.readLine()) != null) {
+				if (line.equals(search)) {
+					StringBundler sb = new StringBundler(64);
 
-		StringBuilder sb = new StringBuilder();
+					sb.append("Conflict MVCC at: \n");
 
-		while ((line = bufferedReader.readLine()) != null) {
-			if (line.contains("mvccVersion=" + version)) {
-				sb.append(line);
+					sb.append(search);
+					sb.append('\n');
 
-				while ((line = bufferedReader.readLine()) != null) {
-					if (!line.contains("mvccVersion")) {
+					while ((line = bufferedReader.readLine()) != null) {
+						if (line.startsWith("{entityName=")) {
+							throw new RuntimeException(sb.toString());
+						}
+
 						sb.append(line);
-					}
-					else {
-						break;
+						sb.append('\n');
 					}
 				}
 			}
-			break;
 		}
-
-		return sb.toString();
 	}
 
-	private boolean _enabled;
 	private File _tempFile;
 
 }
