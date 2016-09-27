@@ -114,91 +114,93 @@ public class DLFileEntryLocalServiceTest {
 		ExpandoTable expandoTable =
 			ExpandoTableLocalServiceUtil.addDefaultTable(
 				PortalUtil.getDefaultCompanyId(), DLFileEntry.class.getName());
-
+		System.out.println("1");
 		ExpandoColumnLocalServiceUtil.addColumn(
 			expandoTable.getTableId(), "ExpandoAttributeName",
 			ExpandoColumnConstants.STRING, StringPool.BLANK);
-
+		System.out.println("2");
 		try {
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId());
-
+			System.out.println("3");
 			Folder folder = DLAppServiceUtil.addFolder(
 				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				serviceContext);
-
+			System.out.println("4");
 			long fileEntryTypeId = populateServiceContextFileEntryType(
 				serviceContext);
-
+			System.out.println("5");
 			Map<String, Serializable> expandoBridgeAttributes = new HashMap<>();
 
 			expandoBridgeAttributes.put(
 				"ExpandoAttributeName", "ExpandoAttributeValue");
-
+			System.out.println("6");
 			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
-
+			System.out.println("7");
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				folder.getFolderId(), RandomTestUtil.randomString(),
 				ContentTypes.TEXT_PLAIN,
 				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 				serviceContext);
-
+			System.out.println("8");
 			serviceContext = ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
-
+			System.out.println("9");
 			Folder destinationFolder = DLAppServiceUtil.addFolder(
 				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				serviceContext);
-
+			System.out.println("10");
 			DLFileEntry copyFileEntry =
 				DLFileEntryLocalServiceUtil.copyFileEntry(
 					TestPropsValues.getUserId(), _group.getGroupId(),
 					_group.getGroupId(), fileEntry.getFileEntryId(),
 					destinationFolder.getFolderId(), serviceContext);
-
+			System.out.println("11");
 			ExpandoBridge expandoBridge = copyFileEntry.getExpandoBridge();
-
+			System.out.println("12");
 			String attributeValue = GetterUtil.getString(
 				expandoBridge.getAttribute("ExpandoAttributeName"));
-
+			System.out.println("13");
 			Assert.assertEquals("ExpandoAttributeValue", attributeValue);
 
 			Assert.assertEquals(
 				fileEntryTypeId, copyFileEntry.getFileEntryTypeId());
-
+			System.out.println("14");
 			DLFileVersion copyDLFileVersion = copyFileEntry.getFileVersion();
-
+			System.out.println("15");
 			List<DDMStructure> copyDDMStructures =
 				copyDLFileVersion.getDDMStructures();
-
+			System.out.println("16");
 			DDMStructure copyDDMStructure = copyDDMStructures.get(0);
-
+			System.out.println("17");
 			DLFileEntryMetadata dlFileEntryMetadata =
 				DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
 					copyDDMStructure.getStructureId(),
 					copyDLFileVersion.getFileVersionId());
-
+			System.out.println("18");
 			DDMFormValues copyDDMFormValues =
 				StorageEngineManagerUtil.getDDMFormValues(
 					dlFileEntryMetadata.getDDMStorageId());
-
+			System.out.println("19");
 			List<DDMFormFieldValue> ddmFormFieldValues =
 				copyDDMFormValues.getDDMFormFieldValues();
-
+			System.out.println("20");
 			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
-
+			System.out.println("21");
 			Value value = ddmFormFieldValue.getValue();
-
+			System.out.println("22");
 			Assert.assertEquals("Text1", ddmFormFieldValue.getName());
-
+			System.out.println("23");
 			Assert.assertEquals("Text 1 Value", value.getString(LocaleUtil.US));
 		}
 		finally {
+			System.out.println("24");
 			ExpandoTableLocalServiceUtil.deleteTable(expandoTable);
+			System.out.println("25");
 		}
 	}
 
