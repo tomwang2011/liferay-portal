@@ -110,6 +110,7 @@ public class DLFileEntryLocalServiceTest {
 
 	@Test
 	public void testCopyFileEntry() throws Exception {
+		System.out.println("testCopyFileEntry");
 		ExpandoTable expandoTable =
 			ExpandoTableLocalServiceUtil.addDefaultTable(
 				PortalUtil.getDefaultCompanyId(), DLFileEntry.class.getName());
@@ -203,6 +204,7 @@ public class DLFileEntryLocalServiceTest {
 
 	@Test
 	public void testDeleteFileEntries() throws Exception {
+		System.out.println("testDeleteFileEntries");
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -249,6 +251,7 @@ public class DLFileEntryLocalServiceTest {
 
 	@Test
 	public void testDuplicateFileIsIgnored() throws Exception {
+		System.out.println("testDuplicateFileIsIgnored");
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 		Map<String, DDMFormValues> ddmFormValuesMap = Collections.emptyMap();
 		InputStream inputStream = new ByteArrayInputStream(new byte[0]);
@@ -275,6 +278,7 @@ public class DLFileEntryLocalServiceTest {
 
 	@Test(expected = DuplicateFileEntryException.class)
 	public void testDuplicateTitleFileEntry() throws Exception {
+		System.out.println("testDuplicateTitleFileEntry");
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 		String title = StringUtil.randomString();
 		Map<String, DDMFormValues> ddmFormValuesMap = Collections.emptyMap();
@@ -302,6 +306,7 @@ public class DLFileEntryLocalServiceTest {
 
 	@Test
 	public void testGetMisversionedFileEntries() throws Exception {
+		System.out.println("testGetMisversionedFileEntries");
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		byte[] bytes = RandomTestUtil.randomBytes(
@@ -354,6 +359,7 @@ public class DLFileEntryLocalServiceTest {
 
 	@Test
 	public void testGetNoAssetEntries() throws Exception {
+		System.out.println("testGetNoAssetEntries");
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		byte[] bytes = RandomTestUtil.randomBytes(
@@ -400,6 +406,7 @@ public class DLFileEntryLocalServiceTest {
 
 	@Test
 	public void testGetOrphanedFileEntries() throws Exception {
+		System.out.println("testGetOrphanedFileEntries");
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
 		byte[] bytes = RandomTestUtil.randomBytes(
