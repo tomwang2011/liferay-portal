@@ -53,32 +53,32 @@ public class ExpandoTableLocalServiceImpl
 
 		ExpandoTable expandoTable = expandoTablePersistence.fetchByC_C_N(
 			companyId, classNameId, name);
-
+		System.out.println("addtable: 3");
 		if (expandoTable != null) {
 			return expandoTable;
 		}
-
+		System.out.println("addtable: 4");
 		validate(companyId, 0, classNameId, name);
-
+		System.out.println("addtable: 5");
 		long tableId = counterLocalService.increment();
-
+		System.out.println("addtable: 6");
 		ExpandoTable table = expandoTablePersistence.create(tableId);
-
+		System.out.println("addtable: 7");
 		table.setCompanyId(companyId);
 		table.setClassNameId(classNameId);
 		table.setName(name);
-
+		System.out.println("addtable: 8");
 		expandoTablePersistence.update(table);
-
+		System.out.println("addtable: 9");
 		return table;
 	}
 
 	@Override
 	public ExpandoTable addTable(long companyId, String className, String name)
 		throws PortalException {
-
+		System.out.println("addtable: 1");
 		long classNameId = classNameLocalService.getClassNameId(className);
-
+		System.out.println("addtable: 2");
 		return addTable(companyId, classNameId, name);
 	}
 
