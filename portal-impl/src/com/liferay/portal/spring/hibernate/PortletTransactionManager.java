@@ -33,10 +33,10 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 /**
  * @author Shuyang Zhou
  */
-public class BridgeConnectionTransactionManager
+public class PortletTransactionManager
 	implements PlatformTransactionManager {
 
-	public BridgeConnectionTransactionManager(
+	public PortletTransactionManager(
 		HibernateTransactionManager portalHibernateTransactionManager,
 		SessionFactory portletSessionFactory) {
 
