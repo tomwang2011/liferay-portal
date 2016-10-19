@@ -19,11 +19,17 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
 import java.io.InputStream;
+import java.util.HashSet;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -252,6 +258,47 @@ public class ResourceActionsUtil {
 		throws Exception {
 
 		getResourceActions().read(servletContextName, classLoader, source);
+	}
+
+	public static void read(
+			String servletContextName, ClassLoader classLoader,
+			String[] sources)
+		throws Exception {
+
+		Set<String> modelNames = new HashSet<>();
+
+		for (String source : sources) {
+			read(servletContextName, classLoader, source);
+
+			InputStream inputStream = classLoader.getResourceAsStream(source);
+
+			if (inputStream == null) {
+				continue;
+			}
+
+			Document document = UnsecureSAXReaderUtil.read(inputStream, true);
+
+			Element rootElement = document.getRootElement();
+
+			for (Element modelResourceElement :
+					rootElement.elements("model-resource")) {
+
+				Element modelNameElement = modelResourceElement.element(
+					"model-name");
+
+				if (modelNameElement != null) {
+					modelNames.add(modelNameElement.getTextTrim());
+				}
+			}
+		}
+
+		for (String modelName : modelNames) {
+			List<String> modelActions =
+				ResourceActionsUtil.getModelResourceActions(modelName);
+
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				modelName, modelActions);
+		}
 	}
 
 	/**

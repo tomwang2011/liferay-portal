@@ -174,33 +174,15 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 		String[] resourceActionsConfigs = StringUtil.split(
 			configuration.get(PropsKeys.RESOURCE_ACTIONS_CONFIGS));
 
-		for (String resourceActionsConfig : resourceActionsConfigs) {
-			try {
-				ResourceActionsUtil.read(
-					null, classLoader, resourceActionsConfig);
-			}
-			catch (Exception e) {
-				_log.error(
-					"Unable to read resource actions config in " +
-						resourceActionsConfig,
-					e);
-			}
+		try {
+			ResourceActionsUtil.read(
+				null, classLoader, resourceActionsConfigs);
 		}
-
-		String[] portletIds = StringUtil.split(
-			configuration.get("service.configurator.portlet.ids"));
-
-		for (String portletId : portletIds) {
-			List<String> modelNames =
-				ResourceActionsUtil.getPortletModelResources(portletId);
-
-			for (String modelName : modelNames) {
-				List<String> modelActions =
-					ResourceActionsUtil.getModelResourceActions(modelName);
-
-				ResourceActionLocalServiceUtil.checkResourceActions(
-					modelName, modelActions);
-			}
+		catch (Exception e) {
+			_log.error(
+				"Unable to read resource actions config in " +
+					resourceActionsConfigs,
+				e);
 		}
 	}
 
