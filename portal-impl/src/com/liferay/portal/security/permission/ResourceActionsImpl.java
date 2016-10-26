@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ModelResourceActionsBag;
 import com.liferay.portal.kernel.security.permission.PortletResourceActionsBag;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -748,6 +749,13 @@ public class ResourceActionsImpl implements ResourceActions {
 				ResourceActionLocalServiceUtil.checkResourceActions(
 					modelName, modelActions);
 			}
+
+			List<String> portletActions =
+				ResourceActionsUtil.getPortletResourceActions(
+					portletId);
+
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				portletId, portletActions);
 		}
 	}
 
