@@ -54,7 +54,7 @@ importedPackagesProperties.each {
 	String[] dependencyIncludes = packageNames.tokenize(",")
 
 	dependencyIncludes = dependencyIncludes.collect {
-		it.replace('.' as char, '/' as char) + "/*"
+		it.replace('.' as char, '/' as char) + "/"
 	}
 
 	importPackages {
