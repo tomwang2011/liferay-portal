@@ -935,8 +935,6 @@ public class PortletTracker
 
 		serviceRegistrations.setBundlePortletApp(bundlePortletApp);
 
-		serviceRegistrations.doConfiguration(classLoader);
-
 		return bundlePortletApp;
 	}
 
@@ -1042,30 +1040,6 @@ public class PortletTracker
 		}
 		catch (InterruptedException ie) {
 			return ReflectionUtil.throwException(ie);
-		}
-	}
-
-	protected void readResourceActions(
-		Configuration configuration, String servletContextName,
-		ClassLoader classLoader) {
-
-		if (configuration == null) {
-			return;
-		}
-
-		Properties properties = configuration.getProperties();
-
-		String[] resourceActionConfigs = StringUtil.split(
-			properties.getProperty(PropsKeys.RESOURCE_ACTIONS_CONFIGS));
-
-		for (String resourceActionConfig : resourceActionConfigs) {
-			try {
-				ResourceActionsUtil.read(
-					null, classLoader, resourceActionConfig);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
 		}
 	}
 
@@ -1209,26 +1183,12 @@ public class PortletTracker
 				servletContextHelperRegistrationServiceReference;
 		}
 
-		protected synchronized void doConfiguration(ClassLoader classLoader) {
-			try {
-				_configuration = ConfigurationFactoryUtil.getConfiguration(
-					classLoader, "portlet");
-			}
-			catch (Exception e) {
-			}
-
-			readResourceActions(
-				_configuration, _bundlePortletApp.getServletContextName(),
-				classLoader);
-		}
-
 		protected synchronized BundlePortletApp getBundlePortletApp() {
 			return _bundlePortletApp;
 		}
 
 		private final Bundle _bundle;
 		private BundlePortletApp _bundlePortletApp;
-		private Configuration _configuration;
 		private final List<ServiceReference<Portlet>> _serviceReferences =
 			new ArrayList<>();
 		private ServiceReference<ServletContextHelperRegistration>
