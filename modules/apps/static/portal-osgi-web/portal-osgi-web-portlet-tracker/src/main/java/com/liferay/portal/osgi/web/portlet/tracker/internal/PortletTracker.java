@@ -1056,7 +1056,7 @@ public class PortletTracker
 		Properties properties = configuration.getProperties();
 
 		try {
-			ResourceActionsUtil.read(
+			ResourceActionsUtil.readAndCheck(
 				null, classLoader,
 				StringUtil.split(
 					properties.getProperty(
