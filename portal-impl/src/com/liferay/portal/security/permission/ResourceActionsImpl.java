@@ -918,47 +918,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
-	protected List<String> getPortletIds(ClassLoader classLoader, String source)
-		throws Exception {
-
-		InputStream inputStream = classLoader.getResourceAsStream(source);
-
-		if (inputStream == null) {
-			return Collections.emptyList();
-		}
-
-		Document document = UnsecureSAXReaderUtil.read(inputStream, true);
-
-		Element rootElement = document.getRootElement();
-
-		List<String> portletIds = new ArrayList<>();
-
-		for (Element resourceElement : rootElement.elements("resource")) {
-			String file = resourceElement.attributeValue("file").trim();
-
-			portletIds.addAll(getPortletIds(classLoader, file));
-
-			String extFile = StringUtil.replace(file, ".xml", "-ext.xml");
-
-			portletIds.addAll(getPortletIds(classLoader, extFile));
-		}
-
-		for (Element modelResourceElement :
-				rootElement.elements("model-resource")) {
-
-			Element portletRefElement = modelResourceElement.element(
-				"portlet-ref");
-
-			for (Element portletNameElement :
-					portletRefElement.elements("portlet-name")) {
-
-				portletIds.add(portletNameElement.getTextTrim());
-			}
-		}
-
-		return portletIds;
-	}
-
 	protected Set<String> getPortletMimeTypeActions(String name) {
 		Set<String> actions = new LinkedHashSet<>();
 
