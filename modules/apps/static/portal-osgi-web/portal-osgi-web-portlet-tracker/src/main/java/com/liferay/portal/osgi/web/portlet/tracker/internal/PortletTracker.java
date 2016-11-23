@@ -19,7 +19,6 @@ import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,22 +30,17 @@ import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.PortletInfo;
 import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactory;
-import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -55,7 +49,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.model.impl.PublicRenderParameterImpl;
-import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperFactory;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portlet.PortletBagFactory;
@@ -71,7 +64,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -937,8 +929,6 @@ public class PortletTracker
 
 		serviceRegistrations.setBundlePortletApp(bundlePortletApp);
 
-		serviceRegistrations.doConfiguration(classLoader);
-
 		return bundlePortletApp;
 	}
 
@@ -1031,30 +1021,6 @@ public class PortletTracker
 		return serviceTracker;
 	}
 
-	protected void readResourceActions(
-		Configuration configuration, String servletContextName,
-		ClassLoader classLoader) {
-
-		if (configuration == null) {
-			return;
-		}
-
-		Properties properties = configuration.getProperties();
-
-		String[] resourceActionConfigs = StringUtil.split(
-			properties.getProperty(PropsKeys.RESOURCE_ACTIONS_CONFIGS));
-
-		for (String resourceActionConfig : resourceActionConfigs) {
-			try {
-				ResourceActionsUtil.read(
-					null, classLoader, resourceActionConfig);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-	}
-
 	@Reference(unbind = "-")
 	protected void setHttpServiceRuntime(
 		HttpServiceRuntime httpServiceRuntime, Map<String, Object> properties) {
@@ -1118,9 +1084,6 @@ public class PortletTracker
 
 	private String _httpServiceEndpoint = StringPool.BLANK;
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
 	@Reference
 	private PortletInstanceFactory _portletInstanceFactory;
 
@@ -1131,21 +1094,12 @@ public class PortletTracker
 		new PortletPropertyValidator();
 
 	@Reference
-	private ResourceActionLocalService _resourceActionLocalService;
-
-	@Reference
-	private ResourceActions _resourceActions;
-
-	@Reference
 	private SAXReader _saxReader;
 
 	private final ConcurrentMap<Long, ServiceRegistrations>
 		_serviceRegistrations = new ConcurrentHashMap<>();
 	private ServiceTracker<Portlet, com.liferay.portal.kernel.model.Portlet>
 		_serviceTracker;
-
-	@Reference
-	private ServletContextHelperFactory _servletContextHelperFactory;
 
 	private class ServiceRegistrations {
 
@@ -1188,19 +1142,6 @@ public class PortletTracker
 				serviceTracker) {
 
 			_serviceTracker = serviceTracker;
-		}
-
-		protected synchronized void doConfiguration(ClassLoader classLoader) {
-			try {
-				_configuration = ConfigurationFactoryUtil.getConfiguration(
-					classLoader, "portlet");
-			}
-			catch (Exception e) {
-			}
-
-			readResourceActions(
-				_configuration, _bundlePortletApp.getServletContextName(),
-				classLoader);
 		}
 
 		protected synchronized BundlePortletApp getBundlePortletApp() {
