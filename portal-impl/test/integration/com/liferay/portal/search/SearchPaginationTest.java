@@ -211,7 +211,9 @@ public class SearchPaginationTest {
 
 		Hits hits = getHits(1000, 1001);
 
-		Assert.assertEquals(hits.toString(), _USERS_COUNT, hits.getLength());
+		Assert.assertEquals(
+			hits.toString() + " and users are: " + _users.toString(),
+			_USERS_COUNT, hits.getLength());
 		Assert.assertEquals(hits.toString(), 1, hits.getDocs().length);
 	}
 
