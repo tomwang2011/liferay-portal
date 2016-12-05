@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTemplateConstants;
 import com.liferay.portal.kernel.model.PluginSetting;
 import com.liferay.portal.kernel.plugin.PluginPackage;
+import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -63,6 +64,7 @@ public class LayoutTemplateLocalServiceImpl
 	extends LayoutTemplateLocalServiceBaseImpl {
 
 	@Override
+	@Skip
 	public String getContent(
 		String layoutTemplateId, boolean standard, String themeId) {
 
@@ -106,6 +108,7 @@ public class LayoutTemplateLocalServiceImpl
 	}
 
 	@Override
+	@Skip
 	public LayoutTemplate getLayoutTemplate(
 		String layoutTemplateId, boolean standard, String themeId) {
 
@@ -149,6 +152,7 @@ public class LayoutTemplateLocalServiceImpl
 	}
 
 	@Override
+	@Skip
 	public List<LayoutTemplate> getLayoutTemplates() {
 		List<LayoutTemplate> customLayoutTemplates = new ArrayList<>(
 			_portalCustom.size() + _warCustom.size());
@@ -160,6 +164,7 @@ public class LayoutTemplateLocalServiceImpl
 	}
 
 	@Override
+	@Skip
 	public List<LayoutTemplate> getLayoutTemplates(String themeId) {
 		Map<String, LayoutTemplate> themesCustom = _getThemesCustom(themeId);
 
