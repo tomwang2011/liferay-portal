@@ -35,6 +35,9 @@ import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
@@ -70,6 +73,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
@@ -1358,6 +1362,16 @@ public class PortletURLImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(PortletURLImpl.class);
 
+	private static final TransactionConfig _transactionConfig;
+
+	static {
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
+
+		builder.setPropagation(Propagation.SUPPORTS);
+
+		_transactionConfig = builder.build();
+	}
+
 	private boolean _anchor = true;
 	private String _cacheability = ResourceURL.PAGE;
 	private boolean _copyCurrentRenderParameters;
@@ -1394,11 +1408,27 @@ public class PortletURLImpl
 
 		@Override
 		public String run() {
-			if (_wsrp) {
-				return generateWSRPToString();
+			try {
+				return TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					new Callable<String>() {
+
+						@Override
+						public String call() throws Exception {
+							if (_wsrp) {
+								return generateWSRPToString();
+							}
+
+							return generateToString();
+						}
+
+					});
+			}
+			catch (Throwable t) {
+				_log.error(t, t);
 			}
 
-			return generateToString();
+			return StringPool.BLANK;
 		}
 
 	}
