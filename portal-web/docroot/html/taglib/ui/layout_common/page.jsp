@@ -25,6 +25,9 @@ boolean includeWebServerDisplayNode = GetterUtil.getBoolean(request.getAttribute
 
 	<%
 	for (String portletId : PropsValues.LAYOUT_STATIC_PORTLETS_ALL) {
+		if (portletId.contains("chat") && !themeDisplay.isSignedIn()) {
+			continue;
+		}
 		if (PortletLocalServiceUtil.hasPortlet(company.getCompanyId(), portletId)) {
 	%>
 
