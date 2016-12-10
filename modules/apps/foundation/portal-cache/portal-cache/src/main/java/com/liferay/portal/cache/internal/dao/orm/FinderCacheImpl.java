@@ -341,11 +341,7 @@ public class FinderCacheImpl
 				return null;
 			}
 
-			List<Serializable> list = new ArrayList<>(primaryKeys.size());
-
-			for (Serializable curPrimaryKey : primaryKeys) {
-				list.add(map.get(curPrimaryKey));
-			}
+			List<Serializable> list = new ArrayList<>(map.values());
 
 			return (Serializable)Collections.unmodifiableList(list);
 		}
