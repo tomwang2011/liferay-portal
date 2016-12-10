@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -33,42 +32,32 @@ public class CacheKeyEncoder {
 		_cacheKeyGenerator = cacheKeyGenerator;
 		_localCacheKeyPrefix = localCacheKeyPrefix;
 		_cacheKeyPrefix = cacheKeyPrefix;
-		_arguments = arguments;
+
+		_keys = new String[arguments.length * 2 + 1];
+
+		int i = 1;
+
+		for (Object argument : arguments) {
+			_keys[i++] = StringPool.PERIOD;
+			_keys[i++] = StringUtil.toHexString(argument);
+		}
 	}
 
 	public Serializable encodeCacheKey() {
-		StringBundler sb = new StringBundler(_arguments.length * 2 + 1);
+		_keys[0] = _cacheKeyPrefix;
 
-		sb.append(_cacheKeyPrefix);
-
-		for (Object arg : _arguments) {
-			sb.append(StringPool.PERIOD);
-			sb.append(StringUtil.toHexString(arg));
-		}
-
-		return _getCacheKey(sb);
+		return _cacheKeyGenerator.getCacheKey(_keys);
 	}
 
 	public Serializable encodeLocalCacheKey() {
-		StringBundler sb = new StringBundler(_arguments.length * 2 + 1);
+		_keys[0] = _localCacheKeyPrefix;
 
-		sb.append(_localCacheKeyPrefix);
-
-		for (Object arg : _arguments) {
-			sb.append(StringPool.PERIOD);
-			sb.append(StringUtil.toHexString(arg));
-		}
-
-		return _getCacheKey(sb);
+		return _cacheKeyGenerator.getCacheKey(_keys);
 	}
 
-	private Serializable _getCacheKey(StringBundler sb) {
-		return _cacheKeyGenerator.getCacheKey(sb);
-	}
-
-	private final Object[] _arguments;
 	private final CacheKeyGenerator _cacheKeyGenerator;
 	private final String _cacheKeyPrefix;
+	private final String[] _keys;
 	private final String _localCacheKeyPrefix;
 
 }
