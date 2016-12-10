@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
+import com.liferay.portal.kernel.dao.orm.CacheKeyEncoder;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -115,10 +116,12 @@ public class FinderCacheImpl
 
 		Serializable localCacheKey = null;
 
+		CacheKeyEncoder cacheKeyEncoder = finderPath.getCacheKeyEncoder(args);
+
 		if (_localCacheAvailable) {
 			localCache = _localCache.get();
 
-			localCacheKey = finderPath.encodeLocalCacheKey(args);
+			localCacheKey = cacheKeyEncoder.encodeLocalCacheKey();
 
 			primaryKey = localCache.get(localCacheKey);
 		}
@@ -127,7 +130,7 @@ public class FinderCacheImpl
 			PortalCache<Serializable, Serializable> portalCache =
 				_getPortalCache(finderPath.getCacheName());
 
-			Serializable cacheKey = finderPath.encodeCacheKey(args);
+			Serializable cacheKey = cacheKeyEncoder.encodeCacheKey();
 
 			primaryKey = portalCache.get(cacheKey);
 
@@ -182,10 +185,12 @@ public class FinderCacheImpl
 
 		Serializable primaryKey = _resultToPrimaryKey((Serializable)result);
 
+		CacheKeyEncoder cacheKeyEncoder = finderPath.getCacheKeyEncoder(args);
+
 		if (_localCacheAvailable) {
 			Map<Serializable, Serializable> localCache = _localCache.get();
 
-			Serializable localCacheKey = finderPath.encodeLocalCacheKey(args);
+			Serializable localCacheKey = cacheKeyEncoder.encodeLocalCacheKey();
 
 			localCache.put(localCacheKey, primaryKey);
 		}
@@ -193,7 +198,7 @@ public class FinderCacheImpl
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
 			finderPath.getCacheName());
 
-		Serializable cacheKey = finderPath.encodeCacheKey(args);
+		Serializable cacheKey = cacheKeyEncoder.encodeCacheKey();
 
 		if (quiet) {
 			PortalCacheHelperUtil.putWithoutReplicator(
@@ -222,10 +227,12 @@ public class FinderCacheImpl
 			return;
 		}
 
+		CacheKeyEncoder cacheKeyEncoder = finderPath.getCacheKeyEncoder(args);
+
 		if (_localCacheAvailable) {
 			Map<Serializable, Serializable> localCache = _localCache.get();
 
-			Serializable localCacheKey = finderPath.encodeLocalCacheKey(args);
+			Serializable localCacheKey = cacheKeyEncoder.encodeLocalCacheKey();
 
 			localCache.remove(localCacheKey);
 		}
@@ -233,7 +240,7 @@ public class FinderCacheImpl
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
 			finderPath.getCacheName());
 
-		Serializable cacheKey = finderPath.encodeCacheKey(args);
+		Serializable cacheKey = cacheKeyEncoder.encodeCacheKey();
 
 		portalCache.remove(cacheKey);
 	}
