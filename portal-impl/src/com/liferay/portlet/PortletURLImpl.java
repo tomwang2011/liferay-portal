@@ -487,7 +487,17 @@ public class PortletURLImpl
 	public void setLifecycle(String lifecycle) {
 		_lifecycle = lifecycle;
 
-		clearCache();
+		if (_lifecycle.equals(PortletRequest.ACTION_PHASE)) {
+			_reservedParameters.put("p_p_lifecycle", "1");
+		}
+		else if (_lifecycle.equals(PortletRequest.RENDER_PHASE)) {
+			_reservedParameters.put("p_p_lifecycle", "0");
+		}
+		else if (_lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
+			_reservedParameters.put("p_p_lifecycle", "2");
+		}
+
+		_toString = null;
 	}
 
 	@Override
