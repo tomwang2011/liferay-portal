@@ -799,7 +799,7 @@ public class PortletURLImpl
 
 				if (layout != null) {
 					_layoutFriendlyURL = GetterUtil.getString(
-						PortalUtil.getLayoutFriendlyURL(layout, themeDisplay));
+						themeDisplay.getLayoutFriendlyURL(layout));
 
 					if (_secure) {
 						_layoutFriendlyURL = HttpUtil.protocolize(
