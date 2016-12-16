@@ -16,6 +16,7 @@ package com.liferay.portal.settings.authentication.ldap.web.internal.servlet.tag
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
@@ -48,7 +49,8 @@ public class PortalSettingsLDAPAuthenticationDynamicInclude
 		throws IOException {
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_JSP_PATH);
+			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+				_servletContext, _JSP_PATH);
 
 		try {
 			requestDispatcher.include(request, response);
