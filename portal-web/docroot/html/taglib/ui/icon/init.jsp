@@ -35,29 +35,31 @@ if (iconMenuIconCount != null) {
 boolean iconMenuShowWhenSingleIcon = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon-menu:showWhenSingleIcon"));
 Boolean iconMenuSingleIcon = (Boolean)request.getAttribute("liferay-ui:icon-menu:single-icon");
 
-String ariaRole = (String)request.getAttribute("liferay-ui:icon:ariaRole");
-boolean auiImage = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:auiImage"));
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:cssClass"));
-Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:icon:data");
-String details = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:details"));
-String icon = (String)request.getAttribute("liferay-ui:icon:icon");
-String iconCssClass = (String)request.getAttribute("liferay-ui:icon:iconCssClass");
-String id = (String)request.getAttribute("liferay-ui:icon:id");
-String image = (String)request.getAttribute("liferay-ui:icon:image");
-boolean forcePost = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:forcePost"));
-String markupView = (String)request.getAttribute("liferay-ui:icon:markupView");
-String message = (String)request.getAttribute("liferay-ui:icon:message");
-boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:label"));
-String lang = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:lang"));
-String linkCssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:linkCssClass"));
-boolean localizeMessage = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:localizeMessage"));
-String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:onClick"));
-String src = (String)request.getAttribute("liferay-ui:icon:src");
-String srcHover = (String)request.getAttribute("liferay-ui:icon:srcHover");
-String target = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:target"));
-boolean toolTip = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:toolTip"));
-String url = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:url"));
-boolean useDialog = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:useDialog"));
+Map<String, Object> attributes = (Map<String, Object>)request.getAttribute("liferay-ui:icon:attributes");
+
+String ariaRole = (String)attributes.get("liferay-ui:icon:ariaRole");
+boolean auiImage = (boolean)attributes.get("liferay-ui:icon:auiImage");
+String cssClass = (String)attributes.get("liferay-ui:icon:cssClass");
+Map<String, Object> data = (Map<String, Object>)attributes.get("liferay-ui:icon:data");
+String details = (String)attributes.get("liferay-ui:icon:details");
+String icon = (String)attributes.get("liferay-ui:icon:icon");
+String iconCssClass = (String)attributes.get("liferay-ui:icon:iconCssClass");
+String id = (String)attributes.get("liferay-ui:icon:id");
+String image = (String)attributes.get("liferay-ui:icon:image");
+boolean forcePost = (boolean)attributes.get("liferay-ui:icon:forcePost");
+String markupView = (String)attributes.get("liferay-ui:icon:markupView");
+String message = (String)attributes.get("liferay-ui:icon:message");
+boolean label = (boolean)attributes.get("liferay-ui:icon:label");
+String lang = (String)attributes.get("liferay-ui:icon:lang");
+String linkCssClass = (String)attributes.get("liferay-ui:icon:linkCssClass");
+boolean localizeMessage = (boolean)attributes.get("liferay-ui:icon:localizeMessage");
+String onClick = (String)attributes.get("liferay-ui:icon:onClick");
+String src = (String)attributes.get("liferay-ui:icon:src");
+String srcHover = (String)attributes.get("liferay-ui:icon:srcHover");
+String target = (String)attributes.get("liferay-ui:icon:target");
+boolean toolTip = (boolean)attributes.get("liferay-ui:icon:toolTip");
+String url = (String)attributes.get("liferay-ui:icon:url");
+boolean useDialog = (boolean)attributes.get("liferay-ui:icon:useDialog");
 
 if (forcePost || useDialog) {
 	if (data == null) {
