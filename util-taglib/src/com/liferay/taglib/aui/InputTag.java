@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.aui.base.BaseInputTag;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -42,6 +41,14 @@ import javax.servlet.jsp.JspException;
  * @author Brian Wing Shun Chan
  */
 public class InputTag extends BaseInputTag {
+
+	public static String getBaseType(Object[] attributes) {
+		return (String)attributes[_BASE_TYPE];
+	}
+
+	public static String getForLabel(Object[] attributes) {
+		return (String)attributes[_FOR_LABEL];
+	}
 
 	@Override
 	public int doEndTag() throws JspException {
@@ -169,46 +176,6 @@ public class InputTag extends BaseInputTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		Map<String, Object> attributes = new HashMap<>();
-
-		attributes.put("aui:input:autoFocus", getAutoFocus());
-		attributes.put("aui:input:autoSize", getAutoSize());
-		attributes.put("aui:input:changesContext", getChangesContext());
-		attributes.put("aui:input:checked", getChecked());
-		attributes.put("aui:input:classPK", getClassPK());
-		attributes.put("aui:input:classTypePK", getClassTypePK());
-		attributes.put("aui:input:cssClass", getCssClass());
-		attributes.put("aui:input:data", getData());
-		attributes.put(
-			"aui:input:dateTogglerCheckboxLabel",
-			getDateTogglerCheckboxLabel());
-		attributes.put("aui:input:disabled", getDisabled());
-		attributes.put("aui:input:fieldParam", getFieldParam());
-		attributes.put("aui:input:first", getFirst());
-		attributes.put("aui:input:helpMessage", getHelpMessage());
-		attributes.put("aui:input:helpTextCssClass", getHelpTextCssClass());
-		attributes.put("aui:input:ignoreRequestValue", getIgnoreRequestValue());
-		attributes.put("aui:input:inlineField", getInlineField());
-		attributes.put("aui:input:inlineLabel", getInlineLabel());
-		attributes.put("aui:input:languageId", getLanguageId());
-		attributes.put("aui:input:last", getLast());
-		attributes.put("aui:input:localized", getLocalized());
-		attributes.put("aui:input:localizeLabel", getLocalizeLabel());
-		attributes.put("aui:input:max", getMax());
-		attributes.put("aui:input:min", getMin());
-		attributes.put("aui:input:multiple", getMultiple());
-		attributes.put("aui:input:name", getName());
-		attributes.put("aui:input:onChange", getOnChange());
-		attributes.put("aui:input:onClick", getOnClick());
-		attributes.put("aui:input:placeholder", getPlaceholder());
-		attributes.put("aui:input:prefix", getPrefix());
-		attributes.put("aui:input:resizable", getResizable());
-		attributes.put("aui:input:showRequiredLabel", getShowRequiredLabel());
-		attributes.put("aui:input:suffix", getSuffix());
-		attributes.put("aui:input:type", getType());
-		attributes.put("aui:input:useNamespace", getUseNamespace());
-		attributes.put("aui:input:wrapperCssClass", getWrapperCssClass());
-
 		Object bean = getBean();
 
 		if (bean == null) {
@@ -324,27 +291,30 @@ public class InputTag extends BaseInputTag {
 			wrappedField = true;
 		}
 
-		attributes.put("aui:input:baseType", getBaseType());
-		attributes.put("aui:input:bean", bean);
-		attributes.put("aui:input:defaultLanguageId", defaultLanguageId);
-		attributes.put("aui:input:field", field);
-		attributes.put("aui:input:forLabel", forLabel);
-		attributes.put("aui:input:formName", formName);
-		attributes.put("aui:input:id", id);
-		attributes.put("aui:input:label", label);
-		attributes.put("aui:input:model", model);
-		attributes.put("aui:input:title", String.valueOf(title));
-		attributes.put("aui:input:wrappedField", wrappedField);
-		attributes.put("aui:input:value", getValue());
+		setBean(bean);
+		setDefaultLanguageId(defaultLanguageId);
+		setField(field);
+		setFormName(formName);
+		setId(id);
+		setLabel(label);
+		setModel(model);
+		setTitle(String.valueOf(title));
+		setWrappedField(wrappedField);
 
 		Map<String, ValidatorTag> validatorTags = getValidatorTags();
 
 		if ((validatorTags != null) &&
 			(validatorTags.get("required") != null)) {
 
-			setNamespacedAttribute(
-				request, "required", Boolean.TRUE.toString());
+			setRequired(true);
 		}
+
+		Object[] attributes = new Object[ATTRIBUTES_COUNT];
+
+		attributes[_BASE_TYPE] = getBaseType();
+		attributes[_FOR_LABEL] = forLabel;
+
+		toAttributes(attributes);
 
 		request.setAttribute("aui:input:attributes", attributes);
 	}
@@ -371,6 +341,12 @@ public class InputTag extends BaseInputTag {
 		}
 	}
 
+	protected static final int ATTRIBUTES_COUNT =
+		BaseInputTag.ATTRIBUTES_COUNT + 2;
+
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
+
+	private static final int _BASE_TYPE = BaseInputTag.ATTRIBUTES_COUNT;
+	private static final int _FOR_LABEL = BaseInputTag.ATTRIBUTES_COUNT + 1;
 
 }

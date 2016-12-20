@@ -14,6 +14,8 @@
 
 package com.liferay.taglib.aui.base;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
@@ -25,6 +27,190 @@ import javax.servlet.jsp.JspException;
  * @generated
  */
 public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSupport {
+
+	public static boolean getAutoFocus(Object[] attributes) {
+		return (boolean)attributes[_AUTO_FOCUS];
+	}
+
+	public static boolean getAutoSize(Object[] attributes) {
+		return (boolean)attributes[_AUTO_SIZE];
+	}
+
+	public static Object getBean(Object[] attributes) {
+		return attributes[_BEAN];
+	}
+
+	public static boolean getChangesContext(Object[] attributes) {
+		return (boolean)attributes[_CHANGES_CONTEXT];
+	}
+
+	public static boolean getChecked(Object[] attributes) {
+		return (boolean)attributes[_CHECKED];
+	}
+
+	public static long getClassPK(Object[] attributes) {
+		return (long)attributes[_CLASS_PK];
+	}
+
+	public static long getClassTypePK(Object[] attributes) {
+		return (long)attributes[_CLASS_TYPE_PK];
+	}
+
+	public static String getCssClass(Object[] attributes) {
+		return (String)attributes[_CSS_CLASS];
+	}
+
+	public static Object getData(Object[] attributes) {
+		return attributes[_DATA];
+	}
+
+	public static String getDateTogglerCheckBoxLabel(Object[] attributes) {
+		return (String)attributes[_DATE_TOGGLER_CHECK_BOX_LABEL];
+	}
+
+	public static String getDefaultLanguageId(Object[] attributes) {
+		return (String)attributes[_DEFAULT_LANGUAGE_ID];
+	}
+
+	public static boolean getDisabled(Object[] attributes) {
+		return (boolean)attributes[_DISABLED];
+	}
+
+	public static String getField(Object[] attributes) {
+		return (String)attributes[_FIELD];
+	}
+
+	public static String getFieldParam(Object[] attributes) {
+		return (String)attributes[_FIELD_PARAM];
+	}
+
+	public static boolean getFirst(Object[] attributes) {
+		return (boolean)attributes[_FIRST];
+	}
+
+	public static String getFormName(Object[] attributes) {
+		return (String)attributes[_FORM_NAME];
+	}
+
+	public static String getHelpMessage(Object[] attributes) {
+		return (String)attributes[_HELP_MESSAGE];
+	}
+
+	public static String getHelpTextCssClass(Object[] attributes) {
+		return (String)attributes[_HELP_TEXT_CSS_CLASS];
+	}
+
+	public static String getId(Object[] attributes) {
+		return (String)attributes[_ID];
+	}
+
+	public static boolean getIgnoreRequestValue(Object[] attributes) {
+		return (boolean)attributes[_IGNORE_REQUEST_VALUE];
+	}
+
+	public static boolean getInlineField(Object[] attributes) {
+		return (boolean)attributes[_INLINE_FIELD];
+	}
+
+	public static String getInlineLabel(Object[] attributes) {
+		return (String)attributes[_INLINE_LABEL];
+	}
+
+	public static String getLabel(Object[] attributes) {
+		return (String)attributes[_LABEL];
+	}
+
+	public static String getLanguageId(Object[] attributes) {
+		return (String)attributes[_LANGUAGE_ID];
+	}
+
+	public static boolean getLast(Object[] attributes) {
+		return (boolean)attributes[_LAST];
+	}
+
+	public static boolean getLocalized(Object[] attributes) {
+		return (boolean)attributes[_LOCALIZED];
+	}
+
+	public static boolean getLocalizeLabel(Object[] attributes) {
+		return (boolean)attributes[_LOCALIZE_LABEL];
+	}
+
+	public static Object getMax(Object[] attributes) {
+		return attributes[_MAX];
+	}
+
+	public static Object getMin(Object[] attributes) {
+		return attributes[_MIN];
+	}
+
+	public static Class<?> getModel(Object[] attributes) {
+		return (Class<?>)attributes[_MODEL];
+	}
+
+	public static boolean getMultiple(Object[] attributes) {
+		return (boolean)attributes[_MULTIPLE];
+	}
+
+	public static String getName(Object[] attributes) {
+		return (String)attributes[_NAME];
+	}
+
+	public static String getOnChange(Object[] attributes) {
+		return (String)attributes[_ON_CHANGE];
+	}
+
+	public static String getOnClick(Object[] attributes) {
+		return (String)attributes[_ON_CLICK];
+	}
+
+	public static String getPlaceholder(Object[] attributes) {
+		return (String)attributes[_PLACEHOLDER];
+	}
+
+	public static String getPrefix(Object[] attributes) {
+		return (String)attributes[_PREFIX];
+	}
+
+	public static boolean getRequired(Object[] attributes) {
+		return (boolean)attributes[_REQUIRED];
+	}
+
+	public static boolean getResizable(Object[] attributes) {
+		return (boolean)attributes[_RESIZABLE];
+	}
+
+	public static boolean getShowRequiredLabel(Object[] attributes) {
+		return (boolean)attributes[_SHOW_REQUIRED_LABEL];
+	}
+
+	public static String getSuffix(Object[] attributes) {
+		return (String)attributes[_SUFFIX];
+	}
+
+	public static String getTitle(Object[] attributes) {
+		return (String)attributes[_TITLE];
+	}
+
+	public static String getType(Object[] attributes) {
+		return (String)attributes[_TYPE];
+	}
+
+	public static boolean getUseNamespace(Object[] attributes) {
+		return (boolean)attributes[_USE_NAMESPACE];
+	}
+
+	public static Object getValue(Object[] attributes) {
+		return attributes[_VALUE];
+	}
+
+	public static boolean getWrappedField(Object[] attributes) {
+		return (boolean)attributes[_WRAPPED_FIELD];
+	}
+
+	public static String getWrapperCssClass(Object[] attributes) {
+		return (String)attributes[_WRAPPER_CSS_CLASS];
+	}
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -412,23 +598,23 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		_checked = false;
 		_classPK = 0;
 		_classTypePK = -1;
-		_cssClass = null;
+		_cssClass = StringPool.BLANK;
 		_data = null;
-		_dateTogglerCheckboxLabel = null;
-		_defaultLanguageId = null;
+		_dateTogglerCheckboxLabel = StringPool.BLANK;
+		_defaultLanguageId = StringPool.BLANK;
 		_disabled = false;
-		_field = null;
-		_fieldParam = null;
+		_field = StringPool.BLANK;
+		_fieldParam = StringPool.BLANK;
 		_first = false;
-		_formName = null;
-		_helpMessage = null;
+		_formName = StringPool.BLANK;
+		_helpMessage = StringPool.BLANK;
 		_helpTextCssClass = "input-group-addon";
 		_id = null;
 		_ignoreRequestValue = false;
 		_inlineField = false;
-		_inlineLabel = null;
-		_label = null;
-		_languageId = null;
+		_inlineLabel = StringPool.BLANK;
+		_label = StringPool.BLANK;
+		_languageId = StringPool.BLANK;
 		_last = false;
 		_localized = false;
 		_localizeLabel = true;
@@ -436,21 +622,21 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		_min = null;
 		_model = null;
 		_multiple = false;
-		_name = null;
-		_onChange = null;
-		_onClick = null;
-		_placeholder = null;
-		_prefix = null;
+		_name = StringPool.BLANK;
+		_onChange = StringPool.BLANK;
+		_onClick = StringPool.BLANK;
+		_placeholder = StringPool.BLANK;
+		_prefix = StringPool.BLANK;
 		_required = false;
 		_resizable = false;
 		_showRequiredLabel = true;
-		_suffix = null;
-		_title = null;
-		_type = null;
+		_suffix = StringPool.BLANK;
+		_title = StringPool.BLANK;
+		_type = StringPool.BLANK;
 		_useNamespace = true;
 		_value = null;
 		_wrappedField = false;
-		_wrapperCssClass = null;
+		_wrapperCssClass = StringPool.BLANK;
 	}
 
 	@Override
@@ -513,6 +699,55 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 	private static final String _PAGE =
 		"/html/taglib/aui/input/page.jsp";
 
+	protected static final int ATTRIBUTES_COUNT = 46;
+
+	private static final int _AUTO_FOCUS = 0;
+	private static final int _AUTO_SIZE = 1;
+	private static final int _BEAN = 2;
+	private static final int _CHANGES_CONTEXT = 3;
+	private static final int _CHECKED = 4;
+	private static final int _CLASS_PK = 5;
+	private static final int _CLASS_TYPE_PK = 6;
+	private static final int _CSS_CLASS = 7;
+	private static final int _DATA = 8;
+	private static final int _DATE_TOGGLER_CHECK_BOX_LABEL = 9;
+	private static final int _DEFAULT_LANGUAGE_ID = 10;
+	private static final int _DISABLED = 11;
+	private static final int _FIELD = 12;
+	private static final int _FIELD_PARAM = 13;
+	private static final int _FIRST = 14;
+	private static final int _FORM_NAME = 15;
+	private static final int _HELP_MESSAGE = 16;
+	private static final int _HELP_TEXT_CSS_CLASS = 17;
+	private static final int _ID = 18;
+	private static final int _IGNORE_REQUEST_VALUE = 19;
+	private static final int _INLINE_FIELD = 20;
+	private static final int _INLINE_LABEL = 21;
+	private static final int _LABEL = 22;
+	private static final int _LANGUAGE_ID = 23;
+	private static final int _LAST = 24;
+	private static final int _LOCALIZED = 25;
+	private static final int _LOCALIZE_LABEL = 26;
+	private static final int _MAX = 27;
+	private static final int _MIN = 28;
+	private static final int _MODEL = 29;
+	private static final int _MULTIPLE = 30;
+	private static final int _NAME = 31;
+	private static final int _ON_CHANGE = 32;
+	private static final int _ON_CLICK = 33;
+	private static final int _PLACEHOLDER = 34;
+	private static final int _PREFIX = 35;
+	private static final int _REQUIRED = 36;
+	private static final int _RESIZABLE = 37;
+	private static final int _SHOW_REQUIRED_LABEL = 38;
+	private static final int _SUFFIX = 39;
+	private static final int _TITLE = 40;
+	private static final int _TYPE = 41;
+	private static final int _USE_NAMESPACE = 42;
+	private static final int _VALUE = 43;
+	private static final int _WRAPPED_FIELD = 44;
+	private static final int _WRAPPER_CSS_CLASS = 45;
+
 	private boolean _autoFocus = false;
 	private boolean _autoSize = false;
 	private java.lang.Object _bean = null;
@@ -520,23 +755,23 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 	private boolean _checked = false;
 	private long _classPK = 0;
 	private long _classTypePK = -1;
-	private java.lang.String _cssClass = null;
+	private java.lang.String _cssClass = StringPool.BLANK;
 	private java.lang.Object _data = null;
-	private java.lang.String _dateTogglerCheckboxLabel = null;
-	private java.lang.String _defaultLanguageId = null;
+	private java.lang.String _dateTogglerCheckboxLabel = StringPool.BLANK;
+	private java.lang.String _defaultLanguageId = StringPool.BLANK;
 	private boolean _disabled = false;
-	private java.lang.String _field = null;
-	private java.lang.String _fieldParam = null;
+	private java.lang.String _field = StringPool.BLANK;
+	private java.lang.String _fieldParam = StringPool.BLANK;
 	private boolean _first = false;
-	private java.lang.String _formName = null;
-	private java.lang.String _helpMessage = null;
+	private java.lang.String _formName = StringPool.BLANK;
+	private java.lang.String _helpMessage = StringPool.BLANK;
 	private java.lang.String _helpTextCssClass = "input-group-addon";
-	private java.lang.String _id = null;
+	private java.lang.String _id = StringPool.BLANK;
 	private boolean _ignoreRequestValue = false;
 	private boolean _inlineField = false;
-	private java.lang.String _inlineLabel = null;
-	private java.lang.String _label = null;
-	private java.lang.String _languageId = null;
+	private java.lang.String _inlineLabel = StringPool.BLANK;
+	private java.lang.String _label = StringPool.BLANK;
+	private java.lang.String _languageId = StringPool.BLANK;
 	private boolean _last = false;
 	private boolean _localized = false;
 	private boolean _localizeLabel = true;
@@ -544,20 +779,69 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 	private java.lang.Object _min = null;
 	private java.lang.Class<?> _model = null;
 	private boolean _multiple = false;
-	private java.lang.String _name = null;
-	private java.lang.String _onChange = null;
-	private java.lang.String _onClick = null;
-	private java.lang.String _placeholder = null;
-	private java.lang.String _prefix = null;
+	private java.lang.String _name = StringPool.BLANK;
+	private java.lang.String _onChange = StringPool.BLANK;
+	private java.lang.String _onClick = StringPool.BLANK;
+	private java.lang.String _placeholder = StringPool.BLANK;
+	private java.lang.String _prefix = StringPool.BLANK;
 	private boolean _required = false;
 	private boolean _resizable = false;
 	private boolean _showRequiredLabel = true;
-	private java.lang.String _suffix = null;
-	private java.lang.String _title = null;
-	private java.lang.String _type = null;
+	private java.lang.String _suffix = StringPool.BLANK;
+	private java.lang.String _title = StringPool.BLANK;
+	private java.lang.String _type = StringPool.BLANK;
 	private boolean _useNamespace = true;
 	private java.lang.Object _value = null;
 	private boolean _wrappedField = false;
-	private java.lang.String _wrapperCssClass = null;
+	private java.lang.String _wrapperCssClass = StringPool.BLANK;
+
+	protected void toAttributes(Object[] attributes) {
+		attributes[_AUTO_FOCUS] = _autoFocus;
+		attributes[_AUTO_SIZE] = _autoSize;
+		attributes[_BEAN] = _bean;
+		attributes[_CHANGES_CONTEXT] = _changesContext;
+		attributes[_CHECKED] = _checked;
+		attributes[_CLASS_PK] = _classPK;
+		attributes[_CLASS_TYPE_PK] = _classTypePK;
+		attributes[_CSS_CLASS] = _cssClass;
+		attributes[_DATA] = _data;
+		attributes[_DATE_TOGGLER_CHECK_BOX_LABEL] = _dateTogglerCheckboxLabel;
+		attributes[_DEFAULT_LANGUAGE_ID] = _defaultLanguageId;
+		attributes[_DISABLED] = _disabled;
+		attributes[_FIELD] = _field;
+		attributes[_FIELD_PARAM] = _fieldParam;
+		attributes[_FIRST] = _first;
+		attributes[_FORM_NAME] = _formName;
+		attributes[_HELP_MESSAGE] = _helpMessage;
+		attributes[_HELP_TEXT_CSS_CLASS] = _helpTextCssClass;
+		attributes[_ID] = _id;
+		attributes[_IGNORE_REQUEST_VALUE] = _ignoreRequestValue;
+		attributes[_INLINE_FIELD] = _inlineField;
+		attributes[_INLINE_LABEL] = _inlineLabel;
+		attributes[_LABEL] = _label;
+		attributes[_LANGUAGE_ID] = _languageId;
+		attributes[_LAST] = _last;
+		attributes[_LOCALIZED] = _localized;
+		attributes[_LOCALIZE_LABEL] = _localizeLabel;
+		attributes[_MAX] = _max;
+		attributes[_MIN] = _min;
+		attributes[_MODEL] = _model;
+		attributes[_MULTIPLE] = _multiple;
+		attributes[_NAME] = _name;
+		attributes[_ON_CHANGE] = _onChange;
+		attributes[_ON_CLICK] = _onClick;
+		attributes[_PLACEHOLDER] = _placeholder;
+		attributes[_PREFIX] = _prefix;
+		attributes[_REQUIRED] = _required;
+		attributes[_RESIZABLE] = _resizable;
+		attributes[_SHOW_REQUIRED_LABEL] = _showRequiredLabel;
+		attributes[_SUFFIX] = _suffix;
+		attributes[_TITLE] = _title;
+		attributes[_TYPE] = _type;
+		attributes[_USE_NAMESPACE] = _useNamespace;
+		attributes[_VALUE] = _value;
+		attributes[_WRAPPED_FIELD] = _wrappedField;
+		attributes[_WRAPPER_CSS_CLASS] = _wrapperCssClass;
+	}
 
 }
