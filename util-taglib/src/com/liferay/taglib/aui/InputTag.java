@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.aui.base.BaseInputTag;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -168,7 +169,45 @@ public class InputTag extends BaseInputTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
+		Map<String, Object> attributes = new HashMap<>();
+
+		attributes.put("aui:input:autoFocus", getAutoFocus());
+		attributes.put("aui:input:autoSize", getAutoSize());
+		attributes.put("aui:input:changesContext", getChangesContext());
+		attributes.put("aui:input:checked", getChecked());
+		attributes.put("aui:input:classPK", getClassPK());
+		attributes.put("aui:input:classTypePK", getClassTypePK());
+		attributes.put("aui:input:cssClass", getCssClass());
+		attributes.put("aui:input:data", getData());
+		attributes.put(
+			"aui:input:dateTogglerCheckboxLabel",
+			getDateTogglerCheckboxLabel());
+		attributes.put("aui:input:disabled", getDisabled());
+		attributes.put("aui:input:fieldParam", getFieldParam());
+		attributes.put("aui:input:first", getFirst());
+		attributes.put("aui:input:helpMessage", getHelpMessage());
+		attributes.put("aui:input:helpTextCssClass", getHelpTextCssClass());
+		attributes.put("aui:input:ignoreRequestValue", getIgnoreRequestValue());
+		attributes.put("aui:input:inlineField", getInlineField());
+		attributes.put("aui:input:inlineLabel", getInlineLabel());
+		attributes.put("aui:input:languageId", getLanguageId());
+		attributes.put("aui:input:last", getLast());
+		attributes.put("aui:input:localized", getLocalized());
+		attributes.put("aui:input:localizeLabel", getLocalizeLabel());
+		attributes.put("aui:input:max", getMax());
+		attributes.put("aui:input:min", getMin());
+		attributes.put("aui:input:multiple", getMultiple());
+		attributes.put("aui:input:name", getName());
+		attributes.put("aui:input:onChange", getOnChange());
+		attributes.put("aui:input:onClick", getOnClick());
+		attributes.put("aui:input:placeholder", getPlaceholder());
+		attributes.put("aui:input:prefix", getPrefix());
+		attributes.put("aui:input:resizable", getResizable());
+		attributes.put("aui:input:showRequiredLabel", getShowRequiredLabel());
+		attributes.put("aui:input:suffix", getSuffix());
+		attributes.put("aui:input:type", getType());
+		attributes.put("aui:input:useNamespace", getUseNamespace());
+		attributes.put("aui:input:wrapperCssClass", getWrapperCssClass());
 
 		Object bean = getBean();
 
@@ -285,19 +324,18 @@ public class InputTag extends BaseInputTag {
 			wrappedField = true;
 		}
 
-		setNamespacedAttribute(request, "baseType", getBaseType());
-		setNamespacedAttribute(request, "bean", bean);
-		setNamespacedAttribute(request, "defaultLanguageId", defaultLanguageId);
-		setNamespacedAttribute(request, "field", field);
-		setNamespacedAttribute(request, "forLabel", forLabel);
-		setNamespacedAttribute(request, "formName", formName);
-		setNamespacedAttribute(request, "id", id);
-		setNamespacedAttribute(request, "label", label);
-		setNamespacedAttribute(request, "model", model);
-		setNamespacedAttribute(request, "title", String.valueOf(title));
-		setNamespacedAttribute(request, "wrappedField", wrappedField);
-
-		request.setAttribute(getAttributeNamespace() + "value", getValue());
+		attributes.put("aui:input:baseType", getBaseType());
+		attributes.put("aui:input:bean", bean);
+		attributes.put("aui:input:defaultLanguageId", defaultLanguageId);
+		attributes.put("aui:input:field", field);
+		attributes.put("aui:input:forLabel", forLabel);
+		attributes.put("aui:input:formName", formName);
+		attributes.put("aui:input:id", id);
+		attributes.put("aui:input:label", label);
+		attributes.put("aui:input:model", model);
+		attributes.put("aui:input:title", String.valueOf(title));
+		attributes.put("aui:input:wrappedField", wrappedField);
+		attributes.put("aui:input:value", getValue());
 
 		Map<String, ValidatorTag> validatorTags = getValidatorTags();
 
@@ -307,6 +345,8 @@ public class InputTag extends BaseInputTag {
 			setNamespacedAttribute(
 				request, "required", Boolean.TRUE.toString());
 		}
+
+		request.setAttribute("aui:input:attributes", attributes);
 	}
 
 	protected void updateFormCheckboxNames() {
