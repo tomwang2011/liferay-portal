@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.util.Dictionary;
 import java.util.Map;
@@ -55,7 +57,8 @@ public class ConfigurableUtil {
 	private static <T> T _createConfigurableSnapshot(
 		Class<T> interfaceClass, T configurable) {
 
-		ClassLoader classLoader = interfaceClass.getClassLoader();
+		ClassLoader classLoader = new URLClassLoader(
+			new URL[]{}, interfaceClass.getClassLoader());
 
 		Package packageObject = interfaceClass.getPackage();
 
