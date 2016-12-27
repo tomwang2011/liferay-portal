@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
@@ -76,30 +75,57 @@ public class FinderPath {
 		_initLocalCacheKeyPrefix();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getCacheKeyEncoder(Object[])}
+	 */
+	@Deprecated
 	public Serializable encodeCacheKey(Object[] arguments) {
-		StringBundler sb = new StringBundler(arguments.length * 2 + 1);
+		CacheKeyGenerator cacheKeyGenerator = _cacheKeyGenerator;
 
-		sb.append(_cacheKeyPrefix);
-
-		for (Object arg : arguments) {
-			sb.append(StringPool.PERIOD);
-			sb.append(StringUtil.toHexString(arg));
+		if (cacheKeyGenerator == null) {
+			cacheKeyGenerator = CacheKeyGeneratorUtil.getCacheKeyGenerator(
+				_cacheKeyGeneratorCacheName);
 		}
 
-		return _getCacheKey(sb);
+		CacheKeyEncoder cacheKeyEncoder = new CacheKeyEncoder(
+			cacheKeyGenerator, _localCacheKeyPrefix, _localCacheKeyPrefix,
+			arguments);
+
+		return cacheKeyEncoder.encodeCacheKey();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getCacheKeyEncoder(Object[])}
+	 */
+	@Deprecated
 	public Serializable encodeLocalCacheKey(Object[] arguments) {
-		StringBundler sb = new StringBundler(arguments.length * 2 + 1);
+		CacheKeyGenerator cacheKeyGenerator = _cacheKeyGenerator;
 
-		sb.append(_localCacheKeyPrefix);
-
-		for (Object arg : arguments) {
-			sb.append(StringPool.PERIOD);
-			sb.append(StringUtil.toHexString(arg));
+		if (cacheKeyGenerator == null) {
+			cacheKeyGenerator = CacheKeyGeneratorUtil.getCacheKeyGenerator(
+				_cacheKeyGeneratorCacheName);
 		}
 
-		return _getCacheKey(sb);
+		CacheKeyEncoder cacheKeyEncoder = new CacheKeyEncoder(
+			cacheKeyGenerator, _localCacheKeyPrefix, _localCacheKeyPrefix,
+			arguments);
+
+		return cacheKeyEncoder.encodeLocalCacheKey();
+	}
+
+	public CacheKeyEncoder getCacheKeyEncoder(Object[] arguments) {
+		CacheKeyGenerator cacheKeyGenerator = _cacheKeyGenerator;
+
+		if (cacheKeyGenerator == null) {
+			cacheKeyGenerator = CacheKeyGeneratorUtil.getCacheKeyGenerator(
+				_cacheKeyGeneratorCacheName);
+		}
+
+		return new CacheKeyEncoder(
+			cacheKeyGenerator, _localCacheKeyPrefix, _localCacheKeyPrefix,
+			arguments);
 	}
 
 	public String getCacheName() {
@@ -120,17 +146,6 @@ public class FinderPath {
 
 	public boolean isFinderCacheEnabled() {
 		return _finderCacheEnabled;
-	}
-
-	private Serializable _getCacheKey(StringBundler sb) {
-		CacheKeyGenerator cacheKeyGenerator = _cacheKeyGenerator;
-
-		if (cacheKeyGenerator == null) {
-			cacheKeyGenerator = CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				_cacheKeyGeneratorCacheName);
-		}
-
-		return cacheKeyGenerator.getCacheKey(sb);
 	}
 
 	private void _initCacheKeyPrefix(String methodName, String[] params) {
