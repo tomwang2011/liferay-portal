@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -165,7 +165,7 @@ public class PrivateMessagingUserNotificationHandler
 		PortletURL portletURL = null;
 
 		if (portletPlid != 0) {
-			portletURL = PortletURLFactoryUtil.create(
+			portletURL = _portletURLFactory.create(
 				serviceContext.getLiferayPortletRequest(),
 				PrivateMessagingPortletKeys.PRIVATE_MESSAGING, portletPlid,
 				PortletRequest.RENDER_PHASE);
@@ -223,6 +223,9 @@ public class PrivateMessagingUserNotificationHandler
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;

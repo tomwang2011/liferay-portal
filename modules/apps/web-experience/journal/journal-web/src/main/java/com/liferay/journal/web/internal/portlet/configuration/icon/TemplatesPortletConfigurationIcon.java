@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -70,7 +70,7 @@ public class TemplatesPortletConfigurationIcon
 		Portlet portlet = _portletLocalService.getPortletById(
 			portletDisplay.getId());
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
+		PortletURL portletURL = _portletURLFactory.create(
 			portletRequest,
 			PortletProviderUtil.getPortletId(
 				DDMTemplate.class.getName(), PortletProvider.Action.VIEW),
@@ -131,5 +131,8 @@ public class TemplatesPortletConfigurationIcon
 	}
 
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 }
