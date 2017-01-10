@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
@@ -695,7 +695,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			FileEntry fileEntry, String redirect)
 		throws Exception {
 
-		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
+		LiferayPortletURL portletURL = _portletURLFactory.create(
 			actionRequest, portletConfig.getPortletName(),
 			PortletRequest.RENDER_PHASE);
 
@@ -1044,6 +1044,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 	private TrashEntryService _trashEntryService;
 

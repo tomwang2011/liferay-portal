@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -523,7 +523,7 @@ public class JournalRSSUtil {
 		long plid = PortalUtil.getPlidFromFriendlyURL(
 			feed.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
 
-		PortletURL entryURL = PortletURLFactoryUtil.create(
+		PortletURL entryURL = _portletURLFactory.create(
 			resourceRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 
 		entryURL.setParameter("groupId", String.valueOf(article.getGroupId()));
@@ -735,5 +735,8 @@ public class JournalRSSUtil {
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
 	private JournalFeedLocalService _journalFeedLocalService;
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 }

@@ -81,7 +81,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider.Action;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -1156,7 +1156,7 @@ public class JournalPortlet extends MVCPortlet {
 		String referringPortletResource = ParamUtil.getString(
 			actionRequest, "referringPortletResource");
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
+		PortletURL portletURL = _portletURLFactory.create(
 			actionRequest, JournalPortletKeys.JOURNAL,
 			PortletRequest.RENDER_PHASE);
 
@@ -1271,7 +1271,7 @@ public class JournalPortlet extends MVCPortlet {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			PortletURL portletURL = PortletURLFactoryUtil.create(
+			PortletURL portletURL = _portletURLFactory.create(
 				actionRequest, themeDisplay.getPpid(),
 				PortletRequest.RENDER_PHASE);
 
@@ -1481,6 +1481,10 @@ public class JournalPortlet extends MVCPortlet {
 	private JournalFolderService _journalFolderService;
 	private volatile JournalWebConfiguration _journalWebConfiguration;
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
+
 	private TrashEntryService _trashEntryService;
 
 }

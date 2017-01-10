@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -86,7 +86,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
+		PortletURL portletURL = _portletURLFactory.create(
 			portletRequest, portletDisplay.getId(),
 			PortletRequest.RENDER_PHASE);
 
@@ -164,7 +164,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
+		PortletURL portletURL = _portletURLFactory.create(
 			portletRequest, portletDisplay.getId(),
 			PortletRequest.RENDER_PHASE);
 
@@ -217,7 +217,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
+		PortletURL portletURL = _portletURLFactory.create(
 			portletRequest, portletDisplay.getId(),
 			PortletRequest.RENDER_PHASE);
 
@@ -261,7 +261,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
+		PortletURL portletURL = _portletURLFactory.create(
 			portletRequest, portletDisplay.getId(),
 			PortletRequest.RENDER_PHASE);
 
@@ -301,7 +301,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
+		PortletURL portletURL = _portletURLFactory.create(
 			portletRequest, portletDisplay.getId(),
 			PortletRequest.RENDER_PHASE);
 
@@ -519,7 +519,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
+		PortletURL portletURL = _portletURLFactory.create(
 			portletRequest, portletDisplay.getId(),
 			PortletRequest.RENDER_PHASE);
 
@@ -586,5 +586,8 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 }

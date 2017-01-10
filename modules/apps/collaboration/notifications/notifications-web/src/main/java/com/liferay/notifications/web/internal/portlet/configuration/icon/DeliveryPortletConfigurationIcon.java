@@ -17,7 +17,7 @@ package com.liferay.notifications.web.internal.portlet.configuration.icon;
 import com.liferay.notifications.web.internal.constants.NotificationsPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -114,7 +114,7 @@ public class DeliveryPortletConfigurationIcon
 	}
 
 	protected PortletURL getDeliveryURL(PortletRequest portletRequest) {
-		PortletURL portletURL = PortletURLFactoryUtil.create(
+		PortletURL portletURL = _portletURLFactory.create(
 			portletRequest, NotificationsPortletKeys.NOTIFICATIONS,
 			PortletRequest.RENDER_PHASE);
 
@@ -131,5 +131,8 @@ public class DeliveryPortletConfigurationIcon
 
 	@Reference
 	private Html _html;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 }

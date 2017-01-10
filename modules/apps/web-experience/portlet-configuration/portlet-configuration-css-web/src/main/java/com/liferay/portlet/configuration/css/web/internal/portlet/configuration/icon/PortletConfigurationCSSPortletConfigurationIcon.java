@@ -15,7 +15,7 @@
 package com.liferay.portlet.configuration.css.web.internal.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -32,6 +32,7 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -60,17 +61,17 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL baseActionURL = PortletURLFactoryUtil.create(
+		PortletURL baseActionURL = _portletURLFactory.create(
 			portletRequest,
 			PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
 			PortletRequest.ACTION_PHASE);
 
-		PortletURL baseRenderURL = PortletURLFactoryUtil.create(
+		PortletURL baseRenderURL = _portletURLFactory.create(
 			portletRequest,
 			PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
 			PortletRequest.RENDER_PHASE);
 
-		PortletURL baseResourceURL = PortletURLFactoryUtil.create(
+		PortletURL baseResourceURL = _portletURLFactory.create(
 			portletRequest,
 			PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
 			PortletRequest.RESOURCE_PHASE);
@@ -125,5 +126,8 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 	public boolean isToolTip() {
 		return false;
 	}
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 }

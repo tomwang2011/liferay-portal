@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Html;
@@ -131,7 +131,7 @@ public class ExportImportUserNotificationHandler
 			ServiceContext serviceContext)
 		throws Exception {
 
-		PortletURL renderURL = PortletURLFactoryUtil.create(
+		PortletURL renderURL = _portletURLFactory.create(
 			serviceContext.getRequest(), ExportImportPortletKeys.EXPORT_IMPORT,
 			PortletRequest.RENDER_PHASE);
 
@@ -172,6 +172,9 @@ public class ExportImportUserNotificationHandler
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 	@Reference(target = "(bundle.symbolic.name=com.liferay.staging.lang)")
 	private ResourceBundleLoader _resourceBundleLoader;

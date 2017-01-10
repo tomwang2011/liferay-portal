@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -181,7 +181,7 @@ public class JournalContentPortletToolbarContributor
 			ThemeDisplay themeDisplay, PortletRequest portletRequest)
 		throws Exception {
 
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
+		PortletURL redirectURL = _portletURLFactory.create(
 			portletRequest, JournalContentPortletKeys.JOURNAL_CONTENT,
 			PortletRequest.RENDER_PHASE);
 
@@ -204,6 +204,10 @@ public class JournalContentPortletToolbarContributor
 	private Html _html;
 
 	private JournalFolderService _journalFolderService;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
+
 	private ResourcePermissionChecker _resourcePermissionChecker;
 
 }

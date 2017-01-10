@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -95,7 +95,7 @@ public class BookmarksPortletToolbarContributor
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
+		PortletURL portletURL = _portletURLFactory.create(
 			portletRequest, portletDisplay.getId(),
 			PortletRequest.RENDER_PHASE);
 
@@ -134,7 +134,7 @@ public class BookmarksPortletToolbarContributor
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
+		PortletURL portletURL = _portletURLFactory.create(
 			portletRequest, portletDisplay.getId(),
 			PortletRequest.RENDER_PHASE);
 
@@ -285,5 +285,8 @@ public class BookmarksPortletToolbarContributor
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 }

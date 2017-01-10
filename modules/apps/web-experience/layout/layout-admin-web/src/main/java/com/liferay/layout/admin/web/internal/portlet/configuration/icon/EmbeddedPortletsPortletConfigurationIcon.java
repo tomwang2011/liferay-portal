@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -71,7 +71,7 @@ public class EmbeddedPortletsPortletConfigurationIcon
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		try {
-			PortletURL portletURL = PortletURLFactoryUtil.create(
+			PortletURL portletURL = _portletURLFactory.create(
 				portletRequest, portletDisplay.getId(),
 				PortletRequest.RENDER_PHASE);
 
@@ -147,5 +147,8 @@ public class EmbeddedPortletsPortletConfigurationIcon
 	}
 
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 }

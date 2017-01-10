@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.TrashedModel;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -473,7 +473,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 				PortletRequest.RENDER_PHASE);
 		}
 		else {
-			portletURL = PortletURLFactoryUtil.create(
+			portletURL = _portletURLFactory.create(
 				portletRequest, WikiPortletKeys.WIKI, plid,
 				PortletRequest.RENDER_PHASE);
 		}
@@ -528,6 +528,9 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletURLFactory _portletURLFactory;
 
 	private WikiEngineRenderer _wikiEngineRenderer;
 	private WikiPageLocalService _wikiPageLocalService;
