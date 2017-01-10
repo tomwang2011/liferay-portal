@@ -17,6 +17,7 @@ package com.liferay.login.authentication.facebook.connect.web.internal.servlet.t
 import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -83,7 +84,8 @@ public class FacebookConnectNavigationPreDynamicInclude
 			FacebookConnectWebKeys.FACEBOOK_APP_ID, facebookAppId);
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_JSP_PATH);
+			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+				_servletContext, _JSP_PATH);
 
 		try {
 			requestDispatcher.include(request, response);

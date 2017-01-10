@@ -16,6 +16,7 @@ package com.liferay.login.authentication.google.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -53,7 +54,8 @@ public class GoogleNavigationPreDynamicInclude extends BaseDynamicInclude {
 		}
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_JSP_PATH);
+			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+				_servletContext, _JSP_PATH);
 
 		try {
 			requestDispatcher.include(request, response);

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 
 import java.io.IOException;
 
@@ -36,7 +37,8 @@ public abstract class BaseJSPDynamicInclude extends BaseDynamicInclude {
 		throws IOException {
 
 		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(getJspPath());
+			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+				_servletContext, getJspPath());
 
 		try {
 			requestDispatcher.include(request, response);
