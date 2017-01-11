@@ -14,7 +14,7 @@
 
 package com.liferay.users.admin.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -52,7 +52,7 @@ public class EditOrganizationPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(getLocale(portletRequest)), "edit");
 	}
 
@@ -113,6 +113,9 @@ public class EditOrganizationPortletConfigurationIcon
 
 		return false;
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

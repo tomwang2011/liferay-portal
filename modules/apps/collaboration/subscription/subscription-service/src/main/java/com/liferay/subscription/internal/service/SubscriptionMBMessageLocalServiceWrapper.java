@@ -25,7 +25,7 @@ import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceWrapper;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -558,14 +558,14 @@ public class SubscriptionMBMessageLocalServiceWrapper
 		try {
 			Group group = _groupLocalService.getGroup(groupId);
 
-			return LanguageUtil.get(locale, "message-boards-home") + " - " +
+			return _language.get(locale, "message-boards-home") + " - " +
 				group.getDescriptiveName(locale);
 		}
 		catch (PortalException pe) {
 			_log.error(
 				"Unable to get descriptive name for group " + groupId, pe);
 
-			return LanguageUtil.get(locale, "message-boards-home");
+			return _language.get(locale, "message-boards-home");
 		}
 	}
 
@@ -577,6 +577,9 @@ public class SubscriptionMBMessageLocalServiceWrapper
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private Language _language;
 
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 	private MBMessageLocalService _mbMessageLocalService;

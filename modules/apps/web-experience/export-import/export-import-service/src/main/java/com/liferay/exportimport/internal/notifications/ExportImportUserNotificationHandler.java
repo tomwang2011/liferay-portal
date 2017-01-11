@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplayFac
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
@@ -69,7 +69,7 @@ public class ExportImportUserNotificationHandler
 			ServiceContext serviceContext)
 		throws Exception {
 
-		String languageId = LanguageUtil.getLanguageId(
+		String languageId = _language.getLanguageId(
 			serviceContext.getRequest());
 
 		ResourceBundle resourceBundle =
@@ -89,10 +89,9 @@ public class ExportImportUserNotificationHandler
 		catch (PortalException pe) {
 			_log.error(pe, pe);
 
-			return LanguageUtil.format(
+			return _language.format(
 				resourceBundle, "unable-to-find-x",
-				LanguageUtil.get(
-					resourceBundle, "export-import-configuration"));
+				_language.get(resourceBundle, "export-import-configuration"));
 		}
 
 		String message =
@@ -122,7 +121,7 @@ public class ExportImportUserNotificationHandler
 		String processName = backgroundTaskDisplay.getDisplayName(
 			serviceContext.getRequest());
 
-		return LanguageUtil.format(resourceBundle, message, processName);
+		return _language.format(resourceBundle, message, processName);
 	}
 
 	@Override
@@ -169,6 +168,9 @@ public class ExportImportUserNotificationHandler
 
 	@Reference
 	private Html _html;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

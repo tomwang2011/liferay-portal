@@ -21,7 +21,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper.DLPortletToolbarContributorHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
@@ -76,7 +76,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		String label = LanguageUtil.get(
+		String label = _language.get(
 			_portal.getHttpServletRequest(portletRequest),
 			fileEntryType.getUnambiguousName(
 				fileEntryTypes, themeDisplay.getScopeGroupId(),
@@ -158,7 +158,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		urlMenuItem.setLabel(
-			LanguageUtil.get(
+			_language.get(
 				_portal.getHttpServletRequest(portletRequest),
 				(folder != null) ? "subfolder" : "folder"));
 
@@ -211,7 +211,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		urlMenuItem.setLabel(
-			LanguageUtil.get(
+			_language.get(
 				_portal.getHttpServletRequest(portletRequest),
 				"multiple-documents"));
 
@@ -256,7 +256,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		urlMenuItem.setLabel(
-			LanguageUtil.get(
+			_language.get(
 				_portal.getHttpServletRequest(portletRequest), "repository"));
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
@@ -296,7 +296,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		urlMenuItem.setLabel(
-			LanguageUtil.get(
+			_language.get(
 				_portal.getHttpServletRequest(portletRequest), "shortcut"));
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
@@ -513,7 +513,7 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		urlMenuItem.setLabel(
-			LanguageUtil.get(
+			_language.get(
 				_portal.getHttpServletRequest(portletRequest),
 				"basic-document"));
 
@@ -583,6 +583,9 @@ public class DLPortletToolbarContributor extends BasePortletToolbarContributor {
 	private DLFileEntryTypeService _dlFileEntryTypeService;
 	private DLPortletToolbarContributorHelper
 		_dlPortletToolbarContributorHelper;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

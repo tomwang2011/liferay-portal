@@ -18,7 +18,7 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -51,7 +51,7 @@ public class PermissionsPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(getLocale(portletRequest)), "permissions");
 	}
 
@@ -125,5 +125,8 @@ public class PermissionsPortletConfigurationIcon
 
 	@Reference
 	private Html _html;
+
+	@Reference
+	private Language _language;
 
 }

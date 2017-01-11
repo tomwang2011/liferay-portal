@@ -15,7 +15,7 @@
 package com.liferay.portlet.configuration.icon.maximize.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -55,7 +55,7 @@ public class MaximizePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(getLocale(portletRequest)), "maximize");
 	}
 
@@ -170,5 +170,8 @@ public class MaximizePortletConfigurationIcon
 
 	@Reference
 	private Html _html;
+
+	@Reference
+	private Language _language;
 
 }

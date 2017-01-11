@@ -20,7 +20,7 @@ import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -172,7 +172,7 @@ public class AssetPublisherPortletToolbarContributor
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
 
-		String title = LanguageUtil.get(
+		String title = _language.get(
 			resourceBundle, "add-content-select-scope-and-type");
 
 		data.put("title", title);
@@ -265,7 +265,7 @@ public class AssetPublisherPortletToolbarContributor
 		String message = AssetUtil.getClassNameMessage(
 			className, themeDisplay.getLocale());
 
-		String title = LanguageUtil.format(
+		String title = _language.format(
 			themeDisplay.getLocale(), "new-x", message, false);
 
 		data.put("title", title);
@@ -311,6 +311,9 @@ public class AssetPublisherPortletToolbarContributor
 
 	@Reference
 	private Html _html;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

@@ -16,7 +16,7 @@ package com.liferay.message.boards.web.internal.notifications;
 
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -47,7 +47,7 @@ public class MBUserNotificationHandler
 		JSONObject jsonObject, ServiceContext serviceContext, String message,
 		String typeName) {
 
-		return LanguageUtil.format(
+		return _language.format(
 			serviceContext.getLocale(), message,
 			new String[] {
 				_html.escape(jsonObject.getString("fullName")),
@@ -58,5 +58,8 @@ public class MBUserNotificationHandler
 
 	@Reference
 	private Html _html;
+
+	@Reference
+	private Language _language;
 
 }
