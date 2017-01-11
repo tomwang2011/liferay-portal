@@ -14,7 +14,7 @@
 
 package com.liferay.roles.admin.web.internal.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -56,7 +56,7 @@ public class DeleteRolePortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return LanguageUtil.get(
+		return _language.get(
 			getResourceBundle(getLocale(portletRequest)), "delete");
 	}
 
@@ -125,6 +125,9 @@ public class DeleteRolePortletConfigurationIcon
 
 		return ParamUtil.getLong(request, "roleId");
 	}
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

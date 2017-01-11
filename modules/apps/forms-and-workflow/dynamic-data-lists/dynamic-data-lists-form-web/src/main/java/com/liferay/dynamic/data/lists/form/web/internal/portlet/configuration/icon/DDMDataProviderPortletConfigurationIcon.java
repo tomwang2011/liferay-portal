@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.lists.form.web.internal.portlet.configuration.i
 
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -57,7 +57,7 @@ public class DDMDataProviderPortletConfigurationIcon
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(languageId);
 
-		return LanguageUtil.get(resourceBundle, getMessageKey());
+		return _language.get(resourceBundle, getMessageKey());
 	}
 
 	@Override
@@ -133,6 +133,9 @@ public class DDMDataProviderPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMDataProviderPortletConfigurationIcon.class);
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;

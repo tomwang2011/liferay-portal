@@ -25,7 +25,7 @@ import com.liferay.bookmarks.service.BookmarksFolderService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -90,7 +90,7 @@ public class BookmarksPortletToolbarContributor
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		urlMenuItem.setLabel(
-			LanguageUtil.get(
+			_language.get(
 				_portal.getHttpServletRequest(portletRequest), "bookmark"));
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
@@ -128,7 +128,7 @@ public class BookmarksPortletToolbarContributor
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
 		urlMenuItem.setLabel(
-			LanguageUtil.get(
+			_language.get(
 				_portal.getHttpServletRequest(portletRequest),
 				(folder != null) ? "subfolder" : "folder"));
 
@@ -282,6 +282,9 @@ public class BookmarksPortletToolbarContributor
 
 	private BaseModelPermissionChecker _baseModelPermissionChecker;
 	private BookmarksFolderService _bookmarksFolderService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

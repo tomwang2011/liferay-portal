@@ -19,7 +19,7 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalFolderService;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -108,7 +108,7 @@ public class JournalContentPortletToolbarContributor
 			String ddmStructureName = ddmStructure.getName(
 				themeDisplay.getLocale());
 
-			String title = LanguageUtil.format(
+			String title = _language.format(
 				themeDisplay.getLocale(), "new-x", ddmStructureName);
 
 			Map<String, Object> data = new HashMap<>();
@@ -204,6 +204,9 @@ public class JournalContentPortletToolbarContributor
 	private Html _html;
 
 	private JournalFolderService _journalFolderService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;

@@ -30,7 +30,7 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.comparator.ArticleDisplayDateComparator;
 import com.liferay.journal.util.comparator.ArticleModifiedDateComparator;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
@@ -377,7 +377,7 @@ public class JournalRSSUtil {
 			feed = _journalFeedLocalService.getFeed(groupId, feedId);
 		}
 
-		String languageId = LanguageUtil.getLanguageId(resourceRequest);
+		String languageId = _language.getLanguageId(resourceRequest);
 
 		long plid = PortalUtil.getPlidFromFriendlyURL(
 			themeDisplay.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
@@ -734,6 +734,10 @@ public class JournalRSSUtil {
 	private JournalContent _journalContent;
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
 	private JournalFeedLocalService _journalFeedLocalService;
+
+	@Reference
+	private Language _language;
+
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference

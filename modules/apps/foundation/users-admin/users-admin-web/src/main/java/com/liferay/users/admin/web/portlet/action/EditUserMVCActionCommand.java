@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.exception.UserReminderQueryException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.exception.UserSmsException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
@@ -741,7 +741,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-			LanguageUtil.updateCookie(request, response, locale);
+			_language.updateCookie(request, response, locale);
 
 			// Clear cached portlet responses
 
@@ -826,6 +826,10 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private Language _language;
+
 	private ListTypeLocalService _listTypeLocalService;
 	private UserService _userService;
 

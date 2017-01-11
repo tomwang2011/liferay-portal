@@ -20,7 +20,7 @@ import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
@@ -122,7 +122,7 @@ public class CommentUserNotificationHandler
 		}
 
 		if (assetRenderer != null) {
-			message = LanguageUtil.format(
+			message = _language.format(
 				serviceContext.getLocale(), message,
 				new String[] {
 					_html.escape(
@@ -134,7 +134,7 @@ public class CommentUserNotificationHandler
 				false);
 		}
 		else {
-			message = LanguageUtil.format(
+			message = _language.format(
 				serviceContext.getLocale(), message,
 				new String[] {
 					_html.escape(
@@ -159,6 +159,9 @@ public class CommentUserNotificationHandler
 
 	@Reference
 	private Html _html;
+
+	@Reference
+	private Language _language;
 
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 

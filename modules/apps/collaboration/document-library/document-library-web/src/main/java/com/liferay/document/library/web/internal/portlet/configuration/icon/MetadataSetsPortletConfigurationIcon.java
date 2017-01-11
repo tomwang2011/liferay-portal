@@ -16,7 +16,7 @@ package com.liferay.document.library.web.internal.portlet.configuration.icon;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -56,7 +56,7 @@ public class MetadataSetsPortletConfigurationIcon
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getLocale(portletRequest), getClass());
 
-		return LanguageUtil.get(resourceBundle, "metadata-sets");
+		return _language.get(resourceBundle, "metadata-sets");
 	}
 
 	@Override
@@ -122,6 +122,9 @@ public class MetadataSetsPortletConfigurationIcon
 
 		_portletLocalService = portletLocalService;
 	}
+
+	@Reference
+	private Language _language;
 
 	private PortletLocalService _portletLocalService;
 
