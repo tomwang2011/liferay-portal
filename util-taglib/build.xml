@@ -59,6 +59,28 @@
 		</if>
 	</target>
 
+	<target depends="build-common-java.init-jar" name="init-jar">
+		<for param="file">
+			<path>
+				<fileset dir="../modules/core/util-taglib-compat/tld" />
+			</path>
+
+			<sequential>
+				<local name="filename" />
+
+				<basename file="@{file}" property="filename" />
+
+				<xmltask source="src/META-INF/${filename}" >
+					<copy append="true" buffer="buffer" path="/*[name()='taglib']/*[name()='tag']" />
+				</xmltask>
+
+				<xmltask dest="classes/META-INF/${filename}" source="../modules/core/util-taglib-compat/tld/${filename}" >
+					<paste buffer="buffer" path="/*[name()='taglib']" />
+				</xmltask>
+			</sequential>
+		</for>
+	</target>
+
 	<target depends="build-common-java.jar" name="jar">
 		<copy file="${jar.file}.jar" preservelastmodified="true" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
 
