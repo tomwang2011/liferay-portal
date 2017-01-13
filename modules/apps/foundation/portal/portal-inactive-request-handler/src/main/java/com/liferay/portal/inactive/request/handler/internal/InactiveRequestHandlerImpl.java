@@ -16,7 +16,7 @@ package com.liferay.portal.inactive.request.handler.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
@@ -76,8 +76,8 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 
 		String message = null;
 
-		if (LanguageUtil.isValidLanguageKey(locale, messageKey)) {
-			message = LanguageUtil.get(locale, messageKey);
+		if (_language.isValidLanguageKey(locale, messageKey)) {
+			message = _language.get(locale, messageKey);
 		}
 		else {
 			message = _html.escape(messageKey);
@@ -137,6 +137,9 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 
 	@Reference
 	private Html _html;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

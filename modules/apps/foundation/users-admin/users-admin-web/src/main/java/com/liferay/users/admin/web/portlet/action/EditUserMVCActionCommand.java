@@ -741,7 +741,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-			_language.updateCookie(request, response, locale);
+			language.updateCookie(request, response, locale);
 
 			// Clear cached portlet responses
 
@@ -819,6 +819,9 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 	protected Http http;
 
 	@Reference
+	protected Language language;
+
+	@Reference
 	protected Portal portal;
 
 	protected UserLocalService userLocalService;
@@ -826,10 +829,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
 	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
-	private Language _language;
-
 	private ListTypeLocalService _listTypeLocalService;
 	private UserService _userService;
 

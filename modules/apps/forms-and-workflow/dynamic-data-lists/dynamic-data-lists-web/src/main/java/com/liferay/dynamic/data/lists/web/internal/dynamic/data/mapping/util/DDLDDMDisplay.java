@@ -52,7 +52,7 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 	public String getStructureName(Locale locale) {
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 
-		return _language.get(resourceBundle, "data-definition");
+		return language.get(resourceBundle, "data-definition");
 	}
 
 	@Override
@@ -73,9 +73,9 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Reference
-	protected Portal portal;
+	protected Language language;
 
 	@Reference
-	private Language _language;
+	protected Portal portal;
 
 }

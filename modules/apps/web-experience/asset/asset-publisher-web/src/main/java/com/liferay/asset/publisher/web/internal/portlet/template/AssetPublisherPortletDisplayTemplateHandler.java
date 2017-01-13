@@ -80,7 +80,7 @@ public class AssetPublisherPortletDisplayTemplateHandler
 			AssetPublisherPortletKeys.ASSET_PUBLISHER, resourceBundle);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
-			_language.get(locale, "template"));
+			language.get(locale, "template"));
 	}
 
 	@Override
@@ -148,9 +148,9 @@ public class AssetPublisherPortletDisplayTemplateHandler
 	}
 
 	@Reference
-	protected Portal portal;
+	protected Language language;
 
 	@Reference
-	private Language _language;
+	protected Portal portal;
 
 }

@@ -18,7 +18,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -166,7 +166,7 @@ public class PingbackMethodImpl implements Method {
 
 		String body =
 			"[...] " + getExcerpt() + " [...] [url=" + _sourceURI + "]" +
-				LanguageUtil.get(LocaleUtil.getSiteDefault(), "read-more") +
+				_language.get(LocaleUtil.getSiteDefault(), "read-more") +
 					"[/url]";
 
 		ServiceContext serviceContext = buildServiceContext(
@@ -185,7 +185,7 @@ public class PingbackMethodImpl implements Method {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		String pingbackUserName = LanguageUtil.get(
+		String pingbackUserName = _language.get(
 			LocaleUtil.getSiteDefault(), "pingback");
 
 		serviceContext.setAttribute("pingbackUserName", pingbackUserName);
@@ -398,6 +398,9 @@ public class PingbackMethodImpl implements Method {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

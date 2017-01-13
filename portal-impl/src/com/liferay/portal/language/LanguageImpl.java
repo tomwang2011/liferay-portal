@@ -1546,6 +1546,13 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
+	public boolean isValidLanguageKey(Locale locale, String key) {
+		String value = get(locale, key, StringPool.BLANK);
+
+		return Validator.isNotNull(value);
+	}
+
+	@Override
 	public String process(
 		ResourceBundle resourceBundle, Locale locale, String content) {
 
