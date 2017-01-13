@@ -642,10 +642,24 @@ public class JavaClass {
 
 		String javaTermContent = javaTerm.getContent();
 
-		if (!javaTermContent.contains("PortalUtil.")) {
-			return;
+		if (javaTermContent.contains("PortalUtil.")) {
+			checkIfUtilIsInComponent("PortalUtil");
 		}
+		if (javaTermContent.contains("HttpUtil.")) {
+			checkIfUtilIsInComponent("HttpUtil");
+		}
+		if (javaTermContent.contains("HtmlUtil.")) {
+			checkIfUtilIsInComponent("HtmlUtil");
+		}
+		if (javaTermContent.contains("PortletURLFactoryUtil.")) {
+			checkIfUtilIsInComponent("PortletURLFactoryUtil");
+		}
+		if (javaTermContent.contains("LanguageUtil.")) {
+			checkIfUtilIsInComponent("LanguageUtil");
+		}
+	}
 
+	protected void checkIfUtilIsInComponent(String util) throws Exception {
 		String moduleSuperClassContent =
 			_javaSourceProcessor.getModuleSuperClassContent(
 				_content, _name, _packagePath);
@@ -656,7 +670,7 @@ public class JavaClass {
 			_javaSourceProcessor.processMessage(
 				_fileName,
 				"Use portal service reference instead of " +
-					"com.liferay.portal.kernel.util.PortalUtil in modules, " +
+					"com.liferay.portal.kernel.util." + util + " in modules, " +
 						"see LPS-69661");
 		}
 	}
