@@ -2539,7 +2539,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ption",com.liferay.portal.kernel.jsonwebservice;version="7.0.0";uses:
  ="com.liferay.portal.kernel.exception,com.liferay.portal.kernel.util,
  javax.servlet,javax.servlet.http",com.liferay.portal.kernel.language;
- version="7.1.0";uses:="com.liferay.portal.kernel.exception,com.lifera
+ version="7.2.0";uses:="com.liferay.portal.kernel.exception,com.lifera
  y.portal.kernel.util,javax.portlet,javax.servlet.http",com.liferay.po
  rtal.kernel.layoutconfiguration.util;version="1.0.0";uses:="com.lifer
  ay.portal.kernel.layoutconfiguration.util.xml,com.liferay.portal.kern
