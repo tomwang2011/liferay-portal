@@ -119,6 +119,10 @@ public class JavaClass {
 
 			if (javaTerm.isMethod() || javaTerm.isConstructor()) {
 				checkLineBreak(javaTerm);
+
+				// LPS-69661
+
+				checkUtilUsageInComponent(javaTerm);
 			}
 
 			// LPS-65690
@@ -624,6 +628,51 @@ public class JavaClass {
 			JavaTerm.TYPE_METHOD_PUBLIC_STATIC);
 		checkAnnotationForMethod(
 			javaTerm, "Test", "^.*test", JavaTerm.TYPE_METHOD_PUBLIC);
+	}
+
+	protected void checkUtilUsageInComponent(JavaTerm javaTerm)
+		throws Exception {
+
+		if (javaTerm.isStatic() ||
+			!_javaSourceProcessor.isModulesFile(_absolutePath) ||
+			!_content.contains("@Component")) {
+
+			return;
+		}
+
+		String javaTermContent = javaTerm.getContent();
+
+		if (javaTermContent.contains("PortalUtil.")) {
+			checkIfUtilIsInComponent("PortalUtil");
+		}
+		if (javaTermContent.contains("HttpUtil.")) {
+			checkIfUtilIsInComponent("HttpUtil");
+		}
+		if (javaTermContent.contains("HtmlUtil.")) {
+			checkIfUtilIsInComponent("HtmlUtil");
+		}
+		if (javaTermContent.contains("PortletURLFactoryUtil.")) {
+			checkIfUtilIsInComponent("PortletURLFactoryUtil");
+		}
+		if (javaTermContent.contains("LanguageUtil.")) {
+			checkIfUtilIsInComponent("LanguageUtil");
+		}
+	}
+
+	protected void checkIfUtilIsInComponent(String util) throws Exception {
+		String moduleSuperClassContent =
+			_javaSourceProcessor.getModuleSuperClassContent(
+				_content, _name, _packagePath);
+
+		if ((moduleSuperClassContent == null) ||
+			!moduleSuperClassContent.contains("@Component")) {
+
+			_javaSourceProcessor.processMessage(
+				_fileName,
+				"Use portal service reference instead of " +
+					"com.liferay.portal.kernel.util." + util + " in modules, " +
+						"see LPS-69661");
+		}
 	}
 
 	protected boolean combineStaticBlocks(List<JavaTerm> staticBlocks) {

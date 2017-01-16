@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.exception.UserReminderQueryException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.exception.UserSmsException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
@@ -81,7 +81,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -359,8 +359,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 							redirect, oldPath, newPath);
 
 						redirect = StringUtil.replace(
-							redirect, HttpUtil.encodeURL(oldPath),
-							HttpUtil.encodeURL(newPath));
+							redirect, http.encodeURL(oldPath),
+							http.encodeURL(newPath));
 					}
 				}
 
@@ -379,7 +379,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 						redirect, themeDisplay.getI18nPath(), i18nPath);
 				}
 
-				redirect = HttpUtil.setParameter(
+				redirect = http.setParameter(
 					redirect, actionResponse.getNamespace() + "p_u_i_d",
 					user.getUserId());
 			}
@@ -390,8 +390,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				(userLocalService.fetchUserById(scopeGroup.getClassPK()) ==
 					null)) {
 
-				redirect = HttpUtil.setParameter(redirect, "doAsGroupId", 0);
-				redirect = HttpUtil.setParameter(redirect, "refererPlid", 0);
+				redirect = http.setParameter(redirect, "doAsGroupId", 0);
+				redirect = http.setParameter(redirect, "refererPlid", 0);
 			}
 
 			sendRedirect(actionRequest, actionResponse, redirect);
@@ -462,7 +462,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 					if (submittedPassword) {
 						User user = portal.getSelectedUser(actionRequest);
 
-						redirect = HttpUtil.setParameter(
+						redirect = http.setParameter(
 							redirect, actionResponse.getNamespace() + "p_u_i_d",
 							user.getUserId());
 					}
@@ -741,7 +741,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-			LanguageUtil.updateCookie(request, response, locale);
+			language.updateCookie(request, response, locale);
 
 			// Clear cached portlet responses
 
@@ -814,6 +814,12 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 		return new Object[] {user, oldScreenName, updateLanguageId};
 	}
+
+	@Reference
+	protected Http http;
+
+	@Reference
+	protected Language language;
 
 	@Reference
 	protected Portal portal;

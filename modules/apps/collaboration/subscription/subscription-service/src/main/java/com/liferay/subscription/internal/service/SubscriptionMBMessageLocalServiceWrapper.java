@@ -25,7 +25,7 @@ import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceWrapper;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -43,10 +43,10 @@ import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SubscriptionSender;
@@ -257,7 +257,7 @@ public class SubscriptionMBMessageLocalServiceWrapper
 
 		String contentURL = (String)serviceContext.getAttribute("contentURL");
 
-		contentURL = HttpUtil.addParameter(
+		contentURL = _http.addParameter(
 			contentURL, serviceContext.getAttribute("namespace") + "messageId",
 			message.getMessageId());
 
@@ -266,8 +266,8 @@ public class SubscriptionMBMessageLocalServiceWrapper
 			"pingbackUserName");
 
 		if (Validator.isNull(userName)) {
-			userAddress = PortalUtil.getUserEmailAddress(message.getUserId());
-			userName = PortalUtil.getUserName(
+			userAddress = _portal.getUserEmailAddress(message.getUserId());
+			userName = _portal.getUserName(
 				message.getUserId(), StringPool.BLANK);
 		}
 
@@ -458,7 +458,7 @@ public class SubscriptionMBMessageLocalServiceWrapper
 
 			Date modifiedDate = parentMessage.getModifiedDate();
 
-			inReplyTo = PortalUtil.getMailId(
+			inReplyTo = _portal.getMailId(
 				company.getMx(), MBUtil.MESSAGE_POP_PORTLET_PREFIX,
 				message.getCategoryId(), parentMessage.getMessageId(),
 				modifiedDate.getTime());
@@ -558,14 +558,14 @@ public class SubscriptionMBMessageLocalServiceWrapper
 		try {
 			Group group = _groupLocalService.getGroup(groupId);
 
-			return LanguageUtil.get(locale, "message-boards-home") + " - " +
+			return _language.get(locale, "message-boards-home") + " - " +
 				group.getDescriptiveName(locale);
 		}
 		catch (PortalException pe) {
 			_log.error(
 				"Unable to get descriptive name for group " + groupId, pe);
 
-			return LanguageUtil.get(locale, "message-boards-home");
+			return _language.get(locale, "message-boards-home");
 		}
 	}
 
@@ -574,8 +574,19 @@ public class SubscriptionMBMessageLocalServiceWrapper
 
 	private CompanyLocalService _companyLocalService;
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Http _http;
+
+	@Reference
+	private Language _language;
+
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@Reference
+	private Portal _portal;
+
 	private SubscriptionLocalService _subscriptionLocalService;
 	private UserLocalService _userLocalService;
 

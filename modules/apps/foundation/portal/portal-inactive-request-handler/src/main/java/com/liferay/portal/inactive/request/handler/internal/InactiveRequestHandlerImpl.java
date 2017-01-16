@@ -16,12 +16,12 @@ package com.liferay.portal.inactive.request.handler.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.inactive.request.handler.configuration.InactiveRequestHandlerConfiguration;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -76,11 +76,11 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 
 		String message = null;
 
-		if (LanguageUtil.isValidLanguageKey(locale, messageKey)) {
-			message = LanguageUtil.get(locale, messageKey);
+		if (_language.isValidLanguageKey(locale, messageKey)) {
+			message = _language.get(locale, messageKey);
 		}
 		else {
-			message = HtmlUtil.escape(messageKey);
+			message = _html.escape(messageKey);
 		}
 
 		String html = StringUtil.replace(_content, "[$MESSAGE$]", message);
@@ -134,6 +134,12 @@ public class InactiveRequestHandlerImpl implements InactiveRequestHandler {
 		InactiveRequestHandlerImpl.class);
 
 	private String _content = StringPool.BLANK;
+
+	@Reference
+	private Html _html;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

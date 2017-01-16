@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
@@ -52,7 +52,7 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 	public String getStructureName(Locale locale) {
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 
-		return LanguageUtil.get(resourceBundle, "data-definition");
+		return language.get(resourceBundle, "data-definition");
 	}
 
 	@Override
@@ -71,6 +71,9 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 	public boolean isShowBackURLInTitleBar() {
 		return true;
 	}
+
+	@Reference
+	protected Language language;
 
 	@Reference
 	protected Portal portal;
