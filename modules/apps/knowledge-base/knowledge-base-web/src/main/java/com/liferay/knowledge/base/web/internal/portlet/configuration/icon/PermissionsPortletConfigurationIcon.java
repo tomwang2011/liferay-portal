@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -113,7 +113,7 @@ public class PermissionsPortletConfigurationIcon
 			if (!AdminPermission.contains(
 					permissionChecker, themeDisplay.getScopeGroupId(),
 					ActionKeys.PERMISSIONS) ||
-				!GroupPermissionUtil.contains(
+				!_groupPermission.contains(
 					permissionChecker, themeDisplay.getScopeGroupId(),
 					ActionKeys.PERMISSIONS)) {
 
@@ -131,6 +131,9 @@ public class PermissionsPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private Language _language;

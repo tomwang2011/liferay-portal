@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
@@ -138,7 +138,7 @@ public class StagingPortletConfigurationIcon
 		}
 
 		try {
-			return GroupPermissionUtil.contains(
+			return _groupPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup(), ActionKeys.PUBLISH_PORTLET_INFO);
 		}
@@ -161,6 +161,9 @@ public class StagingPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagingPortletConfigurationIcon.class);
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private Html _html;

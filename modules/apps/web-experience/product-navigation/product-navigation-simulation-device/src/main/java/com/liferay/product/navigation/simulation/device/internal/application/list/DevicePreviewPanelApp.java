@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.product.navigation.simulation.application.list.SimulationPanelCategory;
 import com.liferay.product.navigation.simulation.web.constants.ProductNavigationSimulationPortletKeys;
@@ -104,9 +104,12 @@ public class DevicePreviewPanelApp extends BaseJSPPanelApp {
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		return GroupPermissionUtil.contains(
+		return _groupPermission.contains(
 			permissionChecker, group, ActionKeys.PREVIEW_IN_DEVICE);
 	}
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private Language _language;

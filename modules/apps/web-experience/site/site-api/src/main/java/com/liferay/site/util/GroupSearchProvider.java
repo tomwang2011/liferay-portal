@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupService;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -185,7 +185,7 @@ public class GroupSearchProvider {
 			}
 
 			if (!permissionChecker.isCompanyAdmin() &&
-				!GroupPermissionUtil.contains(
+				!_groupPermission.contains(
 					permissionChecker, ActionKeys.VIEW)) {
 
 				groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
@@ -227,7 +227,7 @@ public class GroupSearchProvider {
 			return false;
 		}
 
-		if (GroupPermissionUtil.contains(permissionChecker, ActionKeys.VIEW)) {
+		if (_groupPermission.contains(permissionChecker, ActionKeys.VIEW)) {
 			return false;
 		}
 
@@ -261,6 +261,10 @@ public class GroupSearchProvider {
 
 	private long[] _classNameIds;
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private GroupPermission _groupPermission;
+
 	private GroupService _groupService;
 
 }

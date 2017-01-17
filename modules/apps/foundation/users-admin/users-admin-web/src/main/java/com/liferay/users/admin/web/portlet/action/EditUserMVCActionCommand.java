@@ -72,7 +72,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -770,7 +770,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		Group group = user.getGroup();
 
 		if (!portletId.equals(myAccountPortletId) &&
-			GroupPermissionUtil.contains(
+			groupPermission.contains(
 				themeDisplay.getPermissionChecker(), group.getGroupId(),
 				ActionKeys.UPDATE) &&
 			PortalPermissionUtil.contains(
@@ -814,6 +814,9 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 		return new Object[] {user, oldScreenName, updateLanguageId};
 	}
+
+	@Reference
+	protected GroupPermission groupPermission;
 
 	@Reference
 	protected Http http;

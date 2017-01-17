@@ -103,7 +103,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -2252,7 +2252,7 @@ public class StagingImpl implements Staging {
 
 		long userId = permissionChecker.getUserId();
 
-		if (!GroupPermissionUtil.contains(
+		if (!_groupPermission.contains(
 				permissionChecker, liveGroup, ActionKeys.MANAGE_STAGING)) {
 
 			return;
@@ -3054,6 +3054,9 @@ public class StagingImpl implements Staging {
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private Language _language;

@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -281,7 +281,7 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 
 		Group organizationGroup = organization.getGroup();
 
-		if (GroupPermissionUtil.contains(
+		if (_groupPermission.contains(
 				themeDisplay.getPermissionChecker(), organizationGroup,
 				ActionKeys.UPDATE)) {
 
@@ -309,6 +309,9 @@ public class EditOrganizationMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private GroupPermission _groupPermission;
 
 	@Reference
 	private Http _http;
