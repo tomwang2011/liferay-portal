@@ -657,6 +657,24 @@ public class JavaClass {
 		if (javaTermContent.contains("LanguageUtil.")) {
 			checkIfUtilIsInComponent("LanguageUtil");
 		}
+		if (javaTermContent.contains("DirectServletRegistryUtil.")) {
+			checkIfUtilIsInComponent("DirectServletRegistryUtil");
+		}
+		if (javaTermContent.contains("DirectRequestDispatcherFactoryUtil.")) {
+			checkIfUtilIsInComponent("DirectRequestDispatcherFactoryUtil");
+		}
+		if (javaTermContent.contains("BrowserSnifferUtil.")) {
+			checkIfUtilIsInComponent("BrowserSnifferUtil");
+		}
+//		if (javaTermContent.contains("SitesUtil.")) {
+//			checkIfUtilIsInComponent("SitesUtil");
+//		}
+//		if (javaTermContent.contains("PortletConfigFactoryUtil.")) {
+//			checkIfUtilIsInComponent("PortletConfigFactoryUtil");
+//		}
+		if (javaTermContent.contains("GroupPermissionUtil.")) {
+			checkIfUtilIsInComponent("GroupPermissionUtil");
+		}
 	}
 
 	protected void checkIfUtilIsInComponent(String util) throws Exception {
