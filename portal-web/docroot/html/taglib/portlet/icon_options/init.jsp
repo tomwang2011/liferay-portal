@@ -22,8 +22,10 @@ page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 <liferay-theme:defineObjects />
 
 <%
+Map<String, Object> iconAttributes = (Map<String, Object>)request.getAttribute("liferay-ui:icon:attributes");
+
 String direction = (String)request.getAttribute("liferay-ui:icon:direction");
-String markupView = (String)request.getAttribute("liferay-ui:icon:markupView");
+String markupView = (String)iconAttributes.get("liferay-ui:icon:markupView");
 boolean showArrow = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:showArrow"));
 
 List<PortletConfigurationIcon> portletConfigurationIcons = (List<PortletConfigurationIcon>)request.getAttribute("liferay-ui:icon-options:portletConfigurationIcons");
