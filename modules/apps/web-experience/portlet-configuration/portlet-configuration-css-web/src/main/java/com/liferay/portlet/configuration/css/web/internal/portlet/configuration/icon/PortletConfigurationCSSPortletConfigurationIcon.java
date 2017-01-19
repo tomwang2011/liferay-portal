@@ -15,6 +15,7 @@
 package com.liferay.portlet.configuration.css.web.internal.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -29,7 +30,6 @@ import java.util.ResourceBundle;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -60,20 +60,10 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL baseActionURL = PortletURLFactoryUtil.create(
+		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
 			portletRequest,
 			PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
 			PortletRequest.ACTION_PHASE);
-
-		PortletURL baseRenderURL = PortletURLFactoryUtil.create(
-			portletRequest,
-			PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
-			PortletRequest.RENDER_PHASE);
-
-		PortletURL baseResourceURL = PortletURLFactoryUtil.create(
-			portletRequest,
-			PortletConfigurationCSSPortletKeys.PORTLET_CONFIGURATION_CSS,
-			PortletRequest.RESOURCE_PHASE);
 
 		StringBundler sb = new StringBundler(9);
 
@@ -84,11 +74,17 @@ public class PortletConfigurationCSSPortletConfigurationIcon
 		sb.append(portletDisplay.getId());
 
 		sb.append("', '");
-		sb.append(baseActionURL);
+		sb.append(portletURL.toString());
 		sb.append("', '");
-		sb.append(baseRenderURL);
+
+		portletURL.setLifecycle(PortletRequest.RENDER_PHASE);
+
+		sb.append(portletURL.toString());
 		sb.append("', '");
-		sb.append(baseResourceURL);
+
+		portletURL.setLifecycle(PortletRequest.RESOURCE_PHASE);
+
+		sb.append(portletURL.toString());
 		sb.append("'); return false;");
 
 		return sb.toString();
