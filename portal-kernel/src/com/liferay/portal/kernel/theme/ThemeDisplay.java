@@ -383,6 +383,27 @@ public class ThemeDisplay
 		return _layout;
 	}
 
+	public String getLayoutFriendlyURL(Layout layout) throws PortalException {
+		if (_layout.equals(layout)) {
+			if (_layoutFriendlyURL == null) {
+				_layoutFriendlyURL = PortalUtil.getLayoutFriendlyURL(
+					_layout, this);
+			}
+
+			return _layoutFriendlyURL;
+		}
+		else if (layout.isTypeControlPanel()) {
+			if (_controlPanelLayoutFriendlyURL == null) {
+				_controlPanelLayoutFriendlyURL =
+					PortalUtil.getLayoutFriendlyURL(layout, this);
+			}
+
+			return _controlPanelLayoutFriendlyURL;
+		}
+
+		return PortalUtil.getLayoutFriendlyURL(layout, this);
+	}
+
 	/**
 	 * Returns the site's top-level pages.
 	 *
@@ -1356,6 +1377,9 @@ public class ThemeDisplay
 		_locale = locale;
 
 		LocaleThreadLocal.setThemeDisplayLocale(locale);
+
+		_controlPanelLayoutFriendlyURL = null;
+		_layoutFriendlyURL = null;
 	}
 
 	public void setLookAndFeel(Theme theme, ColorScheme colorScheme) {
@@ -1821,6 +1845,7 @@ public class ThemeDisplay
 	private int _companyLogoHeight;
 	private int _companyLogoWidth;
 	private Contact _contact;
+	private String _controlPanelLayoutFriendlyURL;
 	private User _defaultUser;
 	private Device _device;
 	private long _doAsGroupId;
@@ -1841,6 +1866,7 @@ public class ThemeDisplay
 	private boolean _isolated;
 	private String _languageId;
 	private Layout _layout;
+	private String _layoutFriendlyURL;
 	private List<Layout> _layouts;
 	private LayoutSet _layoutSet;
 	private String _layoutSetLogo = StringPool.BLANK;
