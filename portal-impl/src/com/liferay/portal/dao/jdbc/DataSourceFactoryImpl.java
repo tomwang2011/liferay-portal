@@ -381,6 +381,10 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				BeanUtil.setProperty(hikariDataSource, key, value);
 			}
 			catch (Exception e) {
+				if (key.equals("validationQuery")) {
+					continue;
+				}
+
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Property " + key + " is an invalid HikariCP property");
