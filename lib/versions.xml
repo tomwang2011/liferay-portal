@@ -68,31 +68,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/deployment.jar</file-name>
-				<version>1.2-rev-1</version>
-				<project-name>J2EE Application Deployment Library</project-name>
-				<project-url>http://java.sun.com/j2ee/tools/deployment</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.0</license-name>
-						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/dtdparser.jar</file-name>
-				<version>1.21</version>
-				<project-name>DTDParser</project-name>
-				<project-url>http://sourceforge.net/projects/dtdparser</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-
-			<library>
 				<file-name>lib/development/dumbster.jar</file-name>
 				<version>02856255a6cc7f</version>
 				<project-name>Dumbster</project-name>
@@ -156,18 +131,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/jbi_rt.jar</file-name>
-				<version>2.4.3</version>
-				<project-name>Glassfish</project-name>
-				<project-url>http://glassfish.dev.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.0</license-name>
-						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/jndi.jar</file-name>
 				<version>1.2.1</version>
 				<project-name>Java Naming and Directory Interface</project-name>
@@ -216,18 +179,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/persistence.jar</file-name>
-				<version>2.1.1</version>
-				<project-name>Java Persistence</project-name>
-				<project-url>http://java.sun.com/javaee/overview/faq/persistence.jsp</project-url>
-				<licenses>
-					<license>
-						<license-name>Sun Binary Code License Agreement</license-name>
-						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 -				<file-name>lib/development/resin.jar</file-name>
 -				<version>4.0.44</version>
 -				<project-name>Resin</project-name>
@@ -251,18 +202,6 @@
 					<license>
 						<license-name>CDDL 1.0</license-name>
 						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/smtp.jar</file-name>
-				<version>1.5.4</version>
-				<project-name>JavaMail</project-name>
-				<project-url>http://java.sun.com/products/javamail</project-url>
-				<licenses>
-					<license>
-						<license-name>Sun Binary Code License Agreement</license-name>
-						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
 					</license>
 				</licenses>
 			</library>
