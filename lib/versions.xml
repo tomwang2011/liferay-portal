@@ -68,34 +68,23 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/deployment.jar</file-name>
-				<version>1.1</version>
-				<project-name>J2EE Application Deployment Library</project-name>
-				<project-url>http://java.sun.com/j2ee/tools/deployment</project-url>
+				<file-name>lib/development/dtdparser.jar</file-name>
+				<version>1.20</version>
+				<project-name>DTDParser</project-name>
+				<project-url>http://sourceforge.net/projects/dtdparser</project-url>
 				<licenses>
 					<license>
-						<license-name>CDDL 1.0</license-name>
-						<license-url>http://glassfish.java.net/public/CDDLv1.0.html</license-url>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
 					</license>
 				</licenses>
 			</library>
+
 			<library>
 				<file-name>lib/development/dumbster.jar</file-name>
 				<version>02856255a6cc7f</version>
 				<project-name>Dumbster</project-name>
 				<project-url>https://github.com/rjo1970/dumbster</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/error-prone-ant.jar</file-name>
-				<version>1.0.8</version>
-				<project-name>Error-Prone</project-name>
-				<project-url>https://code.google.com/p/error-prone</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>
@@ -127,6 +116,18 @@
 					<license>
 						<license-name>GPL 2.0</license-name>
 						<license-url>http://www.gnu.org/licenses/gpl-2.0.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>lib/development/jargs.jar</file-name>
+				<version>1.0</version>
+				<project-name>JArgs</project-name>
+				<project-url>http://jargs.sourceforge.net</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD Style License</license-name>
+						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -250,18 +251,6 @@
 					<license>
 						<license-name>Sun Binary Code License Agreement</license-name>
 						<license-url>http://www.oracle.com/technetwork/java/javase/downloads/java-se-archive-license-1382604.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/websocket-api.jar</file-name>
-				<version>1.12</version>
-				<project-name>WebSocket</project-name>
-				<project-url>http://www.oracle.com/technetwork/articles/java/jsr356-1937161.html</project-url>
-				<licenses>
-					<license>
-						<license-name>CDDL 1.1</license-name>
-						<license-url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</license-url>
 					</license>
 				</licenses>
 			</library>
