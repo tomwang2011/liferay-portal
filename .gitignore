@@ -42,6 +42,7 @@
 /dist
 /intellij
 /lib/development/appium.jar
+/lib/development/bsh.jar
 /lib/development/db2jcc.jar
 /lib/development/db2jcc_license_cu.jar
 /lib/development/ojdbc14.jar
