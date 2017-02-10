@@ -381,6 +381,10 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 				BeanUtil.setProperty(hikariDataSource, key, value);
 			}
 			catch (Exception e) {
+				if (key.equals("validationQuery")) {
+					continue;
+				}
+
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Property " + key + " is an invalid HikariCP property");
@@ -518,8 +522,11 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 	protected boolean isPropertyTomcat(String key) {
 		if (StringUtil.equalsIgnoreCase(key, "fairQueue") ||
+			StringUtil.equalsIgnoreCase(key, "initialSize") ||
 			StringUtil.equalsIgnoreCase(key, "jdbcInterceptors") ||
 			StringUtil.equalsIgnoreCase(key, "jmxEnabled") ||
+			StringUtil.equalsIgnoreCase(key, "maxIdle") ||
+			StringUtil.equalsIgnoreCase(key, "testWhileIdle") ||
 			StringUtil.equalsIgnoreCase(key, "timeBetweenEvictionRunsMillis") ||
 			StringUtil.equalsIgnoreCase(key, "useEquals")) {
 
