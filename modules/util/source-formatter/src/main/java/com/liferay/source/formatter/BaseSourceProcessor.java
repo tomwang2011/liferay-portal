@@ -2724,6 +2724,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				FileUtil.write(file, newContent);
 			}
 			else if (_firstSourceMismatchException == null) {
+				System.out.println("fileName= " + fileName);
 				_firstSourceMismatchException = new SourceMismatchException(
 					fileName, content, newContent);
 			}
