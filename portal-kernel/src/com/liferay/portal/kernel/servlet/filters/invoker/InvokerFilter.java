@@ -17,9 +17,11 @@ package com.liferay.portal.kernel.servlet.filters.invoker;
 import com.liferay.portal.kernel.concurrent.ConcurrentLFUCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.servlet.HttpOnlyCookieServletResponse;
 import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
 import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -67,6 +69,10 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
+		String key = RandomUtil.shuffle("abcdefghijklmnopqrstuvwxyz");
+
+		request.setAttribute(key, new int[]{2000});
+
 		String originalURI = getOriginalRequestURI(request);
 
 		if (!handleLongRequestURL(request, response, originalURI)) {
@@ -100,6 +106,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		}
 		finally {
 			request.removeAttribute(WebKeys.INVOKER_FILTER_URI);
+			request.removeAttribute(key);
 		}
 	}
 
