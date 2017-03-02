@@ -2,6 +2,10 @@
 
 <tag-plugins>
 	<tag-plugin>
+		<tag-class>com.liferay.taglib.core.IfTag</tag-class>
+		<plugin-class>org.apache.jasper.tagplugins.jstl.core.If</plugin-class>
+	</tag-plugin>
+	<tag-plugin>
 		<tag-class>org.apache.taglibs.standard.tag.rt.core.IfTag</tag-class>
 		<plugin-class>org.apache.jasper.tagplugins.jstl.core.If</plugin-class>
 	</tag-plugin>
