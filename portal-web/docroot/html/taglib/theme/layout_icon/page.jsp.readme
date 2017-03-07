@@ -1,1 +1,3 @@
-The content of this jsp file was inlined to improve performance, if any client have different logic for this jsp file they can replace this file by removing the ".readme" extension add the logic to this file, which will disable the inlined behavior and run the logic that is in this jsp file.
+The content of this JSP file was inlined to improve performance. To use your own 
+content instead, remove the ".readme" extension and add your content to this 
+file.
