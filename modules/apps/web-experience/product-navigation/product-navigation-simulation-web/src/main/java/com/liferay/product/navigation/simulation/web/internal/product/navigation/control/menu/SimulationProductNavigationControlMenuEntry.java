@@ -29,28 +29,34 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.simulation.application.list.SimulationPanelCategory;
 import com.liferay.product.navigation.simulation.web.constants.ProductNavigationSimulationPortletKeys;
 import com.liferay.taglib.aui.IconTag;
+import com.liferay.taglib.aui.ScriptTag;
+import com.liferay.taglib.ui.MessageTag;
+import com.liferay.taglib.util.BodyBottomTag;
 
 import java.io.IOException;
 import java.io.Writer;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -68,8 +74,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ProductNavigationControlMenuEntry.class
 )
 public class SimulationProductNavigationControlMenuEntry
-	extends BaseJSPProductNavigationControlMenuEntry
-	implements ProductNavigationControlMenuEntry {
+	extends BaseProductNavigationControlMenuEntry {
 
 	@Activate
 	public void activate() {
@@ -79,13 +84,33 @@ public class SimulationProductNavigationControlMenuEntry
 	}
 
 	@Override
-	public String getBodyJspPath() {
-		return "/portlet/control_menu/simulation_control_menu_body.jsp";
+	public String getLabel(Locale locale) {
+		return null;
 	}
 
 	@Override
-	public String getIconJspPath() {
+	public String getURL(HttpServletRequest request) {
 		return null;
+	}
+
+	@Override
+	public boolean includeBody(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		BodyBottomTag bodyBottomTag = new BodyBottomTag();
+
+		bodyBottomTag.setOutputKey("simulationMenu");
+
+		try {
+			bodyBottomTag.doBodyTag(
+				request, response, this::_processBodyBottomTagBody);
+		}
+		catch (JspException je) {
+			throw new IOException(je);
+		}
+
+		return true;
 	}
 
 	@Override
@@ -154,15 +179,6 @@ public class SimulationProductNavigationControlMenuEntry
 		return super.isShow(request);
 	}
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.product.navigation.simulation.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
-	}
-
 	@Reference(unbind = "-")
 	public void setSimulationPanelCategory(
 		SimulationPanelCategory simulationPanelCategory) {
@@ -171,6 +187,78 @@ public class SimulationProductNavigationControlMenuEntry
 	@Reference(unbind = "-")
 	protected void setPanelAppRegistry(PanelAppRegistry panelAppRegistry) {
 		_panelAppRegistry = panelAppRegistry;
+	}
+
+	private void _processBodyBottomTagBody(PageContext pageContext) {
+		JspWriter jspWriter = pageContext.getOut();
+
+		try {
+			jspWriter.write(
+				"<div class=\"closed lfr-admin-panel lfr-product-menu-panel " +
+					"lfr-simulation-panel sidenav-fixed sidenav-menu-slider " +
+						"sidenav-right\" id=\"");
+			jspWriter.write(_portletNamespace);
+			jspWriter.write(
+				"simulationPanelId\"><div class=\"product-menu sidebar " +
+					"sidebar-inverse sidenav-menu\"><div class=\"" +
+						"sidebar-header\"><span>");
+
+			MessageTag messageTag = new MessageTag();
+
+			messageTag.setKey("simulation");
+
+			messageTag.doTag(pageContext);
+
+			jspWriter.write("</span>");
+
+			IconTag iconTag = new IconTag();
+
+			iconTag.setCssClass("icon-monospaced sidenav-close");
+			iconTag.setImage("times");
+			iconTag.setMarkupView("lexicon");
+			iconTag.setUrl("javascript:;");
+
+			iconTag.doTag(pageContext);
+
+			jspWriter.write(
+				"</div><div class=\"sidebar-body\"></div></div></div>");
+
+			ScriptTag scriptTag = new ScriptTag();
+
+			scriptTag.setUse("liferay-store,io-request,parse-content");
+
+			scriptTag.doBodyTag(pageContext, this::_processScriptTagBody);
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
+	}
+
+	private void _processScriptTagBody(PageContext pageContext) {
+		JspWriter jspWriter = pageContext.getOut();
+
+		try {
+			jspWriter.write("var simulationToggle = $('#");
+			jspWriter.write(_portletNamespace);
+			jspWriter.write(
+				"simulationToggleId');simulationToggle.sideNavigation();var " +
+					"simulationPanel = $('#");
+			jspWriter.write(_portletNamespace);
+			jspWriter.write(
+				"simulationPanelId');simulationPanel.on(" +
+					"'open.lexicon.sidenav',function(event) {Liferay.fire(" +
+						"'SimulationMenu:openSimulationPanel');});");
+			jspWriter.write(
+				"simulationPanel.on('closed.lexicon.sidenav',function(event) " +
+					"{Liferay.fire('SimulationMenu:closeSimulationPanel');});");
+			jspWriter.write(
+				"Liferay.once('screenLoad',function() {var sideNavigation = " +
+					"simulationToggle.data('lexicon.sidenav');if (" +
+						"sideNavigation) {sideNavigation.destroy();}});");
+		}
+		catch (Exception e) {
+			ReflectionUtil.throwException(e);
+		}
 	}
 
 	private static final String _TMPL_CONTENT = StringUtil.read(
