@@ -1,0 +1,38 @@
+diff --git a/freemarker/ext/beans/BeanModel.java b/freemarker/ext/beans/BeanModel.java
+index 40b23fa..bdec7af 100644
+--- a/freemarker/ext/beans/BeanModel.java
++++ b/freemarker/ext/beans/BeanModel.java
+@@ -227,15 +227,16 @@ implements
+     {
+         // See if this particular instance has a cached implementation
+         // for the requested feature descriptor
+-        TemplateModel member;
+-        synchronized(this) {
+-            if(memberMap != null) {
+-                member = (TemplateModel)memberMap.get(desc);
+-            }
+-            else {
+-                member = null;
+-            }
+-        }
++
++		TemplateModel member = null;
++
++		if(!(desc instanceof PropertyDescriptor) && !(desc instanceof Field)) {
++			synchronized(this) {
++				if(memberMap != null) {
++					member = (TemplateModel)memberMap.get(desc);
++				}
++			}
++		}
+ 
+         if(member != null)
+             return member;
+@@ -396,4 +397,4 @@ implements
+         return wrapper.wrapAsAPI(object);
+     }
+     
+-}
+\ No newline at end of file
++}/* @generated */
+\ No newline at end of file
