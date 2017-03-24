@@ -19,6 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.LongAdder;
+
 /**
  * Provides the local service utility for Layout. This utility wraps
  * {@link com.liferay.portal.service.impl.LayoutLocalServiceImpl} and is the
@@ -581,6 +584,9 @@ public class LayoutLocalServiceUtil {
 		return getService().getLayout(groupId, privateLayout, layoutId);
 	}
 
+	public static final LongAdder SERVICE_TIME = new LongAdder();
+	public static final LongAdder INVOCATION_TIME = new LongAdder();
+
 	/**
 	* Returns the layout with the primary key.
 	*
@@ -590,7 +596,25 @@ public class LayoutLocalServiceUtil {
 	*/
 	public static com.liferay.portal.kernel.model.Layout getLayout(long plid)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLayout(plid);
+
+		long start = System.nanoTime();
+
+		LayoutLocalService layoutLocalService = getService();
+
+		long end = System.nanoTime();
+
+		SERVICE_TIME.add(end - start);
+
+		start = System.nanoTime();
+
+		com.liferay.portal.kernel.model.Layout layout =
+			layoutLocalService.getLayout(plid);
+
+		end = System.nanoTime();
+
+		INVOCATION_TIME.add(end - start);
+
+		return layout;
 	}
 
 	/**

@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
@@ -87,6 +88,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.LongAdder;
 
 /**
  * Provides the local service for accessing, adding, deleting, exporting,
@@ -1148,10 +1151,27 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public Layout getLayout(long plid) throws PortalException {
+		long start = System.nanoTime();
+
 		Layout layout = layoutPersistence.findByPrimaryKey(plid);
 
 		if (_mergeLayout(layout, plid)) {
-			return layoutPersistence.findByPrimaryKey(plid);
+			layout = layoutPersistence.findByPrimaryKey(plid);
+		}
+
+		ACTION_TIME.add(System.nanoTime() - start);
+
+		if ((_modCount++ % 10000) == 0) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("Layout Service Time = ");
+			sb.append(LayoutLocalServiceUtil.SERVICE_TIME.sum());
+			sb.append(" Layout Invocation Time = ");
+			sb.append(LayoutLocalServiceUtil.INVOCATION_TIME.sum());
+			sb.append(" Layout Execution Time = ");
+			sb.append(ACTION_TIME.sum());
+
+			System.out.println(sb.toString());
 		}
 
 		return layout;
@@ -1180,6 +1200,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		return layout;
 	}
+
+	private static int _modCount = 0;
+
+	public static final LongAdder ACTION_TIME = new LongAdder();
 
 	/**
 	 * Returns the layout for the icon image; throws a {@link

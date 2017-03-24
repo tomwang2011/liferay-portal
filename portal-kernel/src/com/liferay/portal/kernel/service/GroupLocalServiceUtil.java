@@ -19,6 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.LongAdder;
+
 /**
  * Provides the local service utility for Group. This utility wraps
  * {@link com.liferay.portal.service.impl.GroupLocalServiceImpl} and is the
@@ -363,8 +366,25 @@ public class GroupLocalServiceUtil {
 	public static com.liferay.portal.kernel.model.Group getGroup(
 		long companyId, java.lang.String groupKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getGroup(companyId, groupKey);
+
+		long time = System.nanoTime();
+
+		GroupLocalService groupLocalService = getService();
+
+		SERVICE_TIME.add(System.nanoTime() - time);
+
+		time = System.nanoTime();
+
+		com.liferay.portal.kernel.model.Group group = 
+			groupLocalService.getGroup(companyId, groupKey);
+
+		INVOCATION_TIME.add(System.nanoTime() - time);
+
+		return group;
 	}
+
+	public static final LongAdder SERVICE_TIME = new LongAdder();
+	public static final LongAdder INVOCATION_TIME = new LongAdder();
 
 	/**
 	* Returns the group with the primary key.

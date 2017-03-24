@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.RolePermissions;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -127,6 +128,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.LongAdder;
 
 /**
  * Provides the local service for accessing, adding, deleting, and updating
@@ -1167,15 +1170,35 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	public Group getGroup(long companyId, String groupKey)
 		throws PortalException {
 
+		long time = System.nanoTime();
+
 		Group group = _systemGroupsMap.get(
 			StringUtil.toHexString(companyId).concat(groupKey));
 
-		if (group != null) {
-			return group;
+		if (group == null) {
+			group = groupLocalService.loadGetGroup(companyId, groupKey);
 		}
 
-		return groupLocalService.loadGetGroup(companyId, groupKey);
+		GROUP_TIME.add(System.nanoTime() - time);
+
+		if ((_modCount++ % 10000) == 0) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append("Group Service Time = ");
+			sb.append(GroupLocalServiceUtil.SERVICE_TIME.sum());
+			sb.append(" Group Invocation Time = ");
+			sb.append(GroupLocalServiceUtil.INVOCATION_TIME.sum());
+			sb.append(" Group Execution Time = ");
+			sb.append(GROUP_TIME.sum());
+
+			System.out.println(sb.toString());
+		}
+
+		return group;
 	}
+
+	private static int _modCount = 0;
+	public static final LongAdder GROUP_TIME = new LongAdder();
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
