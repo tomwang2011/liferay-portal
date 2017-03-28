@@ -880,18 +880,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/unoil.jar</file-name>
-				<version>2.3.0</version>
-				<project-name>OpenOffice.org Java Uno</project-name>
-				<project-url>http://udk.openoffice.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/xbean.jar</file-name>
 				<version>2.5.0</version>
 				<project-name>XMLBeans</project-name>
