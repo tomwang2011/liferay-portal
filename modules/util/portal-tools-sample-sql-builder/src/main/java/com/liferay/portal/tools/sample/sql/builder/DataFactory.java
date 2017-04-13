@@ -847,6 +847,10 @@ public class DataFactory {
 		_assetPublisherQueryName = GetterUtil.getString(
 			properties.getProperty("sample.sql.asset.publisher.query.name"));
 
+		_assetPublisherQueryInterval = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.asset.publisher.query.interval"));
+
 		if (!_assetPublisherQueryName.equals("assetCategories")) {
 			_assetPublisherQueryName = "assetTags";
 		}
@@ -2733,13 +2737,13 @@ public class DataFactory {
 		AssetCategoryModel assetCategoryModel0 = assetCategoryModels.get(
 			index % assetCategoryModels.size());
 		AssetCategoryModel assetCategoryModel1 = assetCategoryModels.get(
-			(index + _maxAssetEntryToAssetCategoryCount) %
+			(index + _assetPublisherQueryInterval) %
 				assetCategoryModels.size());
 		AssetCategoryModel assetCategoryModel2 = assetCategoryModels.get(
-			(index + _maxAssetEntryToAssetCategoryCount * 2) %
+			(index + _assetPublisherQueryInterval * 2) %
 				assetCategoryModels.size());
 		AssetCategoryModel assetCategoryModel3 = assetCategoryModels.get(
-			(index + _maxAssetEntryToAssetCategoryCount * 3) %
+			(index + _assetPublisherQueryInterval * 3) %
 				assetCategoryModels.size());
 
 		return new String[] {
@@ -2756,13 +2760,11 @@ public class DataFactory {
 		AssetTagModel assetTagModel0 = assetTagModels.get(
 			index % assetTagModels.size());
 		AssetTagModel assetTagModel1 = assetTagModels.get(
-			(index + _maxAssetEntryToAssetTagCount) % assetTagModels.size());
+			(index + _assetPublisherQueryInterval) % assetTagModels.size());
 		AssetTagModel assetTagModel2 = assetTagModels.get(
-			(index + _maxAssetEntryToAssetTagCount * 2) %
-				assetTagModels.size());
+			(index + _assetPublisherQueryInterval * 2) % assetTagModels.size());
 		AssetTagModel assetTagModel3 = assetTagModels.get(
-			(index + _maxAssetEntryToAssetTagCount * 3) %
-				assetTagModels.size());
+			(index + _assetPublisherQueryInterval * 3) % assetTagModels.size());
 
 		return new String[] {
 			assetTagModel0.getName(), assetTagModel1.getName(),
@@ -3572,6 +3574,7 @@ public class DataFactory {
 	private List<AssetCategoryModel>[] _assetCategoryModelsArray;
 	private final Map<Long, SimpleCounter> _assetPublisherQueryCounter =
 		new HashMap<>();
+	private int _assetPublisherQueryInterval;
 	private String _assetPublisherQueryName;
 	private final Map<Long, SimpleCounter> _assetTagCounters = new HashMap<>();
 	private List<AssetTagModel>[] _assetTagModelsArray;
