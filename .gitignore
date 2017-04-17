@@ -164,6 +164,7 @@
 /lib/portal/displaytag.jar
 /lib/portal/dom4j.jar
 /lib/portal/easyconf.jar
+/lib/portal/eclipse-core-runtime.jar
 /lib/portal/ecs.jar
 /lib/portal/fontbox.jar
 /lib/portal/gif89.jar
@@ -173,16 +174,21 @@
 /lib/portal/hikaricp.jar
 /lib/portal/htmlparser.jar
 /lib/portal/httpclient.jar
+/lib/portal/httpcore.jar
 /lib/portal/httpmime.jar
+/lib/portal/ical4j.jar
 /lib/portal/im4java.jar
 /lib/portal/isoparser.jar
 /lib/portal/jai_codec.jar
 /lib/portal/jai_core.jar
+/lib/portal/jakarta-regexp.jar
 /lib/portal/java-libpst.jar
 /lib/portal/javassist.jar
 /lib/portal/jaxb-impl.jar
 /lib/portal/jaxen.jar
+/lib/portal/jaxrpc.jar
 /lib/portal/jaxws-rt.jar
+/lib/portal/jcifs.jar
 /lib/portal/jcl-over-slf4j.jar
 /lib/portal/jcommon.jar
 /lib/portal/jdom.jar
@@ -192,6 +198,9 @@
 /lib/portal/jhighlight.jar
 /lib/portal/jhlabs-filters.jar
 /lib/portal/jna.jar
+/lib/portal/jodconverter.jar
+/lib/portal/json-java.jar
+/lib/portal/jrcs-diff.jar
 /lib/portal/jsr107cache.jar
 /lib/portal/jstl-api.jar
 /lib/portal/jstl-impl.jar
@@ -199,6 +208,7 @@
 /lib/portal/juniversalchardet.jar
 /lib/portal/jurt.jar
 /lib/portal/kxml2.jar
+/lib/portal/liferay-icu4j.jar
 /lib/portal/log4j.jar
 /lib/portal/log4j-extras.jar
 /lib/portal/mchange-commons-java.jar
@@ -218,6 +228,9 @@
 /lib/portal/poi-ooxml-schemas.jar
 /lib/portal/poi-scratchpad.jar
 /lib/portal/poi.jar
+/lib/portal/portals-bridges.jar
+/lib/portal/rdffilter.jar
+/lib/portal/rome.jar
 /lib/portal/rometools.jar
 /lib/portal/saaj-api.jar
 /lib/portal/saaj-impl.jar
@@ -255,6 +268,7 @@
 /lib/portal/tika-parsers.jar
 /lib/portal/tomcat-jdbc.jar
 /lib/portal/tomcat-juli.jar
+/lib/portal/unoil.jar
 /lib/portal/urlrewritefilter.jar
 /lib/portal/vorbis-java-core.jar
 /lib/portal/vorbis-java-tika.jar
