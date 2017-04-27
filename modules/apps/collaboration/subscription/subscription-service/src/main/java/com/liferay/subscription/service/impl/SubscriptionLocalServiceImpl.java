@@ -419,15 +419,20 @@ public class SubscriptionLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		Subscription subscription = subscriptionPersistence.fetchByC_U_C_C(
-			companyId, userId, classNameId, classPK);
+		List<Subscription> subscriptions = subscriptionPersistence.findByC_C_C(
+			companyId, classNameId, classPK);
 
-		if (subscription != null) {
-			return true;
-		}
-		else {
+		if (subscriptions.isEmpty()) {
 			return false;
 		}
+
+		for (Subscription subscription : subscriptions) {
+			if (subscription.getUserId() == userId) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
