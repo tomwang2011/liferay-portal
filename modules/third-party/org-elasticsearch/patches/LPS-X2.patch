@@ -1,0 +1,264 @@
+diff --git a/org/elasticsearch/indices/cache/query/IndicesQueryCache.java b/org/elasticsearch/indices/cache/query/IndicesQueryCache.java
+index bdb98c6..f4b4185 100644
+--- a/org/elasticsearch/indices/cache/query/IndicesQueryCache.java
++++ b/org/elasticsearch/indices/cache/query/IndicesQueryCache.java
+@@ -53,7 +53,7 @@ public class IndicesQueryCache extends AbstractComponent implements QueryCache,
+     public static final String DEPRECATED_INDICES_CACHE_QUERY_SIZE = "indices.cache.filter.size";
+     public static final String INDICES_CACHE_QUERY_COUNT = "indices.queries.cache.count";
+ 
+-    private final LRUQueryCache cache;
++    private final ThreadLocal<ThreadLocalQueryCache> cache;
+     private final ShardCoreKeyMap shardKeyMap = new ShardCoreKeyMap();
+     private final Map<ShardId, Stats> shardStats = new ConcurrentHashMap<>();
+     private volatile long sharedRamBytesUsed;
+@@ -81,112 +81,128 @@ public class IndicesQueryCache extends AbstractComponent implements QueryCache,
+         final int count = settings.getAsInt(INDICES_CACHE_QUERY_COUNT, 1000);
+         logger.debug("using [node] query cache with size [{}], actual_size [{}], max filter count [{}]",
+                 sizeString, size, count);
+-        cache = new LRUQueryCache(count, size.bytes()) {
+ 
+-            private Stats getStats(Object coreKey) {
+-                final ShardId shardId = shardKeyMap.getShardId(coreKey);
+-                if (shardId == null) {
+-                    return null;
+-                }
+-                return shardStats.get(shardId);
+-            }
++        cache = new ThreadLocal<ThreadLocalQueryCache>() {
+ 
+-            private Stats getOrCreateStats(Object coreKey) {
+-                final ShardId shardId = shardKeyMap.getShardId(coreKey);
+-                Stats stats = shardStats.get(shardId);
+-                if (stats == null) {
+-                    stats = new Stats();
+-                    shardStats.put(shardId, stats);
+-                }
+-                return stats;
++            @Override
++            protected ThreadLocalQueryCache initialValue() {
++                return new ThreadLocalQueryCache(count, size);
+             }
+ 
+-            // It's ok to not protect these callbacks by a lock since it is
+-            // done in LRUQueryCache
+-            @Override
+-            protected void onClear() {
+-                assert Thread.holdsLock(this);
+-                super.onClear();
+-                for (Stats stats : shardStats.values()) {
+-                    // don't throw away hit/miss
+-                    stats.cacheSize = 0;
+-                    stats.ramBytesUsed = 0;
+-                }
+-                sharedRamBytesUsed = 0;
++        };
++
++        sharedRamBytesUsed = 0;
++    }
++
++    private class ThreadLocalQueryCache extends LRUQueryCache {
++
++       private Stats getStats(Object coreKey) {
++            final ShardId shardId = shardKeyMap.getShardId(coreKey);
++            if (shardId == null) {
++                return null;
+             }
++            return shardStats.get(shardId);
++        }
+ 
+-            @Override
+-            protected void onQueryCache(Query filter, long ramBytesUsed) {
+-                assert Thread.holdsLock(this);
+-                super.onQueryCache(filter, ramBytesUsed);
+-                sharedRamBytesUsed += ramBytesUsed;
++        private Stats getOrCreateStats(Object coreKey) {
++            final ShardId shardId = shardKeyMap.getShardId(coreKey);
++            Stats stats = shardStats.get(shardId);
++            if (stats == null) {
++                stats = new Stats();
++                shardStats.put(shardId, stats);
+             }
++            return stats;
++        }
+ 
+-            @Override
+-            protected void onQueryEviction(Query filter, long ramBytesUsed) {
+-                assert Thread.holdsLock(this);
+-                super.onQueryEviction(filter, ramBytesUsed);
+-                sharedRamBytesUsed -= ramBytesUsed;
++        // It's ok to not protect these callbacks by a lock since it is
++        // done in LRUQueryCache
++        @Override
++        protected void onClear() {
++            assert Thread.holdsLock(this);
++            super.onClear();
++            for (Stats stats : shardStats.values()) {
++                // don't throw away hit/miss
++                stats.cacheSize = 0;
++                stats.ramBytesUsed = 0;
+             }
++            sharedRamBytesUsed = 0;
++        }
+ 
+-            @Override
+-            protected void onDocIdSetCache(Object readerCoreKey, long ramBytesUsed) {
+-                assert Thread.holdsLock(this);
+-                super.onDocIdSetCache(readerCoreKey, ramBytesUsed);
+-                final Stats shardStats = getOrCreateStats(readerCoreKey);
+-                shardStats.cacheSize += 1;
+-                shardStats.cacheCount += 1;
+-                shardStats.ramBytesUsed += ramBytesUsed;
+-
+-                StatsAndCount statsAndCount = stats2.get(readerCoreKey);
+-                if (statsAndCount == null) {
+-                    statsAndCount = new StatsAndCount(shardStats);
+-                    stats2.put(readerCoreKey, statsAndCount);
+-                }
+-                statsAndCount.count += 1;
++        @Override
++        protected void onQueryCache(Query filter, long ramBytesUsed) {
++            assert Thread.holdsLock(this);
++            super.onQueryCache(filter, ramBytesUsed);
++            sharedRamBytesUsed += ramBytesUsed;
++        }
++
++        @Override
++        protected void onQueryEviction(Query filter, long ramBytesUsed) {
++            assert Thread.holdsLock(this);
++            super.onQueryEviction(filter, ramBytesUsed);
++            sharedRamBytesUsed -= ramBytesUsed;
++        }
++
++        @Override
++        protected void onDocIdSetCache(Object readerCoreKey, long ramBytesUsed) {
++            assert Thread.holdsLock(this);
++            super.onDocIdSetCache(readerCoreKey, ramBytesUsed);
++            final Stats shardStats = getOrCreateStats(readerCoreKey);
++            shardStats.cacheSize += 1;
++            shardStats.cacheCount += 1;
++            shardStats.ramBytesUsed += ramBytesUsed;
++
++            StatsAndCount statsAndCount = stats2.get(readerCoreKey);
++            if (statsAndCount == null) {
++                statsAndCount = new StatsAndCount(shardStats);
++                stats2.put(readerCoreKey, statsAndCount);
+             }
++            statsAndCount.count += 1;
++        }
+ 
+-            @Override
+-            protected void onDocIdSetEviction(Object readerCoreKey, int numEntries, long sumRamBytesUsed) {
+-                assert Thread.holdsLock(this);
+-                super.onDocIdSetEviction(readerCoreKey, numEntries, sumRamBytesUsed);
+-                // onDocIdSetEviction might sometimes be called with a number
+-                // of entries equal to zero if the cache for the given segment
+-                // was already empty when the close listener was called
+-                if (numEntries > 0) {
+-                    // We can't use ShardCoreKeyMap here because its core closed
+-                    // listener is called before the listener of the cache which
+-                    // triggers this eviction. So instead we use use stats2 that
+-                    // we only evict when nothing is cached anymore on the segment
+-                    // instead of relying on close listeners
+-                    final StatsAndCount statsAndCount = stats2.get(readerCoreKey);
+-                    final Stats shardStats = statsAndCount.stats;
+-                    shardStats.cacheSize -= numEntries;
+-                    shardStats.ramBytesUsed -= sumRamBytesUsed;
+-                    statsAndCount.count -= numEntries;
+-                    if (statsAndCount.count == 0) {
+-                        stats2.remove(readerCoreKey);
+-                    }
++        @Override
++        protected void onDocIdSetEviction(Object readerCoreKey, int numEntries, long sumRamBytesUsed) {
++            assert Thread.holdsLock(this);
++            super.onDocIdSetEviction(readerCoreKey, numEntries, sumRamBytesUsed);
++            // onDocIdSetEviction might sometimes be called with a number
++            // of entries equal to zero if the cache for the given segment
++            // was already empty when the close listener was called
++            if (numEntries > 0) {
++                // We can't use ShardCoreKeyMap here because its core closed
++                // listener is called before the listener of the cache which
++                // triggers this eviction. So instead we use use stats2 that
++                // we only evict when nothing is cached anymore on the segment
++                // instead of relying on close listeners
++                final StatsAndCount statsAndCount = stats2.get(readerCoreKey);
++                final Stats shardStats = statsAndCount.stats;
++                shardStats.cacheSize -= numEntries;
++                shardStats.ramBytesUsed -= sumRamBytesUsed;
++                statsAndCount.count -= numEntries;
++                if (statsAndCount.count == 0) {
++                    stats2.remove(readerCoreKey);
+                 }
+             }
++        }
+ 
+-            @Override
+-            protected void onHit(Object readerCoreKey, Query filter) {
+-                assert Thread.holdsLock(this);
+-                super.onHit(readerCoreKey, filter);
+-                final Stats shardStats = getStats(readerCoreKey);
+-                shardStats.hitCount += 1;
+-            }
++        @Override
++        protected void onHit(Object readerCoreKey, Query filter) {
++            assert Thread.holdsLock(this);
++            super.onHit(readerCoreKey, filter);
++            final Stats shardStats = getStats(readerCoreKey);
++            shardStats.hitCount += 1;
++        }
++
++        @Override
++        protected void onMiss(Object readerCoreKey, Query filter) {
++            assert Thread.holdsLock(this);
++            super.onMiss(readerCoreKey, filter);
++            final Stats shardStats = getOrCreateStats(readerCoreKey);
++            shardStats.missCount += 1;
++        }
++
++        private ThreadLocalQueryCache(int count, ByteSizeValue byteSizeValue) {
++            super(count, byteSizeValue.bytes());
++        }
+ 
+-            @Override
+-            protected void onMiss(Object readerCoreKey, Query filter) {
+-                assert Thread.holdsLock(this);
+-                super.onMiss(readerCoreKey, filter);
+-                final Stats shardStats = getOrCreateStats(readerCoreKey);
+-                shardStats.missCount += 1;
+-            }
+-        };
+-        sharedRamBytesUsed = 0;
+     }
+ 
+     /** Get usage statistics for the given shard. */
+@@ -267,16 +283,19 @@ public class IndicesQueryCache extends AbstractComponent implements QueryCache,
+     /** Clear all entries that belong to the given index. */
+     public void clearIndex(String index) {
+         final Set<Object> coreCacheKeys = shardKeyMap.getCoreKeysForIndex(index);
++
++        ThreadLocalQueryCache threadLocalQueryCache = cache.get();
++
+         for (Object coreKey : coreCacheKeys) {
+-            cache.clearCoreCacheKey(coreKey);
++            threadLocalQueryCache.clearCoreCacheKey(coreKey);
+         }
+ 
+         // This cache stores two things: filters, and doc id sets. Calling
+         // clear only removes the doc id sets, but if we reach the situation
+         // that the cache does not contain any DocIdSet anymore, then it
+         // probably means that the user wanted to remove everything.
+-        if (cache.getCacheSize() == 0) {
+-            cache.clear();
++        if (threadLocalQueryCache.getCacheSize() == 0) {
++            threadLocalQueryCache.clear();
+         }
+     }
+ 
+@@ -285,7 +304,7 @@ public class IndicesQueryCache extends AbstractComponent implements QueryCache,
+         assert shardKeyMap.size() == 0 : shardKeyMap.size();
+         assert shardStats.isEmpty() : shardStats.keySet();
+         assert stats2.isEmpty() : stats2;
+-        cache.clear();
++        cache.remove();
+     }
+ 
+     private static class Stats implements Cloneable {
