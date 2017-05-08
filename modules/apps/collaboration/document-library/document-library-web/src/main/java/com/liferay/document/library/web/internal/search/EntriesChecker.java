@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -63,6 +64,29 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 	@Override
 	public String getAllRowsCheckBox(HttpServletRequest request) {
 		return null;
+	}
+
+	@Override
+	public String getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		ResultRow resultRow) {
+
+		Object object = resultRow.getObject();
+
+		String name = null;
+
+		if (object instanceof FileEntry) {
+			name = FileEntry.class.getSimpleName();
+		}
+		else if (object instanceof FileShortcut) {
+			name = DLFileShortcut.class.getSimpleName();
+		}
+		else if (object instanceof Folder) {
+			name = Folder.class.getSimpleName();
+		}
+
+		return _getRowCheckBox(
+			request, checked, disabled, name, resultRow.getPrimaryKey());
 	}
 
 	@Override
@@ -117,16 +141,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 			name = Folder.class.getSimpleName();
 		}
 
-		String checkBoxRowIds = getEntryRowIds();
-
-		String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
-		String checkBoxPostOnClick =
-			_liferayPortletResponse.getNamespace() + "toggleActionsButton();";
-
-		return getRowCheckBox(
-			request, checked, disabled,
-			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name,
-			primaryKey, checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick);
+		return _getRowCheckBox(request, checked, disabled, name, primaryKey);
 	}
 
 	protected String getEntryRowIds() {
@@ -147,6 +162,22 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 		sb.append("']");
 
 		return sb.toString();
+	}
+
+	private String _getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String name, String primaryKey) {
+
+		String checkBoxRowIds = getEntryRowIds();
+
+		String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
+		String checkBoxPostOnClick =
+			_liferayPortletResponse.getNamespace() + "toggleActionsButton();";
+
+		return getRowCheckBox(
+			request, checked, disabled,
+			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name,
+			primaryKey, checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick);
 	}
 
 	private final LiferayPortletResponse _liferayPortletResponse;
