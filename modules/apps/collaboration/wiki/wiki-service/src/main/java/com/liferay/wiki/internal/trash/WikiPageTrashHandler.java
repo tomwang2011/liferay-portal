@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -177,7 +177,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 
 		portletURL.setParameter("nodeName", node.getName());
 
-		portletURL.setParameter("title", HtmlUtil.unescape(page.getTitle()));
+		portletURL.setParameter("title", _html.unescape(page.getTitle()));
 
 		return portletURL.toString();
 	}
@@ -469,6 +469,9 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	protected void setWikiPageService(WikiPageService wikiPageService) {
 		_wikiPageService = wikiPageService;
 	}
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private Portal _portal;

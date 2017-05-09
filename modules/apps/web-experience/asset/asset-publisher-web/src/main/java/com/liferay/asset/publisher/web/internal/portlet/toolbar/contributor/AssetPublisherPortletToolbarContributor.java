@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -145,7 +145,7 @@ public class AssetPublisherPortletToolbarContributor
 		Map<String, Object> data = new HashMap<>();
 
 		data.put(
-			"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
+			"id", _html.escape(portletDisplay.getNamespace()) + "editAsset");
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", themeDisplay.getLocale(), getClass());
@@ -209,7 +209,7 @@ public class AssetPublisherPortletToolbarContributor
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		data.put(
-			"id", HtmlUtil.escape(portletDisplay.getNamespace()) + "editAsset");
+			"id", _html.escape(portletDisplay.getNamespace()) + "editAsset");
 
 		String message = AssetUtil.getClassNameMessage(
 			className, themeDisplay.getLocale());
@@ -221,7 +221,7 @@ public class AssetPublisherPortletToolbarContributor
 
 		urlMenuItem.setData(data);
 
-		urlMenuItem.setLabel(HtmlUtil.escape(message));
+		urlMenuItem.setLabel(_html.escape(message));
 
 		long curGroupId = groupId;
 
@@ -257,6 +257,9 @@ public class AssetPublisherPortletToolbarContributor
 		AssetPublisherPortletToolbarContributor.class);
 
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private Portal _portal;

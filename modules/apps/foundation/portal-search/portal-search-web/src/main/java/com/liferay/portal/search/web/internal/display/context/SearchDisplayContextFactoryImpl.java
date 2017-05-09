@@ -16,7 +16,7 @@ package com.liferay.portal.search.web.internal.display.context;
 
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletException;
@@ -41,13 +41,16 @@ public class SearchDisplayContextFactoryImpl
 		throws PortletException {
 
 		return new SearchDisplayContext(
-			renderRequest, portletPreferences, portal, HtmlUtil.getHtml(),
-			language, facetedSearcherManager, new IndexSearchPropsValuesImpl(),
+			renderRequest, portletPreferences, portal, html, language,
+			facetedSearcherManager, new IndexSearchPropsValuesImpl(),
 			new PortletURLFactoryImpl(renderRequest, renderResponse));
 	}
 
 	@Reference
 	protected FacetedSearcherManager facetedSearcherManager;
+
+	@Reference
+	protected Html html;
 
 	@Reference
 	protected Language language;
