@@ -22,6 +22,7 @@ import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.journal.web.internal.display.context.JournalDisplayContext;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -69,6 +70,61 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 	@Override
 	public String getAllRowsCheckBox(HttpServletRequest request) {
 		return null;
+	}
+
+	@Override
+	public String getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		ResultRow resultRow) {
+
+		if (!_journalDisplayContext.isShowEditActions()) {
+			return StringPool.BLANK;
+		}
+
+		Object object = resultRow.getObject();
+		String name = null;
+		boolean showInput = false;
+
+		if (object instanceof JournalArticle) {
+			name = JournalArticle.class.getSimpleName();
+
+			JournalArticle article = (JournalArticle)object;
+
+			try {
+				if (JournalArticlePermission.contains(
+						_permissionChecker, article, ActionKeys.DELETE) ||
+					JournalArticlePermission.contains(
+						_permissionChecker, article, ActionKeys.EXPIRE) ||
+					JournalArticlePermission.contains(
+						_permissionChecker, article, ActionKeys.UPDATE)) {
+
+					showInput = true;
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+		else if (object instanceof JournalFolder) {
+			name = JournalFolder.class.getSimpleName();
+
+			try {
+				if (JournalFolderPermission.contains(
+						_permissionChecker, (JournalFolder)object,
+						ActionKeys.DELETE)) {
+
+					showInput = true;
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+
+		if (!showInput) {
+			return StringPool.BLANK;
+		}
+
+		return _getRowCheckBox(
+			request, checked, disabled, name, resultRow.getPrimaryKey());
 	}
 
 	@Override
@@ -133,6 +189,13 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 		if (!showInput) {
 			return StringPool.BLANK;
 		}
+
+		return _getRowCheckBox(request, checked, disabled, name, primaryKey);
+	}
+
+	private String _getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String name, String primaryKey) {
 
 		StringBundler sb = new StringBundler(9);
 
