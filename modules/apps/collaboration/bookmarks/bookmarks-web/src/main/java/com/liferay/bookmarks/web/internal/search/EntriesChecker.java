@@ -20,6 +20,7 @@ import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -67,6 +68,26 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 	@Override
 	public String getRowCheckBox(
 		HttpServletRequest request, boolean checked, boolean disabled,
+		ResultRow resultRow) {
+
+		Object object = resultRow.getObject();
+
+		String name = null;
+
+		if (object instanceof BookmarksEntry) {
+			name = BookmarksEntry.class.getSimpleName();
+		}
+		else if (object instanceof BookmarksFolder) {
+			name = BookmarksFolder.class.getSimpleName();
+		}
+
+		return _getRowCheckBox(
+			request, checked, disabled, name, resultRow.getPrimaryKey());
+	}
+
+	@Override
+	public String getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
 		String primaryKey) {
 
 		long entryId = GetterUtil.getLong(primaryKey);
@@ -90,13 +111,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 			name = BookmarksFolder.class.getSimpleName();
 		}
 
-		String checkBoxRowIds = getEntryRowIds();
-		String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
-
-		return getRowCheckBox(
-			request, checked, disabled,
-			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name,
-			primaryKey, checkBoxRowIds, checkBoxAllRowIds, StringPool.BLANK);
+		return _getRowCheckBox(request, checked, disabled, name, primaryKey);
 	}
 
 	protected String getEntryRowIds() {
@@ -117,6 +132,19 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 		sb.append("']");
 
 		return sb.toString();
+	}
+
+	private String _getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String name, String primaryKey) {
+
+		String checkBoxRowIds = getEntryRowIds();
+		String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
+
+		return getRowCheckBox(
+			request, checked, disabled,
+			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name,
+			primaryKey, checkBoxRowIds, checkBoxAllRowIds, StringPool.BLANK);
 	}
 
 	private final LiferayPortletResponse _liferayPortletResponse;

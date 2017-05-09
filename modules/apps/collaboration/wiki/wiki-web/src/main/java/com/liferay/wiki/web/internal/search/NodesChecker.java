@@ -15,6 +15,7 @@
 package com.liferay.wiki.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -67,6 +68,34 @@ public class NodesChecker extends EmptyOnClickRowChecker {
 	@Override
 	public String getRowCheckBox(
 		HttpServletRequest request, boolean checked, boolean disabled,
+		ResultRow resultRow) {
+
+		WikiNode node = (WikiNode)resultRow.getObject();
+
+		if (node == null) {
+			return StringPool.BLANK;
+		}
+
+		String name = WikiNode.class.getSimpleName();
+		boolean showInput = false;
+
+		if (WikiNodePermissionChecker.contains(
+				_permissionChecker, node, ActionKeys.DELETE)) {
+
+			showInput = true;
+		}
+
+		if (!showInput) {
+			return StringPool.BLANK;
+		}
+
+		return _getRowCheckBox(
+			request, checked, disabled, name, resultRow.getPrimaryKey());
+	}
+
+	@Override
+	public String getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
 		String primaryKey) {
 
 		long nodeId = GetterUtil.getLong(primaryKey);
@@ -99,6 +128,13 @@ public class NodesChecker extends EmptyOnClickRowChecker {
 		if (!showInput) {
 			return StringPool.BLANK;
 		}
+
+		return _getRowCheckBox(request, checked, disabled, name, primaryKey);
+	}
+
+	private String _getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String name, String primaryKey) {
 
 		StringBundler sb = new StringBundler(5);
 
