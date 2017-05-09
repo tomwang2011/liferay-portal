@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.parser.bbcode.internal;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.HtmlImpl;
@@ -33,6 +34,9 @@ public class HtmlBBCodeTranslatorImplTest {
 		HtmlUtil htmlUtil = new HtmlUtil();
 
 		htmlUtil.setHtml(new HtmlImpl());
+
+		ReflectionTestUtil.setFieldValue(
+			_htmlBBCodeTranslator, "_html", new HtmlImpl());
 	}
 
 	@Test
