@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SessionClicks;
@@ -114,7 +114,7 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 		values.put("portletNamespace", portletNamespace);
 
-		values.put("title", HtmlUtil.escape(LanguageUtil.get(request, "menu")));
+		values.put("title", _html.escape(LanguageUtil.get(request, "menu")));
 
 		String productMenuState = SessionClicks.get(
 			request,
@@ -226,6 +226,9 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 	private static final String _TMPL_CONTENT = StringUtil.read(
 		ProductMenuProductNavigationControlMenuEntry.class, "icon.tmpl");
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private Portal _portal;

@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -238,7 +238,7 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 				defaultLocale, prefix + Field.DESCRIPTION, Field.DESCRIPTION);
 		}
 
-		description = HtmlUtil.extractText(description);
+		description = _html.extractText(description);
 
 		Summary summary = new Summary(snippetLocale, title, description);
 
@@ -364,6 +364,9 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private Html _html;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
