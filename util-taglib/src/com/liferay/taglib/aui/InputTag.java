@@ -42,6 +42,14 @@ import javax.servlet.jsp.JspException;
  */
 public class InputTag extends BaseInputTag {
 
+	public static String getBaseType(Object[] attributes) {
+		return (String)attributes[_BASE_TYPE];
+	}
+
+	public static String getForLabel(Object[] attributes) {
+		return (String)attributes[_FOR_LABEL];
+	}
+
 	@Override
 	public int doEndTag() throws JspException {
 		updateFormCheckboxNames();
@@ -168,8 +176,6 @@ public class InputTag extends BaseInputTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		super.setAttributes(request);
-
 		Object bean = getBean();
 
 		if (bean == null) {
@@ -285,28 +291,32 @@ public class InputTag extends BaseInputTag {
 			wrappedField = true;
 		}
 
-		setNamespacedAttribute(request, "baseType", getBaseType());
-		setNamespacedAttribute(request, "bean", bean);
-		setNamespacedAttribute(request, "defaultLanguageId", defaultLanguageId);
-		setNamespacedAttribute(request, "field", field);
-		setNamespacedAttribute(request, "forLabel", forLabel);
-		setNamespacedAttribute(request, "formName", formName);
-		setNamespacedAttribute(request, "id", id);
-		setNamespacedAttribute(request, "label", label);
-		setNamespacedAttribute(request, "model", model);
-		setNamespacedAttribute(request, "title", String.valueOf(title));
-		setNamespacedAttribute(request, "wrappedField", wrappedField);
-
-		request.setAttribute(getAttributeNamespace() + "value", getValue());
+		setBean(bean);
+		setDefaultLanguageId(defaultLanguageId);
+		setField(field);
+		setFormName(formName);
+		setId(id);
+		setLabel(label);
+		setModel(model);
+		setTitle(String.valueOf(title));
+		setWrappedField(wrappedField);
 
 		Map<String, ValidatorTag> validatorTags = getValidatorTags();
 
 		if ((validatorTags != null) &&
 			(validatorTags.get("required") != null)) {
 
-			setNamespacedAttribute(
-				request, "required", Boolean.TRUE.toString());
+			setRequired(true);
 		}
+
+		Object[] attributes = new Object[ATTRIBUTES_COUNT];
+
+		attributes[_BASE_TYPE] = getBaseType();
+		attributes[_FOR_LABEL] = forLabel;
+
+		toAttributes(attributes);
+
+		request.setAttribute("aui:input:attributes", attributes);
 	}
 
 	protected void updateFormCheckboxNames() {
@@ -331,6 +341,12 @@ public class InputTag extends BaseInputTag {
 		}
 	}
 
+	protected static final int ATTRIBUTES_COUNT =
+		BaseInputTag.ATTRIBUTES_COUNT + 2;
+
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
+
+	private static final int _BASE_TYPE = BaseInputTag.ATTRIBUTES_COUNT;
+	private static final int _FOR_LABEL = BaseInputTag.ATTRIBUTES_COUNT + 1;
 
 }

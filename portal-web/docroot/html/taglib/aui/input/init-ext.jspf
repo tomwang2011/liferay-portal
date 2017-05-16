@@ -19,8 +19,8 @@ if (!useNamespace) {
 	namespace = StringPool.BLANK;
 }
 
-String baseType = GetterUtil.getString((String)request.getAttribute("aui:input:baseType"));
-String forLabel = namespace + GetterUtil.getString((String)request.getAttribute("aui:input:forLabel"));
+String baseType = InputTag.getBaseType(attributes);
+String forLabel = namespace + InputTag.getForLabel(attributes);
 
 if (Validator.isNull(label) && changesContext) {
 	title = StringUtil.appendParentheticalSuffix(LanguageUtil.get(resourceBundle, title), LanguageUtil.get(resourceBundle, "changing-the-value-of-this-field-reloads-the-page"));
