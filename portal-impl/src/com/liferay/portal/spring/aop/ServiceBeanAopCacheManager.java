@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.portal.kernel.concurrent.ConcurrentIdentityHashMap;
+import com.liferay.portal.kernel.concurrent.IdentityKey;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.lang.annotation.Annotation;
@@ -22,7 +24,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -161,13 +162,49 @@ public class ServiceBeanAopCacheManager {
 	}
 
 	private static final Map<Method, Annotation[]> _annotations =
-		new ConcurrentHashMap<>();
+		new ConcurrentMethodIdentityHashMap<>();
 	private static final Annotation[] _nullAnnotations = new Annotation[0];
 
 	private final
 		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
 			_annotationChainableMethodAdvices = new HashMap<>();
 	private final Map<Method, MethodInterceptorsBag> _methodInterceptorBags =
-		new ConcurrentHashMap<>();
+		new ConcurrentMethodIdentityHashMap<>();
+
+	private static class ConcurrentMethodIdentityHashMap<V>
+		extends ConcurrentIdentityHashMap<Method, V> {
+
+		@Override
+		protected IdentityKey<Method> mapKey(Method key) {
+			return new MethodIdentityFirstKey(key);
+		}
+
+		@Override
+		protected IdentityKey<Method> mapKeyForQuery(Method key) {
+			return new MethodIdentityFirstKey(key);
+		}
+
+	}
+
+	private static class MethodIdentityFirstKey extends IdentityKey<Method> {
+
+		@Override
+		public boolean equals(Object obj) {
+			IdentityKey<Method> identityKey = (IdentityKey<Method>)obj;
+
+			Method method = getKey();
+
+			if (method == identityKey.getKey()) {
+				return true;
+			}
+
+			return method.equals(identityKey.getKey());
+		}
+
+		private MethodIdentityFirstKey(Method key) {
+			super(key);
+		}
+
+	}
 
 }
