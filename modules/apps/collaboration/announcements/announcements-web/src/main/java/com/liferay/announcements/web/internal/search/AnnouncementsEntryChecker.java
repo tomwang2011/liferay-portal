@@ -17,6 +17,7 @@ package com.liferay.announcements.web.internal.search;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -67,6 +68,47 @@ public class AnnouncementsEntryChecker extends EmptyOnClickRowChecker {
 	@Override
 	public String getRowCheckBox(
 		HttpServletRequest request, boolean checked, boolean disabled,
+		ResultRow resultRow) {
+
+		AnnouncementsEntry entry = (AnnouncementsEntry)resultRow.getObject();
+
+		if (entry == null) {
+			return StringPool.BLANK;
+		}
+
+		String name = AnnouncementsEntry.class.getSimpleName();
+
+		boolean showInput = false;
+
+		try {
+			if (AnnouncementsEntryPermission.contains(
+					_permissionChecker, entry, ActionKeys.DELETE)) {
+
+				showInput = true;
+
+				if (!showInput) {
+					return StringPool.BLANK;
+				}
+			}
+		}
+		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		return _getRowCheckBox(
+			request, checked, disabled, name, resultRow.getPrimaryKey());
+	}
+
+	@Override
+	public String getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
 		String primaryKey) {
 
 		long entryId = GetterUtil.getLong(primaryKey);
@@ -112,6 +154,13 @@ public class AnnouncementsEntryChecker extends EmptyOnClickRowChecker {
 
 			return StringPool.BLANK;
 		}
+
+		return _getRowCheckBox(request, checked, disabled, name, primaryKey);
+	}
+
+	private String _getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String name, String primaryKey) {
 
 		StringBundler sb = new StringBundler(5);
 

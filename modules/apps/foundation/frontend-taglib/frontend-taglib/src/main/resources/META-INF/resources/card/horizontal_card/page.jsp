@@ -19,7 +19,7 @@
 <c:choose>
 	<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
 		<liferay-util:buffer var="checkboxInput">
-			<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
+			<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow) %>
 		</liferay-util:buffer>
 
 		<c:if test="<%= Validator.isNotNull(checkboxInput) %>">

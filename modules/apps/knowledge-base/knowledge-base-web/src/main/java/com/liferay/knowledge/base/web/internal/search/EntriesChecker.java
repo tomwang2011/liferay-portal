@@ -22,6 +22,7 @@ import com.liferay.knowledge.base.service.KBFolderServiceUtil;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.service.permission.KBFolderPermission;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -64,6 +65,58 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 	@Override
 	public String getAllRowsCheckBox(HttpServletRequest request) {
 		return null;
+	}
+
+	@Override
+	public String getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		ResultRow resultRow) {
+
+		Object object = resultRow.getObject();
+
+		if (object == null) {
+			return StringPool.BLANK;
+		}
+
+		boolean showInput = false;
+
+		String name = null;
+
+		if (object instanceof KBArticle) {
+			name = KBArticle.class.getSimpleName();
+
+			try {
+				if (KBArticlePermission.contains(
+						_permissionChecker, (KBArticle)object,
+						ActionKeys.DELETE)) {
+
+					showInput = true;
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+		else {
+			name = KBFolder.class.getSimpleName();
+
+			try {
+				if (KBFolderPermission.contains(
+						_permissionChecker, (KBFolder)object,
+						ActionKeys.DELETE)) {
+
+					showInput = true;
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+
+		if (!showInput) {
+			return StringPool.BLANK;
+		}
+
+		return _getRowCheckBox(
+			request, checked, disabled, name, resultRow.getPrimaryKey());
 	}
 
 	@Override
@@ -129,15 +182,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 			return StringPool.BLANK;
 		}
 
-		String checkBoxRowIds = getEntryRowIds();
-		String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
-		String checkBoxPostOnClick =
-			_liferayPortletResponse.getNamespace() + "toggleActionsButton();";
-
-		return getRowCheckBox(
-			request, checked, disabled,
-			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name,
-			primaryKey, checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick);
+		return _getRowCheckBox(request, checked, disabled, name, primaryKey);
 	}
 
 	protected String getEntryRowIds() {
@@ -154,6 +199,21 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 		sb.append("']");
 
 		return sb.toString();
+	}
+
+	private String _getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String name, String primaryKey) {
+
+		String checkBoxRowIds = getEntryRowIds();
+		String checkBoxAllRowIds = "'#" + getAllRowIds() + "'";
+		String checkBoxPostOnClick =
+			_liferayPortletResponse.getNamespace() + "toggleActionsButton();";
+
+		return getRowCheckBox(
+			request, checked, disabled,
+			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name,
+			primaryKey, checkBoxRowIds, checkBoxAllRowIds, checkBoxPostOnClick);
 	}
 
 	private final LiferayPortletResponse _liferayPortletResponse;

@@ -18,6 +18,7 @@ import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.service.KBCommentLocalServiceUtil;
 import com.liferay.knowledge.base.service.permission.KBCommentPermission;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -68,6 +69,36 @@ public class KBCommentsChecker extends EmptyOnClickRowChecker {
 	@Override
 	public String getRowCheckBox(
 		HttpServletRequest request, boolean checked, boolean disabled,
+		ResultRow resultRow) {
+
+		KBComment kbComment = (KBComment)resultRow.getObject();
+
+		if (kbComment == null) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			KBCommentPermission.contains(
+				_permissionChecker, kbComment, ActionKeys.DELETE);
+		}
+		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			return StringPool.BLANK;
+		}
+
+		return _getRowCheckBox(
+			request, checked, disabled, resultRow.getPrimaryKey());
+	}
+
+	@Override
+	public String getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
 		String primaryKey) {
 
 		long kbCommentId = GetterUtil.getLong(primaryKey);
@@ -90,6 +121,13 @@ public class KBCommentsChecker extends EmptyOnClickRowChecker {
 
 			return StringPool.BLANK;
 		}
+
+		return _getRowCheckBox(request, checked, disabled, primaryKey);
+	}
+
+	private String _getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String primaryKey) {
 
 		StringBundler sb = new StringBundler(5);
 

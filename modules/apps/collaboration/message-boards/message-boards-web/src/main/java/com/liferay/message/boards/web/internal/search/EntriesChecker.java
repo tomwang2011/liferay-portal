@@ -19,6 +19,7 @@ import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -62,6 +63,63 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 	@Override
 	public String getAllRowsCheckBox(HttpServletRequest request) {
 		return null;
+	}
+
+	@Override
+	public String getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		ResultRow resultRow) {
+
+		Object object = resultRow.getObject();
+
+		if (object == null) {
+			return StringPool.BLANK;
+		}
+
+		boolean showInput = false;
+
+		String name = null;
+
+		if (object instanceof MBCategory) {
+			name = MBCategory.class.getSimpleName();
+
+			try {
+				if (MBCategoryPermission.contains(
+						_permissionChecker, (MBCategory)object,
+						ActionKeys.DELETE)) {
+
+					showInput = true;
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+		else {
+			name = MBThread.class.getSimpleName();
+
+			MBThread thread = (MBThread)object;
+
+			try {
+				if (MBCategoryPermission.contains(
+						_permissionChecker, thread.getGroupId(),
+						thread.getCategoryId(), ActionKeys.LOCK_THREAD) ||
+					MBMessagePermission.contains(
+						_permissionChecker, thread.getRootMessageId(),
+						ActionKeys.DELETE)) {
+
+					showInput = true;
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+
+		if (!showInput) {
+			return StringPool.BLANK;
+		}
+
+		return _getRowCheckBox(
+			request, checked, disabled, name, resultRow.getPrimaryKey());
 	}
 
 	@Override
@@ -123,13 +181,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 			return StringPool.BLANK;
 		}
 
-		String checkBoxRowIds = getEntryRowIds();
-
-		return getRowCheckBox(
-			request, checked, disabled,
-			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name,
-			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "'",
-			StringPool.BLANK);
+		return _getRowCheckBox(request, checked, disabled, name, primaryKey);
 	}
 
 	protected String getEntryRowIds() {
@@ -146,6 +198,19 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 		sb.append("']");
 
 		return sb.toString();
+	}
+
+	private String _getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String name, String primaryKey) {
+
+		String checkBoxRowIds = getEntryRowIds();
+
+		return getRowCheckBox(
+			request, checked, disabled,
+			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name,
+			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "'",
+			StringPool.BLANK);
 	}
 
 	private final LiferayPortletResponse _liferayPortletResponse;

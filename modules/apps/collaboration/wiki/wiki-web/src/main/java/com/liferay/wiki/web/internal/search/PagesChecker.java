@@ -15,6 +15,7 @@
 package com.liferay.wiki.web.internal.search;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -67,6 +68,34 @@ public class PagesChecker extends EmptyOnClickRowChecker {
 	@Override
 	public String getRowCheckBox(
 		HttpServletRequest request, boolean checked, boolean disabled,
+		ResultRow resultRow) {
+
+		WikiPage page = (WikiPage)resultRow.getObject();
+
+		if (page == null) {
+			return StringPool.BLANK;
+		}
+
+		String name = WikiPage.class.getSimpleName();
+		boolean showInput = false;
+
+		if (WikiPagePermissionChecker.contains(
+				_permissionChecker, page, ActionKeys.DELETE)) {
+
+			showInput = true;
+		}
+
+		if (!showInput) {
+			return StringPool.BLANK;
+		}
+
+		return _getRowCheckBox(
+			request, checked, disabled, name, page.getTitle());
+	}
+
+	@Override
+	public String getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
 		String primaryKey) {
 
 		long pageId = GetterUtil.getLong(primaryKey);
@@ -100,6 +129,14 @@ public class PagesChecker extends EmptyOnClickRowChecker {
 			return StringPool.BLANK;
 		}
 
+		return _getRowCheckBox(
+			request, checked, disabled, name, page.getTitle());
+	}
+
+	private String _getRowCheckBox(
+		HttpServletRequest request, boolean checked, boolean disabled,
+		String name, String title) {
+
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("['");
@@ -114,7 +151,7 @@ public class PagesChecker extends EmptyOnClickRowChecker {
 			request, checked, disabled,
 			_liferayPortletResponse.getNamespace() + RowChecker.ROW_IDS + name +
 				"",
-			page.getTitle(), checkBoxRowIds, "'#" + getAllRowIds() + "'",
+			title, checkBoxRowIds, "'#" + getAllRowIds() + "'",
 			StringPool.BLANK);
 	}
 
