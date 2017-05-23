@@ -1180,7 +1180,8 @@ public class ServiceBuilder {
 			catch (IOException ioe) {
 				throw new ServiceBuilderException(
 					"Unable to find " + refEntity + " in " +
-						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
+						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR),
+					ioe);
 			}
 
 			_write(refFile, refContent);
