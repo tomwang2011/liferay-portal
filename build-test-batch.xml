@@ -2839,4 +2839,12 @@ ${output.content}</echo>
 			</test-set-up>
 		</run-batch-test>
 	</target>
+
+	<target name="test-target">
+		<ant dir="portal-kernel" inheritAll="false" target="test-class">
+			<property name="test.class" value="CleanTempDirTest" />
+			<property name="liferay.home" value="${liferay.home}" />
+			<property name="tomcat.temp" value="${app.server.tomcat.temp.dir}" />
+		</ant>
+	</target>
 </project>
