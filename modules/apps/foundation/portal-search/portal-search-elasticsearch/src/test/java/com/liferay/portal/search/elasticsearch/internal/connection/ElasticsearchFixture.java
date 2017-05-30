@@ -21,6 +21,7 @@ import com.liferay.portal.search.elasticsearch.internal.cluster.ClusterSettingsC
 import com.liferay.portal.search.elasticsearch.internal.cluster.UnicastSettingsContributor;
 import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
 import com.liferay.portal.search.elasticsearch.settings.ClientSettingsHelper;
+import com.liferay.portal.util.FileImpl;
 
 import java.io.File;
 
@@ -69,6 +70,8 @@ public class ElasticsearchFixture implements IndicesAdminClientSupplier {
 		deleteTmpDir();
 
 		_embeddedElasticsearchConnection = createElasticsearchConnection();
+
+		_embeddedElasticsearchConnection.setFile(new FileImpl());
 	}
 
 	public void destroyNode() throws Exception {
