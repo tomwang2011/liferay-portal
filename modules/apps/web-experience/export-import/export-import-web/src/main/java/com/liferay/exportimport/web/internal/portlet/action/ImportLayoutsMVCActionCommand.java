@@ -30,7 +30,7 @@ import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportService;
-import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.LayoutPrototypeException;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -286,7 +286,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 		deleteTempFileEntry(themeDisplay.getScopeGroupId(), folderName);
 
-		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
+		JSONObject jsonObject = _staging.getExceptionMessagesJSONObject(
 			themeDisplay.getLocale(), e, (ExportImportConfiguration)null);
 
 		JSONPortletResponseUtil.writeJSON(
@@ -416,7 +416,7 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 				jsonObject.put(
 					"warningMessages",
-					StagingUtil.getWarningMessagesJSONArray(
+					_staging.getWarningMessagesJSONArray(
 						themeDisplay.getLocale(), weakMissingReferences));
 			}
 
@@ -468,5 +468,8 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Staging _staging;
 
 }
