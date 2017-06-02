@@ -222,9 +222,7 @@ gradle.taskGraph.useFilter {
 	}
 
 	if (task.name == "compileJSP") {
-		FileTree jspFileTree = fileTree(dir: task.project.projectDir, excludes: ["**/custom_jsps/**/*", "**/dependencies/**/*"], includes: ["docroot/**/*.jsp", "src/main/resources/META-INF/resources/**/*.jsp"])
-
-		if (jspFileTree.empty) {
+		if (task.project.tasks.generateJSPJava.JSPFiles.empty) {
 			return false
 		}
 	}
