@@ -896,13 +896,21 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			return null;
 		}
 
-		return fetchPage(pageResource.getNodeId(), pageResource.getTitle());
+		return wikiPagePersistence.fetchByPrimaryKey(
+			pageResource.getHeadPageId());
 	}
 
 	@Override
 	public WikiPage fetchPage(long nodeId, String title) {
-		return wikiPagePersistence.fetchByN_T_H_First(
-			nodeId, title, true, null);
+		WikiPageResource pageResource = wikiPageResourcePersistence.fetchByN_T(
+			nodeId, title);
+
+		if (pageResource == null) {
+			return null;
+		}
+
+		return wikiPagePersistence.fetchByPrimaryKey(
+			pageResource.getHeadPageId());
 	}
 
 	@Override
@@ -1178,27 +1186,39 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiPageResource pageResource =
 			wikiPageResourcePersistence.findByPrimaryKey(resourcePrimKey);
 
+		if (Boolean.TRUE.equals(head)) {
+			return wikiPagePersistence.findByPrimaryKey(
+				pageResource.getHeadPageId());
+		}
+
 		return getPage(pageResource.getNodeId(), pageResource.getTitle(), head);
 	}
 
 	@Override
 	public WikiPage getPage(long nodeId, String title) throws PortalException {
-		WikiPage page = fetchPage(nodeId, title);
+		WikiPageResource pageResource = wikiPageResourcePersistence.fetchByN_T(
+			nodeId, title);
+
+		WikiPage page = null;
+
+		if (pageResource != null) {
+			page = wikiPagePersistence.findByPrimaryKey(
+				pageResource.getHeadPageId());
+		}
 
 		if (page != null) {
 			return page;
 		}
-		else {
-			StringBundler sb = new StringBundler(5);
 
-			sb.append("{nodeId=");
-			sb.append(nodeId);
-			sb.append(", title=");
-			sb.append(title);
-			sb.append("}");
+		StringBundler sb = new StringBundler(5);
 
-			throw new NoSuchPageException(sb.toString());
-		}
+		sb.append("{nodeId=");
+		sb.append(nodeId);
+		sb.append(", title=");
+		sb.append(title);
+		sb.append("}");
+
+		throw new NoSuchPageException(sb.toString());
 	}
 
 	@Override
@@ -1210,8 +1230,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		if (head == null) {
 			pages = wikiPagePersistence.findByN_T(nodeId, title, 0, 1);
 		}
+		else if (Boolean.TRUE.equals(head)) {
+			return getPage(nodeId, title);
+		}
 		else {
-			pages = wikiPagePersistence.findByN_T_H(nodeId, title, head, 0, 1);
+			pages = wikiPagePersistence.findByN_T_H(nodeId, title, false, 0, 1);
 		}
 
 		if (!pages.isEmpty()) {
