@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import freemarker.core.CollectionAndSequence;
 import freemarker.core._DelayedFTLTypeDescription;
@@ -219,6 +220,39 @@ implements
         return wrapper.getClassIntrospector().get(object.getClass()).get(ClassIntrospector.GENERIC_GET_KEY) != null;
     }
     
+    private static class IdentityCacheKey {
+
+        @Override
+        public int hashCode() {
+            return _hashCode;
+        }
+
+        @Override
+        public boolean equals(Object object) {
+            IdentityCacheKey identityCacheKey = (IdentityCacheKey)object;
+
+            if (_object == identityCacheKey._object) {
+                return true;
+            }
+
+            return false;
+        }
+
+        private IdentityCacheKey(Object object) {
+            _object = object;
+
+            _hashCode = System.identityHashCode(_object);
+        }
+
+        private final int _hashCode;
+        private final Object _object;
+
+    }
+
+    private static final Map<IdentityCacheKey, Method>
+        _propertyDescriptorMethods =
+            new ConcurrentHashMap<IdentityCacheKey, Method>();
+
     private TemplateModel invokeThroughDescriptor(Object desc, Map classInfo)
         throws
         IllegalAccessException,
@@ -229,18 +263,32 @@ implements
         // for the requested feature descriptor
 
         if (desc instanceof PropertyDescriptor) {
-            if (desc instanceof IndexedPropertyDescriptor) {
-                IndexedPropertyDescriptor indexedPropertyDescriptor =
-                    (IndexedPropertyDescriptor)desc;
+            IdentityCacheKey identityCacheKey = new IdentityCacheKey(desc);
 
-                desc = indexedPropertyDescriptor.getIndexedReadMethod();
+            Method method = _propertyDescriptorMethods.get(identityCacheKey);
+
+            if (method == null) {
+                if (desc instanceof IndexedPropertyDescriptor) {
+                    IndexedPropertyDescriptor indexedPropertyDescriptor =
+                        (IndexedPropertyDescriptor) desc;
+
+                    method = indexedPropertyDescriptor.getIndexedReadMethod();
+                }
+                else {
+                    PropertyDescriptor propertyDescriptor =
+                        (PropertyDescriptor)desc;
+
+                    method = propertyDescriptor.getReadMethod();
+                }
+
+                _propertyDescriptorMethods.put(identityCacheKey, method);
+            }
+
+            if (desc instanceof IndexedPropertyDescriptor) {
+                desc = method;
             }
             else {
-                PropertyDescriptor propertyDescriptor =
-                    (PropertyDescriptor)desc;
-
-                return wrapper.invokeMethod(
-                    object, propertyDescriptor.getReadMethod(), null);
+                return wrapper.invokeMethod(object, method, null);
             }
         }
         else if (desc instanceof Field) {

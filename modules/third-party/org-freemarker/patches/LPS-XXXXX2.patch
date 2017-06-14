@@ -1,0 +1,86 @@
+diff --git a/freemarker/ext/beans/BeanModel.java b/freemarker/ext/beans/BeanModel.java
+index cb70c56..3784c73 100644
+--- a/freemarker/ext/beans/BeanModel.java
++++ b/freemarker/ext/beans/BeanModel.java
+@@ -18,9 +18,6 @@ package freemarker.ext.beans;
+ 
+ import java.beans.IndexedPropertyDescriptor;
+ import java.beans.PropertyDescriptor;
+-import java.lang.ref.Reference;
+-import java.lang.ref.ReferenceQueue;
+-import java.lang.ref.SoftReference;
+ import java.lang.reflect.Field;
+ import java.lang.reflect.InvocationTargetException;
+ import java.lang.reflect.Method;
+@@ -252,29 +249,9 @@ implements
+ 
+     }
+ 
+-    private static class SoftIdentityCacheKeyReference
+-        extends SoftReference<Method> {
+-
+-        private SoftIdentityCacheKeyReference(
+-            IdentityCacheKey identityCacheKey, Method method,
+-            ReferenceQueue<? super Method> referenceQueue) {
+-
+-            super(method, referenceQueue);
+-
+-            _identityCacheKey = identityCacheKey;
+-        }
+-
+-        private final IdentityCacheKey _identityCacheKey;
+-
+-    }
+-
+-    private static final Map<IdentityCacheKey, SoftIdentityCacheKeyReference>
++    private static final Map<IdentityCacheKey, Method>
+         _propertyDescriptorMethods =
+-            new ConcurrentHashMap
+-                <IdentityCacheKey, SoftIdentityCacheKeyReference>();
+-
+-    private static final ReferenceQueue<Method> _referenceQueue =
+-        new ReferenceQueue<Method>();
++            new ConcurrentHashMap<IdentityCacheKey, Method>();
+ 
+     private TemplateModel invokeThroughDescriptor(Object desc, Map classInfo)
+         throws
+@@ -285,26 +262,10 @@ implements
+         // See if this particular instance has a cached implementation
+         // for the requested feature descriptor
+ 
+-        SoftIdentityCacheKeyReference reference = null;
+-
+-        while ((reference =
+-                    (SoftIdentityCacheKeyReference)
+-                        _referenceQueue.poll()) != null) {
+-
+-            _propertyDescriptorMethods.remove(reference._identityCacheKey);
+-        }
+-
+         if (desc instanceof PropertyDescriptor) {
+             IdentityCacheKey identityCacheKey = new IdentityCacheKey(desc);
+ 
+-            Reference<Method> methodReference = _propertyDescriptorMethods.get(
+-                identityCacheKey);
+-
+-            Method method = null;
+-
+-            if (methodReference != null) {
+-                method = methodReference.get();
+-            }
++            Method method = _propertyDescriptorMethods.get(identityCacheKey);
+ 
+             if (method == null) {
+                 if (desc instanceof IndexedPropertyDescriptor) {
+@@ -320,10 +281,7 @@ implements
+                     method = propertyDescriptor.getReadMethod();
+                 }
+ 
+-                _propertyDescriptorMethods.put(
+-                    identityCacheKey,
+-                    new SoftIdentityCacheKeyReference(
+-                        identityCacheKey, method, _referenceQueue));
++                _propertyDescriptorMethods.put(identityCacheKey, method);
+             }
+ 
+             if (desc instanceof IndexedPropertyDescriptor) {
