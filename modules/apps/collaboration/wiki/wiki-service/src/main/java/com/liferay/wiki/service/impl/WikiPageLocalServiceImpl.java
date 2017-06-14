@@ -183,9 +183,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		validate(title, nodeId, content, format);
 
-		long resourcePrimKey =
-			wikiPageResourceLocalService.getPageResourcePrimKey(
+		WikiPageResource pageResource = wikiPageResourcePersistence.fetchByN_T(
+			nodeId, title);
+
+		if (pageResource == null) {
+			pageResource = wikiPageResourceLocalService.addPageResource(
 				node.getGroupId(), nodeId, title);
+		}
+
+		long resourcePrimKey = pageResource.getResourcePrimKey();
 
 		WikiPage page = wikiPagePersistence.create(pageId);
 
@@ -211,6 +217,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		page.setExpandoBridgeAttributes(serviceContext);
 
 		wikiPagePersistence.update(page);
+
+		if (head) {
+			pageResource.setHeadPageId(pageId);
+
+			wikiPageResourcePersistence.update(pageResource);
+		}
 
 		// Resources
 
@@ -2216,6 +2228,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Head
 
+		WikiPageResource pageResource = wikiPageResourcePersistence.fetchByN_T(
+			page.getNodeId(), page.getTitle());
+
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 			page.setHead(true);
 
@@ -2228,6 +2243,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 					wikiPagePersistence.update(curPage);
 				}
+			}
+
+			if (page.getPageId() != pageResource.getHeadPageId()) {
+				pageResource.setHeadPageId(page.getPageId());
+
+				wikiPageResourcePersistence.update(pageResource);
 			}
 		}
 		else if (status != WorkflowConstants.STATUS_IN_TRASH) {
@@ -2242,6 +2263,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 					curPage.setHead(true);
 
 					wikiPagePersistence.update(curPage);
+
+					if (page.getPageId() == pageResource.getHeadPageId()) {
+						pageResource.setHeadPageId(curPage.getPageId());
+
+						wikiPageResourcePersistence.update(pageResource);
+					}
 
 					break;
 				}
