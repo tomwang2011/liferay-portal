@@ -17,10 +17,9 @@
 package freemarker.ext.jsp;
 
 import java.beans.IntrospectionException;
-import java.io.CharArrayReader;
-import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import java.io.Writer;
 import java.util.Map;
 
@@ -32,6 +31,7 @@ import javax.servlet.jsp.tagext.IterationTag;
 import javax.servlet.jsp.tagext.Tag;
 import javax.servlet.jsp.tagext.TryCatchFinally;
 
+import freemarker.ext.jsp.internal.WriterFactoryUtil;
 import freemarker.log.Logger;
 import freemarker.template.TemplateModelException;
 import freemarker.template.TemplateTransformModel;
@@ -95,7 +95,7 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
      * An implementation of BodyContent that buffers it's input to a char[].
      */
     static class BodyContentImpl extends BodyContent {
-        private CharArrayWriter buf;
+        private Writer buf;
 
         BodyContentImpl(JspWriter out, boolean buffer) {
             super(out);
@@ -103,7 +103,7 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
         }
 
         void initBuffer() {
-            buf = new CharArrayWriter();
+            buf = WriterFactoryUtil.getWriter();
         }
 
         public void flush() throws IOException {
@@ -114,7 +114,7 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
 
         public void clear() throws IOException {
             if(buf != null) {
-                buf = new CharArrayWriter();
+                buf = WriterFactoryUtil.getWriter();
             }
             else {
                 throw new IOException("Can't clear");
@@ -123,7 +123,7 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
 
         public void clearBuffer() throws IOException {
             if(buf != null) {
-                buf = new CharArrayWriter();
+                buf = WriterFactoryUtil.getWriter();
             }
             else {
                 throw new IOException("Can't clear");
@@ -264,16 +264,26 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
             }
         }
 
+        @Override
+        public void write(String s, int off, int len) throws IOException {
+            if(buf != null) {
+                buf.write(s, off, len);
+            }
+            else {
+                getEnclosingWriter().write(s, off, len);
+            }
+        }
+
         public String getString() {
             return buf.toString();
         }
 
         public Reader getReader() {
-            return new CharArrayReader(buf.toCharArray());
+            return new StringReader(buf.toString());
         }
 
         public void writeOut(Writer out) throws IOException {
-            buf.writeTo(out);
+            out.write(buf.toString());
         }
 
     }
@@ -412,3 +422,4 @@ class TagTransformModel extends JspTagModelBase implements TemplateTransformMode
         
     }
 }
+/* @generated */
