@@ -46,7 +46,7 @@ import freemarker.debug.impl.DebuggerService;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.BeansWrapperBuilder;
 import freemarker.ext.jsp.TaglibFactory;
-import freemarker.ext.jsp.WriterFactoryUtil;
+import freemarker.ext.jsp.internal.WriterFactoryUtil;
 import freemarker.ext.servlet.HttpRequestHashModel;
 import freemarker.ext.servlet.ServletContextHashModel;
 

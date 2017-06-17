@@ -16,7 +16,7 @@ package com.liferay.portal.template.freemarker.internal;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 
-import freemarker.ext.jsp.WriterFactory;
+import freemarker.ext.jsp.internal.WriterFactory;
 
 import java.io.Writer;
 
