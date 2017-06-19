@@ -125,6 +125,8 @@ public class FiftyOneDegreesEngineProxy {
 		_provider = null;
 
 		if (_tempFile != null) {
+			System.gc();
+
 			_tempFile.delete();
 		}
 	}
