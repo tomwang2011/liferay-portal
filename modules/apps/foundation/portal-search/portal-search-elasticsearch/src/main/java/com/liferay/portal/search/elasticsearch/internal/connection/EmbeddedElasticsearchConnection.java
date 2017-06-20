@@ -56,9 +56,7 @@ import org.elasticsearch.transport.TransportService;
 
 import org.jboss.netty.util.internal.ByteBufferUtil;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -124,19 +122,16 @@ public class EmbeddedElasticsearchConnection
 
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 
-		Bundle bundle = FrameworkUtil.getBundle(
-			EmbeddedElasticsearchConnection.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		java.io.File directory = bundleContext.getDataFile(
+		java.io.File tempDir = bundleContext.getDataFile(
 			"elasticSearch-tmpdir");
 
-		_jnaTmpDir = directory.getAbsolutePath();
+		_jnaTmpDir = tempDir.getAbsolutePath();
 	}
 
 	@Override
@@ -440,11 +435,10 @@ public class EmbeddedElasticsearchConnection
 	private static final Log _log = LogFactoryUtil.getLog(
 		EmbeddedElasticsearchConnection.class);
 
-	private static String _jnaTmpDir;
-
 	@Reference
 	private File _file;
 
+	private String _jnaTmpDir;
 	private Node _node;
 
 }
