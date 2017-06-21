@@ -14,7 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.portlet.configuration.icon;
 
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.exportimport.kernel.staging.LayoutStaging;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -94,7 +94,7 @@ public class CopyApplicationsPortletConfigurationIcon
 
 			// Check if layout is incomplete
 
-			LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
+			LayoutRevision layoutRevision = _layoutStaging.getLayoutRevision(
 				layout);
 
 			boolean incomplete = false;
@@ -163,6 +163,9 @@ public class CopyApplicationsPortletConfigurationIcon
 	}
 
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutStaging _layoutStaging;
 
 	@Reference
 	private Staging _staging;

@@ -36,7 +36,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.exportimport.kernel.staging.LayoutStaging;
 import com.liferay.exportimport.lar.DeletionSystemEventExporter;
 import com.liferay.exportimport.lar.PermissionExporter;
 import com.liferay.portal.background.task.model.BackgroundTask;
@@ -439,7 +439,7 @@ public class LayoutExportController implements ExportController {
 	protected boolean prepareLayoutStagingHandler(
 		PortletDataContext portletDataContext, Layout layout) {
 
-		return LayoutStagingUtil.prepareLayoutStagingHandler(
+		return _layoutStaging.prepareLayoutStagingHandler(
 			portletDataContext, layout);
 	}
 
@@ -561,6 +561,9 @@ public class LayoutExportController implements ExportController {
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference
+	private LayoutStaging _layoutStaging;
 
 	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();

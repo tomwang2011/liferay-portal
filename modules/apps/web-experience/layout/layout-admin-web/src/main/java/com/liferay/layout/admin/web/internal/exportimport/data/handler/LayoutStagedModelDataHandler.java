@@ -37,7 +37,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.exportimport.kernel.staging.LayoutStaging;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.lar.LayoutCache;
 import com.liferay.exportimport.lar.PermissionImporter;
@@ -322,7 +322,7 @@ public class LayoutStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			layoutElement, ExportImportPathUtil.getModelPath(layout),
-			LayoutStagingUtil.mergeLayoutRevisionIntoLayout(layout));
+			_layoutStaging.mergeLayoutRevisionIntoLayout(layout));
 	}
 
 	@Override
@@ -1062,7 +1062,7 @@ public class LayoutStagedModelDataHandler
 			PortletDataContext portletDataContext, Layout layout)
 		throws Exception {
 
-		if (!LayoutStagingUtil.prepareLayoutStagingHandler(
+		if (!_layoutStaging.prepareLayoutStagingHandler(
 				portletDataContext, layout) ||
 			!layout.isSupportsEmbeddedPortlets()) {
 
@@ -1560,7 +1560,7 @@ public class LayoutStagedModelDataHandler
 		throws Exception {
 
 		LayoutStagingHandler layoutStagingHandler =
-			LayoutStagingUtil.getLayoutStagingHandler(layout);
+			_layoutStaging.getLayoutStagingHandler(layout);
 
 		if (layoutStagingHandler != null) {
 			LayoutRevision layoutRevision =
@@ -1846,6 +1846,10 @@ public class LayoutStagedModelDataHandler
 	private LayoutLocalServiceHelper _layoutLocalServiceHelper;
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Reference
+	private LayoutStaging _layoutStaging;
+
 	private LayoutTemplateLocalService _layoutTemplateLocalService;
 	private final PermissionImporter _permissionImporter =
 		PermissionImporter.getInstance();
