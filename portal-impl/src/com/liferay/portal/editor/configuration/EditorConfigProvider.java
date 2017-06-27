@@ -40,7 +40,7 @@ public class EditorConfigProvider
 
 		JSONObject configJSONObject = JSONFactoryUtil.createJSONObject();
 
-		visitEditorContributors(
+		filterEditorContributors(
 			editorConfigContributor ->
 				editorConfigContributor.populateConfigJSONObject(
 					configJSONObject, inputEditorTaglibAttributes, themeDisplay,
