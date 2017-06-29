@@ -62,12 +62,9 @@ public class VideoEditorConfigContributor extends BaseEditorConfigContributor {
 			itemSelectorCriteria.toArray(
 				new ItemSelectorCriterion[itemSelectorCriteria.size()]));
 
-		if (itemSelectorURL != null) {
-			jsonObject.put(
-				"filebrowserVideoBrowseLinkUrl", itemSelectorURL.toString());
-			jsonObject.put(
-				"filebrowserVideoBrowseUrl", itemSelectorURL.toString());
-		}
+		jsonObject.put(
+			"filebrowserVideoBrowseLinkUrl", itemSelectorURL.toString());
+		jsonObject.put("filebrowserVideoBrowseUrl", itemSelectorURL.toString());
 	}
 
 	@Reference(unbind = "-")

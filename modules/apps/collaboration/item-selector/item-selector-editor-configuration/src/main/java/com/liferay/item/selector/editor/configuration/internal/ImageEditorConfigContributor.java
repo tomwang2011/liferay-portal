@@ -62,12 +62,9 @@ public class ImageEditorConfigContributor extends BaseEditorConfigContributor {
 			itemSelectorCriteria.toArray(
 				new ItemSelectorCriterion[itemSelectorCriteria.size()]));
 
-		if (itemSelectorURL != null) {
-			jsonObject.put(
-				"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
-			jsonObject.put(
-				"filebrowserImageBrowseUrl", itemSelectorURL.toString());
-		}
+		jsonObject.put(
+			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
+		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
 	}
 
 	@Reference(unbind = "-")
