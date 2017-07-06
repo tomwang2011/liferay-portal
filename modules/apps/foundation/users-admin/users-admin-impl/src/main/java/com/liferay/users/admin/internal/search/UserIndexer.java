@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -237,7 +237,7 @@ public class UserIndexer extends BaseIndexer<User> {
 	protected void doDelete(User user) throws Exception {
 		deleteDocument(user.getCompanyId(), user.getUserId());
 
-		Indexer<Contact> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<Contact> indexer = _indexerRegistry.nullSafeGetIndexer(
 			Contact.class);
 
 		Contact contact = new ContactImpl();
@@ -352,7 +352,7 @@ public class UserIndexer extends BaseIndexer<User> {
 			getSearchEngineId(), user.getCompanyId(), document,
 			isCommitImmediately());
 
-		Indexer<Contact> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<Contact> indexer = _indexerRegistry.nullSafeGetIndexer(
 			Contact.class);
 
 		try {
@@ -431,5 +431,8 @@ public class UserIndexer extends BaseIndexer<User> {
 	protected UserLocalService userLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(UserIndexer.class);
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 }

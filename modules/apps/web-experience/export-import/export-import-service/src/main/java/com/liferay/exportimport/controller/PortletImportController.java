@@ -81,7 +81,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
@@ -934,7 +934,7 @@ public class PortletImportController implements ImportController {
 				portletDataContext.getPortletId());
 
 			if (userId > 0) {
-				Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				Indexer<User> indexer = _indexerRegistry.nullSafeGetIndexer(
 					User.class);
 
 				User user = _userLocalService.fetchUser(userId);
@@ -1501,6 +1501,10 @@ public class PortletImportController implements ImportController {
 
 	private ExportImportLifecycleManager _exportImportLifecycleManager;
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
+
 	private LayoutLocalService _layoutLocalService;
 	private final PermissionImporter _permissionImporter =
 		PermissionImporter.getInstance();

@@ -56,7 +56,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -553,7 +553,7 @@ public class FileEntryStagedModelDataHandler
 								(LiferayFileEntry)importedFileEntry;
 
 							Indexer<DLFileEntry> indexer =
-								IndexerRegistryUtil.nullSafeGetIndexer(
+								_indexerRegistry.nullSafeGetIndexer(
 									DLFileEntry.class);
 
 							indexer.reindex(
@@ -1021,6 +1021,9 @@ public class FileEntryStagedModelDataHandler
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 	private DLTrashService _dlTrashService;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private Portal _portal;

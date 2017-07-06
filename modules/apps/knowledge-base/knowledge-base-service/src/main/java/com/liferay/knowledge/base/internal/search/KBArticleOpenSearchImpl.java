@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,6 +31,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Shin
@@ -45,7 +46,7 @@ public class KBArticleOpenSearchImpl extends HitsOpenSearchImpl {
 
 	@Override
 	public Indexer<KBArticle> getIndexer() {
-		return IndexerRegistryUtil.getIndexer(KBArticle.class);
+		return _indexerRegistry.getIndexer(KBArticle.class);
 	}
 
 	@Override
@@ -74,5 +75,8 @@ public class KBArticleOpenSearchImpl extends HitsOpenSearchImpl {
 			themeDisplay.getPortalURL(),
 			windowState.equals(LiferayWindowState.MAXIMIZED));
 	}
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 }
