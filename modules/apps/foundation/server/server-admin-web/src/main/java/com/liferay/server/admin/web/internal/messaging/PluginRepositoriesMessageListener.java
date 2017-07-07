@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.server.admin.web.configuration.PluginRepositoriesConfiguration;
 
@@ -78,7 +78,7 @@ public class PluginRepositoriesMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		SearchEngineHelperUtil.initialize(CompanyConstants.SYSTEM);
+		_searchEngineHelper.initialize(CompanyConstants.SYSTEM);
 
 		PluginPackageUtil.reloadRepositories();
 	}
@@ -100,6 +100,9 @@ public class PluginRepositoriesMessageListener extends BaseMessageListener {
 	}
 
 	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private SearchEngineHelper _searchEngineHelper;
 
 	@Reference
 	private TriggerFactory _triggerFactory;
