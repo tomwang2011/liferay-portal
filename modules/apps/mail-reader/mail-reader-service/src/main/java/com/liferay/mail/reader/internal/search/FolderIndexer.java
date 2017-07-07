@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.search.IndexSearcherHelper;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.search.SortFactory;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -69,7 +69,7 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 		searchContext.setCompanyId(folder.getCompanyId());
 		searchContext.setEnd(QueryUtil.ALL_POS);
 		searchContext.setSearchEngineId(getSearchEngineId());
-		searchContext.setSorts(SortFactoryUtil.getDefaultSorts());
+		searchContext.setSorts(_sortFactory.getDefaultSorts());
 		searchContext.setStart(QueryUtil.ALL_POS);
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
@@ -183,5 +183,8 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 	protected IndexWriterHelper indexWriterHelper;
 
 	private static final Log _log = LogFactoryUtil.getLog(FolderIndexer.class);
+
+	@Reference
+	private SortFactory _sortFactory;
 
 }
