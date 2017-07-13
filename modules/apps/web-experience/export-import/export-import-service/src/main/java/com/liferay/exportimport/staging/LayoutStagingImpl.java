@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.staging.LayoutStaging;
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -249,7 +248,7 @@ public class LayoutStagingImpl implements LayoutStaging {
 		boolean exportLAR = MapUtil.getBoolean(
 			portletDataContext.getParameterMap(), "exportLAR");
 
-		if (exportLAR || !LayoutStagingUtil.isBranchingLayout(layout)) {
+		if (exportLAR || !_layoutStaging.isBranchingLayout(layout)) {
 			return true;
 		}
 
@@ -282,7 +281,7 @@ public class LayoutStagingImpl implements LayoutStaging {
 		}
 
 		LayoutStagingHandler layoutStagingHandler =
-			LayoutStagingUtil.getLayoutStagingHandler(layout);
+			_layoutStaging.getLayoutStagingHandler(layout);
 
 		layoutStagingHandler.setLayoutRevision(layoutRevision);
 
@@ -303,5 +302,8 @@ public class LayoutStagingImpl implements LayoutStaging {
 	private LayoutRevisionLocalService _layoutRevisionLocalService;
 
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+
+	@Reference
+	private LayoutStaging _layoutStaging;
 
 }

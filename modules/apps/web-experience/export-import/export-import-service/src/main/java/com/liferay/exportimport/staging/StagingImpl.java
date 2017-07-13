@@ -41,7 +41,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.exportimport.kernel.staging.LayoutStaging;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
@@ -1481,7 +1481,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public boolean isIncomplete(Layout layout, long layoutSetBranchId) {
-		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
+		LayoutRevision layoutRevision = _layoutStaging.getLayoutRevision(
 			layout);
 
 		if (layoutRevision == null) {
@@ -3313,6 +3313,9 @@ public class StagingImpl implements Staging {
 
 	@Reference
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
+
+	@Reference
+	private LayoutStaging _layoutStaging;
 
 	@Reference
 	private LockManager _lockManager;

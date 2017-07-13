@@ -27,7 +27,7 @@ import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
-import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.exportimport.kernel.staging.LayoutStaging;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -660,12 +660,12 @@ public class AssetPublisherConfigurationAction
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 
-		if (LayoutStagingUtil.isBranchingLayout(layout)) {
+		if (layoutStaging.isBranchingLayout(layout)) {
 			HttpServletRequest request = portal.getHttpServletRequest(
 				actionRequest);
 
-			LayoutSetBranch layoutSetBranch =
-				LayoutStagingUtil.getLayoutSetBranch(layout.getLayoutSet());
+			LayoutSetBranch layoutSetBranch = layoutStaging.getLayoutSetBranch(
+				layout.getLayoutSet());
 
 			long layoutSetBranchId = layoutSetBranch.getLayoutSetBranchId();
 
@@ -796,6 +796,9 @@ public class AssetPublisherConfigurationAction
 	protected ItemSelector itemSelector;
 	protected LayoutLocalService layoutLocalService;
 	protected LayoutRevisionLocalService layoutRevisionLocalService;
+
+	@Reference
+	protected LayoutStaging layoutStaging;
 
 	@Reference
 	protected Portal portal;
