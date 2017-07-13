@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
@@ -276,7 +276,7 @@ public class WikiPageIndexer
 	protected void reindexAttachments(WikiPage wikiPage)
 		throws PortalException {
 
-		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer<DLFileEntry> indexer = _indexerRegistry.nullSafeGetIndexer(
 			DLFileEntry.class);
 
 		for (FileEntry attachmentsFileEntry :
@@ -384,6 +384,9 @@ public class WikiPageIndexer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageIndexer.class);
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

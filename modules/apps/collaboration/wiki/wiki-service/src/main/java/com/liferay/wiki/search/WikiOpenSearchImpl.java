@@ -16,11 +16,12 @@ package com.liferay.wiki.search;
 
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.wiki.model.WikiPage;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -39,7 +40,7 @@ public class WikiOpenSearchImpl extends HitsOpenSearchImpl {
 
 	@Override
 	public Indexer<WikiPage> getIndexer() {
-		return IndexerRegistryUtil.getIndexer(WikiPage.class);
+		return _indexerRegistry.getIndexer(WikiPage.class);
 	}
 
 	@Override
@@ -51,5 +52,8 @@ public class WikiOpenSearchImpl extends HitsOpenSearchImpl {
 	public String getTitle(String keywords) {
 		return TITLE + keywords;
 	}
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 }

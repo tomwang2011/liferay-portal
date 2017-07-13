@@ -37,18 +37,18 @@ import com.liferay.exportimport.kernel.exception.LARFileException;
 import com.liferay.exportimport.kernel.exception.LARTypeException;
 import com.liferay.exportimport.kernel.exception.LayoutImportException;
 import com.liferay.exportimport.kernel.exception.MissingReferenceException;
-import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.MissingReference;
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContextFactory;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSenderUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerStatusMessageSender;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
@@ -81,7 +81,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletItemLocalService;
@@ -223,7 +223,7 @@ public class PortletImportController implements ImportController {
 				EVENT_PORTLET_IMPORT_STARTED, getProcessFlag(),
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
+				_portletDataContextFactory.clonePortletDataContext(
 					portletDataContext));
 
 			Map<String, Serializable> settingsMap =
@@ -239,7 +239,7 @@ public class PortletImportController implements ImportController {
 				EVENT_PORTLET_IMPORT_SUCCEEDED, getProcessFlag(),
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
+				_portletDataContextFactory.clonePortletDataContext(
 					portletDataContext),
 				userId);
 		}
@@ -250,7 +250,7 @@ public class PortletImportController implements ImportController {
 				EVENT_PORTLET_IMPORT_FAILED, getProcessFlag(),
 				String.valueOf(
 					exportImportConfiguration.getExportImportConfigurationId()),
-				PortletDataContextFactoryUtil.clonePortletDataContext(
+				_portletDataContextFactory.clonePortletDataContext(
 					portletDataContext),
 				t);
 
@@ -651,7 +651,7 @@ public class PortletImportController implements ImportController {
 				exportImportConfiguration, file);
 
 			MissingReferences missingReferences =
-				ExportImportHelperUtil.validateMissingReferences(
+				_exportImportHelper.validateMissingReferences(
 					portletDataContext);
 
 			Map<String, MissingReference> dependencyMissingReferences =
@@ -823,10 +823,10 @@ public class PortletImportController implements ImportController {
 		// Manifest
 
 		ManifestSummary manifestSummary =
-			ExportImportHelperUtil.getManifestSummary(portletDataContext);
+			_exportImportHelper.getManifestSummary(portletDataContext);
 
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
-			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
+			_portletDataHandlerStatusMessageSender.sendStatusMessage(
 				"portlet", portletDataContext.getPortletId(), manifestSummary);
 		}
 
@@ -880,7 +880,7 @@ public class PortletImportController implements ImportController {
 		Element portletDataElement = portletElement.element("portlet-data");
 
 		Map<String, Boolean> importPortletControlsMap =
-			ExportImportHelperUtil.getImportPortletControlsMap(
+			_exportImportHelper.getImportPortletControlsMap(
 				portletDataContext.getCompanyId(),
 				portletDataContext.getPortletId(), parameterMap,
 				portletDataElement, manifestSummary);
@@ -934,7 +934,7 @@ public class PortletImportController implements ImportController {
 				portletDataContext.getPortletId());
 
 			if (userId > 0) {
-				Indexer<User> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				Indexer<User> indexer = _indexerRegistry.nullSafeGetIndexer(
 					User.class);
 
 				User user = _userLocalService.fetchUser(userId);
@@ -1016,14 +1016,13 @@ public class PortletImportController implements ImportController {
 		String userIdStrategyString = MapUtil.getString(
 			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
 
-		UserIdStrategy userIdStrategy =
-			ExportImportHelperUtil.getUserIdStrategy(
-				userId, userIdStrategyString);
+		UserIdStrategy userIdStrategy = _exportImportHelper.getUserIdStrategy(
+			userId, userIdStrategyString);
 
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
 		PortletDataContext portletDataContext =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
+			_portletDataContextFactory.createImportPortletDataContext(
 				layout.getCompanyId(), targetGroupId, parameterMap,
 				userIdStrategy, zipReader);
 
@@ -1496,8 +1495,16 @@ public class PortletImportController implements ImportController {
 		DeletionSystemEventImporter.getInstance();
 	private ExpandoColumnLocalService _expandoColumnLocalService;
 	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
+	private ExportImportHelper _exportImportHelper;
+
 	private ExportImportLifecycleManager _exportImportLifecycleManager;
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
+
 	private LayoutLocalService _layoutLocalService;
 	private final PermissionImporter _permissionImporter =
 		PermissionImporter.getInstance();
@@ -1506,7 +1513,14 @@ public class PortletImportController implements ImportController {
 	private Portal _portal;
 
 	@Reference
+	private PortletDataContextFactory _portletDataContextFactory;
+
+	@Reference
 	private PortletDataHandlerProvider _portletDataHandlerProvider;
+
+	@Reference
+	private PortletDataHandlerStatusMessageSender
+		_portletDataHandlerStatusMessageSender;
 
 	private PortletItemLocalService _portletItemLocalService;
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

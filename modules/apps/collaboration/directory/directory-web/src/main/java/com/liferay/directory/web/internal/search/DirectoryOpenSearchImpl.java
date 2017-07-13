@@ -20,7 +20,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -35,6 +35,7 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -53,7 +54,7 @@ public class DirectoryOpenSearchImpl extends HitsOpenSearchImpl {
 
 	@Override
 	public Indexer<User> getIndexer() {
-		return IndexerRegistryUtil.getIndexer(User.class);
+		return _indexerRegistry.getIndexer(User.class);
 	}
 
 	@Override
@@ -101,5 +102,8 @@ public class DirectoryOpenSearchImpl extends HitsOpenSearchImpl {
 
 		return userParams;
 	}
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 }

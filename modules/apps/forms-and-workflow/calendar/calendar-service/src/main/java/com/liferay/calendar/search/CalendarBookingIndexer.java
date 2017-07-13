@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -90,10 +89,7 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 			Field.ENTRY_CLASS_NAME, CalendarBooking.class.getName());
 
 		if (searchContext.getUserId() > 0) {
-			SearchPermissionChecker searchPermissionChecker =
-				SearchEngineHelperUtil.getSearchPermissionChecker();
-
-			booleanFilter = searchPermissionChecker.getPermissionBooleanFilter(
+			booleanFilter = _searchPermissionChecker.getPermissionBooleanFilter(
 				searchContext.getCompanyId(), searchContext.getGroupIds(),
 				searchContext.getUserId(), Calendar.class.getName(),
 				booleanFilter, searchContext);
@@ -367,6 +363,9 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
+
+	@Reference
+	private SearchPermissionChecker _searchPermissionChecker;
 
 	@Reference
 	private TrashHelper _trashHelper;

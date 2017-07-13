@@ -17,11 +17,12 @@ package com.liferay.bookmarks.search;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.util.StringPool;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -38,7 +39,7 @@ public class BookmarksOpenSearchImpl extends HitsOpenSearchImpl {
 
 	@Override
 	public Indexer<BookmarksEntry> getIndexer() {
-		return IndexerRegistryUtil.getIndexer(BookmarksEntry.class);
+		return _indexerRegistry.getIndexer(BookmarksEntry.class);
 	}
 
 	@Override
@@ -50,5 +51,8 @@ public class BookmarksOpenSearchImpl extends HitsOpenSearchImpl {
 	public String getTitle(String keywords) {
 		return TITLE + keywords;
 	}
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 }
