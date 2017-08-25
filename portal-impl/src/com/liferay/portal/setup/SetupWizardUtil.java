@@ -153,7 +153,7 @@ public class SetupWizardUtil {
 		unicodeProperties.put(
 			PropsKeys.SETUP_WIZARD_ENABLED, String.valueOf(false));
 
-		_updateCompany(request);
+		_updateCompany(request, unicodeProperties);
 
 		_updateAdminUser(request, response, unicodeProperties);
 
@@ -310,12 +310,6 @@ public class SetupWizardUtil {
 		unicodeProperties.put(
 			PropsKeys.ADMIN_EMAIL_FROM_NAME, user.getFullName());
 
-		String companyDefaultLocale = ParamUtil.getString(
-			request, "companyLocale", PropsValues.COMPANY_DEFAULT_LOCALE);
-
-		unicodeProperties.put(
-			PropsKeys.COMPANY_DEFAULT_LOCALE, companyDefaultLocale);
-
 		HttpSession session = request.getSession();
 
 		session.setAttribute(WebKeys.EMAIL_ADDRESS, emailAddress);
@@ -329,7 +323,8 @@ public class SetupWizardUtil {
 			response);
 	}
 
-	private static void _updateCompany(HttpServletRequest request)
+	private static void _updateCompany(
+			HttpServletRequest request, UnicodeProperties unicodeProperties)
 		throws Exception {
 
 		Company company = CompanyLocalServiceUtil.getCompanyById(
@@ -337,6 +332,8 @@ public class SetupWizardUtil {
 
 		String languageId = ParamUtil.getString(
 			request, "companyLocale", getDefaultLanguageId());
+
+		unicodeProperties.put(PropsKeys.COMPANY_DEFAULT_LOCALE, languageId);
 
 		String companyName = ParamUtil.getString(
 			request, "companyName", PropsValues.COMPANY_DEFAULT_NAME);
