@@ -49,32 +49,41 @@ public class SocksProxyConnection implements Runnable {
 
 	@Override
 	public void run() {
-		try (InputStream internalInputStream = _internalSocket.getInputStream();
+		try {
+			InputStream internalInputStream = _internalSocket.getInputStream();
 			OutputStream internalOutputStream =
 				_internalSocket.getOutputStream();
+
 			Socket externalSocket = _setUpExternalConnection(
 				internalInputStream, internalOutputStream);
-			InputStream externalInputStream = externalSocket.getInputStream();
-			OutputStream externalOutputStream =
-				externalSocket.getOutputStream()) {
 
-			Future<?> future = _executorService.submit(
-				new Runnable() {
+			try {
+				InputStream externalInputStream =
+					externalSocket.getInputStream();
+				OutputStream externalOutputStream =
+					externalSocket.getOutputStream();
 
-					@Override
-					public void run() {
-						_relayData(
-							internalInputStream, externalOutputStream,
-							externalSocket, Constants.DEFAULT_BUFFER_SIZE);
-					}
+				Future<?> future = _executorService.submit(
+					new Runnable() {
 
-				});
+						@Override
+						public void run() {
+							_relayData(
+								internalInputStream, externalOutputStream,
+								externalSocket, Constants.DEFAULT_BUFFER_SIZE);
+						}
 
-			_relayData(
-				externalInputStream, internalOutputStream, _internalSocket,
-				Constants.DEFAULT_BUFFER_SIZE);
+					});
 
-			future.get();
+				_relayData(
+					externalInputStream, internalOutputStream, _internalSocket,
+					Constants.DEFAULT_BUFFER_SIZE);
+
+				future.get();
+			}
+			finally {
+				externalSocket.close();
+			}
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

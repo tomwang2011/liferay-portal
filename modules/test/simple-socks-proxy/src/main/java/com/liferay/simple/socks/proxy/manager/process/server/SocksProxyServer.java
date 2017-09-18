@@ -57,68 +57,75 @@ public class SocksProxyServer extends Thread {
 		ExecutorService executorService = Executors.newCachedThreadPool(
 			new SocksProxyServerThreadFactory());
 
-		try (ServerSocket serverSocket = new ServerSocket(_serverSocketPort)) {
-			_serverSocket = serverSocket;
+		try {
+			ServerSocket serverSocket = new ServerSocket(_serverSocketPort);
 
 			try {
-				serverSocket.setSoTimeout(0);
-			}
-			catch (SocketException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to set server socket so timeout", se);
-				}
-			}
-
-			while (true) {
-				Socket socket = null;
+				_serverSocket = serverSocket;
 
 				try {
-					socket = serverSocket.accept();
-				}
-				catch (SocketException se) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Socks proxy server terminated by module " +
-								"deactivation");
-					}
-
-					break;
-				}
-				catch (IOException ioe) {
-					_log.error("Unable to accept client socket", ioe);
-
-					continue;
-				}
-
-				try {
-					socket.setSoTimeout(0);
+					serverSocket.setSoTimeout(0);
 				}
 				catch (SocketException se) {
 					if (_log.isWarnEnabled()) {
-						_log.warn("Unable to set client socket so timeout", se);
+						_log.warn("Unable to set server socket so timeout", se);
 					}
 				}
 
-				executorService.execute(
-					new SocksProxyConnection(
-						_allowedIPAddresses, socket, executorService));
+				while (true) {
+					Socket socket = null;
+
+					try {
+						socket = serverSocket.accept();
+					}
+					catch (SocketException se) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								"Socks proxy server terminated by module " +
+									"deactivation");
+						}
+
+						break;
+					}
+					catch (IOException ioe) {
+						_log.error("Unable to accept client socket", ioe);
+
+						continue;
+					}
+
+					try {
+						socket.setSoTimeout(0);
+					}
+					catch (SocketException se) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to set client socket so timeout", se);
+						}
+					}
+
+					executorService.execute(
+						new SocksProxyConnection(
+							_allowedIPAddresses, socket, executorService));
+				}
+			}
+			finally {
+				serverSocket.close();
+
+				executorService.shutdown();
+
+				try {
+					executorService.awaitTermination(
+						_shutdownWaitTime, TimeUnit.MILLISECONDS);
+				}
+				catch (InterruptedException ie) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Executor termination interrupted", ie);
+					}
+				}
 			}
 		}
 		catch (IOException ioe) {
 			_log.error("Unable to create server socket", ioe);
-		}
-		finally {
-			executorService.shutdown();
-
-			try {
-				executorService.awaitTermination(
-					_shutdownWaitTime, TimeUnit.MILLISECONDS);
-			}
-			catch (InterruptedException ie) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Executor termination interrupted", ie);
-				}
-			}
 		}
 	}
 
