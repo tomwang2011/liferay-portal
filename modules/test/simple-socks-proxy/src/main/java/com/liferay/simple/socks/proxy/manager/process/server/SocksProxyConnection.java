@@ -160,8 +160,8 @@ public class SocksProxyConnection implements Runnable {
 
 		if (!_allowedIPAddresses.contains(remoteAddress)) {
 			throw new IOException(
-				"Trying to access host not listed in allowedIPAddresses " +
-					"property");
+				"Trying to access host (" + remoteAddress + ") not listed in " +
+					"allowedIPAddresses property" );
 		}
 
 		Socket externalSocket = new Socket(
