@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.organizations.service.test;
+package com.liferay.portal.service;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
