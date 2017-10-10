@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.organizations.service.test;
+package com.liferay.portal.service;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -51,13 +50,11 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Jorge Ferrer
  * @author Sergio González
  */
-@RunWith(Arquillian.class)
 @Sync
 public class OrganizationLocalServiceTest {
 

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.OrganizationServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -121,10 +122,10 @@ public class OrganizationMembershipPolicyMembershipsTest
 	public void testAssignUserToForbiddenOrganizations() throws Exception {
 		long[] userIds = addUsers();
 
-		User user = UserLocalServiceUtil.getUser(userIds[0]);
+		_user = UserLocalServiceUtil.getUser(userIds[0]);
 
 		MembershipPolicyTestUtil.updateUser(
-			user, addForbiddenOrganizations(), null, null, null,
+			_user, addForbiddenOrganizations(), null, null, null,
 			Collections.<UserGroupRole>emptyList());
 	}
 
@@ -137,10 +138,10 @@ public class OrganizationMembershipPolicyMembershipsTest
 			UserLocalServiceUtil.getOrganizationUsersCount(
 				requiredOrganizationIds[0]);
 
-		User user = UserLocalServiceUtil.getUser(userIds[0]);
+		_user = UserLocalServiceUtil.getUser(userIds[0]);
 
 		MembershipPolicyTestUtil.updateUser(
-			user, new long[] {requiredOrganizationIds[0]}, null, null, null,
+			_user, new long[] {requiredOrganizationIds[0]}, null, null, null,
 			Collections.<UserGroupRole>emptyList());
 
 		Assert.assertEquals(
@@ -178,10 +179,10 @@ public class OrganizationMembershipPolicyMembershipsTest
 
 		long[] userIds = addUsers();
 
-		User user = UserLocalServiceUtil.getUser(userIds[0]);
+		_user = UserLocalServiceUtil.getUser(userIds[0]);
 
 		MembershipPolicyTestUtil.updateUser(
-			user, addRequiredOrganizations(), null, null, null,
+			_user, addRequiredOrganizations(), null, null, null,
 			Collections.<UserGroupRole>emptyList());
 
 		Assert.assertTrue(isPropagateMembership());
@@ -193,9 +194,9 @@ public class OrganizationMembershipPolicyMembershipsTest
 		long[] standardOrganizationIds = addStandardOrganizations();
 		long[] requiredOrganizationIds = addRequiredOrganizations();
 
-		User user = UserLocalServiceUtil.getUser(userIds[0]);
+		_user = UserLocalServiceUtil.getUser(userIds[0]);
 
-		List<Organization> organizations = user.getOrganizations();
+		List<Organization> organizations = _user.getOrganizations();
 
 		Assert.assertEquals(organizations.toString(), 0, organizations.size());
 
@@ -203,20 +204,20 @@ public class OrganizationMembershipPolicyMembershipsTest
 			standardOrganizationIds, requiredOrganizationIds);
 
 		MembershipPolicyTestUtil.updateUser(
-			user, userOrganizationIds, null, null, null,
+			_user, userOrganizationIds, null, null, null,
 			Collections.<UserGroupRole>emptyList());
 
-		organizations = user.getOrganizations();
+		organizations = _user.getOrganizations();
 
 		Assert.assertEquals(
 			organizations.toString(), userOrganizationIds.length,
 			organizations.size());
 
 		MembershipPolicyTestUtil.updateUser(
-			user, standardOrganizationIds, null, null, null,
+			_user, standardOrganizationIds, null, null, null,
 			Collections.<UserGroupRole>emptyList());
 
-		organizations = user.getOrganizations();
+		organizations = _user.getOrganizations();
 
 		Assert.assertEquals(
 			organizations.toString(), userOrganizationIds.length,
@@ -229,9 +230,9 @@ public class OrganizationMembershipPolicyMembershipsTest
 		long[] standardOrganizationIds = addStandardOrganizations();
 		long[] requiredOrganizationIds = addRequiredOrganizations();
 
-		User user = UserLocalServiceUtil.getUser(userIds[0]);
+		_user = UserLocalServiceUtil.getUser(userIds[0]);
 
-		List<Organization> organizations = user.getOrganizations();
+		List<Organization> organizations = _user.getOrganizations();
 
 		Assert.assertEquals(organizations.toString(), 0, organizations.size());
 
@@ -239,20 +240,20 @@ public class OrganizationMembershipPolicyMembershipsTest
 			standardOrganizationIds, requiredOrganizationIds);
 
 		MembershipPolicyTestUtil.updateUser(
-			user, userOrganizationIds, null, null, null,
+			_user, userOrganizationIds, null, null, null,
 			Collections.<UserGroupRole>emptyList());
 
-		organizations = user.getOrganizations();
+		organizations = _user.getOrganizations();
 
 		Assert.assertEquals(
 			organizations.toString(), userOrganizationIds.length,
 			organizations.size());
 
 		MembershipPolicyTestUtil.updateUser(
-			user, requiredOrganizationIds, null, null, null,
+			_user, requiredOrganizationIds, null, null, null,
 			Collections.<UserGroupRole>emptyList());
 
-		organizations = user.getOrganizations();
+		organizations = _user.getOrganizations();
 
 		Assert.assertEquals(
 			organizations.toString(), requiredOrganizationIds.length,
@@ -263,7 +264,7 @@ public class OrganizationMembershipPolicyMembershipsTest
 	public void testUnassignUsersFromOrganization() throws Exception {
 		long[] standardOrganizationIds = addStandardOrganizations();
 
-		User user = MembershipPolicyTestUtil.addUser(
+		_user = MembershipPolicyTestUtil.addUser(
 			standardOrganizationIds, null, null, null);
 
 		int initialUserOrganizationCount =
@@ -271,7 +272,7 @@ public class OrganizationMembershipPolicyMembershipsTest
 				standardOrganizationIds[0]);
 
 		UserServiceUtil.unsetOrganizationUsers(
-			standardOrganizationIds[0], new long[] {user.getUserId()});
+			standardOrganizationIds[0], new long[] {_user.getUserId()});
 
 		Assert.assertEquals(
 			initialUserOrganizationCount - 1,
@@ -285,11 +286,11 @@ public class OrganizationMembershipPolicyMembershipsTest
 	public void testUnassignUsersFromRequiredOrganization() throws Exception {
 		long[] requiredOrganizationIds = addRequiredOrganizations();
 
-		User user = MembershipPolicyTestUtil.addUser(
+		_user = MembershipPolicyTestUtil.addUser(
 			requiredOrganizationIds, null, null, null);
 
 		UserServiceUtil.unsetOrganizationUsers(
-			requiredOrganizationIds[0], new long[] {user.getUserId()});
+			requiredOrganizationIds[0], new long[] {_user.getUserId()});
 	}
 
 	@Test
@@ -312,5 +313,8 @@ public class OrganizationMembershipPolicyMembershipsTest
 
 		Assert.assertTrue(isVerify());
 	}
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

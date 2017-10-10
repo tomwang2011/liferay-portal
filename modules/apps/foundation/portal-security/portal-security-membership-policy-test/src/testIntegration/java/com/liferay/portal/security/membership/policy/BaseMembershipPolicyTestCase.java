@@ -71,14 +71,14 @@ public abstract class BaseMembershipPolicyTestCase {
 	}
 
 	protected long[] addUsers() throws Exception {
-		User user1 = UserTestUtil.addUser(group.getGroupId());
+		_user1 = UserTestUtil.addUser(group.getGroupId());
 
-		_userIds[0] = user1.getUserId();
+		_userIds[0] = _user1.getUserId();
 
-		User user2 = UserTestUtil.addUser(
+		_user2 = UserTestUtil.addUser(
 			RandomTestUtil.randomString(), group.getGroupId());
 
-		_userIds[1] = user2.getUserId();
+		_userIds[1] = _user2.getUserId();
 
 		return _userIds;
 	}
@@ -89,6 +89,13 @@ public abstract class BaseMembershipPolicyTestCase {
 	private static boolean _propagateMembership;
 	private static boolean _propagateRoles;
 	private static long[] _userIds = new long[2];
+
+	@DeleteAfterTestRun
+	private User _user1;
+
+	@DeleteAfterTestRun
+	private User _user2;
+
 	private static boolean _verify;
 
 }

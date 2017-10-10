@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.organizations.service.test;
+package com.liferay.portal.service;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.TreeModel;
@@ -28,12 +27,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.runner.RunWith;
 
 /**
  * @author Shinn Lok
  */
-@RunWith(Arquillian.class)
 public class OrganizationLocalServiceTreeTest
 	extends BaseLocalServiceTreeTestCase {
 

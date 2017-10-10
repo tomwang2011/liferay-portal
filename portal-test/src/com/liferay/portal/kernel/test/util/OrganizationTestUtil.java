@@ -82,10 +82,8 @@ public class OrganizationTestUtil {
 			long parentOrganizationId, String name, boolean site)
 		throws Exception {
 
-		User user = UserTestUtil.addUser();
-
 		return OrganizationLocalServiceUtil.addOrganization(
-			user.getUserId(), parentOrganizationId, name, site);
+			TestPropsValues.getUserId(), parentOrganizationId, name, site);
 	}
 
 	public static OrgLabor addOrgLabor(Organization organization)
