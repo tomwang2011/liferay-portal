@@ -59,6 +59,11 @@ public class GoogleDocsConfigurator {
 		actionableDynamicQuery.performActions();
 	}
 
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
+	}
+
 	@Reference(unbind = "-")
 	protected void setDDMStructureVersionLocalService(
 		DDMStructureVersionLocalService ddmStructureVersionLocalService) {
@@ -68,11 +73,6 @@ public class GoogleDocsConfigurator {
 	protected void setDLFileEntryMetadataDDMPermissionSupport(
 		DLFileEntryMetadataDDMPermissionSupport
 			dlFileEntryMetadataDDMPermissionSupport) {
-	}
-
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference
