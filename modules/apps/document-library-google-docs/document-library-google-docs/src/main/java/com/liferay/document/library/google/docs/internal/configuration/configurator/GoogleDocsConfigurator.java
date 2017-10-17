@@ -45,15 +45,25 @@ public class GoogleDocsConfigurator {
 			_companyLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
-			(Company company) -> {
-				GoogleDocsDLFileEntryTypeHelper
-					googleDocsDLFileEntryTypeHelper =
-						new GoogleDocsDLFileEntryTypeHelper(
-							company, _classNameLocalService, _ddm,
-							_ddmFormXSDDeserializer, _ddmStructureLocalService,
-							_dlFileEntryTypeLocalService, _userLocalService);
+			new ActionableDynamicQuery.PerformActionMethod<Company>() {
 
-				googleDocsDLFileEntryTypeHelper.addGoogleDocsDLFileEntryType();
+				@Override
+				public void performAction(Company company)
+					throws PortalException {
+
+					GoogleDocsDLFileEntryTypeHelper
+						googleDocsDLFileEntryTypeHelper =
+							new GoogleDocsDLFileEntryTypeHelper(
+								company, _classNameLocalService, _ddm,
+								_ddmFormXSDDeserializer,
+								_ddmStructureLocalService,
+								_dlFileEntryTypeLocalService,
+								_userLocalService);
+
+					googleDocsDLFileEntryTypeHelper.
+						addGoogleDocsDLFileEntryType();
+				}
+
 			});
 
 		actionableDynamicQuery.performActions();
