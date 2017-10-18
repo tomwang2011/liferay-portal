@@ -204,7 +204,9 @@ public class ClassPathUtil {
 			sb.append(File.pathSeparator);
 		}
 
-		sb.setIndex(sb.index() - 1);
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
 
 		return sb.toString();
 	}
