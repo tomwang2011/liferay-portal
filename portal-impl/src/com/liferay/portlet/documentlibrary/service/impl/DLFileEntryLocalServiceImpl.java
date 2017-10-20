@@ -35,7 +35,7 @@ import com.liferay.document.library.kernel.util.DL;
 import com.liferay.document.library.kernel.util.DLFileVersionPolicy;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
-import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
+import com.liferay.document.library.kernel.util.comparator.typeless.RepositoryModelModifiedDateComparator;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
@@ -1440,7 +1440,8 @@ public class DLFileEntryLocalServiceImpl
 
 		return getGroupFileEntries(
 			groupId, start, end,
-			new RepositoryModelModifiedDateComparator<DLFileEntry>());
+			RepositoryModelModifiedDateComparator.
+				INSTANCE_DESCENDING_NOT_ORDER_BY_MODEL);
 	}
 
 	@Override
@@ -1456,7 +1457,8 @@ public class DLFileEntryLocalServiceImpl
 
 		return getGroupFileEntries(
 			groupId, userId, start, end,
-			new RepositoryModelModifiedDateComparator<DLFileEntry>());
+			RepositoryModelModifiedDateComparator.
+				INSTANCE_DESCENDING_NOT_ORDER_BY_MODEL);
 	}
 
 	@Override

@@ -28,10 +28,10 @@ import com.liferay.document.library.kernel.util.ImageProcessorUtil;
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.kernel.util.VideoProcessorUtil;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelCreateDateComparator;
-import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelReadCountComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelSizeComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
+import com.liferay.document.library.kernel.util.comparator.typeless.RepositoryModelModifiedDateComparator;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -636,8 +636,10 @@ public class DLImpl implements DL {
 				orderByAsc, orderByModel);
 		}
 		else if (orderByCol.equals("modifiedDate")) {
-			orderByComparator = new RepositoryModelModifiedDateComparator<>(
-				orderByAsc, orderByModel);
+			orderByComparator =
+				(OrderByComparator<T>)
+					RepositoryModelModifiedDateComparator.getInstance(
+						orderByAsc, orderByModel);
 		}
 		else if (orderByCol.equals("size")) {
 			orderByComparator = new RepositoryModelSizeComparator<>(

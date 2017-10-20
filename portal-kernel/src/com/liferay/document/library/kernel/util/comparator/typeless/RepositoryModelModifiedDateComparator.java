@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.kernel.util.comparator;
+package com.liferay.document.library.kernel.util.comparator.typeless;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
@@ -27,12 +27,28 @@ import java.util.Date;
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
- * @deprecated As of 2.0.0, replaced by {@link com.liferay.document.library.kernel.util.comparator.typeless.RepositoryModelModifiedDateComparator}
  */
+public class RepositoryModelModifiedDateComparator extends OrderByComparator {
 
-@Deprecated
-public class RepositoryModelModifiedDateComparator<T>
-	extends OrderByComparator<T> {
+	public static final RepositoryModelModifiedDateComparator
+		INSTANCE_ASCENDING_NOT_ORDER_BY_MODEL =
+			new RepositoryModelModifiedDateComparator(
+				Boolean.TRUE, Boolean.FALSE);
+
+	public static final RepositoryModelModifiedDateComparator
+		INSTANCE_ASCENDING_ORDER_BY_MODEL =
+			new RepositoryModelModifiedDateComparator(
+				Boolean.TRUE, Boolean.TRUE);
+
+	public static final RepositoryModelModifiedDateComparator
+		INSTANCE_DESCENDING_NOT_ORDER_BY_MODEL =
+			new RepositoryModelModifiedDateComparator(
+				Boolean.FALSE, Boolean.FALSE);
+
+	public static final RepositoryModelModifiedDateComparator
+		INSTANCE_DESCENDING_ORDER_BY_MODEL =
+			new RepositoryModelModifiedDateComparator(
+				Boolean.FALSE, Boolean.TRUE);
 
 	public static final String ORDER_BY_ASC = "modifiedDate ASC";
 
@@ -46,24 +62,24 @@ public class RepositoryModelModifiedDateComparator<T>
 	public static final String ORDER_BY_MODEL_DESC =
 		"modelFolder DESC, modifiedDate DESC";
 
-	public RepositoryModelModifiedDateComparator() {
-		this(false);
-	}
-
-	public RepositoryModelModifiedDateComparator(boolean ascending) {
-		_ascending = ascending;
-		_orderByModel = false;
-	}
-
-	public RepositoryModelModifiedDateComparator(
+	public static RepositoryModelModifiedDateComparator getInstance(
 		boolean ascending, boolean orderByModel) {
 
-		_ascending = ascending;
-		_orderByModel = orderByModel;
+		if (ascending && orderByModel) {
+			return INSTANCE_ASCENDING_ORDER_BY_MODEL;
+		}
+		else if (ascending && !orderByModel) {
+			return INSTANCE_ASCENDING_NOT_ORDER_BY_MODEL;
+		}
+		else if (!ascending && orderByModel) {
+			return INSTANCE_DESCENDING_ORDER_BY_MODEL;
+		}
+
+		return INSTANCE_DESCENDING_NOT_ORDER_BY_MODEL;
 	}
 
 	@Override
-	public int compare(T t1, T t2) {
+	public int compare(Object t1, Object t2) {
 		int value = 0;
 
 		Date modifiedDate1 = getModifiedDate(t1);
@@ -148,6 +164,13 @@ public class RepositoryModelModifiedDateComparator<T>
 
 			return repositoryEntry.getModifiedDate();
 		}
+	}
+
+	private RepositoryModelModifiedDateComparator(
+		Boolean ascending, Boolean orderByModel) {
+
+		_ascending = ascending;
+		_orderByModel = orderByModel;
 	}
 
 	private final boolean _ascending;

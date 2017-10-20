@@ -19,8 +19,8 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.comparator.FolderNameComparator;
-import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
+import com.liferay.document.library.kernel.util.comparator.typeless.RepositoryModelModifiedDateComparator;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
@@ -1673,7 +1673,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return getGroupFileEntries(
 			groupId, userId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, start,
-			end, new RepositoryModelModifiedDateComparator<FileEntry>());
+			end,
+			RepositoryModelModifiedDateComparator.
+				INSTANCE_DESCENDING_NOT_ORDER_BY_MODEL);
 	}
 
 	/**
@@ -1743,7 +1745,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return getGroupFileEntries(
 			groupId, userId, rootFolderId, start, end,
-			new RepositoryModelModifiedDateComparator<FileEntry>());
+			RepositoryModelModifiedDateComparator.
+				INSTANCE_DESCENDING_NOT_ORDER_BY_MODEL);
 	}
 
 	/**
