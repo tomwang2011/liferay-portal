@@ -2333,8 +2333,12 @@ file, always use default versions in the `testCompileClasspath` and
 configuration compile and runtime classpaths.
 =======
 ### Changed
+<<<<<<< HEAD
 - [LPS-75427]: Update the [Liferay Gradle Plugins] dependency to version 3.5.20.
 >>>>>>> LPS-75427 Update changelog
+=======
+- [LPS-75430]: Update the [Liferay Gradle Plugins] dependency to version 3.5.20.
+>>>>>>> LPS-75430 Update changelog
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -2596,10 +2600,14 @@ configuration compile and runtime classpaths.
 [LPS-75254]: https://issues.liferay.com/browse/LPS-75254
 [LPS-75273]: https://issues.liferay.com/browse/LPS-75273
 <<<<<<< HEAD
+<<<<<<< HEAD
 [LPS-75359]: https://issues.liferay.com/browse/LPS-75359
 =======
 [LPS-75427]: https://issues.liferay.com/browse/LPS-75427
 >>>>>>> LPS-75427 Update changelog
+=======
+[LPS-75430]: https://issues.liferay.com/browse/LPS-75430
+>>>>>>> LPS-75430 Update changelog
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981
