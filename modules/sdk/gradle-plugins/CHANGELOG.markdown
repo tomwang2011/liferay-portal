@@ -2714,10 +2714,14 @@ to version 2.3.11.
 1.0.482.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## 3.5.20 - 2017-10-24
 =======
 ## 3.5.20 - 2017-10-23
 >>>>>>> LPS-75427 Update changelog
+=======
+## 3.5.20 - 2017-10-24
+>>>>>>> LPS-75427 Fix changelog
 
 ### Added
 - [LPS-75427]: Log destination directory of the `deploy` task after execution.
