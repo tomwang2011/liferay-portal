@@ -2713,17 +2713,28 @@ to version 2.3.11.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.482.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 ## 3.5.20 - 2017-10-24
+=======
+## 3.5.20 - 2017-10-23
+>>>>>>> LPS-75427 Update changelog
+=======
+## 3.5.20 - 2017-10-24
+>>>>>>> LPS-75427 Fix changelog
 
 ### Added
 - [LPS-75427]: Log destination directory of the `deploy` task after execution.
 
+<<<<<<< HEAD
 ### Changed
 - [LPS-75430]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 2.3.12.
 - [LPS-75430]: Update the [Liferay Source Formatter] dependency to version
 1.0.483.
 
+=======
+>>>>>>> LPS-75427 Update changelog
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -2969,5 +2980,8 @@ to version 2.3.12.
 [LPS-75254]: https://issues.liferay.com/browse/LPS-75254
 [LPS-75273]: https://issues.liferay.com/browse/LPS-75273
 [LPS-75427]: https://issues.liferay.com/browse/LPS-75427
+<<<<<<< HEAD
 [LPS-75430]: https://issues.liferay.com/browse/LPS-75430
+=======
+>>>>>>> LPS-75427 Update changelog
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023
