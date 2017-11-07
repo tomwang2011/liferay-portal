@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -184,7 +183,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			@Override
 			public String getClassName() {
 				if (getClassNameId() <= 0) {
-					return StringPool.BLANK;
+					return "";
 				}
 
 				return PortalUtil.getClassName(getClassNameId());
@@ -351,7 +350,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 					return user.getUuid();
 				}
 				catch (PortalException pe) {
-					return StringPool.BLANK;
+					return "";
 				}
 			}
 
@@ -817,7 +816,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 					String xml = get${column.methodName}();
 
 					if (xml == null) {
-						return StringPool.BLANK;
+						return "";
 					}
 
 					<#if entity.isGroupedModel()>

@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -246,7 +245,7 @@ public class ${entity.name}PersistenceTest {
 				<#if stringUtil.equals(column.type, "Blob")>
 					String new${column.methodName}String = RandomTestUtil.randomString();
 
-					byte[] new${column.methodName}Bytes = new${column.methodName}String.getBytes(StringPool.UTF8);
+					byte[] new${column.methodName}Bytes = new${column.methodName}String.getBytes("UTF-8");
 
 					Blob new${column.methodName}Blob = new OutputBlob(new UnsyncByteArrayInputStream(new${column.methodName}Bytes), new${column.methodName}Bytes.length);
 				</#if>
@@ -321,7 +320,7 @@ public class ${entity.name}PersistenceTest {
 				<#elseif stringUtil.equals(finderCol.type, "String")>
 					<#assign hasString = true />
 
-					StringPool.BLANK
+					""
 				<#else>
 					(${finderCol.type})null
 				</#if>
@@ -348,7 +347,7 @@ public class ${entity.name}PersistenceTest {
 						<#elseif stringUtil.equals(finderCol.type, "Date")>
 							RandomTestUtil.nextDate()
 						<#elseif stringUtil.equals(finderCol.type, "String")>
-							StringPool.NULL
+							"null"
 						<#else>
 							(${finderCol.type})null
 						</#if>
@@ -409,9 +408,9 @@ public class ${entity.name}PersistenceTest {
 							<#assign maxLength = serviceBuilder.getMaxLength(entity.getName(), finderCol.getName()) />
 
 							<#if maxLength < 8>
-								RandomTestUtil.randomString(${maxLength}), StringPool.BLANK, StringPool.NULL, null, null
+								RandomTestUtil.randomString(${maxLength}), "", "null", null, null
 							<#else>
-								RandomTestUtil.randomString(), StringPool.BLANK, StringPool.NULL, null, null
+								RandomTestUtil.randomString(), "", "null", null, null
 							</#if>
 						<#else>
 							null
@@ -1064,7 +1063,7 @@ public class ${entity.name}PersistenceTest {
 				<#if stringUtil.equals(column.type, "Blob")>
 					String ${column.name}String = RandomTestUtil.randomString();
 
-					byte[] ${column.name}Bytes = ${column.name}String.getBytes(StringPool.UTF8);
+					byte[] ${column.name}Bytes = ${column.name}String.getBytes("UTF-8");
 
 					Blob ${column.name}Blob = new OutputBlob(new UnsyncByteArrayInputStream(${column.name}Bytes), ${column.name}Bytes.length);
 				</#if>
@@ -1329,7 +1328,7 @@ public class ${entity.name}PersistenceTest {
 						<#if stringUtil.equals(column.type, "Blob")>
 							String ${column.name}String = RandomTestUtil.randomString();
 
-							byte[] ${column.name}Bytes = ${column.name}String.getBytes(StringPool.UTF8);
+							byte[] ${column.name}Bytes = ${column.name}String.getBytes("UTF-8");
 
 							Blob ${column.name}Blob = new OutputBlob(new UnsyncByteArrayInputStream(${column.name}Bytes), ${column.name}Bytes.length);
 						</#if>
