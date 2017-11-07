@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.portlet.social.model.impl.SocialActivityCounterImpl;
 import com.liferay.portlet.social.model.impl.SocialActivityCounterModelImpl;
@@ -306,7 +305,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		msg.append("groupId=");
 		msg.append(groupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchActivityCounterException(msg.toString());
 	}
@@ -357,7 +356,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		msg.append("groupId=");
 		msg.append(groupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchActivityCounterException(msg.toString());
 	}
@@ -835,7 +834,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		msg.append(", classPK=");
 		msg.append(classPK);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchActivityCounterException(msg.toString());
 	}
@@ -891,7 +890,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		msg.append(", classPK=");
 		msg.append(classPK);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchActivityCounterException(msg.toString());
 	}
@@ -1422,7 +1421,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		msg.append(", ownerType=");
 		msg.append(ownerType);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchActivityCounterException(msg.toString());
 	}
@@ -1490,7 +1489,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		msg.append(", ownerType=");
 		msg.append(ownerType);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchActivityCounterException(msg.toString());
 	}
@@ -1849,7 +1848,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			msg.append(", startPeriod=");
 			msg.append(startPeriod);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -1936,7 +1935,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			if (name == null) {
 				query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_1);
 			}
-			else if (name.equals(StringPool.BLANK)) {
+			else if (name.equals("")) {
 				query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_3);
 			}
 			else {
@@ -2077,7 +2076,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			if (name == null) {
 				query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_1);
 			}
-			else if (name.equals(StringPool.BLANK)) {
+			else if (name.equals("")) {
 				query.append(_FINDER_COLUMN_G_C_C_N_O_S_NAME_3);
 			}
 			else {
@@ -2206,7 +2205,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			msg.append(", endPeriod=");
 			msg.append(endPeriod);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -2293,7 +2292,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			if (name == null) {
 				query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_1);
 			}
-			else if (name.equals(StringPool.BLANK)) {
+			else if (name.equals("")) {
 				query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_3);
 			}
 			else {
@@ -2434,7 +2433,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 			if (name == null) {
 				query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_1);
 			}
-			else if (name.equals(StringPool.BLANK)) {
+			else if (name.equals("")) {
 				query.append(_FINDER_COLUMN_G_C_C_N_O_E_NAME_3);
 			}
 			else {
@@ -3146,12 +3145,12 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

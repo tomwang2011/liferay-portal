@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.powwow.service.ClpSerializer;
 import com.liferay.powwow.service.PowwowParticipantLocalServiceUtil;
@@ -286,7 +285,7 @@ public class PowwowParticipantClp extends BaseModelImpl<PowwowParticipant>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -441,7 +440,7 @@ public class PowwowParticipantClp extends BaseModelImpl<PowwowParticipant>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -141,7 +140,7 @@ public class DLContentPersistenceTest {
 
 		String newDataString = RandomTestUtil.randomString();
 
-		byte[] newDataBytes = newDataString.getBytes(StringPool.UTF8);
+		byte[] newDataBytes = newDataString.getBytes("UTF-8");
 
 		Blob newDataBlob = new OutputBlob(new UnsyncByteArrayInputStream(
 					newDataBytes), newDataBytes.length);
@@ -184,9 +183,9 @@ public class DLContentPersistenceTest {
 	@Test
 	public void testCountByC_R_P() throws Exception {
 		_persistence.countByC_R_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), StringPool.BLANK);
+			RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_R_P(0L, 0L, StringPool.NULL);
+		_persistence.countByC_R_P(0L, 0L, "null");
 
 		_persistence.countByC_R_P(0L, 0L, (String)null);
 	}
@@ -194,9 +193,9 @@ public class DLContentPersistenceTest {
 	@Test
 	public void testCountByC_R_LikeP() throws Exception {
 		_persistence.countByC_R_LikeP(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), StringPool.BLANK);
+			RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_R_LikeP(0L, 0L, StringPool.NULL);
+		_persistence.countByC_R_LikeP(0L, 0L, "null");
 
 		_persistence.countByC_R_LikeP(0L, 0L, (String)null);
 	}
@@ -204,9 +203,9 @@ public class DLContentPersistenceTest {
 	@Test
 	public void testCountByC_R_P_V() throws Exception {
 		_persistence.countByC_R_P_V(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), StringPool.BLANK, StringPool.BLANK);
+			RandomTestUtil.nextLong(), "", "");
 
-		_persistence.countByC_R_P_V(0L, 0L, StringPool.NULL, StringPool.NULL);
+		_persistence.countByC_R_P_V(0L, 0L, "null", "null");
 
 		_persistence.countByC_R_P_V(0L, 0L, (String)null, (String)null);
 	}
@@ -470,7 +469,7 @@ public class DLContentPersistenceTest {
 
 		String dataString = RandomTestUtil.randomString();
 
-		byte[] dataBytes = dataString.getBytes(StringPool.UTF8);
+		byte[] dataBytes = dataString.getBytes("UTF-8");
 
 		Blob dataBlob = new OutputBlob(new UnsyncByteArrayInputStream(dataBytes),
 				dataBytes.length);

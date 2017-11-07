@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.tasks.service.ClpSerializer;
 import com.liferay.tasks.service.TasksEntryLocalServiceUtil;
@@ -293,7 +292,7 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -447,7 +446,7 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -486,7 +485,7 @@ public class TasksEntryClp extends BaseModelImpl<TasksEntry>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 

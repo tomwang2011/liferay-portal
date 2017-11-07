@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -308,7 +307,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		msg.append("groupId=");
 		msg.append(groupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchOrderException(msg.toString());
 	}
@@ -359,7 +358,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		msg.append("groupId=");
 		msg.append(groupId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchOrderException(msg.toString());
 	}
@@ -989,7 +988,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			msg.append("number=");
 			msg.append(number);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -1048,7 +1047,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			if (number == null) {
 				query.append(_FINDER_COLUMN_NUMBER_NUMBER_1);
 			}
-			else if (number.equals(StringPool.BLANK)) {
+			else if (number.equals("")) {
 				query.append(_FINDER_COLUMN_NUMBER_NUMBER_3);
 			}
 			else {
@@ -1148,7 +1147,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			if (number == null) {
 				query.append(_FINDER_COLUMN_NUMBER_NUMBER_1);
 			}
-			else if (number.equals(StringPool.BLANK)) {
+			else if (number.equals("")) {
 				query.append(_FINDER_COLUMN_NUMBER_NUMBER_3);
 			}
 			else {
@@ -1222,7 +1221,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			msg.append("ppTxnId=");
 			msg.append(ppTxnId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -1282,7 +1281,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			if (ppTxnId == null) {
 				query.append(_FINDER_COLUMN_PPTXNID_PPTXNID_1);
 			}
-			else if (ppTxnId.equals(StringPool.BLANK)) {
+			else if (ppTxnId.equals("")) {
 				query.append(_FINDER_COLUMN_PPTXNID_PPTXNID_3);
 			}
 			else {
@@ -1394,7 +1393,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			if (ppTxnId == null) {
 				query.append(_FINDER_COLUMN_PPTXNID_PPTXNID_1);
 			}
-			else if (ppTxnId.equals(StringPool.BLANK)) {
+			else if (ppTxnId.equals("")) {
 				query.append(_FINDER_COLUMN_PPTXNID_PPTXNID_3);
 			}
 			else {
@@ -1610,7 +1609,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			if (ppPaymentStatus == null) {
 				query.append(_FINDER_COLUMN_G_U_PPPS_PPPAYMENTSTATUS_1);
 			}
-			else if (ppPaymentStatus.equals(StringPool.BLANK)) {
+			else if (ppPaymentStatus.equals("")) {
 				query.append(_FINDER_COLUMN_G_U_PPPS_PPPAYMENTSTATUS_3);
 			}
 			else {
@@ -1712,7 +1711,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		msg.append(", ppPaymentStatus=");
 		msg.append(ppPaymentStatus);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchOrderException(msg.toString());
 	}
@@ -1775,7 +1774,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		msg.append(", ppPaymentStatus=");
 		msg.append(ppPaymentStatus);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchOrderException(msg.toString());
 	}
@@ -1878,7 +1877,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		if (ppPaymentStatus == null) {
 			query.append(_FINDER_COLUMN_G_U_PPPS_PPPAYMENTSTATUS_1);
 		}
-		else if (ppPaymentStatus.equals(StringPool.BLANK)) {
+		else if (ppPaymentStatus.equals("")) {
 			query.append(_FINDER_COLUMN_G_U_PPPS_PPPAYMENTSTATUS_3);
 		}
 		else {
@@ -2067,7 +2066,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		if (ppPaymentStatus == null) {
 			query.append(_FINDER_COLUMN_G_U_PPPS_PPPAYMENTSTATUS_1);
 		}
-		else if (ppPaymentStatus.equals(StringPool.BLANK)) {
+		else if (ppPaymentStatus.equals("")) {
 			query.append(_FINDER_COLUMN_G_U_PPPS_PPPAYMENTSTATUS_3);
 		}
 		else {
@@ -2217,7 +2216,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		if (ppPaymentStatus == null) {
 			query.append(_FINDER_COLUMN_G_U_PPPS_PPPAYMENTSTATUS_1);
 		}
-		else if (ppPaymentStatus.equals(StringPool.BLANK)) {
+		else if (ppPaymentStatus.equals("")) {
 			query.append(_FINDER_COLUMN_G_U_PPPS_PPPAYMENTSTATUS_3);
 		}
 		else {
@@ -2396,7 +2395,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			if (ppPaymentStatus == null) {
 				query.append(_FINDER_COLUMN_G_U_PPPS_PPPAYMENTSTATUS_1);
 			}
-			else if (ppPaymentStatus.equals(StringPool.BLANK)) {
+			else if (ppPaymentStatus.equals("")) {
 				query.append(_FINDER_COLUMN_G_U_PPPS_PPPAYMENTSTATUS_3);
 			}
 			else {
@@ -2469,7 +2468,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		if (ppPaymentStatus == null) {
 			query.append(_FINDER_COLUMN_G_U_PPPS_PPPAYMENTSTATUS_1);
 		}
-		else if (ppPaymentStatus.equals(StringPool.BLANK)) {
+		else if (ppPaymentStatus.equals("")) {
 			query.append(_FINDER_COLUMN_G_U_PPPS_PPPAYMENTSTATUS_3);
 		}
 		else {
@@ -3132,12 +3131,12 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

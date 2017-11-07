@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -124,7 +123,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 			msg.append("key=");
 			msg.append(key);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -183,7 +182,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 			if (key == null) {
 				query.append(_FINDER_COLUMN_KEY_KEY_1);
 			}
-			else if (key.equals(StringPool.BLANK)) {
+			else if (key.equals("")) {
 				query.append(_FINDER_COLUMN_KEY_KEY_3);
 			}
 			else {
@@ -294,7 +293,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 			if (key == null) {
 				query.append(_FINDER_COLUMN_KEY_KEY_1);
 			}
-			else if (key.equals(StringPool.BLANK)) {
+			else if (key.equals("")) {
 				query.append(_FINDER_COLUMN_KEY_KEY_3);
 			}
 			else {
@@ -558,7 +557,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 		msg.append("receiverUserId=");
 		msg.append(receiverUserId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchMemberRequestException(msg.toString());
 	}
@@ -609,7 +608,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 		msg.append("receiverUserId=");
 		msg.append(receiverUserId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchMemberRequestException(msg.toString());
 	}
@@ -1085,7 +1084,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 		msg.append(", status=");
 		msg.append(status);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchMemberRequestException(msg.toString());
 	}
@@ -1141,7 +1140,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 		msg.append(", status=");
 		msg.append(status);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchMemberRequestException(msg.toString());
 	}
@@ -1444,7 +1443,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 			msg.append(", status=");
 			msg.append(status);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -2247,12 +2246,12 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

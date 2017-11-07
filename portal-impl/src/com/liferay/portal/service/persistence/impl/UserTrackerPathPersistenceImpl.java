@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.impl.UserTrackerPathImpl;
 import com.liferay.portal.model.impl.UserTrackerPathModelImpl;
 
@@ -311,7 +310,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		msg.append("userTrackerId=");
 		msg.append(userTrackerId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserTrackerPathException(msg.toString());
 	}
@@ -362,7 +361,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		msg.append("userTrackerId=");
 		msg.append(userTrackerId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchUserTrackerPathException(msg.toString());
 	}
@@ -1056,12 +1055,12 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

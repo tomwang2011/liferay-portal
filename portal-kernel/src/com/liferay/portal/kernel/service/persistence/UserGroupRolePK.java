@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -155,25 +154,23 @@ public class UserGroupRolePK implements Comparable<UserGroupRolePK>,
 	public String toString() {
 		StringBundler sb = new StringBundler(15);
 
-		sb.append(StringPool.OPEN_CURLY_BRACE);
+		sb.append("{");
 
 		sb.append("userId");
-		sb.append(StringPool.EQUAL);
+		sb.append("=");
 		sb.append(userId);
 
-		sb.append(StringPool.COMMA);
-		sb.append(StringPool.SPACE);
+		sb.append(", ");
 		sb.append("groupId");
-		sb.append(StringPool.EQUAL);
+		sb.append("=");
 		sb.append(groupId);
 
-		sb.append(StringPool.COMMA);
-		sb.append(StringPool.SPACE);
+		sb.append(", ");
 		sb.append("roleId");
-		sb.append(StringPool.EQUAL);
+		sb.append("=");
 		sb.append(roleId);
 
-		sb.append(StringPool.CLOSE_CURLY_BRACE);
+		sb.append("}");
 
 		return sb.toString();
 	}

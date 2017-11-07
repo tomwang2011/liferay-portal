@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -238,7 +237,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -327,7 +326,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchNotificationTemplateException(msg.toString());
 	}
@@ -378,7 +377,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchNotificationTemplateException(msg.toString());
 	}
@@ -473,7 +472,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -609,7 +608,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -691,7 +690,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			msg.append(", groupId=");
 			msg.append(groupId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -754,7 +753,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -862,7 +861,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -1065,7 +1064,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1163,7 +1162,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchNotificationTemplateException(msg.toString());
 	}
@@ -1221,7 +1220,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchNotificationTemplateException(msg.toString());
 	}
@@ -1322,7 +1321,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1464,7 +1463,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1731,7 +1730,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 		msg.append("calendarId=");
 		msg.append(calendarId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchNotificationTemplateException(msg.toString());
 	}
@@ -1783,7 +1782,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 		msg.append("calendarId=");
 		msg.append(calendarId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchNotificationTemplateException(msg.toString());
 	}
@@ -2082,7 +2081,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			msg.append(", notificationTemplateType=");
 			msg.append(notificationTemplateType);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -2157,7 +2156,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			if (notificationType == null) {
 				query.append(_FINDER_COLUMN_C_NT_NTT_NOTIFICATIONTYPE_1);
 			}
-			else if (notificationType.equals(StringPool.BLANK)) {
+			else if (notificationType.equals("")) {
 				query.append(_FINDER_COLUMN_C_NT_NTT_NOTIFICATIONTYPE_3);
 			}
 			else {
@@ -2171,7 +2170,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			if (notificationTemplateType == null) {
 				query.append(_FINDER_COLUMN_C_NT_NTT_NOTIFICATIONTEMPLATETYPE_1);
 			}
-			else if (notificationTemplateType.equals(StringPool.BLANK)) {
+			else if (notificationTemplateType.equals("")) {
 				query.append(_FINDER_COLUMN_C_NT_NTT_NOTIFICATIONTEMPLATETYPE_3);
 			}
 			else {
@@ -2305,7 +2304,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			if (notificationType == null) {
 				query.append(_FINDER_COLUMN_C_NT_NTT_NOTIFICATIONTYPE_1);
 			}
-			else if (notificationType.equals(StringPool.BLANK)) {
+			else if (notificationType.equals("")) {
 				query.append(_FINDER_COLUMN_C_NT_NTT_NOTIFICATIONTYPE_3);
 			}
 			else {
@@ -2319,7 +2318,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 			if (notificationTemplateType == null) {
 				query.append(_FINDER_COLUMN_C_NT_NTT_NOTIFICATIONTEMPLATETYPE_1);
 			}
-			else if (notificationTemplateType.equals(StringPool.BLANK)) {
+			else if (notificationTemplateType.equals("")) {
 				query.append(_FINDER_COLUMN_C_NT_NTT_NOTIFICATIONTEMPLATETYPE_3);
 			}
 			else {
@@ -3040,12 +3039,12 @@ public class CalendarNotificationTemplatePersistenceImpl
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.lock.exception.NoSuchLockException;
@@ -225,7 +224,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -312,7 +311,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLockException(msg.toString());
 	}
@@ -360,7 +359,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLockException(msg.toString());
 	}
@@ -449,7 +448,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -585,7 +584,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -776,7 +775,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -871,7 +870,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLockException(msg.toString());
 	}
@@ -924,7 +923,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLockException(msg.toString());
 	}
@@ -1018,7 +1017,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1160,7 +1159,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1421,7 +1420,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		msg.append("expirationDate=");
 		msg.append(expirationDate);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLockException(msg.toString());
 	}
@@ -1471,7 +1470,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		msg.append("expirationDate=");
 		msg.append(expirationDate);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchLockException(msg.toString());
 	}
@@ -1773,7 +1772,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			msg.append(", key=");
 			msg.append(key);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -1836,7 +1835,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			if (className == null) {
 				query.append(_FINDER_COLUMN_C_K_CLASSNAME_1);
 			}
-			else if (className.equals(StringPool.BLANK)) {
+			else if (className.equals("")) {
 				query.append(_FINDER_COLUMN_C_K_CLASSNAME_3);
 			}
 			else {
@@ -1850,7 +1849,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			if (key == null) {
 				query.append(_FINDER_COLUMN_C_K_KEY_1);
 			}
-			else if (key.equals(StringPool.BLANK)) {
+			else if (key.equals("")) {
 				query.append(_FINDER_COLUMN_C_K_KEY_3);
 			}
 			else {
@@ -1958,7 +1957,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			if (className == null) {
 				query.append(_FINDER_COLUMN_C_K_CLASSNAME_1);
 			}
-			else if (className.equals(StringPool.BLANK)) {
+			else if (className.equals("")) {
 				query.append(_FINDER_COLUMN_C_K_CLASSNAME_3);
 			}
 			else {
@@ -1972,7 +1971,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			if (key == null) {
 				query.append(_FINDER_COLUMN_C_K_KEY_1);
 			}
-			else if (key.equals(StringPool.BLANK)) {
+			else if (key.equals("")) {
 				query.append(_FINDER_COLUMN_C_K_KEY_3);
 			}
 			else {
@@ -2547,12 +2546,12 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

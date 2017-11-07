@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -226,7 +225,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -312,7 +311,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchAppException(msg.toString());
 	}
@@ -360,7 +359,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchAppException(msg.toString());
 	}
@@ -449,7 +448,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -585,7 +584,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -775,7 +774,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -869,7 +868,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchAppException(msg.toString());
 	}
@@ -922,7 +921,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchAppException(msg.toString());
 	}
@@ -1016,7 +1015,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1158,7 +1157,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1414,7 +1413,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		msg.append("companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchAppException(msg.toString());
 	}
@@ -1462,7 +1461,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		msg.append("companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchAppException(msg.toString());
 	}
@@ -1732,7 +1731,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 			msg.append("remoteAppId=");
 			msg.append(remoteAppId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -2049,7 +2048,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 			if (category == null) {
 				query.append(_FINDER_COLUMN_CATEGORY_CATEGORY_1);
 			}
-			else if (category.equals(StringPool.BLANK)) {
+			else if (category.equals("")) {
 				query.append(_FINDER_COLUMN_CATEGORY_CATEGORY_3);
 			}
 			else {
@@ -2135,7 +2134,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		msg.append("category=");
 		msg.append(category);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchAppException(msg.toString());
 	}
@@ -2183,7 +2182,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		msg.append("category=");
 		msg.append(category);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchAppException(msg.toString());
 	}
@@ -2274,7 +2273,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		if (category == null) {
 			query.append(_FINDER_COLUMN_CATEGORY_CATEGORY_1);
 		}
-		else if (category.equals(StringPool.BLANK)) {
+		else if (category.equals("")) {
 			query.append(_FINDER_COLUMN_CATEGORY_CATEGORY_3);
 		}
 		else {
@@ -2410,7 +2409,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 			if (category == null) {
 				query.append(_FINDER_COLUMN_CATEGORY_CATEGORY_1);
 			}
-			else if (category.equals(StringPool.BLANK)) {
+			else if (category.equals("")) {
 				query.append(_FINDER_COLUMN_CATEGORY_CATEGORY_3);
 			}
 			else {
@@ -3036,12 +3035,12 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 
