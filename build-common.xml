@@ -750,10 +750,10 @@ information.
 					<if>
 						<equals arg1="${junit.java.unit.gc.logging}" arg2="on" />
 						<then>
-							<property name="junit.java.gc" value="${junit.java.unit.gc} -verbose:gc -XX:+PrintGCCause -XX:+PrintGCDetails" />
+							<property name="junit.java.gc" value="${junit.java.unit.gc} -verbose:gc -XX:+PrintGCCause -XX:+PrintGCDetails -XX:+TraceClassLoading -XX:+TraceClassUnloading" />
 						</then>
 						<else>
-							<property name="junit.java.gc" value="${junit.java.unit.gc}" />
+							<property name="junit.java.gc" value="${junit.java.unit.gc} -XX:+TraceClassLoading -XX:+TraceClassUnloading" />
 						</else>
 					</if>
 				</then>
