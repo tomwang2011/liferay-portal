@@ -753,7 +753,7 @@ information.
 							<property name="junit.java.gc" value="${junit.java.unit.gc} -verbose:gc -XX:+PrintGCCause -XX:+PrintGCDetails" />
 						</then>
 						<else>
-							<property name="junit.java.gc" value="${junit.java.unit.gc}" />
+							<property name="junit.java.gc" value="${junit.java.unit.gc} -XX:+TraceClassLoading -XX:+TraceClassUnloading" />
 						</else>
 					</if>
 				</then>
