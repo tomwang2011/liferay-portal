@@ -851,6 +851,8 @@ app.server.type=@{app.server.type}]]></echo>
 								</and>
 								<then>
 									<setup-testable-jboss />
+
+									<setup-testable-jboss-gc />
 								</then>
 								<elseif>
 									<and>
@@ -861,6 +863,18 @@ app.server.type=@{app.server.type}]]></echo>
 										<setup-testable-tomcat />
 
 										<setup-test-batch-testable-tomcat setup.proxy="@{setup.proxy}" />
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="@{app.server.type}" arg2="jboss" />
+									<then>
+										<setup-testable-jboss-gc />
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="@{app.server.type}" arg2="wildfly" />
+									<then>
+										<setup-testable-wildfly-gc />
 									</then>
 								</elseif>
 							</if>
@@ -897,6 +911,8 @@ app.server.type=@{app.server.type}]]></echo>
 								</and>
 								<then>
 									<setup-testable-jboss />
+
+									<setup-testable-jboss-gc />
 								</then>
 								<elseif>
 									<and>
@@ -907,6 +923,18 @@ app.server.type=@{app.server.type}]]></echo>
 										<setup-testable-tomcat />
 
 										<setup-test-batch-testable-tomcat setup.proxy="@{setup.proxy}" />
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="@{app.server.type}" arg2="jboss" />
+									<then>
+										<setup-testable-jboss-gc />
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="@{app.server.type}" arg2="wildfly" />
+									<then>
+										<setup-testable-wildfly-gc />
 									</then>
 								</elseif>
 							</if>
@@ -1584,6 +1612,44 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="setup-testable-jboss-gc">
+		<sequential>
+			<if>
+				<resourcecontains resource="${app.server.jboss.bin.dir}/standalone.conf.bat" substring="${test.batch.app.server.jboss.standalone.gc.old}" />
+				<then>
+					<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat" token="${test.batch.app.server.jboss.standalone.gc.old}" value="${test.batch.app.server.jboss.standalone.gc.new}" />
+				</then>
+				<else>
+					<if>
+						<not>
+							<resourcecontains resource="${app.server.jboss.bin.dir}/standalone.conf.bat" substring="${test.batch.app.server.jboss.standalone.gc.new}" />
+						</not>
+						<then>
+							<fail message="Unable to setup JBoss GC properties for ${app.server.jboss.bin.dir}/standalone.conf.bat." />
+						</then>
+					</if>
+				</else>
+			</if>
+
+			<if>
+				<resourcecontains resource="${app.server.jboss.bin.dir}/standalone.conf" substring="${test.batch.app.server.jboss.standalone.gc.old}" />
+				<then>
+					<replace file="${app.server.jboss.bin.dir}/standalone.conf" token="${test.batch.app.server.jboss.standalone.gc.old}" value="${test.batch.app.server.jboss.standalone.gc.new}" />
+				</then>
+				<else>
+					<if>
+						<not>
+							<resourcecontains resource="${app.server.jboss.bin.dir}/standalone.conf" substring="${test.batch.app.server.jboss.standalone.gc.new}" />
+						</not>
+						<then>
+							<fail message="Unable to setup JBoss GC properties for ${app.server.jboss.bin.dir}/standalone.conf." />
+						</then>
+					</if>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-testable-tomcat-dummy-socket-proxy">
 		<sequential>
 			<local name="dummy.socket.proxy" />
@@ -1717,6 +1783,44 @@ app.server.type=@{app.server.type}]]></echo>
 						]]>
 					</echo>
 				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-wildfly-gc">
+		<sequential>
+			<if>
+				<resourcecontains resource="${app.server.wildfly.bin.dir}/standalone.conf.bat" substring="${test.batch.app.server.wildfly.standalone.gc.old}" />
+				<then>
+					<replace file="${app.server.wildfly.bin.dir}/standalone.conf.bat" token="${test.batch.app.server.wildfly.standalone.gc.old}" value="${test.batch.app.server.wildfly.standalone.gc.new}" />
+				</then>
+				<else>
+					<if>
+						<not>
+							<resourcecontains resource="${app.server.wildfly.bin.dir}/standalone.conf.bat" substring="${test.batch.app.server.wildfly.standalone.gc.new}" />
+						</not>
+						<then>
+							<fail message="Unable to setup WildFly GC properties for ${app.server.wildfly.bin.dir}/standalone.conf.bat." />
+						</then>
+					</if>
+				</else>
+			</if>
+
+			<if>
+				<resourcecontains resource="${app.server.wildfly.bin.dir}/standalone.conf" substring="${test.batch.app.server.wildfly.standalone.gc.old}" />
+				<then>
+					<replace file="${app.server.wildfly.bin.dir}/standalone.conf" token="${test.batch.app.server.wildfly.standalone.gc.old}" value="${test.batch.app.server.wildfly.standalone.gc.new}" />
+				</then>
+				<else>
+					<if>
+						<not>
+							<resourcecontains resource="${app.server.wildfly.bin.dir}/standalone.conf" substring="${test.batch.app.server.wildfly.standalone.gc.new}" />
+						</not>
+						<then>
+							<fail message="Unable to setup WildFly GC properties for ${app.server.wildfly.bin.dir}/standalone.conf." />
+						</then>
+					</if>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>
