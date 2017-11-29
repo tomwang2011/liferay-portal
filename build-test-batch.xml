@@ -1615,34 +1615,34 @@ app.server.type=@{app.server.type}]]></echo>
 	<macrodef name="setup-testable-jboss-gc">
 		<sequential>
 			<if>
-				<resourcecontains resource="${app.server.jboss.bin.dir}/standalone.conf.bat" substring="${test.batch.app.server.jboss.standalone.gc.old}" />
+				<resourcecontains resource="${app.server.jboss.dir}/bin/standalone.conf.bat" substring="${test.batch.app.server.jboss.standalone.gc.old}" />
 				<then>
-					<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat" token="${test.batch.app.server.jboss.standalone.gc.old}" value="${test.batch.app.server.jboss.standalone.gc.new}" />
+					<replace file="${app.server.jboss.dir}/bin/standalone.conf.bat" token="${test.batch.app.server.jboss.standalone.gc.old}" value="${test.batch.app.server.jboss.standalone.gc.new}" />
 				</then>
 				<else>
 					<if>
 						<not>
-							<resourcecontains resource="${app.server.jboss.bin.dir}/standalone.conf.bat" substring="${test.batch.app.server.jboss.standalone.gc.new}" />
+							<resourcecontains resource="${app.server.jboss.dir}/bin/standalone.conf.bat" substring="${test.batch.app.server.jboss.standalone.gc.new}" />
 						</not>
 						<then>
-							<fail message="Unable to setup JBoss GC properties for ${app.server.jboss.bin.dir}/standalone.conf.bat." />
+							<fail message="Unable to setup JBoss GC properties for ${app.server.jboss.dir}/bin/standalone.conf.bat." />
 						</then>
 					</if>
 				</else>
 			</if>
 
 			<if>
-				<resourcecontains resource="${app.server.jboss.bin.dir}/standalone.conf" substring="${test.batch.app.server.jboss.standalone.gc.old}" />
+				<resourcecontains resource="${app.server.jboss.dir}/bin/standalone.conf" substring="${test.batch.app.server.jboss.standalone.gc.old}" />
 				<then>
-					<replace file="${app.server.jboss.bin.dir}/standalone.conf" token="${test.batch.app.server.jboss.standalone.gc.old}" value="${test.batch.app.server.jboss.standalone.gc.new}" />
+					<replace file="${app.server.jboss.dir}/bin/standalone.conf" token="${test.batch.app.server.jboss.standalone.gc.old}" value="${test.batch.app.server.jboss.standalone.gc.new}" />
 				</then>
 				<else>
 					<if>
 						<not>
-							<resourcecontains resource="${app.server.jboss.bin.dir}/standalone.conf" substring="${test.batch.app.server.jboss.standalone.gc.new}" />
+							<resourcecontains resource="${app.server.jboss.dir}/bin/standalone.conf" substring="${test.batch.app.server.jboss.standalone.gc.new}" />
 						</not>
 						<then>
-							<fail message="Unable to setup JBoss GC properties for ${app.server.jboss.bin.dir}/standalone.conf." />
+							<fail message="Unable to setup JBoss GC properties for ${app.server.jboss.dir}/bin/standalone.conf." />
 						</then>
 					</if>
 				</else>
@@ -1790,34 +1790,34 @@ app.server.type=@{app.server.type}]]></echo>
 	<macrodef name="setup-testable-wildfly-gc">
 		<sequential>
 			<if>
-				<resourcecontains resource="${app.server.wildfly.bin.dir}/standalone.conf.bat" substring="${test.batch.app.server.wildfly.standalone.gc.old}" />
+				<resourcecontains resource="${app.server.wildfly.dir}/bin/standalone.conf.bat" substring="${test.batch.app.server.wildfly.standalone.gc.old}" />
 				<then>
-					<replace file="${app.server.wildfly.bin.dir}/standalone.conf.bat" token="${test.batch.app.server.wildfly.standalone.gc.old}" value="${test.batch.app.server.wildfly.standalone.gc.new}" />
+					<replace file="${app.server.wildfly.dir}/bin/standalone.conf.bat" token="${test.batch.app.server.wildfly.standalone.gc.old}" value="${test.batch.app.server.wildfly.standalone.gc.new}" />
 				</then>
 				<else>
 					<if>
 						<not>
-							<resourcecontains resource="${app.server.wildfly.bin.dir}/standalone.conf.bat" substring="${test.batch.app.server.wildfly.standalone.gc.new}" />
+							<resourcecontains resource="${app.server.wildfly.dir}/bin/standalone.conf.bat" substring="${test.batch.app.server.wildfly.standalone.gc.new}" />
 						</not>
 						<then>
-							<fail message="Unable to setup WildFly GC properties for ${app.server.wildfly.bin.dir}/standalone.conf.bat." />
+							<fail message="Unable to setup WildFly GC properties for ${app.server.wildfly.dir}/bin/standalone.conf.bat." />
 						</then>
 					</if>
 				</else>
 			</if>
 
 			<if>
-				<resourcecontains resource="${app.server.wildfly.bin.dir}/standalone.conf" substring="${test.batch.app.server.wildfly.standalone.gc.old}" />
+				<resourcecontains resource="${app.server.wildfly.dir}/bin/standalone.conf" substring="${test.batch.app.server.wildfly.standalone.gc.old}" />
 				<then>
-					<replace file="${app.server.wildfly.bin.dir}/standalone.conf" token="${test.batch.app.server.wildfly.standalone.gc.old}" value="${test.batch.app.server.wildfly.standalone.gc.new}" />
+					<replace file="${app.server.wildfly.dir}/bin/standalone.conf" token="${test.batch.app.server.wildfly.standalone.gc.old}" value="${test.batch.app.server.wildfly.standalone.gc.new}" />
 				</then>
 				<else>
 					<if>
 						<not>
-							<resourcecontains resource="${app.server.wildfly.bin.dir}/standalone.conf" substring="${test.batch.app.server.wildfly.standalone.gc.new}" />
+							<resourcecontains resource="${app.server.wildfly.dir}/bin/standalone.conf" substring="${test.batch.app.server.wildfly.standalone.gc.new}" />
 						</not>
 						<then>
-							<fail message="Unable to setup WildFly GC properties for ${app.server.wildfly.bin.dir}/standalone.conf." />
+							<fail message="Unable to setup WildFly GC properties for ${app.server.wildfly.dir}/bin/standalone.conf." />
 						</then>
 					</if>
 				</else>
