@@ -850,6 +850,7 @@ app.server.type=@{app.server.type}]]></echo>
 									<equals arg1="@{setup.testable.jboss}" arg2="true" />
 								</and>
 								<then>
+									<echo>$$$$$$$$$$$$$$$$</echo>
 									<setup-testable-jboss />
 
 									<setup-testable-jboss-gc />
@@ -868,6 +869,7 @@ app.server.type=@{app.server.type}]]></echo>
 								<elseif>
 									<equals arg1="@{app.server.type}" arg2="jboss" />
 									<then>
+										<echo>!!!!!!!!!!!!!!!!!!!!!!!!!!</echo>
 										<setup-testable-jboss-gc />
 									</then>
 								</elseif>
@@ -911,7 +913,7 @@ app.server.type=@{app.server.type}]]></echo>
 								</and>
 								<then>
 									<setup-testable-jboss />
-
+									<echo>@@@@@@@@@@@@@@@@@@@@@@@@@@</echo>
 									<setup-testable-jboss-gc />
 								</then>
 								<elseif>
@@ -928,6 +930,7 @@ app.server.type=@{app.server.type}]]></echo>
 								<elseif>
 									<equals arg1="@{app.server.type}" arg2="jboss" />
 									<then>
+										<echo>%%%%%%%%%%%%%%%%%%%%%%%%%</echo>
 										<setup-testable-jboss-gc />
 									</then>
 								</elseif>
