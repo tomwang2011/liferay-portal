@@ -1620,7 +1620,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<macrodef name="setup-testable-jboss-gc">
 		<sequential>
-			<if>
+			<!-- <if>
 				<resourcecontains resource="${app.server.jboss.dir}/bin/standalone.conf.bat" substring="${test.batch.app.server.jboss.standalone.gc.old}" />
 				<then>
 					<replace file="${app.server.jboss.dir}/bin/standalone.conf.bat" token="${test.batch.app.server.jboss.standalone.gc.old}" value="${test.batch.app.server.jboss.standalone.gc.new}" />
@@ -1635,7 +1635,7 @@ app.server.type=@{app.server.type}]]></echo>
 						</then>
 					</if>
 				</else>
-			</if>
+			</if> -->
 
 			<if>
 				<resourcecontains resource="${app.server.jboss.dir}/bin/standalone.conf" substring="${test.batch.app.server.jboss.standalone.gc.old}" />
