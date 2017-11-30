@@ -484,8 +484,19 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<setup-libs />
 
-			<setup-testable-jboss-gc />
-			<setup-testable-wildfly-gc />
+			<if>
+				<equals arg1="@{app.server.type}" arg2="jboss" />
+				<then>
+					<setup-testable-jboss-gc />
+				</then>
+			</if>
+
+			<if>
+				<equals arg1="@{app.server.type}" arg2="wildfly" />
+				<then>
+					<setup-testable-wildfly-gc />
+				</then>
+			</if>
 
 			<antcall inheritAll="false" target="install-portal-snapshots" />
 
