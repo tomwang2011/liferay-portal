@@ -85,7 +85,9 @@ public class SybaseDumpTransactionLogTestCallback
 
 							Thread.sleep(10000);
 						} catch (Exception e) {
-							throw new RuntimeException(e);
+							if (!e.getMessage().contains("sleep interrupted")) {
+								throw new RuntimeException(e);
+							}
 						}
 					};
 				};
