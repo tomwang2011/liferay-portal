@@ -520,10 +520,10 @@ app.server.type=@{app.server.type}]]></echo>
 	</macrodef>
 
 	<macrodef name="run-batch-test">
-		<attribute default="false" name="jboss.gc.log" />
-		<attribute default="false" name="tomcat.gc.log" />
-		<attribute default="false" name="tsant.gc.log" />
-		<attribute default="false" name="wildfly.gc.log" />
+		<attribute default="true" name="jboss.gc.log" />
+		<attribute default="true" name="tomcat.gc.log" />
+		<attribute default="true" name="tsant.gc.log" />
+		<attribute default="true" name="wildfly.gc.log" />
 		<element name="test-action" />
 		<element name="test-set-up" optional="true" />
 		<element name="test-tear-down" optional="true" />
