@@ -721,8 +721,8 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="" name="test.portal.bundle.zip.url" />
 		<attribute default="" name="test.portal.lpkg.name" />
 		<attribute default="" name="test.sql.zip.url" />
-		<attribute default="false" name="tomcat.gc.log" />
-		<attribute default="false" name="tsant.gc.log" />
+		<attribute default="true" name="tomcat.gc.log" />
+		<attribute default="true" name="tsant.gc.log" />
 		<attribute default="true" name="wildfly.gc.log" />
 
 		<sequential>
