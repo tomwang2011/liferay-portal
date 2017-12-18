@@ -3279,8 +3279,6 @@ information. Make sure to commit in all build services results.
 
 		<clean-restart-sybase />
 
-		<set-sybase-charset-utf8 />
-
 		<echo file="create-header.sql">use master
 dump transaction master with no_log
 go
@@ -3301,6 +3299,8 @@ go</echo>
 
 		<retry retrycount="10">
 			<sequential>
+				<set-sybase-charset-utf8 />
+
 				<if>
 					<not>
 						<available file="/opt/sybase/charsets" />
