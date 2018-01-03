@@ -204,16 +204,7 @@ public class ServiceTestUtil {
 
 			serviceDependencyManager.waitForDependencies();
 
-			_replaceWithSynchronousDestination(
-				DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR);
-			_replaceWithSynchronousDestination(
-				DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR);
-			_replaceWithSynchronousDestination(
-				DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR);
-			_replaceWithSynchronousDestination(
-				DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR);
-			_replaceWithSynchronousDestination(
-				DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR);
+			initSynchronousDestination();
 		}
 
 		// Shutdown
@@ -271,6 +262,19 @@ public class ServiceTestUtil {
 				_log.error(e, e);
 			}
 		}
+	}
+
+	public static void initSynchronousDestination() {
+		_replaceWithSynchronousDestination(
+			DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR);
+		_replaceWithSynchronousDestination(
+			DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR);
+		_replaceWithSynchronousDestination(
+			DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR);
+		_replaceWithSynchronousDestination(
+			DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR);
+		_replaceWithSynchronousDestination(
+			DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR);
 	}
 
 	public static Date newDate() throws Exception {
