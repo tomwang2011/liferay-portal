@@ -40,6 +40,8 @@
 	</tear-down>
 
 	<command name="ConvertCurrencyUSDToEUR" priority="2">
+		<property name="portal.acceptance" value="LRQA-34105" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Currency Converter Page" />
 		</execute>
