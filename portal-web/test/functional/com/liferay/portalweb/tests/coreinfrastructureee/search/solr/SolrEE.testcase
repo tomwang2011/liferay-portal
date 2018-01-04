@@ -234,6 +234,7 @@
 
 		<property name="solr.solrcloud.enabled" value="true" />
 		<property name="portal.acceptance" value="LRQA-34105" />
+		<property name="socks.proxy.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="SolrEE#SolrWithSolrCloudSmokeTest" />
 
 		<execute macro="Solr#viewSolrwithSolrCloudEnabledInConsole" />
