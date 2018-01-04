@@ -62,6 +62,11 @@ public class MainServletTestCallback extends BaseTestCallback<Void, Void> {
 	@Override
 	public Void beforeClass(Description description) {
 		if (ArquillianUtil.isArquillianTest(description)) {
+			if (!_synchronousDestinationInitialized) {
+				ServiceTestUtil.initSynchronousDestination();
+
+				_synchronousDestinationInitialized = true;
+			}
 			return null;
 		}
 
@@ -114,5 +119,7 @@ public class MainServletTestCallback extends BaseTestCallback<Void, Void> {
 	}
 
 	private static MainServlet _mainServlet;
+
+	private static boolean _synchronousDestinationInitialized;
 
 }
