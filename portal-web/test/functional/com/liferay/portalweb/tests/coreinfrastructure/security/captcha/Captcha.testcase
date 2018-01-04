@@ -24,6 +24,7 @@
 	</tear-down>
 
 	<command name="ViewCaptchaEnabled" priority="4">
+		<property name="socks.proxy.enabled" value="true" />
 		<property name="osgi.module.configuration.file.names" value="com.liferay.captcha.configuration.CaptchaConfiguration.config" />
 		<property name="osgi.module.configurations" value="maxChallenges=&quot;0&quot;" />
 
