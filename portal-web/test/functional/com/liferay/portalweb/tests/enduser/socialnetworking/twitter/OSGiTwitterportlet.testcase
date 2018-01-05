@@ -39,6 +39,8 @@
 	</command>
 
 	<command name="ViewEntry" priority="5">
+		<property name="portal.acceptance" value="LRQA-34105" />
+		<property name="socks.proxy.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="OSGiTwitterportlet#ViewEntry" />
 
 		<execute macro="UserBar#gotoProfile" />

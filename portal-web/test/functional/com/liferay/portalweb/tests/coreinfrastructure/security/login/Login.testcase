@@ -77,6 +77,8 @@
 	</command>
 
 	<command name="FacebookSSOSmoke" priority="4">
+		<property name="portal.acceptance" value="LRQA-34105" />
+		<property name="socks.proxy.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#FacebookSSOSmoke" />
 
 		<var method="TestPropsUtil#get('facebook.application.id')" name="facebookApplicationID" />
@@ -126,6 +128,9 @@
 	</command>
 
 	<command name="GoogleSSOSmoke" priority="4">
+		<property name="portal.acceptance" value="LRQA-34105" />
+		<property name="socks.proxy.enabled" value="true" />
+		<property name="socks.proxy.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#GoogleSSOSmoke" />
 
 		<var method="TestPropsUtil#get('google.client.id')" name="googleClientID" />
@@ -194,6 +199,8 @@
 	</command>
 
 	<command name="OpenIDSmoke" priority="4">
+		<property name="portal.acceptance" value="LRQA-34105" />
+		<property name="socks.proxy.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenIDSmoke" />
 
 		<var method="TestPropsUtil#get('openid.password')" name="openIDPassword" />
@@ -235,6 +242,8 @@
 
 	<command name="OpenSSOSmoke" priority="5">
 		<property name="openam.enabled" value="true" />
+		<property name="portal.acceptance" value="LRQA-34105" />
+		<property name="socks.proxy.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenSSOSmoke" />
 
 		<execute macro="Navigator#openSpecificURL">
@@ -306,6 +315,8 @@
 	</command>
 
 	<command name="TokenBasedSSOSmoke" priority="5">
+		<property name="portal.acceptance" value="LRQA-34105" />
+		<property name="socks.proxy.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#TokenBasedSSOSmoke" />
 
 		<execute macro="User#firstLoginPG" />

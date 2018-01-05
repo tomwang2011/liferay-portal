@@ -452,6 +452,8 @@
 	</command>
 
 	<command name="ViewSecureContentAndPageAsGuest" priority="3">
+		<property name="portal.acceptance" value="LRQA-34105" />
+		<property name="socks.proxy.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsGuest" />
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration" />
 
@@ -682,6 +684,8 @@
 	</command>
 
 	<command name="ViewSecureContentAndPageAsSiteMember" priority="3">
+		<property name="portal.acceptance" value="LRQA-34105" />
+		<property name="socks.proxy.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsSiteMember" />
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration" />
 
@@ -956,6 +960,8 @@
 	</command>
 
 	<command name="ViewSecureContentAndPageAsUser" priority="5">
+		<property name="portal.acceptance" value="LRQA-34105" />
+		<property name="socks.proxy.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsUser" />
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration,Training" />
 
