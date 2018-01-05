@@ -78,6 +78,7 @@
 
 	<command name="FacebookSSOSmoke" priority="4">
 		<property name="socks.proxy.enabled" value="true" />
+		<property name="socks.proxy.hosts" value="www.facebook.com" />
 		<property name="test.name.skip.portal.instance" value="Login#FacebookSSOSmoke" />
 
 		<var method="TestPropsUtil#get('facebook.application.id')" name="facebookApplicationID" />
@@ -128,6 +129,7 @@
 
 	<command name="GoogleSSOSmoke" priority="4">
 		<property name="socks.proxy.enabled" value="true" />
+		<property name="socks.proxy.hosts" value="www.google.com" />
 		<property name="test.name.skip.portal.instance" value="Login#GoogleSSOSmoke" />
 
 		<var method="TestPropsUtil#get('google.client.id')" name="googleClientID" />
@@ -197,6 +199,7 @@
 
 	<command name="OpenIDSmoke" priority="4">
 		<property name="socks.proxy.enabled" value="true" />
+		<property name="socks.proxy.hosts" value="openid.org.cn" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenIDSmoke" />
 
 		<var method="TestPropsUtil#get('openid.password')" name="openIDPassword" />
@@ -239,6 +242,7 @@
 	<command name="OpenSSOSmoke" priority="5">
 		<property name="openam.enabled" value="true" />
 		<property name="socks.proxy.enabled" value="true" />
+		<property name="socks.proxy.hosts" value="test.able.com" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenSSOSmoke" />
 
 		<execute macro="Navigator#openSpecificURL">

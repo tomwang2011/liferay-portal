@@ -6,6 +6,7 @@
 	<property name="osgi.app.includes" value="saml" />
 	<property name="plugins.deployment.type" value="osgi" />
 	<property name="socks.proxy.enabled" value="true" />
+	<property name="socks.proxy.hosts" value="www.able.com,www.baker.com" />
 	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="SAML" />
 

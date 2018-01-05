@@ -233,6 +233,7 @@
 
 		<property name="solr.solrcloud.enabled" value="true" />
 		<property name="socks.proxy.enabled" value="true" />
+		<property name="socks.proxy.hosts" value="localhost:9983" />
 		<property name="test.name.skip.portal.instance" value="SolrEE#SolrWithSolrCloudSmokeTest" />
 
 		<execute macro="Solr#viewSolrwithSolrCloudEnabledInConsole" />

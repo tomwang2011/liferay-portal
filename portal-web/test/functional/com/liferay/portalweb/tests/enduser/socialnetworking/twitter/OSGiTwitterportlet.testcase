@@ -40,6 +40,7 @@
 
 	<command name="ViewEntry" priority="5">
 		<property name="socks.proxy.enabled" value="true" />
+		<property name="socks.proxy.hosts" value="www.twitter.com" />
 		<property name="test.name.skip.portal.instance" value="OSGiTwitterportlet#ViewEntry" />
 
 		<execute macro="UserBar#gotoProfile" />

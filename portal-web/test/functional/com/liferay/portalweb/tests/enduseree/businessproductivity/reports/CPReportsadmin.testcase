@@ -701,6 +701,7 @@
 
 	<command name="ViewEmailRecipientDelivery" priority="4">
 		<property name="socks.proxy.enabled" value="true" />
+		<property name="socks.proxy.hosts" value="mail.google.com,www.gmail.com" />
 		<property name="test.name.skip.portal.instance" value="CPReportsadmin#ViewEmailRecipientDelivery" />
 
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
