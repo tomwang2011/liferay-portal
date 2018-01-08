@@ -40,6 +40,7 @@
 	</tear-down>
 
 	<command name="ConvertCurrencyUSDToEUR" priority="2">
+		<property name="portal.acceptance" value="LRQA-34105" />
 		<property name="socks.proxy.enabled" value="true" />
 
 		<execute macro="Navigator#gotoPage">

@@ -453,6 +453,7 @@
 	</command>
 
 	<command name="ViewSecureContentAndPageAsGuest" priority="3">
+		<property name="portal.acceptance" value="LRQA-34105" />
 		<property name="socks.proxy.enabled" value="true" />
 		<property name="socks.proxy.hosts" value="mail.google.com,www.gmail.com" />
 		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsGuest" />
@@ -685,6 +686,7 @@
 	</command>
 
 	<command name="ViewSecureContentAndPageAsSiteMember" priority="3">
+		<property name="portal.acceptance" value="LRQA-34105" />
 		<property name="socks.proxy.enabled" value="true" />
 		<property name="socks.proxy.hosts" value="mail.google.com,www.gmail.com" />
 		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsSiteMember" />
@@ -961,6 +963,7 @@
 	</command>
 
 	<command name="ViewSecureContentAndPageAsUser" priority="5">
+		<property name="portal.acceptance" value="LRQA-34105" />
 		<property name="socks.proxy.enabled" value="true" />
 		<property name="socks.proxy.hosts" value="mail.google.com,www.gmail.com" />
 		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsUser" />

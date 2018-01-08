@@ -225,6 +225,7 @@
 	</command>
 
 	<command name="AddWebContentFeed" priority="3">
+		<property name="portal.acceptance" value="LRQA-34105" />
 		<property name="socks.proxy.enabled" value="true" />
 		<property name="socks.proxy.hosts" value="127.0.0.1,localhost" />
 		<property name="test.name.skip.portal.instance" value="RSS#AddWebContentFeed" />
@@ -591,6 +592,7 @@
 	</command>
 
 	<command name="EnableRSSFeedFromAssetpublisher" priority="3">
+		<property name="portal.acceptance" value="LRQA-34105" />
 		<property name="socks.proxy.enabled" value="true" />
 		<property name="socks.proxy.hosts" value="127.0.0.1,localhost" />
 		<property name="test.name.skip.portal.instance" value="RSS#EnableRSSFeedFromAssetpublisher" />
