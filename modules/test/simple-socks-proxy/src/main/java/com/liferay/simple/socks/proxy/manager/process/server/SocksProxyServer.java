@@ -48,7 +48,9 @@ public class SocksProxyServer extends Thread {
 		ServerSocket serverSocket = _serverSocket;
 
 		if (serverSocket != null) {
-			serverSocket.close();
+			while (!serverSocket.isClosed()) {
+				serverSocket.close();
+			}
 		}
 	}
 
