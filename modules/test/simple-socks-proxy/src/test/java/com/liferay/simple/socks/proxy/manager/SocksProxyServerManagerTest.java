@@ -14,6 +14,7 @@
 
 package com.liferay.simple.socks.proxy.manager;
 
+import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessUtil;
@@ -23,10 +24,12 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.HeapUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.simple.socks.proxy.manager.test.util.SocksProxyTestUtil;
+import java.io.IOException;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.Future;
 
 import org.junit.Assert;
@@ -74,6 +77,40 @@ public class SocksProxyServerManagerTest {
 		String stdOutString = new String(objectValuePair.getKey());
 
 		Assert.assertFalse(stdOutString.contains(String.valueOf(processID)));
+	}
+
+	@Test
+	public void testCancellationException() throws Exception {
+		int port = SocksProxyTestUtil.findOpenPort(8888);
+
+		SocksProxyServerManager socksProxyServerManager =
+			new SocksProxyServerManager(
+				new LocalProcessExecutor(), Collections.emptyList(), 10000,
+				port);
+
+		ProcessChannel processChannel = new ProcessChannel() {
+			@Override
+			public NoticeableFuture getProcessNoticeableFuture() {
+				throw new CancellationException();
+			}
+
+			@Override
+			public NoticeableFuture write(ProcessCallable processCallable) {
+				throw new CancellationException();
+			}
+		};
+
+		ReflectionTestUtil.setFieldValue(
+			socksProxyServerManager, "_processChannel", processChannel);
+
+		try {
+			socksProxyServerManager.stop();
+		}
+		catch (CancellationException ce) {
+		}
+		catch (Exception e) {
+			Assert.fail();
+		}
 	}
 
 	private static class ReturnProcessIDCallable
