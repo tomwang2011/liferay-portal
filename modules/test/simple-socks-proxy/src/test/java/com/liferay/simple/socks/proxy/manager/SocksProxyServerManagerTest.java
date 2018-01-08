@@ -79,7 +79,7 @@ public class SocksProxyServerManagerTest {
 		Assert.assertFalse(stdOutString.contains(String.valueOf(processID)));
 	}
 
-	@Test
+	@Test (expected = CancellationException.class)
 	public void testCancellationException() throws Exception {
 		int port = SocksProxyTestUtil.findOpenPort(8888);
 
@@ -103,14 +103,7 @@ public class SocksProxyServerManagerTest {
 		ReflectionTestUtil.setFieldValue(
 			socksProxyServerManager, "_processChannel", processChannel);
 
-		try {
-			socksProxyServerManager.stop();
-		}
-		catch (CancellationException ce) {
-		}
-		catch (Exception e) {
-			Assert.fail();
-		}
+		socksProxyServerManager.stop();
 	}
 
 	private static class ReturnProcessIDCallable
