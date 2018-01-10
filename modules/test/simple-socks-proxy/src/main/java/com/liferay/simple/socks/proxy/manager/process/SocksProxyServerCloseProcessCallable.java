@@ -41,7 +41,7 @@ public class SocksProxyServerCloseProcessCallable
 			try {
 				socksProxyServer.close();
 
-				socksProxyServer.join();
+				socksProxyServer.join(30000);
 			}
 			catch (Exception e) {
 				throw new ProcessException(e);
