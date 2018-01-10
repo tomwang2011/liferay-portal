@@ -146,9 +146,9 @@ public class SocksProxyServerTest {
 
 			_connectSocket();
 
-			socksProxyServer.interrupt();
-
 			socksProxyServer.close();
+
+			socksProxyServer.interrupt();
 
 			socksProxyServer.join();
 
