@@ -150,6 +150,8 @@ public class SocksProxyServerTest {
 
 			socksProxyServer.close();
 
+			Thread.sleep(1000);
+
 			socksProxyServer.join();
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
