@@ -99,6 +99,8 @@ public class SocksProxyServerProcessCallableTest {
 
 			Assert.assertSame(SocksProxyServer.class, object.getClass());
 
+			Thread.sleep(10000);
+
 			try (Socket socket = new Socket("localhost", port)) {
 				Assert.assertTrue(socket.isConnected());
 			}
