@@ -26,6 +26,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.exportimport.internal.content.processor">
+		<priority value="WARN" />
+	</category>
+
 	<category name="com.liferay.exportimport.lar">
 		<priority value="INFO" />
 	</category>
