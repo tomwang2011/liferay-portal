@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -586,7 +587,7 @@ public class TrashImpl implements Trash {
 	}
 
 	protected String getTrashTitle(long trashEntryId, String prefix) {
-		return prefix.concat(String.valueOf(trashEntryId));
+		return URLCodec.encodeURL(prefix.concat(String.valueOf(trashEntryId)));
 	}
 
 	protected boolean isValidTrashTitle(String title, String prefix) {
