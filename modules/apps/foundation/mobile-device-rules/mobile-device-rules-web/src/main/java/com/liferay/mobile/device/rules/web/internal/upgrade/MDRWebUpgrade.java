@@ -39,8 +39,15 @@ public class MDRWebUpgrade implements UpgradeStepRegistrator {
 			new UpgradePortletId());
 
 		registry.register(
-			"com.liferay.mobile.device.rules.service", "1.0.0", "1.0.1",
-			new MDRActionUpgrade(), new MDRRuleUpgrade());
+			"com.liferay.mobile.device.rules.web", "1.0.0", "1.0.1",
+			new MDRActionUpgrade(
+				"com.liferay.mobile.device.rules.rule.group.action",
+				"com.liferay.portal.mobile.device.rulegroup.action.impl"),
+			new MDRRuleUpgrade(
+				"com.liferay.mobile.device.rules.rule.group.rule." +
+					"SimpleRuleHandler",
+				"com.liferay.portal.mobile.device.rulegroup.rule.impl." +
+					"SimpleRuleHandler"));
 	}
 
 }
