@@ -15,6 +15,8 @@
 package com.liferay.mobile.device.rules.web.internal.upgrade;
 
 import com.liferay.mobile.device.rules.web.internal.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.mobile.device.rules.web.internal.upgrades.MDRActionUpgrade;
+import com.liferay.mobile.device.rules.web.internal.upgrades.MDRRuleUpgrade;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
@@ -35,6 +37,10 @@ public class MDRWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.mobile.device.rules.web", "0.0.1", "1.0.0",
 			new UpgradePortletId());
+
+		registry.register(
+			"com.liferay.mobile.device.rules.service", "1.0.0", "1.0.1",
+			new MDRActionUpgrade(), new MDRRuleUpgrade());
 	}
 
 }
