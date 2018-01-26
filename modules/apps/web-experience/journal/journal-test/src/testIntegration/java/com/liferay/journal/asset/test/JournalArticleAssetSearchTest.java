@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.callback.SybaseDump;
+import com.liferay.portal.test.rule.callback.SybaseDumpTransactionLog;
 
 import java.util.Date;
 import java.util.Locale;
@@ -47,6 +49,7 @@ import org.junit.runner.RunWith;
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
+@SybaseDumpTransactionLog(dumpBefore = {SybaseDump.CLASS, SybaseDump.METHOD})
 public class JournalArticleAssetSearchTest extends BaseAssetSearchTestCase {
 
 	@ClassRule
