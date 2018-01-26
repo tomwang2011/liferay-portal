@@ -30,4 +30,6 @@ public interface RuleHandler {
 
 	public String getType();
 
+	public String getEditorJSP();
+
 }
