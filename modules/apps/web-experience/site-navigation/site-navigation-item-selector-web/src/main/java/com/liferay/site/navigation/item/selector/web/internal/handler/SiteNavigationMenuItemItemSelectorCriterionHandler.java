@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.site.item.selector.internal.handler;
+package com.liferay.site.navigation.item.selector.web.internal.handler;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
+import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -24,15 +24,18 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Julio Camarero
+ * @author Eudaldo Alonso
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class SiteItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler<SiteItemSelectorCriterion> {
+public class SiteNavigationMenuItemItemSelectorCriterionHandler
+	extends BaseItemSelectorCriterionHandler
+		<SiteNavigationMenuItemItemSelectorCriterion> {
 
 	@Override
-	public Class<SiteItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return SiteItemSelectorCriterion.class;
+	public Class<SiteNavigationMenuItemItemSelectorCriterion>
+		getItemSelectorCriterionClass() {
+
+		return SiteNavigationMenuItemItemSelectorCriterion.class;
 	}
 
 	@Activate
