@@ -4,8 +4,7 @@ Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.journal.web.asset,\
 	com.liferay.journal.web.dynamic.data.mapping.util,\
-	com.liferay.journal.web.social,\
-	com.liferay.journal.web.util
+	com.liferay.journal.web.social
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content
