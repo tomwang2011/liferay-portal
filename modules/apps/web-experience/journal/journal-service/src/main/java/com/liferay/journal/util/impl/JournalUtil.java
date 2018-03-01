@@ -131,7 +131,7 @@ public class JournalUtil {
 		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_VERSION,
-			article.getVersion());
+			String.valueOf(article.getVersion()));
 
 		addReservedEl(
 			rootElement, tokens,
@@ -151,18 +151,18 @@ public class JournalUtil {
 		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_CREATE_DATE,
-			article.getCreateDate());
+			String.valueOf(Time.getRFC822(article.getCreateDate())));
 
 		addReservedEl(
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_MODIFIED_DATE,
-			article.getModifiedDate());
+			String.valueOf(Time.getRFC822(article.getModifiedDate())));
 
 		if (article.getDisplayDate() != null) {
 			addReservedEl(
 				rootElement, tokens,
 				JournalStructureConstants.RESERVED_ARTICLE_DISPLAY_DATE,
-				article.getDisplayDate());
+				String.valueOf(Time.getRFC822(article.getDisplayDate())));
 		}
 
 		String smallImageURL = StringPool.BLANK;
@@ -243,20 +243,6 @@ public class JournalUtil {
 
 			stack.push(article);
 		}
-	}
-
-	public static void addReservedEl(
-		Element rootElement, Map<String, String> tokens, String name,
-		Date value) {
-
-		addReservedEl(rootElement, tokens, name, Time.getRFC822(value));
-	}
-
-	public static void addReservedEl(
-		Element rootElement, Map<String, String> tokens, String name,
-		double value) {
-
-		addReservedEl(rootElement, tokens, name, String.valueOf(value));
 	}
 
 	public static void addReservedEl(
