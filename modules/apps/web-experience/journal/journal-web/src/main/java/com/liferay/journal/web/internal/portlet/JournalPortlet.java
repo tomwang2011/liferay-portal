@@ -68,6 +68,7 @@ import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.portlet.action.ActionUtil;
 import com.liferay.journal.web.util.JournalPortletUtil;
+import com.liferay.journal.web.util.JournalWebUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.diff.CompareVersionsException;
@@ -867,7 +868,7 @@ public class JournalPortlet extends MVCPortlet {
 
 		// Recent articles
 
-		JournalUtil.addRecentArticle(actionRequest, article);
+		JournalWebUtil.addRecentArticle(actionRequest, article);
 
 		// Journal content
 

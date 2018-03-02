@@ -74,7 +74,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 			</liferay-ui:section>
 
 			<%
-			Map<String, String> emailDefinitionTerms = JournalUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
+			Map<String, String> emailDefinitionTerms = JournalWebUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName);
 			%>
 
 			<liferay-ui:section>
@@ -181,7 +181,7 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 						<aui:fieldset-group markupView="lexicon">
 							<liferay-frontend:email-notification-settings
 								emailBodyLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedBody() %>"
-								emailDefinitionTerms='<%= JournalUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, "requested") %>'
+								emailDefinitionTerms='<%= JournalWebUtil.getEmailDefinitionTerms(renderRequest, emailFromAddress, emailFromName, "requested") %>'
 								emailEnabled="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedEnabled() %>"
 								emailParam="emailArticleApprovalRequested"
 								emailSubjectLocalizedValuesMap="<%= journalGroupServiceConfiguration.emailArticleApprovalRequestedSubject() %>"

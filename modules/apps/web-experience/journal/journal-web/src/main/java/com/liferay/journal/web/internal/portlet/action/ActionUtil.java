@@ -30,6 +30,7 @@ import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.journal.web.internal.portlet.JournalPortlet;
 import com.liferay.journal.web.internal.security.permission.resource.JournalPermission;
+import com.liferay.journal.web.util.JournalWebUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.diff.CompareVersionsException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -182,7 +183,7 @@ public class ActionUtil {
 				groupId, articleId, version, articleURL, serviceContext);
 		}
 
-		JournalUtil.removeRecentArticle(actionRequest, articleId, version);
+		JournalWebUtil.removeRecentArticle(actionRequest, articleId, version);
 	}
 
 	public static void expireArticle(
@@ -213,7 +214,7 @@ public class ActionUtil {
 				groupId, articleId, version, articleURL, serviceContext);
 		}
 
-		JournalUtil.removeRecentArticle(actionRequest, articleId, version);
+		JournalWebUtil.removeRecentArticle(actionRequest, articleId, version);
 	}
 
 	public static void expireFolder(
@@ -323,7 +324,7 @@ public class ActionUtil {
 
 		JournalArticle article = getArticle(request);
 
-		JournalUtil.addRecentArticle(portletRequest, article);
+		JournalWebUtil.addRecentArticle(portletRequest, article);
 
 		return article;
 	}
@@ -434,7 +435,7 @@ public class ActionUtil {
 		JournalArticle article = JournalArticleServiceUtil.getArticle(
 			groupId, articleId, version);
 
-		JournalUtil.addRecentArticle(portletRequest, article);
+		JournalWebUtil.addRecentArticle(portletRequest, article);
 
 		return article;
 	}
