@@ -25,6 +25,7 @@ import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.service.permission.JournalFolderPermission;
+import com.liferay.journal.util.JournalApiUtil;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
@@ -344,7 +345,8 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			containerModelId = article.getFolderId();
 		}
 
-		int restrictionType = JournalUtil.getRestrictionType(containerModelId);
+		int restrictionType = JournalApiUtil.getRestrictionType(
+			containerModelId);
 
 		List<DDMStructure> folderDDMStructures =
 			_journalFolderLocalService.getDDMStructures(

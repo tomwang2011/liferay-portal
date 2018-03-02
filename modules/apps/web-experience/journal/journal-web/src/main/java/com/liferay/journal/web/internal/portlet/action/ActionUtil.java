@@ -26,8 +26,8 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.JournalFeedServiceUtil;
 import com.liferay.journal.service.JournalFolderServiceUtil;
+import com.liferay.journal.util.JournalApiUtil;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
-import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.journal.web.internal.portlet.JournalPortlet;
 import com.liferay.journal.web.internal.security.permission.resource.JournalPermission;
 import com.liferay.journal.web.util.JournalWebUtil;
@@ -141,7 +141,7 @@ public class ActionUtil {
 		String diffHtmlResults = null;
 
 		try {
-			diffHtmlResults = JournalUtil.diffHtml(
+			diffHtmlResults = JournalApiUtil.diffHtml(
 				groupId, articleId, sourceVersion, targetVersion, languageId,
 				new PortletRequestModel(renderRequest, renderResponse),
 				themeDisplay);

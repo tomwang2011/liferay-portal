@@ -297,7 +297,26 @@ public class JournalWebUtil {
 		}
 	}
 
-	public static class FiniteUniqueStack<E> extends Stack<E> {
+	private static Stack<JournalArticle> _getRecentArticles(
+		PortletRequest portletRequest) {
+
+		PortletSession portletSession = portletRequest.getPortletSession();
+
+		Stack<JournalArticle> recentArticles =
+			(Stack<JournalArticle>)portletSession.getAttribute(
+				WebKeys.JOURNAL_RECENT_ARTICLES);
+
+		if (recentArticles == null) {
+			recentArticles = new FiniteUniqueStack<>(MAX_STACK_SIZE);
+
+			portletSession.setAttribute(
+				WebKeys.JOURNAL_RECENT_ARTICLES, recentArticles);
+		}
+
+		return recentArticles;
+	}
+
+	private static class FiniteUniqueStack<E> extends Stack<E> {
 
 		@Override
 		public E push(E item) {
@@ -320,25 +339,6 @@ public class JournalWebUtil {
 
 		private final int _maxSize;
 
-	}
-
-	private static Stack<JournalArticle> _getRecentArticles(
-		PortletRequest portletRequest) {
-
-		PortletSession portletSession = portletRequest.getPortletSession();
-
-		Stack<JournalArticle> recentArticles =
-			(Stack<JournalArticle>)portletSession.getAttribute(
-				WebKeys.JOURNAL_RECENT_ARTICLES);
-
-		if (recentArticles == null) {
-			recentArticles = new FiniteUniqueStack<>(MAX_STACK_SIZE);
-
-			portletSession.setAttribute(
-				WebKeys.JOURNAL_RECENT_ARTICLES, recentArticles);
-		}
-
-		return recentArticles;
 	}
 
 }

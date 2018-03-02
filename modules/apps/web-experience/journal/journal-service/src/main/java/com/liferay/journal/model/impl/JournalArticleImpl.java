@@ -33,7 +33,7 @@ import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.journal.util.impl.JournalUtil;
+import com.liferay.journal.util.JournalApiUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -531,7 +531,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			return null;
 		}
 
-		return JournalUtil.getArticleLayout(layoutUuid, getGroupId());
+		return JournalApiUtil.getArticleLayout(layoutUuid, getGroupId());
 	}
 
 	/**
