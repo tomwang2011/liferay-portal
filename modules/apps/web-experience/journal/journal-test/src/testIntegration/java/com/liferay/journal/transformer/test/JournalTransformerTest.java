@@ -22,13 +22,11 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalTransformerListenerRegistry;
-import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.PortletRequestModel;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -109,12 +107,9 @@ public class JournalTransformerTest {
 			xml, _ddmStructure.getStructureKey(),
 			_ddmTemplate.getTemplateKey());
 
-		Map<String, String> tokens = getTokens();
-
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, xsl,
-			TemplateConstants.LANG_TYPE_VM);
+		String content = JournalArticleLocalServiceUtil.getArticleContent(
+			_article, _ddmTemplate.getTemplateKey(), Constants.VIEW, "en_US",
+			null, null);
 
 		Assert.assertEquals("Joe Bloggs", content);
 
@@ -125,34 +120,39 @@ public class JournalTransformerTest {
 
 		element.setText("[@" + _article.getArticleId() + ";name@]");
 
-		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", document, null, xsl,
-			TemplateConstants.LANG_TYPE_VM);
+		content = JournalArticleLocalServiceUtil.getArticleContent(
+			_article, _ddmTemplate.getTemplateKey(), Constants.VIEW, "en_US",
+			null, null);
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
 
 	@Test
 	public void testFTLTransformation() throws Exception {
-		Map<String, String> tokens = getTokens();
-
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
 			"name", "Joe Bloggs");
 
 		String script = "${name.getData()} - ${viewMode}";
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.PRINT, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_FTL);
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_FTL, script);
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				xml, _ddmStructure.getStructureKey(),
+				ddmTemplate.getTemplateKey());
+
+		String content = JournalArticleLocalServiceUtil.getArticleContent(
+			journalArticle, ddmTemplate.getTemplateKey(), Constants.PRINT,
+			"en_US", null, null);
 
 		Assert.assertEquals("Joe Bloggs - print", content);
 	}
 
 	@Test
 	public void testLocaleTransformerListener() throws Exception {
-		Map<String, String> tokens = getTokens();
-
 		Map<Locale, String> contents = new HashMap<>();
 
 		contents.put(LocaleUtil.BRAZIL, "Joao da Silva");
@@ -163,24 +163,31 @@ public class JournalTransformerTest {
 
 		String script = "$name.getData()";
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_VM);
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM, script);
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				xml, _ddmStructure.getStructureKey(),
+				ddmTemplate.getTemplateKey());
+
+		String content = JournalArticleLocalServiceUtil.getArticleContent(
+			journalArticle, ddmTemplate.getTemplateKey(), Constants.VIEW,
+			"en_US", null, null);
 
 		Assert.assertEquals("Joe Bloggs", content);
 
-		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "pt_BR",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_VM);
+		content = JournalArticleLocalServiceUtil.getArticleContent(
+			journalArticle, ddmTemplate.getTemplateKey(), Constants.VIEW,
+			"pt_BR", null, null);
 
 		Assert.assertEquals("Joao da Silva", content);
 
-		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "fr_CA",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_VM);
+		content = JournalArticleLocalServiceUtil.getArticleContent(
+			journalArticle, ddmTemplate.getTemplateKey(), Constants.VIEW,
+			"fr_CA", null, null);
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
@@ -188,8 +195,6 @@ public class JournalTransformerTest {
 	@Test
 	public void testLocaleTransformerListenerNestedFieldWithNoTranslation()
 		throws Exception {
-
-		Map<String, String> tokens = getTokens();
 
 		Map<Locale, String> contents = new HashMap<>();
 
@@ -214,15 +219,25 @@ public class JournalTransformerTest {
 
 		String script = "$name.getData()";
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", document, null, script,
-			TemplateConstants.LANG_TYPE_VM);
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM, script);
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				xml, _ddmStructure.getStructureKey(),
+				ddmTemplate.getTemplateKey());
+
+		String content = JournalArticleLocalServiceUtil.getArticleContent(
+			journalArticle, ddmTemplate.getTemplateKey(), Constants.VIEW,
+			"en_US", null, null);
 
 		Assert.assertEquals("Joe Bloggs", content);
 
-		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "pt_BR", document, null, script,
-			TemplateConstants.LANG_TYPE_VM);
+		content = JournalArticleLocalServiceUtil.getArticleContent(
+			journalArticle, ddmTemplate.getTemplateKey(), Constants.VIEW,
+			"pt_BR", null, null);
 
 		Assert.assertEquals("Joe Bloggs", content);
 	}
@@ -231,17 +246,24 @@ public class JournalTransformerTest {
 	public void testRegexTransformerListener() throws Exception {
 		initRegexTransformerListener();
 
-		Map<String, String> tokens = getTokens();
-
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
 			"name", "Joe Bloggs");
 
 		String script = "Hello $name.getData(), Welcome to beta.sample.com.";
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_VM);
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM, script);
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				xml, _ddmStructure.getStructureKey(),
+				ddmTemplate.getTemplateKey());
+
+		String content = JournalArticleLocalServiceUtil.getArticleContent(
+			journalArticle, ddmTemplate.getTemplateKey(), Constants.VIEW,
+			"en_US", null, null);
 
 		Assert.assertEquals(
 			"Hello Joe Bloggs, Welcome to production.sample.com.", content);
@@ -249,26 +271,37 @@ public class JournalTransformerTest {
 
 	@Test
 	public void testTokensTransformerListener() throws Exception {
-		Map<String, String> tokens = getTokens();
-
 		String xml = DDMStructureTestUtil.getSampleStructuredContent();
 
 		String script = "@company_id@";
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_VM);
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM, script);
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				xml, _ddmStructure.getStructureKey(),
+				ddmTemplate.getTemplateKey());
+
+		String content = JournalArticleLocalServiceUtil.getArticleContent(
+			journalArticle, ddmTemplate.getTemplateKey(), Constants.VIEW,
+			"en_US", null, null);
 
 		Assert.assertEquals(
 			String.valueOf(TestPropsValues.getCompanyId()), content);
 
 		script = "@@company_id@@";
 
-		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_VM);
+		ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM, script);
+
+		content = JournalArticleLocalServiceUtil.getArticleContent(
+			journalArticle, ddmTemplate.getTemplateKey(), Constants.VIEW,
+			"en_US", null, null);
 
 		Assert.assertEquals(
 			String.valueOf(TestPropsValues.getCompanyId()), content);
@@ -276,18 +309,25 @@ public class JournalTransformerTest {
 
 	@Test
 	public void testViewCounterTransformerListener() throws Exception {
-		Map<String, String> tokens = getTokens();
-
-		tokens.put("article_resource_pk", "1");
-
 		String xml = DDMStructureTestUtil.getSampleStructuredContent();
 
 		String script = "@view_counter@";
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, script,
-			TemplateConstants.LANG_TYPE_VM);
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM, script);
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				xml, _ddmStructure.getStructureKey(),
+				ddmTemplate.getTemplateKey());
+
+		journalArticle.setResourcePrimKey(1);
+
+		String content = JournalArticleLocalServiceUtil.getArticleContent(
+			journalArticle, ddmTemplate.getTemplateKey(), Constants.VIEW,
+			"en_US", null, null);
 
 		StringBundler sb = new StringBundler(5);
 
@@ -302,8 +342,6 @@ public class JournalTransformerTest {
 
 	@Test
 	public void testVMTransformation() throws Exception {
-		Map<String, String> tokens = getTokens();
-
 		_ddmStructure = DDMStructureTestUtil.addStructure(
 			TestPropsValues.getGroupId(), JournalArticle.class.getName());
 
@@ -315,42 +353,35 @@ public class JournalTransformerTest {
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
 			"name", "Joe Bloggs");
 
-		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null,
-			"#parse(\"$templatesPath/" + _ddmTemplate.getTemplateKey() +
-				"\")",
-			TemplateConstants.LANG_TYPE_VM);
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
+			"#parse(\"$templatesPath/" + _ddmTemplate.getTemplateKey() + "\")");
+
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				xml, _ddmStructure.getStructureKey(),
+				ddmTemplate.getTemplateKey());
+
+		String content = JournalArticleLocalServiceUtil.getArticleContent(
+			journalArticle, ddmTemplate.getTemplateKey(), Constants.VIEW,
+			"en_US", null, null);
 
 		Assert.assertEquals("Joe Bloggs", content);
 
-		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null,
+		ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_VM,
 			"#parse(\"$journalTemplatesPath/" + _ddmTemplate.getTemplateKey() +
-				"\")",
-			TemplateConstants.LANG_TYPE_VM);
+				"\")");
+
+		content = JournalArticleLocalServiceUtil.getArticleContent(
+			journalArticle, ddmTemplate.getTemplateKey(), Constants.VIEW,
+			"en_US", null, null);
 
 		Assert.assertEquals("Joe Bloggs", content);
-	}
-
-	protected Map<String, String> getTokens() throws Exception {
-		Map<String, String> tokens = JournalUtil.getTokens(
-			TestPropsValues.getGroupId(), (PortletRequestModel)null, null);
-
-		tokens.put(
-			TemplateConstants.CLASS_NAME_ID,
-			String.valueOf(
-				ClassNameLocalServiceUtil.getClassNameId(
-					DDMStructure.class.getName())));
-		tokens.put(
-			"article_group_id", String.valueOf(TestPropsValues.getGroupId()));
-		tokens.put(
-			"ddm_structure_id", String.valueOf(_ddmStructure.getStructureId()));
-		tokens.put(
-			"company_id", String.valueOf(TestPropsValues.getCompanyId()));
-
-		return tokens;
 	}
 
 	protected void initRegexTransformerListener() {
