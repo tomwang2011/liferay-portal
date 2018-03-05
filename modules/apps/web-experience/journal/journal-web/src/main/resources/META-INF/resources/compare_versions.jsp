@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -53,7 +52,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "compare-versions"));
 	<liferay-frontend:diff-version-comparator
 		availableLocales="<%= availableLocales %>"
 		diffHtmlResults="<%= diffHtmlResults %>"
-		diffVersionsInfo="<%= JournalUtil.getDiffVersionsInfo(groupId, articleId, sourceVersion, targetVersion) %>"
+		diffVersionsInfo="<%= JournalWebUtil.getDiffVersionsInfo(groupId, articleId, sourceVersion, targetVersion) %>"
 		languageId="<%= languageId %>"
 		portletURL="<%= portletURL %>"
 		resourceURL="<%= resourceURL %>"
