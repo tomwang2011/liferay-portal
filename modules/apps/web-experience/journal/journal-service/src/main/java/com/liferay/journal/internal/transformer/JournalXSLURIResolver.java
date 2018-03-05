@@ -14,7 +14,7 @@
 
 package com.liferay.journal.internal.transformer;
 
-import com.liferay.journal.util.impl.JournalUtil;
+import com.liferay.journal.util.JournalApiUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
@@ -113,7 +113,7 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 
 				String templateId = matcher.group(1);
 
-				content = JournalUtil.getTemplateScript(
+				content = JournalApiUtil.getTemplateScript(
 					articleGroupId, templateId, _tokens, _languageId);
 			}
 			else {

@@ -14,6 +14,9 @@
 
 package com.liferay.journal.util;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalFolder;
@@ -32,14 +35,17 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Tom Wang
@@ -155,6 +161,28 @@ public class JournalApiUtil {
 		}
 
 		return restrictionType;
+	}
+
+	public static String getTemplateScript(
+			long groupId, String ddmTemplateKey, Map<String, String> tokens,
+			String languageId)
+		throws PortalException {
+
+		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
+			groupId, PortalUtil.getClassNameId(DDMStructure.class),
+			ddmTemplateKey, true);
+
+		String script = ddmTemplate.getScript();
+
+		for (TransformerListener transformerListener :
+				JournalTransformerListenerRegistryUtil.
+					getTransformerListeners()) {
+
+			script = transformerListener.onScript(
+				script, null, languageId, tokens);
+		}
+
+		return script;
 	}
 
 }
