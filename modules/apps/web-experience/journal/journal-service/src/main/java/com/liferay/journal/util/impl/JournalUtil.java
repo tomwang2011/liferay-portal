@@ -21,11 +21,8 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.internal.transformer.JournalTransformer;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.model.JournalStructureConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.util.JournalTransformerListenerRegistryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -63,7 +60,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -73,7 +69,6 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -207,42 +202,6 @@ public class JournalUtil extends com.liferay.journal.util.JournalUtil {
 			rootElement, tokens,
 			JournalStructureConstants.RESERVED_ARTICLE_AUTHOR_JOB_TITLE,
 			userJobTitle);
-	}
-
-	public static String getAbsolutePath(
-			PortletRequest portletRequest, long folderId)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			return themeDisplay.translate("home");
-		}
-
-		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
-			folderId);
-
-		List<JournalFolder> folders = folder.getAncestors();
-
-		Collections.reverse(folders);
-
-		StringBundler sb = new StringBundler((folders.size() * 3) + 5);
-
-		sb.append(themeDisplay.translate("home"));
-		sb.append(StringPool.SPACE);
-
-		for (JournalFolder curFolder : folders) {
-			sb.append(StringPool.RAQUO_CHAR);
-			sb.append(StringPool.SPACE);
-			sb.append(curFolder.getName());
-		}
-
-		sb.append(StringPool.RAQUO_CHAR);
-		sb.append(StringPool.SPACE);
-		sb.append(folder.getName());
-
-		return sb.toString();
 	}
 
 	public static String getJournalControlPanelLink(
