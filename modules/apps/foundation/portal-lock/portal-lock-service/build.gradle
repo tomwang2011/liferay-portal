@@ -14,4 +14,5 @@ dependencies {
 	provided project(":apps:foundation:portal:portal-upgrade-api")
 	provided project(":apps:foundation:xstream:xstream-configurator-api")
 	provided project(":core:petra:petra-reflect")
+	provided project(":core:petra:petra-string")
 }
