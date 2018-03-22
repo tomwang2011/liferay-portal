@@ -94,23 +94,18 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 	public void testPACLTests() throws Exception {
 		LocalProcessExecutor localProcessExecutor = new LocalProcessExecutor();
 
-		try {
-			List<Class<?>> classes = scanTestClasses();
+		List<Class<?>> classes = scanTestClasses();
 
-			Assume.assumeFalse("No PACL tests available", classes.isEmpty());
+		Assume.assumeFalse("No PACL tests available", classes.isEmpty());
 
-			ProcessChannel<Result> processChannel =
-				localProcessExecutor.execute(
-					createProcessConfig(),
-					new PACLTestsProcessCallable(classes));
+		ProcessChannel<Result> processChannel =
+			localProcessExecutor.execute(
+				createProcessConfig(),
+				new PACLTestsProcessCallable(classes));
 
-			Future<Result> future = processChannel.getProcessNoticeableFuture();
+		Future<Result> future = processChannel.getProcessNoticeableFuture();
 
-			future.get();
-		}
-		finally {
-			localProcessExecutor.destroy();
-		}
+		future.get();
 	}
 
 	protected ProcessConfig createProcessConfig() {
