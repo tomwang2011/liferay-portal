@@ -319,6 +319,9 @@ public class DefaultSearchResultPermissionFilter
 
 				Hits hits = getHits(searchContext);
 
+				System.out.println(
+					"######### " + searchContext.getAttribute("queryString"));
+
 				if (startTime == 0) {
 					hitsSize = hits.getLength();
 					startTime = hits.getStart();
