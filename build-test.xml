@@ -2421,12 +2421,18 @@ ${tomcat-gc-log}
 						sb.append("\n\n");
 					}
 
+					sb.append("TEST_CLASS_GROUP_10=com/liferay/portal/upgrade/v6_1_1/UpgradeSchemaTest.class,com/liferay/portal/upgrade/v6_2_0/UpgradeSchemaTest.class");
+
+					sb.append("\n\n");
+
 					sb.append("TEST_CLASS_GROUPS=");
 
 					for (int i = 0; i < axisCount; i++) {
 						sb.append(i);
 						sb.append(" ");
 					}
+
+					sb.append("10");
 
 					if (axisCount > 0) {
 						sb.setLength(sb.length() - 1);

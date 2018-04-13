@@ -3360,6 +3360,54 @@ information. Make sure to commit in all build services results.
 		</run-batch-test>
 	</target>
 
+	<macrodef name="test-upgrade-schema">
+		<attribute name="database.type" />
+		<attribute default="${database.@{database.type}.version}" name="database.version" />
+
+		<sequential>
+			<run-batch-test>
+				<test-action>
+					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}">
+						<test-action>
+							<print-test-class-group test.class.group.index="10" />
+
+							<ant dir="portal-impl" inheritAll="false" target="test-class-group">
+								<property name="database.type" value="@{database.type}" />
+								<property name="junit.code.coverage" value="${test.batch.code.coverage}" />
+								<property name="test.class.group.index" value="10" />
+								<property name="test.type" value="integration" />
+							</ant>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+
+				<test-set-up>
+					<if>
+						<isset property="env.DIST_PATH" />
+						<then>
+							<prepare-test-environment />
+
+							<antcall inheritAll="false" target="record-test-class-file-names">
+								<param name="test.class.groups.size" value="${test.batch.size}" />
+							</antcall>
+						</then>
+						<else>
+							<prepare-test-build />
+						</else>
+					</if>
+				</test-set-up>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
+	<target name="test-upgrade-schema-mysql56-jdk8">
+		<test-upgrade-schema database.type="mysql" />
+	</target>
+
+	<target name="test-upgrade-schema-mysql50-jdk8">
+		<test-upgrade-schema database.type="mysql" database.version="5.0" />
+	</target>
+
 	<target name="setup-testable-tomcat-gc">
 		<setup-testable-tomcat-gc />
 	</target>
