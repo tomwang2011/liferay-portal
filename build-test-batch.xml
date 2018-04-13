@@ -3404,6 +3404,10 @@ information. Make sure to commit in all build services results.
 		<test-upgrade-schema database.type="mysql" />
 	</target>
 
+	<target name="test-upgrade-schema-mysql50-jdk8">
+		<test-upgrade-schema database.type="mysql" database.version="5.0" />
+	</target>
+
 	<target name="setup-testable-tomcat-gc">
 		<setup-testable-tomcat-gc />
 	</target>
