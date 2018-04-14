@@ -636,7 +636,7 @@ create index IX_467956FD on SCProductScreenshot (productEntryId);
 create index IX_DA913A55 on SCProductScreenshot (productEntryId, priority);
 create index IX_6C572DAC on SCProductScreenshot (thumbnailId);
 
-create index IX_7020130F on SCProductVersion (directDownloadURL(200));
+create index IX_7020130F on SCProductVersion (directDownloadURL);
 create index IX_8377A211 on SCProductVersion (productEntryId);
 
 create index IX_7338606F on ServiceComponent (buildNamespace);
@@ -771,7 +771,7 @@ create index IX_3A1E834E on User_ (companyId);
 create index IX_6EF03E4E on User_ (companyId, defaultUser);
 create unique index IX_615E9F7A on User_ (companyId, emailAddress);
 create index IX_1D731F03 on User_ (companyId, facebookId);
-create index IX_89509087 on User_ (companyId, openId(255));
+create index IX_89509087 on User_ (companyId, openId);
 create unique index IX_C5806019 on User_ (companyId, screenName);
 create index IX_F6039434 on User_ (companyId, status);
 create unique index IX_9782AD88 on User_ (companyId, userId);
