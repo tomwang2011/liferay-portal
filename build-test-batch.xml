@@ -3453,12 +3453,20 @@ information. Make sure to commit in all build services results.
 		</sequential>
 	</macrodef>
 
-	<target name="test-upgrade-schema-mysql56-jdk8">
-		<test-upgrade-schema database.type="mysql" />
+	<target name="test-upgrade-schema-hypersonic20-jdk8">
+		<test-upgrade-schema database.type="hypersonic" />
 	</target>
 
 	<target name="test-upgrade-schema-mysql55-jdk8">
 		<test-upgrade-schema database.type="mysql" database.version="5.5" />
+	</target>
+
+	<target name="test-upgrade-schema-mysql56-jdk8">
+		<test-upgrade-schema database.type="mysql" />
+	</target>
+
+	<target name="test-upgrade-schema-postgresql94-jdk8">
+		<test-upgrade-schema database.type="postgresql" />
 	</target>
 
 	<target name="setup-testable-tomcat-gc">
