@@ -41,7 +41,7 @@ public class UpgradeSchemaTest {
 
 	@Test
 	public void testUpgradeSchema() throws Exception {
-		Assert.assertFalse(UpgradeTestUtil.hasColumn("DLFileVersion", "uuid_"));
+		Assert.assertFalse("Column uuid_ does not exist", UpgradeTestUtil.hasColumn("DLFileVersion", "uuid_"));
 		Assert.assertFalse(UpgradeTestUtil.hasColumn("DLSync", "description"));
 		Assert.assertFalse(
 			UpgradeTestUtil.hasColumn("LayoutSetBranch", "logo"));
