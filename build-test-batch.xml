@@ -3424,6 +3424,14 @@ information. Make sure to commit in all build services results.
 						<test-action>
 							<print-test-class-group test.class.group.index="10" />
 
+							<if>
+								<equals arg1="@{database.type]" arg2="postgresql" />
+								<then>
+									<exec executable="psql" input="drop database lportal;" />
+									<exec executable="psql" input="create database lportal encoding = 'UNICODE';" />
+								</then>
+							</if>
+
 							<ant dir="portal-impl" inheritAll="false" target="test-class-group">
 								<property name="database.type" value="@{database.type}" />
 								<property name="junit.code.coverage" value="${test.batch.code.coverage}" />
