@@ -3457,6 +3457,10 @@ information. Make sure to commit in all build services results.
 		<test-upgrade-schema database.type="hypersonic" />
 	</target>
 
+	<target name="test-upgrade-schema-mariadb100-jdk8">
+		<test-upgrade-schema database.type="mariadb" />
+	</target>
+
 	<target name="test-upgrade-schema-mysql55-jdk8">
 		<test-upgrade-schema database.type="mysql" database.version="5.5" />
 	</target>
