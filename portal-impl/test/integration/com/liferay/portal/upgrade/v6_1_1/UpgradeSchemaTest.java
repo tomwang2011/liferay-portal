@@ -14,9 +14,9 @@
 
 package com.liferay.portal.upgrade.v6_1_1;
 
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.LiferayUpgradeSchemaTestRule;
 import com.liferay.portal.upgrade.UpgradeTestUtil;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -30,9 +30,8 @@ public class UpgradeSchemaTest {
 
 	@ClassRule
 	@Rule
-	public static final LiferayIntegrationTestRule
-		LIFERAY_INTEGRATION_TEST_RULE =
-			LiferayIntegrationTestRule.UPGRADE_TESTRULES_INSTANCE;
+	public static final AggregateTestRule aggregateTestRule =
+			new LiferayUpgradeSchemaTestRule();
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

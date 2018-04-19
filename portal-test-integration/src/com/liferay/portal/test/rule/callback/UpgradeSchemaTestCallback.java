@@ -14,38 +14,25 @@
 
 package com.liferay.portal.test.rule.callback;
 
-import com.liferay.mail.util.SendmailHook;
-import com.liferay.petra.process.LoggingOutputProcessor;
-import com.liferay.petra.process.ProcessUtil;
-import com.liferay.petra.process.local.LocalProcessExecutor;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.xml.SAXReaderImpl;
+import jodd.io.FileUtil;
+import org.junit.runner.Description;
+import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 
 import java.io.File;
 import java.io.InputStream;
-import java.lang.reflect.InvocationHandler;
-import java.sql.Connection;
-import java.sql.Wrapper;
-import java.util.concurrent.Future;
-
-import com.zaxxer.hikari.HikariDataSource;
-import jodd.io.FileUtil;
-
-import org.junit.runner.Description;
-import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 
 import javax.sql.DataSource;
 
@@ -82,34 +69,26 @@ public class UpgradeSchemaTestCallback extends BaseTestCallback<Void, Void> {
 				UpgradeSchemaTestCallback.class.getResourceAsStream(
 					"dependencies/init-" + dbName + ".sql");
 
-			LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy = (LazyConnectionDataSourceProxy) DataAccess.getConnection();
+			LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy = (LazyConnectionDataSourceProxy) PortalBeanLocatorUtil.locate("liferayDataSource");
 
-			DataSource dataSource =
-				ReflectionTestUtil.getFieldValue(
-					lazyConnectionDataSourceProxy, "targetDataSource");
+			DataSource dataSource = lazyConnectionDataSourceProxy.getTargetDataSource();
 
-			Connection connection1 = dataSource.getConnection();
+//			DataSourceFactoryUtil.destroyDataSource(dataSource);
 
-			DataAccess.cleanUp(connection1);
+			DataSource counterDataSource = (DataSource) PortalBeanLocatorUtil.locate("counterDataSourceImpl");
 
-			try {
-				Future<?> future = ProcessUtil.execute(
-					new LoggingOutputProcessor(
-						(stdErr, line) -> {
-							if (stdErr) {
-								_log.error(line);
-							}
-							else if (_log.isInfoEnabled()) {
-								_log.info(line);
-							}
-						}),
-					"psql", "-c", "\"drop database\"");
+			DataSourceFactoryUtil.destroyDataSource(counterDataSource);
 
-				future.get();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+
+//			Path filePath = Paths.get("/home/tom/temp/dumpfile");
+//
+//			Future<?> future = HeapUtil.heapDump(
+//				true , true, filePath.toString(),
+//				EchoOutputProcessor.INSTANCE);
+//
+//			future.get();
+//
+//			System.out.println("Successfully dumped heap at " + filePath.toString());
 
 			db.runSQLTemplateString(StringUtil.read(is), false, false);
 		}

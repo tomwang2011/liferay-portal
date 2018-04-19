@@ -18,9 +18,7 @@ import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
-import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.TimeoutTestRule;
-import com.liferay.portal.kernel.test.rule.callback.CompanyProviderTestCallback;
 import com.liferay.portal.kernel.test.rule.callback.DeleteAfterTestRunTestCallback;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -28,10 +26,8 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.spring.hibernate.DialectDetector;
 import com.liferay.portal.test.rule.callback.ClearThreadLocalTestCallback;
-import com.liferay.portal.test.rule.callback.DestinationAwaitTestCallback;
 import com.liferay.portal.test.rule.callback.InjectTestCallback;
 import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
-import com.liferay.portal.test.rule.callback.MainServletTestCallback;
 import com.liferay.portal.test.rule.callback.SybaseDumpTransactionLogTestCallback;
 import com.liferay.portal.test.rule.callback.UniqueStringRandomizerBumperTestCallback;
 import com.liferay.portal.test.rule.callback.UpgradeSchemaTestCallback;
@@ -51,13 +47,13 @@ import java.util.List;
 /**
  * @author Shuyang Zhou
  */
-public class LiferayIntegrationTestRule extends AggregateTestRule {
+public class LiferayUpgradeSchemaTestRule extends AggregateTestRule {
 
-	public LiferayIntegrationTestRule() {
-		super(false, _getTestRules());
+	public LiferayUpgradeSchemaTestRule() {
+		super(false, _getUpgradeTestRules());
 	}
 
-	private static TestRule[] _getTestRules() {
+	private static TestRule[] _getUpgradeTestRules() {
 		List<TestRule> testRules = new ArrayList<>();
 
 		if (System.getenv("JENKINS_HOME") != null) {
@@ -65,32 +61,23 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 		}
 
 		testRules.add(LogAssertionTestRule.INSTANCE);
-		testRules.add(springInitializationTestRule);
+		testRules.add(_upgradeSpringInitializationTestRule);
 		testRules.add(_sybaseDumpTransactionLogTestRule);
 		testRules.add(_clearThreadLocalTestRule);
 		testRules.add(_uniqueStringRandomizerBumperTestRule);
-		testRules.add(_mainServletTestRule);
-		testRules.add(_destinationAwaitTestRule);
-		testRules.add(_companyProviderTestRule);
 		testRules.add(_deleteAfterTestRunTestRule);
-		testRules.add(SynchronousDestinationTestRule.INSTANCE);
 		testRules.add(_injectTestRule);
+		testRules.add(_upgradeSchemaTestRule);
 
 		return testRules.toArray(new TestRule[testRules.size()]);
 	}
 
 	private static final TestRule _clearThreadLocalTestRule =
 		new BaseTestRule<>(ClearThreadLocalTestCallback.INSTANCE);
-	private static final TestRule _companyProviderTestRule = new BaseTestRule<>(
-		CompanyProviderTestCallback.INSTANCE);
 	private static final TestRule _deleteAfterTestRunTestRule =
 		new BaseTestRule<>(DeleteAfterTestRunTestCallback.INSTANCE);
-	private static final TestRule _destinationAwaitTestRule =
-		new BaseTestRule<>(DestinationAwaitTestCallback.INSTANCE);
 	private static final TestRule _injectTestRule = new BaseTestRule<>(
 		InjectTestCallback.INSTANCE);
-	private static final TestRule _mainServletTestRule = new BaseTestRule<>(
-		MainServletTestCallback.INSTANCE);
 	private static final TestRule _sybaseDumpTransactionLogTestRule =
 		new BaseTestRule<>(SybaseDumpTransactionLogTestCallback.INSTANCE);
 	private static final TestRule _uniqueStringRandomizerBumperTestRule =
@@ -98,7 +85,7 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 	private static final TestRule _upgradeSchemaTestRule = new BaseTestRule<>(
 		UpgradeSchemaTestCallback.INSTANCE);
 
-	private static final TestRule springInitializationTestRule = new TestRule() {
+	private static final TestRule _upgradeSpringInitializationTestRule = new TestRule() {
 
 		@Override
 		public Statement apply(Statement statement, Description description) {
@@ -107,8 +94,7 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 				@Override
 				public void evaluate() throws Throwable {
 					if (!InitUtil.isInitialized()) {
-						List<String> configLocations = ListUtil.fromArray(
-							PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
+						List<String> configLocations = new ArrayList<>();
 
 						boolean configureLog4j = false;
 
