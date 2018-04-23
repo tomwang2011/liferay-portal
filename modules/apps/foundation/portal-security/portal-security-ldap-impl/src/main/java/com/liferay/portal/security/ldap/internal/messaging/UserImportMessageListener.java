@@ -65,7 +65,7 @@ public class UserImportMessageListener extends BaseMessageListener {
 		String className = clazz.getName();
 
 		Trigger trigger = _triggerFactory.createTrigger(
-			className, className, null, null, interval, TimeUnit.MINUTE);
+			className, className, null, null, interval, TimeUnit.SECOND);
 
 		SchedulerEntry schedulerEntry = new SchedulerEntryImpl(
 			className, trigger);
