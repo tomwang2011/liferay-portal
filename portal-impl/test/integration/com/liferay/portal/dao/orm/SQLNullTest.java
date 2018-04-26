@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
@@ -504,6 +505,7 @@ public class SQLNullTest {
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Test
+	@Transactional
 	public void testBlankStringEqualsNull() {
 		String sql = _SQL_EQUALS_NULL;
 
@@ -533,6 +535,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testBlankStringIsNotNull() {
 		String sql = _SQL_IS_NOT_NULL;
 
@@ -564,6 +567,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testBlankStringIsNull() {
 		String sql = _SQL_IS_NULL;
 
@@ -595,6 +599,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testBlankStringLikeNull() {
 		String sql = _SQL_LIKE_NULL;
 
@@ -621,6 +626,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testBlankStringNotEqualsNull() {
 		String sql = _SQL_NOT_EQUALS_NULL;
 
@@ -655,6 +661,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testBlankStringNotLikeNull() {
 		String sql = _SQL_NOT_LIKE_NULL;
 
@@ -686,6 +693,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testNullEqualsNull() {
 		String sql = _SQL_EQUALS_NULL;
 
@@ -720,6 +728,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testNullIsNotNull() {
 		String sql = _SQL_IS_NOT_NULL;
 
@@ -746,6 +755,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testNullIsNull() {
 		String sql = _SQL_IS_NULL;
 
@@ -772,6 +782,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testNullLikeNull() {
 		String sql = _SQL_LIKE_NULL;
 
@@ -798,6 +809,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testNullNotEqualsNull() {
 		String sql = _SQL_NOT_EQUALS_NULL;
 
@@ -827,6 +839,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testNullNotLikeNull() {
 		String sql = _SQL_NOT_LIKE_NULL;
 
@@ -858,6 +871,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testZeroEqualsNull() {
 		String sql = _SQL_EQUALS_NULL;
 
@@ -884,6 +898,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testZeroIsNotNull() {
 		Session session = _sessionFactory.openSession();
 
@@ -905,6 +920,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testZeroIsNull() {
 		Session session = _sessionFactory.openSession();
 
@@ -926,6 +942,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testZeroLikeNull() {
 		String sql = _SQL_LIKE_NULL;
 
@@ -958,6 +975,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testZeroNotEqualsNull() {
 		String sql = _SQL_NOT_EQUALS_NULL;
 
@@ -989,6 +1007,7 @@ public class SQLNullTest {
 	}
 
 	@Test
+	@Transactional
 	public void testZeroNotLikeNull() {
 		String sql = _SQL_NOT_LIKE_NULL;
 
