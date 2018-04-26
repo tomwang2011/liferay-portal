@@ -67,35 +67,35 @@ public class ConnectionPoolLeakTestCallback
 		}
 	}
 
-//	@Override
-//	public void afterMethod(
-//		Description description,
-//		Collection<ServiceReference<ConnectionPoolMetrics>> serviceReferences,
-//		Object target) {
-//
-//		for (ServiceReference<ConnectionPoolMetrics> serviceReference :
-//				serviceReferences) {
-//
-//			ConnectionPoolMetrics connectionPoolMetrics = _registry.getService(
-//				serviceReference);
-//
-//			int[] initialConnectionsCount =
-//				_ConnectionPoolMap.get(
-//					"method-" + connectionPoolMetrics.getConnectionPoolName());
-//
-//			Assert.assertEquals(
-//				"Active connection count differ before and after test",
-//				initialConnectionsCount[0],
-//				connectionPoolMetrics.getNumActive());
-//
-//			Assert.assertEquals(
-//				"Idle connection count differ before and after test",
-//				initialConnectionsCount[1],
-//				connectionPoolMetrics.getNumIdle());
-//
-//			_registry.ungetService(serviceReference);
-//		}
-//	}
+	@Override
+	public void afterMethod(
+		Description description,
+		Collection<ServiceReference<ConnectionPoolMetrics>> serviceReferences,
+		Object target) {
+
+		for (ServiceReference<ConnectionPoolMetrics> serviceReference :
+				serviceReferences) {
+
+			ConnectionPoolMetrics connectionPoolMetrics = _registry.getService(
+				serviceReference);
+
+			int[] initialConnectionsCount =
+				_ConnectionPoolMap.get(
+					"method-" + connectionPoolMetrics.getConnectionPoolName());
+
+			Assert.assertEquals(
+				"Active connection count differ before and after test",
+				initialConnectionsCount[0],
+				connectionPoolMetrics.getNumActive());
+
+			Assert.assertEquals(
+				"Idle connection count differ before and after test",
+				initialConnectionsCount[1],
+				connectionPoolMetrics.getNumIdle());
+
+			_registry.ungetService(serviceReference);
+		}
+	}
 
 	@Override
 	public Collection<ServiceReference<ConnectionPoolMetrics>> beforeClass(
@@ -128,34 +128,34 @@ public class ConnectionPoolLeakTestCallback
 		return serviceReferences;
 	}
 
-//	@Override
-//	public Collection<ServiceReference<ConnectionPoolMetrics>> beforeMethod(
-//			Description description, Object target)
-//		throws Exception {
-//
-//		Collection<ServiceReference<ConnectionPoolMetrics>> serviceReferences =
-//			_registry.getServiceReferences(ConnectionPoolMetrics.class, null);
-//
-//		Assert.assertEquals(
-//			"Number of datasources should be 2", 2, serviceReferences.size());
-//
-//		for (ServiceReference<ConnectionPoolMetrics> serviceReference :
-//				serviceReferences) {
-//
-//			ConnectionPoolMetrics connectionPoolMetrics = _registry.getService(
-//				serviceReference);
-//
-//			_ConnectionPoolMap.put(
-//				"method-" + connectionPoolMetrics.getConnectionPoolName(),
-//				new int[] {
-//					connectionPoolMetrics.getNumActive(),
-//					connectionPoolMetrics.getNumIdle()});
-//
-//			_registry.ungetService(serviceReference);
-//		}
-//
-//		return serviceReferences;
-//	}
+	@Override
+	public Collection<ServiceReference<ConnectionPoolMetrics>> beforeMethod(
+			Description description, Object target)
+		throws Exception {
+
+		Collection<ServiceReference<ConnectionPoolMetrics>> serviceReferences =
+			_registry.getServiceReferences(ConnectionPoolMetrics.class, null);
+
+		Assert.assertEquals(
+			"Number of datasources should be 2", 2, serviceReferences.size());
+
+		for (ServiceReference<ConnectionPoolMetrics> serviceReference :
+				serviceReferences) {
+
+			ConnectionPoolMetrics connectionPoolMetrics = _registry.getService(
+				serviceReference);
+
+			_ConnectionPoolMap.put(
+				"method-" + connectionPoolMetrics.getConnectionPoolName(),
+				new int[] {
+					connectionPoolMetrics.getNumActive(),
+					connectionPoolMetrics.getNumIdle()});
+
+			_registry.ungetService(serviceReference);
+		}
+
+		return serviceReferences;
+	}
 
 	private static Registry _registry;
 
