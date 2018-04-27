@@ -167,28 +167,25 @@ public class FragmentsEditorContext {
 		String[] languageIds = LocaleUtil.toLanguageIds(
 			LanguageUtil.getAvailableLocales(_themeDisplay.getSiteGroupId()));
 
-		SoyContext availableLanguagesSoyContext =
+		SoyContext availableLanguages =
 			SoyContextFactoryUtil.createSoyContext();
 
 		for (String curLanguageId : languageIds) {
-			SoyContext curLanguageSoyContext =
-				SoyContextFactoryUtil.createSoyContext();
+			SoyContext curLanguage = SoyContextFactoryUtil.createSoyContext();
 
 			String curLanguageIcon = StringUtil.toLowerCase(
 				curLanguageId.replace(StringPool.UNDERLINE, StringPool.DASH));
 
-			curLanguageSoyContext.put("languageIcon", curLanguageIcon);
-
 			String curLanguageLabel = curLanguageId.replace(
 				StringPool.UNDERLINE, StringPool.DASH);
 
-			curLanguageSoyContext.put("languageLabel", curLanguageLabel);
+			curLanguage.put("languageIcon", curLanguageIcon);
+			curLanguage.put("languageLabel", curLanguageLabel);
 
-			availableLanguagesSoyContext.put(
-				curLanguageId, curLanguageSoyContext);
+			availableLanguages.put(curLanguageId, curLanguage);
 		}
 
-		soyContext.put("availableLanguages", availableLanguagesSoyContext);
+		soyContext.put("availableLanguages", availableLanguages);
 
 		return soyContext;
 	}
