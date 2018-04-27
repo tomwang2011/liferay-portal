@@ -88,27 +88,14 @@ class EditableTextFragmentProcessor {
 
 		const nativeEditor = editor.get('nativeEditor');
 
+		nativeEditor.name = `${this.fragmentEntryLink.portletNamespace}fragmentEntryLink_`;
+		nativeEditor.on('change', this._handleEditorChange);
+		nativeEditor.on('selectionChange', this._handleEditorChange);
+
 		editor._editableId = editableId;
 		editor.setData = nativeEditor.setData.bind(nativeEditor);
 
-		const editorChangeHandler = nativeEditor.on(
-			'change',
-			this._handleEditorChange
-		);
-
-		const editorSelectionChangeHandler = nativeEditor.on(
-			'selectionChange',
-			this._handleEditorChange
-		);
-
-		return {
-			editableField,
-			editor,
-			eventHandlers: [
-				editorChangeHandler,
-				editorSelectionChangeHandler
-			]
-		};
+		return editor;
 	}
 
 	/**
@@ -133,15 +120,8 @@ class EditableTextFragmentProcessor {
 
 	_destroyEditors() {
 		this._editors.forEach(
-			({editableField, editor, eventHandlers}) => {
-				eventHandlers.forEach(
-					eventHandler => {
-						eventHandler.removeListener();
-					}
-				);
-
+			editor => {
 				editor.destroy();
-				editableField.innerHTML = editor.get('nativeEditor').getData();
 			}
 		);
 
