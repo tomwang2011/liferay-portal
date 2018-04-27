@@ -58,10 +58,10 @@ public class ConnectionPoolLeakTestCallback
 				initialConnectionsCount[0],
 				connectionPoolMetrics.getNumActive());
 
-			Assert.assertEquals(
-				"Idle connection count differ before and after test",
-				initialConnectionsCount[1],
-				connectionPoolMetrics.getNumIdle());
+//			Assert.assertEquals(
+//				"Idle connection count differ before and after test",
+//				initialConnectionsCount[1],
+//				connectionPoolMetrics.getNumIdle());
 
 			_registry.ungetService(serviceReference);
 		}
@@ -88,10 +88,10 @@ public class ConnectionPoolLeakTestCallback
 				initialConnectionsCount[0],
 				connectionPoolMetrics.getNumActive());
 
-			Assert.assertEquals(
-				"Idle connection count differ before and after test",
-				initialConnectionsCount[1],
-				connectionPoolMetrics.getNumIdle());
+//			Assert.assertEquals(
+//				"Idle connection count differ before and after test",
+//				initialConnectionsCount[1],
+//				connectionPoolMetrics.getNumIdle());
 
 			_registry.ungetService(serviceReference);
 		}
