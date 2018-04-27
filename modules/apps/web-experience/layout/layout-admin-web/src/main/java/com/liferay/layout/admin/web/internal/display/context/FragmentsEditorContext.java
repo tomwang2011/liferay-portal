@@ -159,8 +159,10 @@ public class FragmentsEditorContext {
 			_getFragmentEntryActionURL(
 				"/layout/update_layout_page_template_entry_asset_type"));
 
-		soyContext.put("defaultLanguageId", _themeDisplay.getLanguageId());
-		soyContext.put("languageId", _themeDisplay.getLanguageId());
+		String languageId = _themeDisplay.getLanguageId();
+
+		soyContext.put("defaultLanguageId", languageId);
+		soyContext.put("languageId", languageId);
 
 		String[] languageIds = LocaleUtil.toLanguageIds(
 			LanguageUtil.getAvailableLocales(_themeDisplay.getSiteGroupId()));
