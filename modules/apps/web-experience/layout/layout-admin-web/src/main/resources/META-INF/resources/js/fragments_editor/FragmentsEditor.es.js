@@ -53,7 +53,7 @@ class FragmentsEditor extends Component {
 		this.on('languageIdChanged', this._handleLanguageIdChange);
 
 		this._translationStatus = this._getTranslationStatus(
-			Object.keys(this.availableLanguages).filter(languageId => languageId !== '_INJECTED_DATA_'),
+			this.availableLanguageIds,
 			this._getEditableValues(this.fragmentEntryLinks)
 		);
 	}
@@ -589,7 +589,7 @@ class FragmentsEditor extends Component {
 					this._lastSaveDate = new Date().toLocaleTimeString();
 
 					this._translationStatus = this._getTranslationStatus(
-						Object.keys(this.availableLanguages).filter(languageId => languageId !== '_INJECTED_DATA_'),
+						this.availableLanguageIds,
 						this._getEditableValues(this.fragmentEntryLinks)
 					);
 
@@ -636,15 +636,15 @@ FragmentsEditor.STATE = {
 	addFragmentEntryLinkURL: Config.string().required(),
 
 	/**
-	 * List of available languages for translation.
+	 * List of available language ids for translation.
 	 * @default undefined
 	 * @instance
 	 * @memberOf FragmentsEditor
 	 * @review
-	 * @type {!object}
+	 * @type {!string}
 	 */
 
-	availableLanguages: Config.object().required(),
+	availableLanguageIds: Config.arrayOf(Config.string()).value([]),
 
 	/**
 	 * Class name id used for storing changes.
