@@ -16,7 +16,6 @@ package com.liferay.fragment.service.impl;
 
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.base.FragmentEntryLinkLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
@@ -75,14 +73,6 @@ public class FragmentEntryLinkLocalServiceImpl
 		fragmentEntryLink.setCss(css);
 		fragmentEntryLink.setHtml(html);
 		fragmentEntryLink.setJs(js);
-
-		if (Validator.isNull(editableValues)) {
-			JSONObject jsonObject =
-				_fragmentEntryProcessorRegistry.getDefaultEditableValues(html);
-
-			editableValues = jsonObject.toString();
-		}
-
 		fragmentEntryLink.setEditableValues(editableValues);
 		fragmentEntryLink.setPosition(position);
 		fragmentEntryLink.setLastPropagationDate(
@@ -322,9 +312,6 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		return fragmentEntryLink;
 	}
-
-	@ServiceReference(type = FragmentEntryProcessorRegistry.class)
-	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@ServiceReference(type = JSONFactory.class)
 	private JSONFactory _jsonFactory;
