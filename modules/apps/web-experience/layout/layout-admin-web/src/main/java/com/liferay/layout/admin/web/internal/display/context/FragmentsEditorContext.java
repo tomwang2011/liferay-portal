@@ -112,7 +112,6 @@ public class FragmentsEditorContext {
 		soyContext.put(
 			"defaultEditorConfiguration", editorConfiguration.getData());
 
-		soyContext.put("defaultLanguageId", _themeDisplay.getLanguageId());
 		soyContext.put(
 			"deleteFragmentEntryLinkURL",
 			_getFragmentEntryActionURL("/layout/delete_fragment_entry_link"));
@@ -138,7 +137,6 @@ public class FragmentsEditorContext {
 
 		soyContext.put("imageSelectorURL", itemSelectorURL.toString());
 
-		soyContext.put("languageId", _themeDisplay.getLanguageId());
 		soyContext.put("portletNamespace", _renderResponse.getNamespace());
 		soyContext.put(
 			"renderFragmentEntryURL",
@@ -160,6 +158,9 @@ public class FragmentsEditorContext {
 			"updateLayoutPageTemplateEntryAssetTypeURL",
 			_getFragmentEntryActionURL(
 				"/layout/update_layout_page_template_entry_asset_type"));
+
+		soyContext.put("defaultLanguageId", _themeDisplay.getLanguageId());
+		soyContext.put("languageId", _themeDisplay.getLanguageId());
 
 		String[] languageIds = LocaleUtil.toLanguageIds(
 			LanguageUtil.getAvailableLocales(_themeDisplay.getSiteGroupId()));
