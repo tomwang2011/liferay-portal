@@ -78,8 +78,7 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		if (Validator.isNull(editableValues)) {
 			JSONObject jsonObject =
-				_fragmentEntryProcessorRegistry.
-					getDefaultEditableValuesJSONObject(html);
+				_fragmentEntryProcessorRegistry.getDefaultEditableValues(html);
 
 			editableValues = jsonObject.toString();
 		}

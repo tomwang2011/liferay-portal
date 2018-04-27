@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.json.JSONObject;
  */
 public interface FragmentEntryProcessorRegistry {
 
-	public JSONObject getDefaultEditableValuesJSONObject(String html);
+	public JSONObject getDefaultEditableValues(String html);
 
 	public String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink)

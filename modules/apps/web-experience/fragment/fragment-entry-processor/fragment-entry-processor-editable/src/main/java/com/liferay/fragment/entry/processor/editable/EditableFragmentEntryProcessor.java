@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
-	public JSONObject getDefaultEditableValuesJSONObject(String html) {
+	public JSONObject getDefaultEditableValues(String html) {
 		JSONObject defaultEditableValuesJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
