@@ -16,7 +16,6 @@ package com.liferay.fragment.processor;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 
 import javax.portlet.PortletMode;
 
@@ -24,10 +23,6 @@ import javax.portlet.PortletMode;
  * @author Pavel Savinov
  */
 public interface FragmentEntryProcessor {
-
-	public default JSONObject getDefaultEditableValues(String html) {
-		return null;
-	}
 
 	public default String processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String html)

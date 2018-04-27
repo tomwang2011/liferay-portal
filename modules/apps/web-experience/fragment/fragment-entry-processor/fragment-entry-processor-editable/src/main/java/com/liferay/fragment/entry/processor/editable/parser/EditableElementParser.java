@@ -25,8 +25,6 @@ import org.jsoup.nodes.Element;
  */
 public interface EditableElementParser {
 
-	public String getValue(Element element);
-
 	/**
 	 * Replaces editable element value with the provided one.
 	 *
