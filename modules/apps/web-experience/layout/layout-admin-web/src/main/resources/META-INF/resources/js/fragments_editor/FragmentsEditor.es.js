@@ -267,17 +267,15 @@ class FragmentsEditor extends Component {
 		);
 
 		if (fragmentEntryLink && component) {
-			const editableValue = component.getEditableValue(data.editableId) || {};
+			const editableValues = component.getEditableValues() || {};
 
-			const defaultEditableValue = editableValue.defaultValue || '';
+			const editableValue = editableValues[data.editableId] || {};
 
-			if (data.value.trim() !== defaultEditableValue.trim()) {
-				const newEditableValues = component.setEditableValue(
-					data.editableId,
-					{[this.languageId]: data.value}
-				);
+			const defaultEditableValue = editableValue.defaultValue.trim();
 
-				fragmentEntryLink.editableValues = newEditableValues;
+			if (data.value !== defaultEditableValue) {
+				editableValue[this.languageId] = data.value;
+
 				this._updateFragmentEntryLink(fragmentEntryLink);
 			}
 		}

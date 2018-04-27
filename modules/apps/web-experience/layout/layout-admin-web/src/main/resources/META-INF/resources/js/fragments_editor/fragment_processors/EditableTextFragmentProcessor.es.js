@@ -44,7 +44,7 @@ class EditableTextFragmentProcessor {
 
 	findEditor(editableId) {
 		return this._editors.find(
-			editor => editor.editableId === editableId
+			editor => editor._editableId === editableId
 		);
 	}
 
@@ -87,7 +87,9 @@ class EditableTextFragmentProcessor {
 		);
 
 		const nativeEditor = editor.get('nativeEditor');
-		const setData = nativeEditor.setData.bind(nativeEditor);
+
+		editor._editableId = editableId;
+		editor.setData = nativeEditor.setData.bind(nativeEditor);
 
 		const editorChangeHandler = nativeEditor.on(
 			'change',
@@ -100,15 +102,12 @@ class EditableTextFragmentProcessor {
 		);
 
 		return {
-			defaultValue: editableContent,
 			editableField,
-			editableId,
 			editor,
 			eventHandlers: [
 				editorChangeHandler,
 				editorSelectionChangeHandler
-			],
-			setData
+			]
 		};
 	}
 

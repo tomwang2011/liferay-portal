@@ -1,6 +1,6 @@
 import Component from 'metal-component';
 import {Config} from 'metal-state';
-import {isFunction, isObject, object} from 'metal';
+import {isFunction, isObject} from 'metal';
 import Soy from 'metal-soy';
 
 import EditableTextFragmentProcessor from './fragment_processors/EditableTextFragmentProcessor.es';
@@ -103,39 +103,13 @@ class FragmentEntryLink extends Component {
 	}
 
 	/**
-	 * Returns the given editable value
-	 */
-
-	getEditableValue(editableId) {
-		return this.getEditableValues()[editableId] || {};
-	}
-
-	/**
 	 * Returns the editable values property content
 	 * @return {object}
 	 * @review
 	 */
 
 	getEditableValues() {
-		return this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR] || {};
-	}
-
-	/**
-	 * Returns a new object with the updated editableId
-	 * @param {string} editableId
-	 * @param {object} content
-	 */
-
-	setEditableValue(editableId, content) {
-		const editableValues = this.getEditableValues();
-
-		const editableValue = this.getEditableValue(editableId);
-
-		editableValues[editableId] = object.mixin({}, editableValue, content);
-
-		return {
-			[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: editableValues
-		};
+		return this.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
 	}
 
 	/**
@@ -308,9 +282,7 @@ class FragmentEntryLink extends Component {
 				const editor = processor.findEditor(editableId);
 
 				if (editor) {
-					editor.setData(
-						value || defaultValue || editor.defaultValue
-					);
+					editor.setData(value || defaultValue);
 				}
 			}
 		);
