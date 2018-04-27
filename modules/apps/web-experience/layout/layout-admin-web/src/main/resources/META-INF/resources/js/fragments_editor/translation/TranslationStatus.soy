@@ -24,7 +24,7 @@
 		</button>
 
 		{if isNonnull($translationStatus)}
-			<div class="dropdown-menu dropdown-menu-indicator-end">
+			<div class="dropdown-menu">
 				{call .translationStatusItem}
 					{param isDefault: true /}
 					{param languageId: $defaultLanguageId /}
@@ -65,9 +65,8 @@
 			{/call}
 		</span>
 		<span>
-			{$languageId}
-		</span>
-		<span class="dropdown-item-indicator">
+			{$languageId}{sp}
+
 			{if $isDefault}
 				<span class="label label-info">{msg desc=""}default{/msg}</span>
 			{elseif $translatedValues == 0}
