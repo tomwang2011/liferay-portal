@@ -26,6 +26,14 @@ const ADDED_FRAGMENTS_TAB = {
 };
 
 /**
+ * Constant for the EditableFragmentEntryProcessor class
+ * @review
+ * @type {string}
+ */
+
+const EDITABLE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor';
+
+/**
  * FragmentsEditor
  * @review
  */
@@ -149,30 +157,9 @@ class FragmentsEditor extends Component {
 	 */
 
 	_getEditableValues() {
-		return Object
-			.keys(this.fragmentEntryLinks)
-			.map(
-				fragmentEntryLinkId => {
-					const component = this._getFragmentEntryLinkComponent(
-						fragmentEntryLinkId
-					);
-
-					return component ? component.getEditableValues() : null;
-				}
-			)
-			.filter(editableValues => editableValues);
-	}
-
-	/**
-	 * Returns a FragmentEntryLink instance for a fragmentEntryLinkId
-	 * @param {string} fragmentEntryLinkId
-	 * @private
-	 * @return {FragmentEntryLink}
-	 * @review
-	 */
-
-	_getFragmentEntryLinkComponent(fragmentEntryLinkId) {
-		return this.refs[`fragmentEntryLink_${fragmentEntryLinkId}`];
+		return Object.keys(this.fragmentEntryLinks).map(
+			fragmentEntryLinkId => this.fragmentEntryLinks[fragmentEntryLinkId].editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]
+		);
 	}
 
 	/**
@@ -260,21 +247,17 @@ class FragmentsEditor extends Component {
 	 */
 
 	_handleEditableChanged(data) {
-		const component = this._getFragmentEntryLinkComponent(data.fragmentEntryLinkId);
 		const fragmentEntryLink = this.fragmentEntryLinks.find(
-			fragmentEntryLink => fragmentEntryLink.fragmentEntryLinkId ===
-				data.fragmentEntryLinkId
+			fragmentEntryLink => fragmentEntryLink.fragmentEntryLinkId === data.fragmentEntryLinkId
 		);
 
-		if (fragmentEntryLink && component) {
-			const editableValues = component.getEditableValues() || {};
+		if (fragmentEntryLink) {
+			const editableValues = fragmentEntryLink.editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR][data.editableId];
 
-			const editableValue = editableValues[data.editableId] || {};
-
-			const defaultEditableValue = editableValue.defaultValue.trim();
+			const defaultEditableValue = editableValues.defaultValue.trim();
 
 			if (data.value !== defaultEditableValue) {
-				editableValue[this.languageId] = data.value;
+				editableValues[this.languageId] = data.value;
 
 				this._updateFragmentEntryLink(fragmentEntryLink);
 			}
