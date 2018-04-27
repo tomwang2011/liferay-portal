@@ -24,9 +24,9 @@ import java.sql.DatabaseMetaData;
 
 import org.eclipse.core.runtime.Assert;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Assume;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,15 +41,15 @@ public class DBInspectorTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_connection = DataAccess.getConnection();
 
 		_dbInspector = new DBInspector(_connection);
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
+	@After
+	public void tearDown() throws Exception {
 		DataAccess.cleanUp(_connection);
 	}
 
