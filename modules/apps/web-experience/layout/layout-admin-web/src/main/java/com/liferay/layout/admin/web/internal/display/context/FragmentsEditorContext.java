@@ -99,32 +99,6 @@ public class FragmentsEditorContext {
 		soyContext.put(
 			"addFragmentEntryLinkURL",
 			_getFragmentEntryActionURL("/layout/add_fragment_entry_link"));
-
-		SoyContext availableLanguagesSoyContext =
-			SoyContextFactoryUtil.createSoyContext();
-
-		String[] languageIds = LocaleUtil.toLanguageIds(
-			LanguageUtil.getAvailableLocales(_themeDisplay.getSiteGroupId()));
-
-		for (String languageId : languageIds) {
-			SoyContext languageSoyContext =
-				SoyContextFactoryUtil.createSoyContext();
-
-			String languageIcon = StringUtil.toLowerCase(
-				languageId.replace(StringPool.UNDERLINE, StringPool.DASH));
-
-			languageSoyContext.put("languageIcon", languageIcon);
-
-			String languageLabel = languageId.replace(
-				StringPool.UNDERLINE, StringPool.DASH);
-
-			languageSoyContext.put("languageLabel", languageLabel);
-
-			availableLanguagesSoyContext.put(languageId, languageSoyContext);
-		}
-
-		soyContext.put("availableLanguages", availableLanguagesSoyContext);
-
 		soyContext.put("classNameId", _classNameId);
 		soyContext.put("classPK", _classPK);
 
@@ -186,6 +160,31 @@ public class FragmentsEditorContext {
 			"updateLayoutPageTemplateEntryAssetTypeURL",
 			_getFragmentEntryActionURL(
 				"/layout/update_layout_page_template_entry_asset_type"));
+
+		SoyContext availableLanguagesSoyContext =
+			SoyContextFactoryUtil.createSoyContext();
+
+		String[] languageIds = LocaleUtil.toLanguageIds(
+			LanguageUtil.getAvailableLocales(_themeDisplay.getSiteGroupId()));
+
+		for (String languageId : languageIds) {
+			SoyContext languageSoyContext =
+				SoyContextFactoryUtil.createSoyContext();
+
+			String languageIcon = StringUtil.toLowerCase(
+				languageId.replace(StringPool.UNDERLINE, StringPool.DASH));
+
+			languageSoyContext.put("languageIcon", languageIcon);
+
+			String languageLabel = languageId.replace(
+				StringPool.UNDERLINE, StringPool.DASH);
+
+			languageSoyContext.put("languageLabel", languageLabel);
+
+			availableLanguagesSoyContext.put(languageId, languageSoyContext);
+		}
+
+		soyContext.put("availableLanguages", availableLanguagesSoyContext);
 
 		return soyContext;
 	}
