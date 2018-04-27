@@ -532,12 +532,12 @@ class FragmentsEditor extends Component {
 	/**
 	 * Callback executed when the translation language has changed
 	 * @private
-	 * @param {{languageId: string}} event
+	 * @param {string} languageId
 	 * @review
 	 */
 
-	_handleTranslationLanguageChange(event) {
-		this.languageId = event.languageId;
+	_handleTranslationLanguageChange(languageId) {
+		this.languageId = languageId;
 	}
 
 	/**
