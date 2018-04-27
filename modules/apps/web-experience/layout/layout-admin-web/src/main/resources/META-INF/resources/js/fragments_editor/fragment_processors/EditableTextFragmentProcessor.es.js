@@ -36,19 +36,6 @@ class EditableTextFragmentProcessor {
 	}
 
 	/**
-	 * Finds an associated editor for a given editable id
-	 * @param {string} editableId The id of editable section
-	 * @return {?AlloyEditor}
-	 * @review
-	 */
-
-	findEditor(editableId) {
-		return this._editors.find(
-			editor => editor._editableId === editableId
-		);
-	}
-
-	/**
 	 * @inheritDoc
 	 * @review
 	 */
@@ -72,11 +59,9 @@ class EditableTextFragmentProcessor {
 		const editableId = editableField.id;
 		const wrapper = document.createElement('div');
 
-		editableField.innerHTML = '';
-
 		wrapper.dataset.lfrEditableId = editableId;
 		wrapper.innerHTML = editableContent;
-		editableField.appendChild(wrapper);
+		editableField.parentNode.replaceChild(wrapper, editableField);
 
 		const editor = AlloyEditor.editable(
 			wrapper,
@@ -91,9 +76,6 @@ class EditableTextFragmentProcessor {
 		nativeEditor.name = `${this.fragmentEntryLink.portletNamespace}fragmentEntryLink_`;
 		nativeEditor.on('change', this._handleEditorChange);
 		nativeEditor.on('selectionChange', this._handleEditorChange);
-
-		editor._editableId = editableId;
-		editor.setData = nativeEditor.setData.bind(nativeEditor);
 
 		return editor;
 	}
