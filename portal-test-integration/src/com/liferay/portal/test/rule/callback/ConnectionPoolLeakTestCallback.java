@@ -67,35 +67,35 @@ public class ConnectionPoolLeakTestCallback
 		}
 	}
 
-	@Override
-	public void afterMethod(
-		Description description,
-		Collection<ServiceReference<ConnectionPoolMetrics>> serviceReferences,
-		Object target) {
-
-		for (ServiceReference<ConnectionPoolMetrics> serviceReference :
-				serviceReferences) {
-
-			ConnectionPoolMetrics connectionPoolMetrics = _registry.getService(
-				serviceReference);
-
-			int[] initialConnectionsCount =
-				_ConnectionPoolMap.get(
-					"method-" + connectionPoolMetrics.getConnectionPoolName());
-
-			Assert.assertEquals(
-				"Active connection count differ before and after test",
-				initialConnectionsCount[0],
-				connectionPoolMetrics.getNumActive());
-
+//	@Override
+//	public void afterMethod(
+//		Description description,
+//		Collection<ServiceReference<ConnectionPoolMetrics>> serviceReferences,
+//		Object target) {
+//
+//		for (ServiceReference<ConnectionPoolMetrics> serviceReference :
+//				serviceReferences) {
+//
+//			ConnectionPoolMetrics connectionPoolMetrics = _registry.getService(
+//				serviceReference);
+//
+//			int[] initialConnectionsCount =
+//				_ConnectionPoolMap.get(
+//					"method-" + connectionPoolMetrics.getConnectionPoolName());
+//
 //			Assert.assertEquals(
-//				"Idle connection count differ before and after test",
-//				initialConnectionsCount[1],
-//				connectionPoolMetrics.getNumIdle());
-
-			_registry.ungetService(serviceReference);
-		}
-	}
+//				"Active connection count differ before and after test",
+//				initialConnectionsCount[0],
+//				connectionPoolMetrics.getNumActive());
+//
+////			Assert.assertEquals(
+////				"Idle connection count differ before and after test",
+////				initialConnectionsCount[1],
+////				connectionPoolMetrics.getNumIdle());
+//
+//			_registry.ungetService(serviceReference);
+//		}
+//	}
 
 	@Override
 	public Collection<ServiceReference<ConnectionPoolMetrics>> beforeClass(
