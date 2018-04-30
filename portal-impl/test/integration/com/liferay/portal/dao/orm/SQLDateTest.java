@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.impl.ReleaseImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -51,6 +52,7 @@ public class SQLDateTest {
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Test
+	@Transactional
 	public void testMillisecondsHibernate() {
 		long time = readTimeHibernate() / Time.SECOND * Time.SECOND;
 
@@ -62,6 +64,7 @@ public class SQLDateTest {
 	}
 
 	@Test
+	@Transactional
 	public void testMillisecondsJDBC() throws SQLException {
 		long time = readTimeJDBC() / Time.SECOND * Time.SECOND;
 
