@@ -24,9 +24,7 @@ import com.liferay.portal.test.rule.TransactionalTestRule;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import junit.framework.AssertionFailedError;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -48,18 +46,13 @@ public class TransactionalTestRuleTest {
 	}
 
 	@After
-	public void tearDown() throws SQLException {
+	public void tearDown() throws Exception {
 		_connection.close();
 	}
 
 	@Test
 	public void testWithoutAnnotation() throws SQLException {
-		try {
-			Connection connection = DataAccess.getConnection();
-		}
-		catch (Error e) {
-			Assert.assertEquals(AssertionFailedError.class, e.getClass());
-		}
+		Connection connection = DataAccess.getConnection();
 	}
 
 	@Test
