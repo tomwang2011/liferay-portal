@@ -53,6 +53,19 @@ public class UpgradeTestUtil {
 		is = clazz.getResourceAsStream(
 			"dependencies/indexes-" + dbType.getName() + ".sql");
 
+		String sqlContent = StringUtil.read(is);
+
+		StringUtil.replace(
+			sqlContent,
+			"create index IX_7020130F on SCProductVersion (directDownloadURL);",
+			"create index IX_7020130F on SCProductVersion " +
+				"(directDownloadURL(255));");
+
+		StringUtil.replace(
+			sqlContent,
+			"create index IX_89509087 on User_ (companyId, openId);",
+			"create index IX_89509087 on User_ (companyId, openId(255));");
+
 		db.runSQLTemplateString(StringUtil.read(is), false, false);
 	}
 
