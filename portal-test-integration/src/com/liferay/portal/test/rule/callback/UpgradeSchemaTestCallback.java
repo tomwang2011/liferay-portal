@@ -53,9 +53,15 @@ public class UpgradeSchemaTestCallback extends BaseTestCallback<Void, Void> {
 			}
 		}
 		else {
+			String dbName = dbType.getName();
+
+			if (dbName.equals(DBType.MARIADB.getName())) {
+				dbName = DBType.MYSQL.getName();
+			}
+
 			InputStream is =
 				UpgradeSchemaTestCallback.class.getResourceAsStream(
-					"dependencies/init-mysql.sql");
+					"dependencies/init-" + dbName + ".sql");
 
 			db.runSQLTemplateString(StringUtil.read(is), false, false);
 		}

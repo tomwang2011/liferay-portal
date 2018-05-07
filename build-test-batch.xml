@@ -178,6 +178,7 @@ lportal_BS
 	<macrodef name="database-test-run-test">
 		<attribute name="database.type" />
 		<attribute default="" name="database.version" />
+		<attribute default="false" name="skip.rebuild.database" />
 		<attribute default="false" name="stop.app.server" />
 		<element name="test-action" />
 
@@ -316,7 +317,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 						<param name="todir" value="${app.server.lib.global.dir}" />
 					</antcall>
 
-					<antcall inheritall="false" target="rebuild-database">
+					<antcall inheritall="false" target="rebuild-database" unless:true="@{skip.rebuild.database}">
 						<param name="database.type" value="@{database.type}" />
 					</antcall>
 
@@ -1918,6 +1919,44 @@ app.server.type=@{app.server.type}]]></echo>
 					</echo>
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="upgrade-schema-test">
+		<attribute name="database.type" />
+		<attribute default="${database.@{database.type}.version}" name="database.version" />
+
+		<sequential>
+			<run-batch-test>
+				<test-action>
+					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" skip.rebuild.database="true">
+						<test-action>
+							<ant dir="portal-impl" inheritAll="false" target="test-class">
+								<property name="database.type" value="@{database.type}" />
+								<property name="junit.code.coverage" value="${test.batch.code.coverage}" />
+								<property name="test.class" value="UpgradeSchemaTest" />
+								<property name="test.type" value="integration" />
+							</ant>
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+
+				<test-set-up>
+					<if>
+						<isset property="env.DIST_PATH" />
+						<then>
+							<prepare-test-environment />
+
+							<antcall inheritAll="false" target="record-test-class-file-names">
+								<param name="test.class.groups.size" value="${test.batch.size}" />
+							</antcall>
+						</then>
+						<else>
+							<prepare-test-build />
+						</else>
+					</if>
+				</test-set-up>
+			</run-batch-test>
 		</sequential>
 	</macrodef>
 
@@ -3959,6 +3998,22 @@ ${output.content}</echo>
 				</if>
 			</test-set-up>
 		</run-batch-test>
+	</target>
+
+	<target name="upgrade-schema-test-hypersonic20-jdk8">
+		<upgrade-schema-test database.type="hypersonic" />
+	</target>
+
+	<target name="upgrade-schema-test-mariadb100-jdk8">
+		<upgrade-schema-test database.type="mariadb" />
+	</target>
+
+	<target name="upgrade-schema-test-mysql56-jdk8">
+		<upgrade-schema-test database.type="mysql" />
+	</target>
+
+	<target name="upgrade-schema-test-postgresql94-jdk8">
+		<upgrade-schema-test database.type="postgresql" />
 	</target>
 
 	<target name="wsdd-builder-jdk8">

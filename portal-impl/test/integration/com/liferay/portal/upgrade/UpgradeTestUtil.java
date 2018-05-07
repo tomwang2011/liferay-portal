@@ -45,13 +45,19 @@ public class UpgradeTestUtil {
 
 		DBType dbType = db.getDBType();
 
+		String dbName = dbType.getName();
+
+		if (dbName.equals(DBType.MARIADB.getName())) {
+			dbName = DBType.MYSQL.getName();
+		}
+
 		InputStream is = clazz.getResourceAsStream(
-			"dependencies/portal-tables-" + dbType.getName() + ".sql");
+			"dependencies/portal-tables-" + dbName + ".sql");
 
 		db.runSQLTemplateString(StringUtil.read(is), false, false);
 
 		is = clazz.getResourceAsStream(
-			"dependencies/indexes-" + dbType.getName() + ".sql");
+			"dependencies/indexes-" + dbName + ".sql");
 
 		String sqlContent = StringUtil.read(is);
 
