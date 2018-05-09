@@ -280,21 +280,16 @@ public class PortalClassPathUtil {
 			String classesDirName = path.substring(
 				0, path.length() - pathOfClass.length());
 
-			if (!classesDirName.endsWith("/WEB-INF/classes/")) {
-				_log.error(
-					StringBundler.concat(
-						"Class ", className, " is not loaded from a standard ",
-						"location (/WEB-INF/classes)"));
-
-				return null;
-			}
-
 			String libDirName = classesDirName.substring(
 				0, classesDirName.length() - "classes/".length());
 
 			libDirName += "/lib";
 
 			dir = new File(libDirName);
+
+			if (!dir.exists()) {
+				return new File[] {new File(classesDirName)};
+			}
 		}
 		else {
 			pos = path.lastIndexOf(CharPool.SLASH, pos);
