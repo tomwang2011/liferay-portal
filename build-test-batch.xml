@@ -3413,73 +3413,81 @@ ${output.content}</echo>
 	</target>
 
 	<target name="service-builder-jdk8">
-		<run-batch-test>
-			<test-action>
-				<gradle-execute dir="modules/util/portal-tools-service-builder" task="deploy">
-					<arg value="clean" />
-				</gradle-execute>
+		<gradle-execute dir="modules/util/portal-tools-service-builder" task="deploy">
+			<arg value="clean" />
+		</gradle-execute>
 
-				<record action="start" name="${project.dir}/build.services.output.txt" />
+		<record action="start" name="${project.dir}/build.services.output.txt" />
 
-				<ant dir="portal-impl" target="build-services" />
+		<ant dir="portal-impl" target="build-service-portlet-announcements" />
 
-				<record action="stop" name="${project.dir}/build.services.output.txt" />
+		<record action="stop" name="${project.dir}/build.services.output.txt" />
+
+		<loadfile
+			property="build.services.output.txt.content"
+			srcfile="${project.dir}/build.services.output.txt"
+		/>
+
+		<delete file="${project.dir}/build.services.output.txt" />
+
+		<if>
+			<contains string="${build.services.output.txt.content}" substring="Writing " />
+			<then>
+				<echo>#### DIFF ####</echo>
+
+				<exec executable="git">
+					<arg value="diff" />
+					<arg value="&quot;:(exclude)*/*-portlet-service.jar&quot;" />
+					<arg value="&quot;:(exclude)*/src/main/resources/service.properties&quot;" />
+					<arg value="&quot;:(exclude)*/src/service.properties&quot;" />
+				</exec>
+
+				<echo>#### DIFF outputproperty ####</echo>
+
+				<exec executable="git" outputproperty="build.services.diff">
+					<arg value="diff" />
+					<arg value="&quot;:(exclude)*/*-portlet-service.jar&quot;" />
+					<arg value="&quot;:(exclude)*/src/main/resources/service.properties&quot;" />
+					<arg value="&quot;:(exclude)*/src/service.properties&quot;" />
+				</exec>
+
+				<echo>${build.services.diff}</echo>
+
+				<echo>#### DIFF output ####</echo>
+
+				<exec executable="git" output="${project.dir}/build.services.diff.txt">
+					<arg value="diff" />
+					<arg value="&quot;:(exclude)*/*-portlet-service.jar&quot;" />
+					<arg value="&quot;:(exclude)*/src/main/resources/service.properties&quot;" />
+					<arg value="&quot;:(exclude)*/src/service.properties&quot;" />
+				</exec>
 
 				<loadfile
-					property="build.services.output.txt.content"
-					srcfile="${project.dir}/build.services.output.txt"
+					property="build.services.diff.txt.content"
+					srcfile="${project.dir}/build.services.diff.txt"
 				/>
 
-				<delete file="${project.dir}/build.services.output.txt" />
+				<echo>${build.services.diff.txt.content}</echo>
+
+				<delete file="${project.dir}/build.services.diff.txt" />
 
 				<if>
-					<contains string="${build.services.output.txt.content}" substring="Writing " />
+					<not>
+						<equals arg1="${build.services.diff}" arg2="" />
+					</not>
 					<then>
-						<exec executable="git" output="${project.dir}/build.services.diff.txt">
-							<arg value="diff" />
-							<arg value="&quot;:!*/*-portlet-service.jar&quot;" />
-							<arg value="&quot;:!*/src/main/resources/service.properties&quot;" />
-							<arg value="&quot;:!*/src/service.properties&quot;" />
-						</exec>
+						<echo message="${build.services.diff}" />
 
-						<loadfile
-							property="build.services.diff.txt.content"
-							srcfile="${project.dir}/build.services.diff.txt"
-						/>
-
-						<delete file="${project.dir}/build.services.diff.txt" />
-
-						<if>
-							<not>
-								<equals arg1="${build.services.diff.txt.content}" arg2="" />
-							</not>
-							<then>
-								<echo message="${build.services.diff.txt.content}" />
-
-								<fail>
+						<fail>
 .
 
 Detected build services changes. See above build services log for more
 information. Make sure to commit in all build services results.
-								</fail>
-							</then>
-						</if>
+						</fail>
 					</then>
 				</if>
-			</test-action>
-
-			<test-set-up>
-				<if>
-					<isset property="env.DIST_PATH" />
-					<then>
-						<prepare-test-environment />
-					</then>
-					<else>
-						<prepare-test-build />
-					</else>
-				</if>
-			</test-set-up>
-		</run-batch-test>
+			</then>
+		</if>
 	</target>
 
 	<target name="setup-testable-tomcat-gc">
