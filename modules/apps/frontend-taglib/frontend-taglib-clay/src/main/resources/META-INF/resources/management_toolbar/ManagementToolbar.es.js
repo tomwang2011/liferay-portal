@@ -3,9 +3,10 @@ import {
 	creationMenuItemsValidator,
 	filterItemsValidator
 } from 'clay-management-toolbar';
-import {Config} from 'metal-state';
 import ClayComponent from 'clay-component';
 import Soy from 'metal-soy';
+import {Config} from 'metal-state';
+import {EventEmitterProxy} from 'metal-events';
 
 import templates from './ManagementToolbar.soy';
 
@@ -49,6 +50,8 @@ class ManagementToolbar extends ClayComponent {
 				);
 			}
 		}
+
+		new EventEmitterProxy(this.refs.managementToolbar, this);
 	}
 
 	/**
@@ -249,6 +252,15 @@ ManagementToolbar.STATE = {
 	 */
 
 	searchActionURL: Config.string(),
+
+	/**
+	 * Method of the search form.
+	 * @default GET
+	 * @instance
+	 * @memberof ManagementToolbar
+	 * @type {?(string|undefined)}
+	 */
+	searchFormMethod: Config.oneOf(['GET', 'POST']).value('GET'),
 
 	/**
 	 * Id to get a instance of the searchContainer.
