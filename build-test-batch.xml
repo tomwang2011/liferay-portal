@@ -1622,6 +1622,10 @@ app.server.type=@{app.server.type}]]></echo>
 								<param name="database.type" value="@{database.type}" />
 							</antcall>
 
+							<loadfile srcFile="${app.server.classes.portal.dir}/META-INF/portal-log4j-ext.xml" property="log4jfilecontent" />
+
+							<echo>*************${log4jfilecontent}</echo>
+
 							<antcall inheritAll="false" target="prepare-portal-ext-properties">
 								<param name="database.type" value="@{database.type}" />
 							</antcall>
