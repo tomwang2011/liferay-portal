@@ -274,7 +274,7 @@ public abstract class BaseSearchTestCase {
 	protected void assertGroupEntriesCount(long expectedCount)
 		throws Exception {
 
-		assertGroupEntriesCount(expectedCount, 0);
+		assertGroupEntriesCount(expectedCount, 1);
 	}
 
 	protected void assertGroupEntriesCount(long expectedCount, long userId)
