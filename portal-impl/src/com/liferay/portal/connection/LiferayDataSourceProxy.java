@@ -37,6 +37,7 @@ public class LiferayDataSourceProxy extends LazyConnectionDataSourceProxy {
 
 	@Override
 	public Connection getConnection() throws SQLException {
+		System.out.println("***********Using proxy*******");
 		Connection connection = super.getConnection();
 
 		AtomicInteger atomicInteger = _openConnectionCountThreadLocal.get();
