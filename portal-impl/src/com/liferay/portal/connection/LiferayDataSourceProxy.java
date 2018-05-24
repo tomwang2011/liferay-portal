@@ -1,14 +1,64 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.portal.connection;
+
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.springframework.jdbc.datasource.ConnectionProxy;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 
+/**
+ * @author Tom Wang
+ */
 public class LiferayDataSourceProxy extends LazyConnectionDataSourceProxy {
-	public Connection getConnection() throws SQLException {
-		System.out.println("********Current Thread: " + Thread.currentThread());
 
-		return super.getConnection();
+	public static int getAndResetOpenConnectionCount() {
+		AtomicInteger atomicInteger = _openConnectionCountThreadLocal.get();
+
+		return atomicInteger.getAndSet(0);
 	}
+
+	@Override
+	public Connection getConnection() throws SQLException {
+		Connection connection = super.getConnection();
+
+		AtomicInteger atomicInteger = _openConnectionCountThreadLocal.get();
+
+		atomicInteger.incrementAndGet();
+
+		return (Connection)ProxyUtil.newProxyInstance(
+			ConnectionProxy.class.getClassLoader(), _INTERFACES,
+			(proxy, method, args) -> {
+				if ("close".equals(method.getName())) {
+					atomicInteger.decrementAndGet();
+				}
+
+				return method.invoke(connection, args);
+			});
+	}
+
+	private static final Class<?>[] _INTERFACES =
+		new Class<?>[] {ConnectionProxy.class};
+
+	private static final ThreadLocal<AtomicInteger>
+		_openConnectionCountThreadLocal = ThreadLocal.withInitial(
+			() -> new AtomicInteger(0));
+
 }
