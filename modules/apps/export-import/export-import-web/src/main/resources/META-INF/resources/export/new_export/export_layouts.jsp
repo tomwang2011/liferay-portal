@@ -80,6 +80,12 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(portletURL.toString());
 
 renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custom-export") : LanguageUtil.format(request, "new-export-based-on-x", exportImportConfiguration.getName(), false));
+
+JSONArray blacklistCharJSONArray = JSONFactoryUtil.createJSONArray();
+
+for (String s : PropsValues.DL_CHAR_BLACKLIST) {
+	blacklistCharJSONArray.put(s);
+}
 %>
 
 <div class="container-fluid-1280">
@@ -229,15 +235,6 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 	var fieldRules = [
 		{
 			body: function(val, fieldNode, ruleValue) {
-
-				<%
-				JSONArray blacklistCharJSONArray = JSONFactoryUtil.createJSONArray();
-
-				for (String s : PropsValues.DL_CHAR_BLACKLIST) {
-					blacklistCharJSONArray.put(s);
-				}
-				%>
-
 				var blacklistCharJSONArray = <%= blacklistCharJSONArray.toJSONString() %>;
 
 				for (var i = 0; i < blacklistCharJSONArray.length; i++) {

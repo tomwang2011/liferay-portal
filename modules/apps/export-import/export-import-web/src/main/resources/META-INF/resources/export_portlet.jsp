@@ -23,6 +23,12 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "exportImport");
 portletURL.setParameter("portletResource", portletResource);
+
+JSONArray blacklistCharJSONArray = JSONFactoryUtil.createJSONArray();
+
+for (String s : PropsValues.DL_CHAR_BLACKLIST) {
+	blacklistCharJSONArray.put(s);
+}
 %>
 
 <aui:nav-bar cssClass="navbar-collapse-absolute" markupView="lexicon">
@@ -473,15 +479,6 @@ portletURL.setParameter("portletResource", portletResource);
 			var fieldRules = [
 				{
 					body: function(val, fieldNode, ruleValue) {
-
-						<%
-						JSONArray blacklistCharJSONArray = JSONFactoryUtil.createJSONArray();
-
-						for (String s : PropsValues.DL_CHAR_BLACKLIST) {
-							blacklistCharJSONArray.put(s);
-						}
-						%>
-
 						var blacklistCharJSONArray = <%= blacklistCharJSONArray.toJSONString() %>;
 
 						for (var i = 0; i < blacklistCharJSONArray.length; i++) {
