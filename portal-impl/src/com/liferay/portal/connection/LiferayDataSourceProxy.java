@@ -37,6 +37,10 @@ public class LiferayDataSourceProxy extends LazyConnectionDataSourceProxy {
 		return atomicInteger.getAndSet(0);
 	}
 
+	public static void setTestThreadThreadLocal(boolean value) {
+		_testThreadThreadLocal.set(value);
+	}
+
 	@Override
 	public Connection getConnection() throws SQLException {
 		return getConnection(null, null);
@@ -53,6 +57,10 @@ public class LiferayDataSourceProxy extends LazyConnectionDataSourceProxy {
 		}
 		else {
 			connection = super.getConnection();
+		}
+
+		if (!_testThreadThreadLocal.get()) {
+			return connection;
 		}
 
 		AtomicInteger atomicInteger = _openConnectionCountThreadLocal.get();
@@ -81,5 +89,7 @@ public class LiferayDataSourceProxy extends LazyConnectionDataSourceProxy {
 	private static final ThreadLocal<AtomicInteger>
 		_openConnectionCountThreadLocal = ThreadLocal.withInitial(
 			() -> new AtomicInteger(0));
+	private static final ThreadLocal<Boolean> _testThreadThreadLocal =
+		ThreadLocal.withInitial(() -> Boolean.FALSE);
 
 }

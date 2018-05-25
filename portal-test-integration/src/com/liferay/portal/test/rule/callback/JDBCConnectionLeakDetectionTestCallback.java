@@ -38,6 +38,8 @@ public class JDBCConnectionLeakDetectionTestCallback
 
 	@Override
 	public Void beforeClass(Description description) {
+		LiferayDataSourceProxy.setTestThreadThreadLocal(true);
+
 		LiferayDataSourceProxy.getAndResetOpenConnectionCount();
 
 		return null;
