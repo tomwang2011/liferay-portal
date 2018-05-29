@@ -25,6 +25,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.management.InstanceNotFoundException;
+
 import org.junit.Assert;
 import org.junit.runner.Description;
 
@@ -88,9 +90,16 @@ public class JDBCConnectionLeakDetectionTestCallback
 			ConnectionPoolMetrics connectionPoolMetrics = _registry.getService(
 				serviceReference);
 
-			_connectionPoolActiveNumbers.put(
-				connectionPoolMetrics.getConnectionPoolName(),
-				connectionPoolMetrics.getNumActive());
+			try {
+				_connectionPoolActiveNumbers.put(
+					connectionPoolMetrics.getConnectionPoolName(),
+					connectionPoolMetrics.getNumActive());
+			}
+			catch (Exception e) {
+				if (!(e instanceof InstanceNotFoundException)) {
+					throw e;
+				}
+			}
 
 			_registry.ungetService(serviceReference);
 		}
