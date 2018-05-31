@@ -14,9 +14,9 @@
 
 package com.liferay.portal.kernel.servlet.taglib.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Mergeable;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 

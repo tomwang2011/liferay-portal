@@ -14,6 +14,7 @@
 
 package com.liferay.portal.template.xsl.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.xsl.configuration.XSLEngineConfiguration;
 import com.liferay.portal.xsl.XSLTemplateResource;

@@ -16,9 +16,9 @@ package com.liferay.portal.kernel.layoutconfiguration.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.layoutconfiguration.util.xml.RuntimeLogic;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
