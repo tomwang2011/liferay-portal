@@ -54,6 +54,7 @@ import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -122,7 +123,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Tuple;
@@ -3817,10 +3817,9 @@ public class StagingImpl implements Staging {
 				_log.warn(
 					StringBundler.concat(
 						"Unable to set recent layout revision ID",
-						"with layout set branch ",
-						String.valueOf(layoutSetBranchId), " and PLID ",
-						String.valueOf(plid), " and layout branch ",
-						String.valueOf(layoutBranchId)),
+						"with layout set branch ", layoutSetBranchId,
+						" and PLID ", plid, " and layout branch ",
+						layoutBranchId),
 					pe);
 			}
 		}

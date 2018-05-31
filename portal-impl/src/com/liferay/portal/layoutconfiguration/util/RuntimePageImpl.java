@@ -18,6 +18,7 @@ import com.liferay.petra.concurrent.ThreadPoolHandler;
 import com.liferay.petra.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.layoutconfiguration.util.RuntimePage;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -494,7 +494,7 @@ public class RuntimePageImpl implements RuntimePage {
 							StringBundler.concat(
 								"Serially rendered portlet ",
 								portlet.getPortletId(), " in ",
-								String.valueOf(stopWatch.getTime()), " ms"));
+								stopWatch.getTime(), " ms"));
 					}
 				}
 
@@ -640,8 +640,8 @@ public class RuntimePageImpl implements RuntimePage {
 						_log.debug(
 							StringBundler.concat(
 								"Parallely rendered portlet ",
-								portlet.getPortletId(), " in ",
-								String.valueOf(duration), " ms"));
+								portlet.getPortletId(), " in ", duration,
+								" ms"));
 					}
 
 					continue;

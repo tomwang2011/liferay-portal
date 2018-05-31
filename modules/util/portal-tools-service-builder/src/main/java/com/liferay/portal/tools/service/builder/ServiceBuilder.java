@@ -119,6 +119,7 @@ import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
+import org.dom4j.DocumentType;
 import org.dom4j.Element;
 import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
@@ -596,6 +597,8 @@ public class ServiceBuilder {
 			Document document = saxReader.read(
 				new XMLSafeReader(
 					ToolsUtil.getContent(_normalize(inputFileName))));
+
+			_compatProperties = _getCompatProperties(document.getDocType());
 
 			Element rootElement = document.getRootElement();
 
@@ -2108,6 +2111,9 @@ public class ServiceBuilder {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+		context.put(
+			"stringBundlerCompat",
+			_compatProperties.getProperty("StringBundler"));
 
 		// Content
 
@@ -2164,6 +2170,9 @@ public class ServiceBuilder {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+		context.put(
+			"stringBundlerCompat",
+			_compatProperties.getProperty("StringBundler"));
 
 		// Content
 
@@ -2353,6 +2362,9 @@ public class ServiceBuilder {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
+		context.put(
+			"stringBundlerCompat",
+			_compatProperties.getProperty("StringBundler"));
 
 		JavaClass modelImplJavaClass = _getJavaClass(
 			StringBundler.concat(
@@ -2708,6 +2720,9 @@ public class ServiceBuilder {
 
 		context.put("cacheFields", _getCacheFields(modelImplJavaClass));
 		context.put("entity", entity);
+		context.put(
+			"stringBundlerCompat",
+			_compatProperties.getProperty("StringBundler"));
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
@@ -2800,6 +2815,9 @@ public class ServiceBuilder {
 		context.put("cacheFields", _getCacheFields(modelImplJavaClass));
 		context.put("entity", entity);
 		context.put("hasClassNameCacheField", hasClassNameCacheField);
+		context.put(
+			"stringBundlerCompat",
+			_compatProperties.getProperty("StringBundler"));
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
@@ -2919,6 +2937,9 @@ public class ServiceBuilder {
 
 		context.put("entity", entity);
 		context.put("referenceEntities", _mergeReferenceEntities(entity));
+		context.put(
+			"stringBundlerCompat",
+			_compatProperties.getProperty("StringBundler"));
 
 		JavaClass modelImplJavaClass = _getJavaClass(
 			StringBundler.concat(
@@ -4420,6 +4441,31 @@ public class ServiceBuilder {
 
 		return StringUtil.replace(
 			content, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+	}
+
+	private Properties _getCompatProperties(DocumentType documentType) {
+		String systemID = documentType.getSystemID();
+
+		_pattern = Pattern.compile(".*service-builder_(.*).dtd");
+
+		Matcher matcher = _pattern.matcher(systemID);
+
+		matcher.matches();
+
+		String version = matcher.group(1);
+
+		Properties properties = new Properties();
+
+		try (InputStream is = ServiceBuilder.class.getResourceAsStream(
+				"dependencies/" + version + "/compatibility.properties")) {
+
+			properties.load(is);
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		return properties;
 	}
 
 	private Map<String, Object> _getContext() throws TemplateModelException {
@@ -7041,6 +7087,7 @@ public class ServiceBuilder {
 	private long _buildNumber;
 	private boolean _buildNumberIncrement;
 	private boolean _commercialPlugin;
+	private Properties _compatProperties;
 	private String _currentTplName;
 	private int _databaseNameMaxLength = 30;
 	private List<Entity> _entities;
@@ -7056,6 +7103,7 @@ public class ServiceBuilder {
 	private boolean _osgiModule;
 	private String _outputPath;
 	private String _packagePath;
+	private Pattern _pattern;
 	private String _pluginName;
 	private String _portletShortName = StringPool.BLANK;
 	private String _propsUtil;

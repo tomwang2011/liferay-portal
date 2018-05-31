@@ -16,7 +16,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.kernel.util.StringBundler" %><%@
+<%@ page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.taglib.util.OutputTag" %>
 

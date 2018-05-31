@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.util.StringBundler" %><%@
+<%@ page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%

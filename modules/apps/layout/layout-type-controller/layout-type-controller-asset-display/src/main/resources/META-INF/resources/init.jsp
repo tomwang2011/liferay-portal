@@ -27,8 +27,8 @@ page import="com.liferay.fragment.model.FragmentEntryLink" %><%@
 page import="com.liferay.fragment.util.FragmentEntryRenderUtil" %><%@
 page import="com.liferay.layout.type.controller.asset.display.internal.constants.AssetDisplayLayoutTypeControllerWebKeys" %><%@
 page import="com.liferay.layout.type.controller.asset.display.internal.display.context.AssetDisplayLayoutTypeControllerDisplayContext" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringBundler" %>
+page import="com.liferay.petra.string.StringBundler" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
