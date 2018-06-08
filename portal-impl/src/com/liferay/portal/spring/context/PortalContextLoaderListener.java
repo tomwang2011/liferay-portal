@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
+import com.liferay.portal.servlet.MainServlet;
 import com.liferay.portal.servlet.PortalSessionListener;
 import com.liferay.portal.spring.aop.DynamicProxyCreator;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
@@ -79,6 +80,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -105,6 +107,18 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 	public static String getPortalServletContextPath() {
 		return _portalServletContextPath;
+	}
+
+	public static void waitForFile() {
+		try {
+			System.out.println("Connect Profiler now!");
+			Scanner scanner = new Scanner(System.in);
+
+			scanner.nextLine();
+		}
+		catch (Exception e) {
+			System.out.println("Exception!");
+		}
 	}
 
 	@Override
@@ -188,6 +202,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
+		long startTime = System.currentTimeMillis();
+
 		Thread currentThread = Thread.currentThread();
 
 		SystemProperties.load(currentThread.getContextClassLoader());
@@ -219,7 +235,11 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		ClassPathUtil.initializeClassPaths(servletContext);
 		PortalClassPathUtil.initializeClassPaths(servletContext);
 
+		long afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed before init: " + afterMethod);
 		InitUtil.init();
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after init: " + afterMethod);
 
 		_portalServletContextName = servletContext.getServletContextName();
 
@@ -242,7 +262,12 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			tempDir.getAbsolutePath();
 
 		try {
+			afterMethod = System.currentTimeMillis() - startTime;
+			System.out.println("********* Time elapsed before init framework: " + afterMethod);
 			ModuleFrameworkUtilAdapter.initFramework();
+
+			afterMethod = System.currentTimeMillis() - startTime;
+			System.out.println("********* Time elapsed after init framework: " + afterMethod);
 
 			_arrayApplicationContext = new ArrayApplicationContext(
 				PropsValues.SPRING_INFRASTRUCTURE_CONFIGS);
@@ -254,9 +279,16 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			ModuleFrameworkUtilAdapter.registerContext(
 				_arrayApplicationContext);
 
+			afterMethod = System.currentTimeMillis() - startTime;
+			System.out.println("********* Time elapsed before start framework: " + afterMethod);
+
 			ModuleFrameworkUtilAdapter.startFramework();
+			afterMethod = System.currentTimeMillis() - startTime;
+			System.out.println("********* Time elapsed after start framework: " + afterMethod);
 
 			ModuleFrameworkUtilAdapter.startRuntime();
+			afterMethod = System.currentTimeMillis() - startTime;
+			System.out.println("********* Time elapsed after start runtime: " + afterMethod);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -290,12 +322,19 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		PortalContextLoaderLifecycleThreadLocal.setInitializing(true);
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed before start contextInitalized: " + afterMethod);
 		try {
 			super.contextInitialized(servletContextEvent);
+
+			afterMethod = System.currentTimeMillis() - startTime;
+			System.out.println("********* Time elapsed after start contextInitalized: " + afterMethod);
 		}
 		finally {
 			PortalContextLoaderLifecycleThreadLocal.setInitializing(false);
 		}
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after setInitializing: " + afterMethod);
 
 		ApplicationContext applicationContext =
 			ContextLoader.getCurrentWebApplicationContext();
@@ -309,6 +348,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		InitUtil.registerSpringInitialized();
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after RegisterSpringInitialized: " + afterMethod);
 
 		if (PropsValues.CACHE_CLEAR_ON_CONTEXT_INITIALIZATION) {
 			CacheRegistryUtil.clear();
@@ -337,6 +378,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 			classLoader = classLoader.getParent();
 		}
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after ClearClassLoader: " + afterMethod);
 
 		AutowireCapableBeanFactory autowireCapableBeanFactory =
 			applicationContext.getAutowireCapableBeanFactory();
@@ -348,6 +391,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		dynamicProxyCreator.clear();
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed before registerContext: " + afterMethod);
 		try {
 			ModuleFrameworkUtilAdapter.registerContext(applicationContext);
 		}
@@ -355,9 +400,14 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			throw new RuntimeException(e);
 		}
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after registerContext: " + afterMethod);
+
 		CustomJspBagRegistryUtil.getCustomJspBags();
 
 		initListeners(servletContext);
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after initListeners: " + afterMethod);
 	}
 
 	protected void clearFilteredPropertyDescriptorsCache(

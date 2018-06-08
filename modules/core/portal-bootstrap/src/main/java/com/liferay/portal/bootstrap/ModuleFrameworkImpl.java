@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.module.framework.ModuleFramework;
+import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -86,6 +87,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
@@ -252,6 +254,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	@Override
 	public void initFramework() throws Exception {
+		long startTime = System.currentTimeMillis();
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initializing the OSGi framework");
 		}
@@ -260,12 +263,18 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		_initRequiredStartupDirs();
 
+		long afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in ModuleFrameworkImpl after initRequiredStartupDirs: " + afterMethod);
+
 		Thread currentThread = Thread.currentThread();
 
 		List<FrameworkFactory> frameworkFactories = ServiceLoader.load(
 			new URLClassLoader(_getClassPathURLs(), null),
 			currentThread.getContextClassLoader(), FrameworkFactory.class,
 			null);
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in ModuleFrameworkImpl after serviceLoader Load: " + afterMethod);
 
 		FrameworkFactory frameworkFactory = frameworkFactories.get(0);
 
@@ -278,11 +287,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		Map<String, String> properties = _buildFrameworkProperties(
 			frameworkFactory.getClass());
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in ModuleFrameworkImpl after buildFrameworkProperties: " + afterMethod);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Creating a new OSGi framework instance");
 		}
 
 		_framework = frameworkFactory.newFramework(properties);
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in ModuleFrameworkImpl after newFramework: " + afterMethod);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initializing the new OSGi framework instance");
@@ -290,12 +305,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		_framework.init();
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in ModuleFrameworkImpl after framework init: " + afterMethod);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Binding the OSGi framework to the registry API");
 		}
 
 		RegistryUtil.setRegistry(
 			new RegistryImpl(_framework.getBundleContext()));
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in ModuleFrameworkImpl after setRegistry: " + afterMethod);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -305,6 +325,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		ServiceTrackerMapFactoryUtil.setServiceTrackerMapFactory(
 			new ServiceTrackerMapFactoryImpl(_framework.getBundleContext()));
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in ModuleFrameworkImpl after setServiceTrackerMapFactory: " + afterMethod);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialized the OSGi framework");
@@ -399,17 +422,30 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	@Override
 	public void startFramework() throws Exception {
+		long startTime = System.currentTimeMillis();
 		if (_log.isDebugEnabled()) {
 			_log.debug("Starting the OSGi framework");
 		}
 
 		_framework.start();
 
+		long afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in startFramework after start: " + afterMethod);
+
 		_setUpPrerequisiteFrameworkServices(_framework.getBundleContext());
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in startFramework after setUpPrerequisiteFrameworkServices: " + afterMethod);
 
 		Set<Bundle> initialBundles = _setUpInitialBundles();
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in startFramework after setUpInitialBundles: " + afterMethod);
+
 		_startDynamicBundles(initialBundles);
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in startFramework after startDynamicBundles: " + afterMethod);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Started the OSGi framework");
@@ -1242,6 +1278,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private Set<Bundle> _setUpInitialBundles() throws Exception {
+		long startTime = System.currentTimeMillis();
 		if (_log.isDebugEnabled()) {
 			_log.debug("Starting initial bundles");
 		}
@@ -1256,6 +1293,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		bundleContext.registerService(
 			ThrowableCollector.class, throwableCollector, dictionary);
+
+		long afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in setUpInitalBundles after registerService: " + afterMethod);
 
 		final Map<String, Bundle> bundles = new LinkedHashMap<>();
 
@@ -1298,6 +1338,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			});
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in setUpInitalBundles after walkFileTree: " + afterMethod);
+
 		for (String staticJarFileName :
 				PropsValues.MODULE_FRAMEWORK_STATIC_JARS) {
 
@@ -1311,6 +1354,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				_log.error("Missing " + staticJarFile);
 			}
 		}
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in setUpInitalBundles after staticJars: " + afterMethod);
 
 		Collections.sort(jarPaths);
 
@@ -1344,6 +1390,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in setUpInitalBundles after uninstalled orphan overriding: " + afterMethod);
+
 		_refreshBundles(refreshBundles);
 
 		refreshBundles.clear();
@@ -1370,6 +1419,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in setUpInitalBundles after jarPaths: " + afterMethod);
+
 		String deployDir = bundleContext.getProperty("lpkg.deployer.dir");
 
 		for (String staticFileName :
@@ -1383,6 +1435,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 						file, overrideStaticFileNames));
 			}
 		}
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in setUpInitalBundles after getStaticLPKGFileNames: " + afterMethod);
 
 		Set<String> overrideLPKGFileNames = new HashSet<>();
 
@@ -1400,6 +1455,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in setUpInitalBundles after directoryStream: " + afterMethod);
+
 		for (Bundle bundle : bundleContext.getBundles()) {
 			String location = bundle.getLocation();
 
@@ -1413,6 +1471,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				bundle.uninstall();
 			}
 		}
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in setUpInitalBundles after overrideLPKGFileNames Uninstall: " + afterMethod);
 
 		Bundle[] initialBundles = bundleContext.getBundles();
 
@@ -1447,10 +1508,17 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			};
 
+			afterMethod = System.currentTimeMillis() - startTime;
+			System.out.println("*****Processing bundle: " + bundle.getSymbolicName());
+			System.out.println("********* Time elapsed: " + afterMethod);
+
 			bundleTracker.open();
 
 			countDownLatch.await();
 		}
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in setUpInitalBundles after bundleTracker open: " + afterMethod);
 
 		throwableCollector.rethrow();
 
@@ -1481,13 +1549,22 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			hostBundleSymbolicNames.add(fragmentHost);
 		}
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in setUpInitalBundles after installedBundles: " + afterMethod);
+
 		for (Bundle bundle : installedBundles) {
 			if (hostBundleSymbolicNames.contains(bundle.getSymbolicName())) {
 				refreshBundles.add(bundle);
 			}
 		}
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in setUpInitalBundles after refresh installed bundles: " + afterMethod);
+
 		_refreshBundles(refreshBundles);
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in setUpInitalBundles after refreshBundles: " + afterMethod);
 
 		return new HashSet<>(Arrays.asList(initialBundles));
 	}
@@ -1660,6 +1737,18 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			sb.append("\"");
 
 			_log.warn(sb.toString());
+		}
+	}
+
+	private static void waitForFile() {
+		try {
+			System.out.println("Connect Profiler now!");
+			Scanner scanner = new Scanner(System.in);
+
+			scanner.nextLine();
+		}
+		catch (Exception e) {
+			System.out.println("Exception!");
 		}
 	}
 
