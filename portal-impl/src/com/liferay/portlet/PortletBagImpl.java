@@ -150,32 +150,6 @@ public class PortletBagImpl implements PortletBag {
 
 	@Override
 	public void destroy() {
-		close(_assetRendererFactoryInstances);
-		close(_atomCollectionAdapterInstances);
-		close(_configurationActionInstances);
-		close(_controlPanelEntryInstances);
-		close(_customAttributesDisplayInstances);
-		close(_friendlyURLMapperTracker);
-		close(_indexerInstances);
-		close(_openSearchInstances);
-		close(_permissionPropagatorInstances);
-		close(_pollerProcessorInstances);
-		close(_popMessageListenerInstances);
-		close(_portletDataHandlerInstances);
-		close(_portletLayoutListenerInstances);
-		close(_preferencesValidatorInstances);
-		close(_schedulerEventMessageListeners);
-		close(_socialActivityInterpreterInstances);
-		close(_socialRequestInterpreterInstances);
-		close(_stagedModelDataHandlerInstances);
-		close(_templateHandlerInstances);
-		close(_trashHandlerInstances);
-		close(_urlEncoderInstances);
-		close(_userNotificationDefinitionInstances);
-		close(_userNotificationHandlerInstances);
-		close(_webDAVStorageInstances);
-		close(_workflowHandlerInstances);
-		close(_xmlRpcMethodInstances);
 	}
 
 	@Override
