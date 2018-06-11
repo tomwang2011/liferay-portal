@@ -168,4 +168,3 @@ public class LocalRepositoryImpl implements Repository, SynchronousBundleListene
         }
     }
 }
-/* @generated */

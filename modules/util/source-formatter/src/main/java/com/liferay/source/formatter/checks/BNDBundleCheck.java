@@ -92,6 +92,14 @@ public class BNDBundleCheck extends BaseFileCheck {
 			String value = StringUtil.toLowerCase(s.trim());
 
 			if (Validator.isNull(value)) {
+				content = _updateInstruction(
+					content, "Liferay-Releng-Bundle", "false");
+				content = _updateInstruction(
+					content, "Liferay-Releng-Fix-Delivery-Method",
+					StringPool.BLANK);
+				content = _updateInstruction(
+					content, "Liferay-Releng-Portal-Required", "false");
+
 				continue;
 			}
 
@@ -115,6 +123,12 @@ public class BNDBundleCheck extends BaseFileCheck {
 				content, "Liferay-Releng-Portal-Required", "true");
 			content = _updateInstruction(
 				content, "Liferay-Releng-Suite", value);
+		}
+
+		for (String instruction : _REQUIRED_INSTRUCTIONS) {
+			if (!content.contains(instruction + ":")) {
+				content = StringBundler.concat(content, "\n", instruction, ":");
+			}
 		}
 
 		return content;
@@ -168,6 +182,17 @@ public class BNDBundleCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private static final String[] _REQUIRED_INSTRUCTIONS = {
+		"Liferay-Releng-App-Description", "Liferay-Releng-App-Title",
+		"Liferay-Releng-Bundle", "Liferay-Releng-Category",
+		"Liferay-Releng-Demo-Url", "Liferay-Releng-Deprecated",
+		"Liferay-Releng-Fix-Delivery-Method", "Liferay-Releng-Labs",
+		"Liferay-Releng-Marketplace", "Liferay-Releng-Portal-Required",
+		"Liferay-Releng-Public", "Liferay-Releng-Restart-Required",
+		"Liferay-Releng-Suite", "Liferay-Releng-Support-Url",
+		"Liferay-Releng-Supported"
+	};
 
 	private static final String[] _SUITES = {
 		"collaboration", "forms-and-workflow", "foundation", "static",
