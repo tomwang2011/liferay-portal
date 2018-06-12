@@ -14,7 +14,6 @@
 
 package com.liferay.portal.osgi.web.portlet.tracker.internal;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.model.EventDefinition;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
@@ -34,20 +33,17 @@ import java.util.Set;
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
-import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Raymond Augé
  */
 public class BundlePortletApp implements PortletApp {
 
-	public BundlePortletApp(
-		Bundle bundle, Portlet portalPortletModel,
-		ServiceTracker<ServletContextHelperRegistration, ServletContext>
-			serviceTracker) {
-
+	public BundlePortletApp(Bundle bundle, Portlet portalPortletModel) {
+		_bundle = bundle;
 		_portalPortletModel = portalPortletModel;
-		_serviceTracker = serviceTracker;
 
 		_pluginPackage = new BundlePluginPackage(bundle, this);
 		_portletApp = portalPortletModel.getPortletApp();
@@ -161,12 +157,16 @@ public class BundlePortletApp implements PortletApp {
 
 	@Override
 	public ServletContext getServletContext() {
-		try {
-			return _serviceTracker.waitForService(0);
-		}
-		catch (InterruptedException ie) {
-			return ReflectionUtil.throwException(ie);
-		}
+		BundleContext bundleContext = _bundle.getBundleContext();
+
+		ServiceReference<ServletContextHelperRegistration> serviceReference =
+			bundleContext.getServiceReference(
+				ServletContextHelperRegistration.class);
+
+		ServletContextHelperRegistration servletContextHelperRegistration =
+			bundleContext.getService(serviceReference);
+
+		return servletContextHelperRegistration.getServletContext();
 	}
 
 	@Override
@@ -242,11 +242,10 @@ public class BundlePortletApp implements PortletApp {
 		_portletApp.setWARFile(warFile);
 	}
 
+	private final Bundle _bundle;
 	private String _defaultNamespace;
 	private final BundlePluginPackage _pluginPackage;
 	private final Portlet _portalPortletModel;
 	private final PortletApp _portletApp;
-	private final ServiceTracker
-		<ServletContextHelperRegistration, ServletContext> _serviceTracker;
 
 }
