@@ -19,7 +19,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.osgi.web.servlet.JSPServletFactory;
 import com.liferay.portal.osgi.web.servlet.JSPTaglibHelper;
-import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperFactory;
+import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 import com.liferay.portal.osgi.web.wab.extender.internal.configuration.WabExtenderConfiguration;
 import com.liferay.portal.osgi.web.wab.extender.internal.event.EventUtil;
 import com.liferay.portal.profile.PortalProfile;
@@ -127,7 +127,7 @@ public class WabFactory extends AbstractExtender {
 	private Logger _logger;
 
 	@Reference
-	private ServletContextHelperFactory _servletContextHelperFactory;
+	private ServletContextHelperRegistration _servletContextHelperRegistration;
 
 	private WabExtenderConfiguration _wabExtenderConfiguration;
 	private WebBundleDeployer _webBundleDeployer;
