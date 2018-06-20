@@ -3075,7 +3075,7 @@ go</echo>
 						<![CDATA[
 							JMX_OPTS="${testable.tomcat.jmx.opts}"
 
-							CATALINA_OPTS="${CATALINA_OPTS} ${JMX_OPTS} -Dsun.zip.disableMemoryMapping=true"
+							CATALINA_OPTS="${CATALINA_OPTS} ${JMX_OPTS} -Dsun.zip.disableMemoryMapping=true -Djava.security.egd=file:/dev/./urandom"
 						]]>
 					</echo>
 				</then>

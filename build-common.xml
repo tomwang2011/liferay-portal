@@ -963,6 +963,7 @@ information.
 				<jvmarg value="-DsocksProxyHost=127.0.0.1" />
 				<jvmarg value="-DsocksProxyPort=8888" />
 				<jvmarg value="-Dsun.zip.disableMemoryMapping=true" />
+				<jvmarg value="-Dfile:/dev/./urandom" />
 				<misc />
 				<jvmarg value="-Duser.timezone=GMT" />
 				<classpath location="test-coverage" />
