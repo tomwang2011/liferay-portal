@@ -66,11 +66,20 @@ public class MVCCommandCache {
 
 		_packagePrefix = packagePrefix;
 
-		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
-			mvcCommandClass,
-			StringBundler.concat(
+		String filterString = null;
+
+		if (portletId.equals(portletName)) {
+			filterString = StringBundler.concat(
+				"(&(javax.portlet.name=", portletId, "))(mvc.command.name=*))");
+		}
+		else {
+			filterString = StringBundler.concat(
 				"(&(|(javax.portlet.name=", portletName,
-				")(javax.portlet.name=", portletId, "))(mvc.command.name=*))"),
+				")(javax.portlet.name=", portletId, "))(mvc.command.name=*))");
+		}
+
+		_serviceTrackerMap = ServiceTrackerCollections.openSingleValueMap(
+			mvcCommandClass, filterString,
 			new ServiceReferenceMapper<String, MVCCommand>() {
 
 				@Override
