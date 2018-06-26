@@ -64,17 +64,35 @@ public class WabFactory extends AbstractExtender {
 		_wabExtenderConfiguration = ConfigurableUtil.createConfigurable(
 			WabExtenderConfiguration.class, properties);
 
+		setSynchronous(false);
+
+		int i = 0;
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			String contextPath = WabUtil.getWebContextPath(bundle);
+
+			if (contextPath != null) {
+				i++;
+			}
+		}
+
+		_countDownLatch = new CountDownLatch(i);
+
 		try {
 			_webBundleDeployer = new WebBundleDeployer(
 				bundleContext, _jspServletFactory, _jspTaglibHelper, properties,
 				_eventUtil, _logger);
 
 			start(bundleContext);
+
+			_countDownLatch.await();
 		}
 		catch (Exception e) {
 			_logger.log(Logger.LOG_ERROR, e.getMessage(), e);
 		}
 	}
+
+	CountDownLatch _countDownLatch;
 
 	@Deactivate
 	public void deactivate(BundleContext bundleContext) throws Exception {
@@ -174,6 +192,7 @@ public class WabFactory extends AbstractExtender {
 				_serviceRegistration = _webBundleDeployer.doStart(_bundle);
 			}
 			finally {
+				_countDownLatch.countDown();
 				_started.countDown();
 			}
 		}
