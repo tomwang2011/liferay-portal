@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import javax.sql.DataSource;
 
@@ -69,7 +70,24 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
+		setSynchronous(false);
+
+		int i = 0;
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			Dictionary<String, String> headers = bundle.getHeaders(
+			StringPool.BLANK);
+
+			if (headers.get("Liferay-Spring-Context") != null) {
+				i++;
+			}
+		}
+
+		_countDownLatch = new CountDownLatch(i);
+
 		start(bundleContext);
+
+		_countDownLatch.await();
 	}
 
 	@Deactivate
@@ -139,6 +157,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleApplicationContextExtender.class);
 
+	private CountDownLatch _countDownLatch;
 	private ServiceConfigurator _serviceConfigurator;
 
 	private class ModuleApplicationContextExtension implements Extension {
@@ -185,53 +204,60 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 		@Override
 		public void start() throws Exception {
-			_component = _dependencyManager.createComponent();
+			try {
+				_component = _dependencyManager.createComponent();
 
-			BundleContext bundleContext =
-				ModuleApplicationContextExtender.this.getBundleContext();
+				BundleContext bundleContext =
+					ModuleApplicationContextExtender.this.getBundleContext();
 
-			Bundle bundle = bundleContext.getBundle();
+				Bundle bundle = bundleContext.getBundle();
 
-			_component.setImplementation(
-				new ModuleApplicationContextRegistrator(
-					_bundle, bundle, _serviceConfigurator));
+				_component.setImplementation(
+					new ModuleApplicationContextRegistrator(
+						_bundle, bundle, _serviceConfigurator));
 
-			ClassLoader classLoader = new BundleResolverClassLoader(
-				_bundle, bundle);
+				ClassLoader classLoader = new BundleResolverClassLoader(
+					_bundle, bundle);
 
-			List<ContextDependency> contextDependencies =
-				_processServiceReferences(_bundle);
+				List<ContextDependency> contextDependencies =
+					_processServiceReferences(_bundle);
 
-			for (ContextDependency contextDependency : contextDependencies) {
-				ServiceDependency serviceDependency =
-					_dependencyManager.createServiceDependency();
+				for (ContextDependency contextDependency :
+						contextDependencies) {
 
-				serviceDependency.setRequired(true);
+					ServiceDependency serviceDependency =
+						_dependencyManager.createServiceDependency();
 
-				Class<?> serviceClass = Class.forName(
-					contextDependency.getServiceClassName(), false,
+					serviceDependency.setRequired(true);
+
+					Class<?> serviceClass = Class.forName(
+						contextDependency.getServiceClassName(), false,
+						classLoader);
+
+					serviceDependency.setService(
+						serviceClass, contextDependency.getFilterString());
+
+					_component.add(serviceDependency);
+				}
+
+				Dictionary<String, String> headers = _bundle.getHeaders(
+					StringPool.BLANK);
+
+				String requireSchemaVersion = headers.get(
+					"Liferay-Require-SchemaVersion");
+
+				if (Validator.isNull(requireSchemaVersion)) {
+					_generateReleaseInfo();
+				}
+
+				_dependencyManager.add(_component);
+
+				_upgradeStepServiceRegistration = _processInitialUpgrade(
 					classLoader);
-
-				serviceDependency.setService(
-					serviceClass, contextDependency.getFilterString());
-
-				_component.add(serviceDependency);
 			}
-
-			Dictionary<String, String> headers = _bundle.getHeaders(
-				StringPool.BLANK);
-
-			String requireSchemaVersion = headers.get(
-				"Liferay-Require-SchemaVersion");
-
-			if (Validator.isNull(requireSchemaVersion)) {
-				_generateReleaseInfo();
+			finally {
+				_countDownLatch.countDown();
 			}
-
-			_dependencyManager.add(_component);
-
-			_upgradeStepServiceRegistration = _processInitialUpgrade(
-				classLoader);
 		}
 
 		private void _generateReleaseInfo() {
