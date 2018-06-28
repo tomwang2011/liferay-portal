@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.net.URL;
 import java.util.ArrayDeque;
 import java.util.Collections;
 import java.util.HashSet;
@@ -496,13 +497,13 @@ public class LiferayPortlet extends GenericPortlet {
 			}
 		}
 
-		validPaths = getPaths(rootPath, extension);
+		//validPaths = getPaths(rootPath, extension);
 
-		validPaths.addAll(
-			getPaths(_PATH_META_INF_RESOURCES.concat(rootPath), extension));
+		//validPaths.addAll(
+		//	getPaths(_PATH_META_INF_RESOURCES.concat(rootPath), extension));
 
-		Collections.addAll(
-			validPaths, StringUtil.split(getInitParameter("valid-paths")));
+		//Collections.addAll(
+		//	validPaths, StringUtil.split(getInitParameter("valid-paths")));
 	}
 
 	protected boolean isAddSuccessMessage(ActionRequest actionRequest) {
