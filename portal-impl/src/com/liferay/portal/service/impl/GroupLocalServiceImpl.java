@@ -4414,28 +4414,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected List<PortletDataHandler> getPortletDataHandlers(Group group) {
-		List<Portlet> portlets = portletLocalService.getPortlets(
-			group.getCompanyId());
-
-		List<PortletDataHandler> portletDataHandlers = new ArrayList<>(
-			portlets.size());
-
-		for (Portlet portlet : portlets) {
-			if (!portlet.isActive()) {
-				continue;
-			}
-
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
-
-			if ((portletDataHandler != null) &&
-				!portletDataHandler.isDataPortalLevel()) {
-
-				portletDataHandlers.add(portletDataHandler);
-			}
-		}
-
-		return portletDataHandlers;
+		return Collections.emptyList();
 	}
 
 	protected String[] getSearchNames(long companyId, String name) {
