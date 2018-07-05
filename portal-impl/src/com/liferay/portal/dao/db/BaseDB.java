@@ -50,9 +50,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -378,6 +380,8 @@ public abstract class BaseDB implements DB {
 			}
 		}
 
+		List<String> sqls = new ArrayList<>();
+
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(template))) {
 
@@ -478,38 +482,57 @@ public abstract class BaseDB implements DB {
 					}
 				}
 
-				try (Statement s = connection.createStatement()) {
-					s.executeUpdate(sql);
+				sqls.add(sql);
+			}
+		}
+
+		if (sqls.isEmpty()) {
+			return;
+		}
+
+		try (Statement s = connection.createStatement()) {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			if (databaseMetaData.supportsBatchUpdates()) {
+				for (String sql : sqls) {
+					s.addBatch(sql);
 				}
-				catch (SecurityException se) {
-					if (failOnError) {
-						throw se;
-					}
-					else if (_log.isWarnEnabled()) {
-						_log.warn(se.getMessage());
-					}
+
+				s.executeBatch();
+			}
+			else {
+				for (String sql : sqls) {
+					s.execute(sql);
 				}
-				catch (SQLException sqle) {
-					_logSQLException(sql, sqle);
+			}
+		}
+		catch (SecurityException se) {
+			if (failOnError) {
+				throw se;
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(se.getMessage());
+			}
+		}
+		catch (SQLException sqle) {
+			_logSQLException(template, sqle);
 
-					if (failOnError) {
-						throw sqle;
-					}
+			if (failOnError) {
+				throw sqle;
+			}
 
-					String message = GetterUtil.getString(sqle.getMessage());
+			String message = GetterUtil.getString(sqle.getMessage());
 
-					if (!message.startsWith("Duplicate key name") &&
-						_log.isWarnEnabled()) {
+			if (!message.startsWith("Duplicate key name") &&
+				_log.isWarnEnabled()) {
 
-						_log.warn(message + ": " + template);
-					}
+				_log.warn(message + ": " + template);
+			}
 
-					if (message.startsWith("Duplicate entry") ||
-						message.startsWith("Specified key was too long")) {
+			if (message.startsWith("Duplicate entry") ||
+				message.startsWith("Specified key was too long")) {
 
-						_log.error(message + ": " + template);
-					}
-				}
+				_log.error(message + ": " + template);
 			}
 		}
 	}
