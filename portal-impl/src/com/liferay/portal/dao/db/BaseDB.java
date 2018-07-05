@@ -453,20 +453,12 @@ public abstract class BaseDB implements DB {
 				try {
 					runSQL(connection, sql);
 				}
-				catch (IOException ioe) {
+				catch (IOException | SecurityException e) {
 					if (failOnError) {
-						throw ioe;
+						throw e;
 					}
 					else if (_log.isWarnEnabled()) {
-						_log.warn(ioe.getMessage());
-					}
-				}
-				catch (SecurityException se) {
-					if (failOnError) {
-						throw se;
-					}
-					else if (_log.isWarnEnabled()) {
-						_log.warn(se.getMessage());
+						_log.warn(e.getMessage());
 					}
 				}
 				catch (SQLException sqle) {
