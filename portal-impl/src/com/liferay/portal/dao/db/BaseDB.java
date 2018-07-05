@@ -450,7 +450,7 @@ public abstract class BaseDB implements DB {
 					continue;
 				}
 
-				try (Statement s = connection.createStatement()) {
+				try {
 					sql = buildSQL(sql);
 
 					sql = SQLTransformer.transform(sql.trim());
@@ -466,8 +466,6 @@ public abstract class BaseDB implements DB {
 					if (_log.isDebugEnabled()) {
 						_log.debug(sql);
 					}
-
-					s.executeUpdate(sql);
 				}
 				catch (IOException | SecurityException e) {
 					if (failOnError) {
@@ -475,6 +473,20 @@ public abstract class BaseDB implements DB {
 					}
 					else if (_log.isWarnEnabled()) {
 						_log.warn(e.getMessage());
+
+						continue;
+					}
+				}
+
+				try (Statement s = connection.createStatement()) {
+					s.executeUpdate(sql);
+				}
+				catch (SecurityException se) {
+					if (failOnError) {
+						throw se;
+					}
+					else if (_log.isWarnEnabled()) {
+						_log.warn(se.getMessage());
 					}
 				}
 				catch (SQLException sqle) {
