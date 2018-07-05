@@ -433,7 +433,7 @@ public abstract class BaseDB implements DB {
 					include = convertTimestamp(include);
 					include = replaceTemplate(include, getTemplate());
 
-					runSQLTemplateString(include, false, true);
+					runSQLTemplateString(connection, include, false, true);
 				}
 				else {
 					sb.append(line);
