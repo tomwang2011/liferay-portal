@@ -434,57 +434,57 @@ public abstract class BaseDB implements DB {
 				sb.append(line);
 				sb.append(StringPool.NEW_LINE);
 
-				if (line.endsWith(";")) {
-					String sql = sb.toString();
+				if (!line.endsWith(";")) {
+					continue;
+				}
 
-					sb.setIndex(0);
+				String sql = sb.toString();
 
-					try {
-						if (!sql.equals("COMMIT_TRANSACTION;\n")) {
-							runSQL(connection, sql);
-						}
-						else {
-							if (_log.isDebugEnabled()) {
-								_log.debug("Skip commit sql");
-							}
+				sb.setIndex(0);
+
+				try {
+					if (!sql.equals("COMMIT_TRANSACTION;\n")) {
+						runSQL(connection, sql);
+					}
+					else {
+						if (_log.isDebugEnabled()) {
+							_log.debug("Skip commit sql");
 						}
 					}
-					catch (IOException ioe) {
-						if (failOnError) {
-							throw ioe;
-						}
-						else if (_log.isWarnEnabled()) {
-							_log.warn(ioe.getMessage());
-						}
+				}
+				catch (IOException ioe) {
+					if (failOnError) {
+						throw ioe;
 					}
-					catch (SecurityException se) {
-						if (failOnError) {
-							throw se;
-						}
-						else if (_log.isWarnEnabled()) {
-							_log.warn(se.getMessage());
-						}
+					else if (_log.isWarnEnabled()) {
+						_log.warn(ioe.getMessage());
 					}
-					catch (SQLException sqle) {
-						if (failOnError) {
-							throw sqle;
-						}
+				}
+				catch (SecurityException se) {
+					if (failOnError) {
+						throw se;
+					}
+					else if (_log.isWarnEnabled()) {
+						_log.warn(se.getMessage());
+					}
+				}
+				catch (SQLException sqle) {
+					if (failOnError) {
+						throw sqle;
+					}
 
-						String message = GetterUtil.getString(
-							sqle.getMessage());
+					String message = GetterUtil.getString(sqle.getMessage());
 
-						if (!message.startsWith("Duplicate key name") &&
-							_log.isWarnEnabled()) {
+					if (!message.startsWith("Duplicate key name") &&
+						_log.isWarnEnabled()) {
 
-							_log.warn(message + ": " + buildSQL(sql));
-						}
+						_log.warn(message + ": " + buildSQL(sql));
+					}
 
-						if (message.startsWith("Duplicate entry") ||
-							message.startsWith(
-								"Specified key was too long")) {
+					if (message.startsWith("Duplicate entry") ||
+						message.startsWith("Specified key was too long")) {
 
-							_log.error(line);
-						}
+						_log.error(line);
 					}
 				}
 			}
