@@ -442,15 +442,16 @@ public abstract class BaseDB implements DB {
 
 				sb.setIndex(0);
 
+				if (sql.equals("COMMIT_TRANSACTION;\n")) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Skip commit sql");
+					}
+
+					continue;
+				}
+
 				try {
-					if (!sql.equals("COMMIT_TRANSACTION;\n")) {
-						runSQL(connection, sql);
-					}
-					else {
-						if (_log.isDebugEnabled()) {
-							_log.debug("Skip commit sql");
-						}
-					}
+					runSQL(connection, sql);
 				}
 				catch (IOException ioe) {
 					if (failOnError) {
