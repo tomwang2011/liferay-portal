@@ -81,6 +81,7 @@ import com.liferay.portal.service.impl.LayoutTemplateLocalServiceImpl;
 import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsResponse;
 import com.liferay.portal.servlet.filters.i18n.I18nFilter;
 import com.liferay.portal.setup.SetupWizardSampleDataUtil;
+import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.PortletRequestProcessor;
 import com.liferay.portal.struts.StrutsUtil;
 import com.liferay.portal.util.ExtRegistry;
@@ -108,6 +109,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -194,6 +196,7 @@ public class MainServlet extends ActionServlet {
 
 	@Override
 	public void init() throws ServletException {
+		long startTime = System.currentTimeMillis();
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize");
 		}
@@ -202,7 +205,11 @@ public class MainServlet extends ActionServlet {
 
 		servletContext.setAttribute(MainServlet.class.getName(), Boolean.TRUE);
 
+		long afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed before callParentInit: " + afterMethod);
 		callParentInit();
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after callParentInit: " + afterMethod);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Verify patch levels");
@@ -266,6 +273,8 @@ public class MainServlet extends ActionServlet {
 			_log.debug("Process startup events");
 		}
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed before ProcessStartupEvents: " + afterMethod);
 		try {
 			processStartupEvents();
 		}
@@ -277,6 +286,8 @@ public class MainServlet extends ActionServlet {
 
 			System.exit(0);
 		}
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after ProcessStartupEvents: " + afterMethod);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize server detector");
@@ -288,6 +299,9 @@ public class MainServlet extends ActionServlet {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after server detector: " + afterMethod);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize plugin package");
@@ -302,6 +316,9 @@ public class MainServlet extends ActionServlet {
 			_log.error(e, e);
 		}
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after initPluginPackage: " + afterMethod);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize portlets");
 		}
@@ -314,6 +331,8 @@ public class MainServlet extends ActionServlet {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after portletAddAll: " + afterMethod);
 
 		try {
 			initLayoutTemplates(pluginPackage);
@@ -321,6 +340,9 @@ public class MainServlet extends ActionServlet {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after initLayoutTemplates: " + afterMethod);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize social");
@@ -333,6 +355,9 @@ public class MainServlet extends ActionServlet {
 			_log.error(e, e);
 		}
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after initSocial: " + afterMethod);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize themes");
 		}
@@ -343,6 +368,9 @@ public class MainServlet extends ActionServlet {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after initThemes: " + afterMethod);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize web settings");
@@ -355,6 +383,9 @@ public class MainServlet extends ActionServlet {
 			_log.error(e, e);
 		}
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after initWebSettings: " + afterMethod);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize extension environment");
 		}
@@ -365,6 +396,9 @@ public class MainServlet extends ActionServlet {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after initExt: " + afterMethod);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Process global startup events");
@@ -377,6 +411,9 @@ public class MainServlet extends ActionServlet {
 			_log.error(e, e);
 		}
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after processGlobalStartupEvents: " + afterMethod);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize resource actions");
 		}
@@ -388,12 +425,18 @@ public class MainServlet extends ActionServlet {
 			_log.error(e, e);
 		}
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after initResourceActions: " + afterMethod);
+
 		try {
 			initCompanies();
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after initCompanies: " + afterMethod);
 
 		if (StartupHelperUtil.isDBNew() &&
 			PropsValues.SETUP_WIZARD_ADD_SAMPLE_DATA) {
@@ -407,6 +450,9 @@ public class MainServlet extends ActionServlet {
 			}
 		}
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after addSampleData: " + afterMethod);
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Initialize plugins");
 		}
@@ -418,13 +464,29 @@ public class MainServlet extends ActionServlet {
 			_log.error(e, e);
 		}
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after initPlugins: " + afterMethod);
+
 		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, Boolean.TRUE);
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after setAttribute: " + afterMethod);
 
 		StartupHelperUtil.setStartupFinished(true);
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after setStartupFinished: " + afterMethod);
+
 		registerPortalInitialized();
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after registerPortalInitialized: " + afterMethod);
+
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
+
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed after all finish: " + afterMethod);
 	}
 
 	@Override
@@ -1336,7 +1398,12 @@ public class MainServlet extends ActionServlet {
 	}
 
 	protected void registerPortalInitialized() {
+		long startTime = System.currentTimeMillis();
+
 		Registry registry = RegistryUtil.getRegistry();
+
+		long afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in registerPortalInitalized after getRegistery: " + afterMethod);
 
 		Map<String, Object> properties = new HashMap<>();
 
@@ -1349,6 +1416,9 @@ public class MainServlet extends ActionServlet {
 				ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
 				properties);
 
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in registerPortalInitalized after portalInitializedModule: " + afterMethod);
+
 		properties = new HashMap<>();
 
 		properties.put("bean.id", ServletContext.class.getName());
@@ -1357,6 +1427,9 @@ public class MainServlet extends ActionServlet {
 
 		_servletContextServiceRegistration = registry.registerService(
 			ServletContext.class, getServletContext(), properties);
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in registerPortalInitalized after servletCOntext: " + afterMethod);
 
 		properties = new HashMap<>();
 
@@ -1368,6 +1441,9 @@ public class MainServlet extends ActionServlet {
 			registry.registerService(
 				ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
 				properties);
+
+		afterMethod = System.currentTimeMillis() - startTime;
+		System.out.println("********* Time elapsed in registerPortalInitalized after systemCheckModule: " + afterMethod);
 	}
 
 	protected void sendError(
