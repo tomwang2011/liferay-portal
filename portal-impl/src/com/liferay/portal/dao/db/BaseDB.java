@@ -951,22 +951,7 @@ public abstract class BaseDB implements DB {
 	protected void handleSQLException(String sql, SQLException sqle)
 		throws SQLException {
 
-		if (_log.isDebugEnabled()) {
-			StringBundler sb = new StringBundler(10);
-
-			sb.append("SQL: ");
-			sb.append(sql);
-			sb.append("\nSQL state: ");
-			sb.append(sqle.getSQLState());
-			sb.append("\nVendor: ");
-			sb.append(getDBType());
-			sb.append("\nVendor error code: ");
-			sb.append(sqle.getErrorCode());
-			sb.append("\nVendor error message: ");
-			sb.append(sqle.getMessage());
-
-			_log.debug(sb.toString());
-		}
+		_logSQLException(sql, sqle);
 
 		throw sqle;
 	}
@@ -1190,6 +1175,25 @@ public abstract class BaseDB implements DB {
 		" SBLOB", " BOOLEAN", " DATE", " DOUBLE", " INTEGER", " LONG",
 		" STRING", " TEXT", " VARCHAR", " IDENTITY", "COMMIT_TRANSACTION"
 	};
+
+	private void _logSQLException(String sql, SQLException sqle) {
+		if (_log.isDebugEnabled()) {
+			StringBundler sb = new StringBundler(10);
+
+			sb.append("SQL: ");
+			sb.append(sql);
+			sb.append("\nSQL state: ");
+			sb.append(sqle.getSQLState());
+			sb.append("\nVendor: ");
+			sb.append(getDBType());
+			sb.append("\nVendor error code: ");
+			sb.append(sqle.getErrorCode());
+			sb.append("\nVendor error message: ");
+			sb.append(sqle.getMessage());
+
+			_log.debug(sb.toString());
+		}
+	}
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_NAME = true;
 
