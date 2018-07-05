@@ -450,31 +450,24 @@ public abstract class BaseDB implements DB {
 					continue;
 				}
 
-				try {
-					try (Statement s = connection.createStatement()) {
-						sql = buildSQL(sql);
+				try (Statement s = connection.createStatement()) {
+					sql = buildSQL(sql);
 
-						sql = SQLTransformer.transform(sql.trim());
+					sql = SQLTransformer.transform(sql.trim());
 
-						if (sql.endsWith(";")) {
-							sql = sql.substring(0, sql.length() - 1);
-						}
-
-						if (sql.endsWith("\ngo")) {
-							sql = sql.substring(0, sql.length() - 3);
-						}
-
-						if (_log.isDebugEnabled()) {
-							_log.debug(sql);
-						}
-
-						try {
-							s.executeUpdate(sql);
-						}
-						catch (SQLException sqle) {
-							handleSQLException(sql, sqle);
-						}
+					if (sql.endsWith(";")) {
+						sql = sql.substring(0, sql.length() - 1);
 					}
+
+					if (sql.endsWith("\ngo")) {
+						sql = sql.substring(0, sql.length() - 3);
+					}
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(sql);
+					}
+
+					s.executeUpdate(sql);
 				}
 				catch (IOException | SecurityException e) {
 					if (failOnError) {
@@ -485,6 +478,8 @@ public abstract class BaseDB implements DB {
 					}
 				}
 				catch (SQLException sqle) {
+					_logSQLException(sql, sqle);
+
 					if (failOnError) {
 						throw sqle;
 					}
