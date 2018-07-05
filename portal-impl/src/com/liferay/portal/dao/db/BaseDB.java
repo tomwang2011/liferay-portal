@@ -489,13 +489,13 @@ public abstract class BaseDB implements DB {
 					if (!message.startsWith("Duplicate key name") &&
 						_log.isWarnEnabled()) {
 
-						_log.warn(message + ": " + buildSQL(sql));
+						_log.warn(message + ": " + template);
 					}
 
 					if (message.startsWith("Duplicate entry") ||
 						message.startsWith("Specified key was too long")) {
 
-						_log.error(line);
+						_log.error(message + ": " + template);
 					}
 				}
 			}
