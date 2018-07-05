@@ -452,8 +452,7 @@ public abstract class BaseDB implements DB {
 
 				try {
 					try (Statement s = connection.createStatement()) {
-						sql = buildSQL(
-							applyMaxStringIndexLengthLimitation(sql));
+						sql = buildSQL(sql);
 
 						sql = SQLTransformer.transform(sql.trim());
 
