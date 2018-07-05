@@ -268,11 +268,7 @@ public abstract class BaseDB implements DB {
 	public void runSQL(Connection con, String[] sqls)
 		throws IOException, SQLException {
 
-		Statement s = null;
-
-		try {
-			s = con.createStatement();
-
+		try (Statement s = con.createStatement()) {
 			for (String sql : sqls) {
 				sql = buildSQL(applyMaxStringIndexLengthLimitation(sql));
 
@@ -297,9 +293,6 @@ public abstract class BaseDB implements DB {
 					handleSQLException(sql, sqle);
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(s);
 		}
 	}
 
