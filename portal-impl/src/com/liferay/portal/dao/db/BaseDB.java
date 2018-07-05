@@ -451,7 +451,31 @@ public abstract class BaseDB implements DB {
 				}
 
 				try {
-					runSQL(connection, sql);
+					try (Statement s = connection.createStatement()) {
+						sql = buildSQL(
+							applyMaxStringIndexLengthLimitation(sql));
+
+						sql = SQLTransformer.transform(sql.trim());
+
+						if (sql.endsWith(";")) {
+							sql = sql.substring(0, sql.length() - 1);
+						}
+
+						if (sql.endsWith("\ngo")) {
+							sql = sql.substring(0, sql.length() - 3);
+						}
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(sql);
+						}
+
+						try {
+							s.executeUpdate(sql);
+						}
+						catch (SQLException sqle) {
+							handleSQLException(sql, sqle);
+						}
+					}
 				}
 				catch (IOException | SecurityException e) {
 					if (failOnError) {
