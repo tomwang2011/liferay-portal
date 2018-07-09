@@ -21,6 +21,7 @@ import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.dao.db.DBManagerImpl;
 import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
+import com.liferay.portal.internal.spring.context.LiferayBeanFactory;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -62,6 +63,7 @@ import java.util.zip.ZipFile;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -226,7 +228,15 @@ public class InitUtil {
 			ApplicationContext appApplicationContext =
 				new ClassPathXmlApplicationContext(
 					configLocations.toArray(new String[configLocations.size()]),
-					infrastructureApplicationContext);
+					infrastructureApplicationContext) {
+
+					@Override
+					protected DefaultListableBeanFactory createBeanFactory() {
+						return new LiferayBeanFactory(
+							getInternalParentBeanFactory());
+					}
+
+				};
 
 			BeanLocator beanLocator = new BeanLocatorImpl(
 				ClassLoaderUtil.getPortalClassLoader(), appApplicationContext);
