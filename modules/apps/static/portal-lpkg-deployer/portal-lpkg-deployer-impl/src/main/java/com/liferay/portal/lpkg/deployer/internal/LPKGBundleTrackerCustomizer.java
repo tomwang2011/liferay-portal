@@ -106,6 +106,8 @@ public class LPKGBundleTrackerCustomizer
 			return null;
 		}
 
+		long startTime = System.currentTimeMillis();
+
 		try {
 			Properties properties = _readMarketplaceProperties(bundle);
 
@@ -263,6 +265,12 @@ public class LPKGBundleTrackerCustomizer
 
 			return null;
 		}
+
+		System.out.println(
+			StringBundler.concat(
+				"### LPKG ", bundle.getSymbolicName(), " took ",
+				String.valueOf(System.currentTimeMillis() - startTime),
+				" ms ###"));
 
 		return bundles;
 	}
