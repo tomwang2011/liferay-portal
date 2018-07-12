@@ -50,9 +50,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -268,11 +270,7 @@ public abstract class BaseDB implements DB {
 	public void runSQL(Connection con, String[] sqls)
 		throws IOException, SQLException {
 
-		Statement s = null;
-
-		try {
-			s = con.createStatement();
-
+		try (Statement s = con.createStatement()) {
 			for (String sql : sqls) {
 				sql = buildSQL(applyMaxStringIndexLengthLimitation(sql));
 
@@ -297,9 +295,6 @@ public abstract class BaseDB implements DB {
 					handleSQLException(sql, sqle);
 				}
 			}
-		}
-		finally {
-			DataAccess.cleanUp(s);
 		}
 	}
 
@@ -385,6 +380,8 @@ public abstract class BaseDB implements DB {
 			}
 		}
 
+		List<String> sqls = new ArrayList<>();
+
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(template))) {
 
@@ -433,66 +430,109 @@ public abstract class BaseDB implements DB {
 					include = convertTimestamp(include);
 					include = replaceTemplate(include, getTemplate());
 
-					runSQLTemplateString(include, false, true);
+					runSQLTemplateString(connection, include, false, true);
+
+					continue;
 				}
-				else {
-					sb.append(line);
-					sb.append(StringPool.NEW_LINE);
 
-					if (line.endsWith(";")) {
-						String sql = sb.toString();
+				sb.append(line);
+				sb.append(StringPool.NEW_LINE);
 
-						sb.setIndex(0);
+				if (!line.endsWith(";")) {
+					continue;
+				}
 
-						try {
-							if (!sql.equals("COMMIT_TRANSACTION;\n")) {
-								runSQL(connection, sql);
-							}
-							else {
-								if (_log.isDebugEnabled()) {
-									_log.debug("Skip commit sql");
-								}
-							}
-						}
-						catch (IOException ioe) {
-							if (failOnError) {
-								throw ioe;
-							}
-							else if (_log.isWarnEnabled()) {
-								_log.warn(ioe.getMessage());
-							}
-						}
-						catch (SecurityException se) {
-							if (failOnError) {
-								throw se;
-							}
-							else if (_log.isWarnEnabled()) {
-								_log.warn(se.getMessage());
-							}
-						}
-						catch (SQLException sqle) {
-							if (failOnError) {
-								throw sqle;
-							}
+				String sql = sb.toString();
 
-							String message = GetterUtil.getString(
-								sqle.getMessage());
+				sb.setIndex(0);
 
-							if (!message.startsWith("Duplicate key name") &&
-								_log.isWarnEnabled()) {
+				if (sql.equals("COMMIT_TRANSACTION;\n")) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Skip commit sql");
+					}
 
-								_log.warn(message + ": " + buildSQL(sql));
-							}
+					continue;
+				}
 
-							if (message.startsWith("Duplicate entry") ||
-								message.startsWith(
-									"Specified key was too long")) {
+				try {
+					sql = buildSQL(sql);
 
-								_log.error(line);
-							}
-						}
+					sql = SQLTransformer.transform(sql.trim());
+
+					if (sql.endsWith(";")) {
+						sql = sql.substring(0, sql.length() - 1);
+					}
+
+					if (sql.endsWith("\ngo")) {
+						sql = sql.substring(0, sql.length() - 3);
+					}
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(sql);
 					}
 				}
+				catch (IOException | SecurityException e) {
+					if (failOnError) {
+						throw e;
+					}
+					else if (_log.isWarnEnabled()) {
+						_log.warn(e.getMessage());
+
+						continue;
+					}
+				}
+
+				sqls.add(sql);
+			}
+		}
+
+		if (sqls.isEmpty()) {
+			return;
+		}
+
+		try (Statement s = connection.createStatement()) {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			if (databaseMetaData.supportsBatchUpdates()) {
+				for (String sql : sqls) {
+					s.addBatch(sql);
+				}
+
+				s.executeBatch();
+			}
+			else {
+				for (String sql : sqls) {
+					s.execute(sql);
+				}
+			}
+		}
+		catch (SecurityException se) {
+			if (failOnError) {
+				throw se;
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn(se.getMessage());
+			}
+		}
+		catch (SQLException sqle) {
+			_logSQLException(template, sqle);
+
+			if (failOnError) {
+				throw sqle;
+			}
+
+			String message = GetterUtil.getString(sqle.getMessage());
+
+			if (!message.startsWith("Duplicate key name") &&
+				_log.isWarnEnabled()) {
+
+				_log.warn(message + ": " + template);
+			}
+
+			if (message.startsWith("Duplicate entry") ||
+				message.startsWith("Specified key was too long")) {
+
+				_log.error(message + ": " + template);
 			}
 		}
 	}
@@ -941,22 +981,7 @@ public abstract class BaseDB implements DB {
 	protected void handleSQLException(String sql, SQLException sqle)
 		throws SQLException {
 
-		if (_log.isDebugEnabled()) {
-			StringBundler sb = new StringBundler(10);
-
-			sb.append("SQL: ");
-			sb.append(sql);
-			sb.append("\nSQL state: ");
-			sb.append(sqle.getSQLState());
-			sb.append("\nVendor: ");
-			sb.append(getDBType());
-			sb.append("\nVendor error code: ");
-			sb.append(sqle.getErrorCode());
-			sb.append("\nVendor error message: ");
-			sb.append(sqle.getMessage());
-
-			_log.debug(sb.toString());
-		}
+		_logSQLException(sql, sqle);
 
 		throw sqle;
 	}
@@ -1180,6 +1205,25 @@ public abstract class BaseDB implements DB {
 		" SBLOB", " BOOLEAN", " DATE", " DOUBLE", " INTEGER", " LONG",
 		" STRING", " TEXT", " VARCHAR", " IDENTITY", "COMMIT_TRANSACTION"
 	};
+
+	private void _logSQLException(String sql, SQLException sqle) {
+		if (_log.isDebugEnabled()) {
+			StringBundler sb = new StringBundler(10);
+
+			sb.append("SQL: ");
+			sb.append(sql);
+			sb.append("\nSQL state: ");
+			sb.append(sqle.getSQLState());
+			sb.append("\nVendor: ");
+			sb.append(getDBType());
+			sb.append("\nVendor error code: ");
+			sb.append(sqle.getErrorCode());
+			sb.append("\nVendor error message: ");
+			sb.append(sqle.getMessage());
+
+			_log.debug(sb.toString());
+		}
+	}
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_NAME = true;
 
