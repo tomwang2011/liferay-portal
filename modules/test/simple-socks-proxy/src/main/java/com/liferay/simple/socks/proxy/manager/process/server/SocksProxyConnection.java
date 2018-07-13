@@ -158,12 +158,6 @@ public class SocksProxyConnection implements Runnable {
 
 		String remoteAddress = request.getHostAddress();
 
-		if (!_allowedIPAddresses.contains(remoteAddress)) {
-			throw new IOException(
-				"Trying to access host (" + remoteAddress + ") not listed in " +
-					"allowedIPAddresses property");
-		}
-
 		Socket externalSocket = new Socket(
 			remoteAddress, request.calculateServerPort());
 
