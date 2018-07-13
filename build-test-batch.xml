@@ -2356,6 +2356,8 @@ log.sanitizer.enabled=false</echo>
 					</echo>
 				</then>
 			</if>
+
+			<echo file="${liferay.home}/osgi/configs/com.liferay.simple.socks.proxy.SocksProxyConfiguration.cfg">allowedHostnames=${env.HOSTNAME}</echo>
 		</sequential>
 	</macrodef>
 
