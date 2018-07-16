@@ -48,6 +48,7 @@ import java.util.logging.LogRecord;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -86,6 +87,7 @@ public class SocksProxyConnectionTest {
 			SocksProxyTestUtil.createTestSocket(new byte[0]), _executorService);
 	}
 
+	@Ignore
 	@Test
 	public void testDomainAType() throws IOException {
 		TestRequestInput testRequestInput = new TestRequestInput(
