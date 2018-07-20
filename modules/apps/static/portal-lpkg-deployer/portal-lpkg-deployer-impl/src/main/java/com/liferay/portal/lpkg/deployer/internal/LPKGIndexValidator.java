@@ -297,8 +297,14 @@ public class LPKGIndexValidator {
 		Map<Bundle, List<Bundle>> deployedLPKGBundles =
 			_lpkgDeployer.getDeployedLPKGBundles();
 
+		String marketplaceDir = PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR;
+
 		for (Bundle bundle : deployedLPKGBundles.keySet()) {
-			files.add(new File(bundle.getLocation()));
+			File file = new File(bundle.getLocation());
+
+			Path lpkgPath = Paths.get(marketplaceDir, file.getName());
+
+			files.add(lpkgPath.toFile());
 		}
 
 		List<URI> uris = _indexLPKGFiles(files);
