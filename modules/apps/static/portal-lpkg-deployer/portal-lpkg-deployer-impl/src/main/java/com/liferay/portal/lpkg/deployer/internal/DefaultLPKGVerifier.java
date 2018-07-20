@@ -106,19 +106,19 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 				if (value != 0) {
 					oldBundles.add(bundle);
 				}
-				else {
-					String path = lpkgFile.getCanonicalPath();
-
-					if (path.equals(bundle.getLocation())) {
-						continue;
-					}
-
-					throw new LPKGVerifyException(
-						StringBundler.concat(
-							"Existing LPKG bundle ", String.valueOf(bundle),
-							" has the same symbolic name and version as LPKG ",
-							"file ", String.valueOf(lpkgFile)));
-				}
+//				else {
+//					String path = lpkgFile.getCanonicalPath();
+//
+//					if (path.equals(bundle.getLocation())) {
+//						continue;
+//					}
+//
+//					throw new LPKGVerifyException(
+//						StringBundler.concat(
+//							"Existing LPKG bundle ", String.valueOf(bundle),
+//							" has the same symbolic name and version as LPKG ",
+//							"file ", String.valueOf(lpkgFile)));
+//				}
 			}
 
 			return oldBundles;
