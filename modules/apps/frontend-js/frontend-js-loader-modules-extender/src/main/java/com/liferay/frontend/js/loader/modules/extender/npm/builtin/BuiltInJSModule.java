@@ -15,10 +15,9 @@
 package com.liferay.frontend.js.loader.modules.extender.npm.builtin;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
-import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.model.JSModuleAdapter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Collection;
 
@@ -49,64 +48,57 @@ public abstract class BuiltInJSModule extends JSModuleAdapter {
 	public BuiltInJSModule(
 		JSPackage jsPackage, String name, Collection<String> dependencies) {
 
+		this(new BootstrapFactory(jsPackage, name), dependencies);
+	}
+
+	private BuiltInJSModule(
+		BootstrapFactory bootstrapFactory, Collection<String> dependencies) {
+
 		super(
-			jsPackage, name, _getURL(jsPackage, name),
-			_getResolvedURL(jsPackage, name), _getResolvedId(jsPackage, name),
-			dependencies);
+			bootstrapFactory._jsPackage, bootstrapFactory._name,
+			bootstrapFactory._url, bootstrapFactory._resolvedURL,
+			bootstrapFactory._resolvedId, dependencies);
 	}
 
-	/**
-	 * Composes a resolved ID given the package and module name.
-	 *
-	 * @param  jsPackage the NPM package
-	 * @param  moduleName the module's name
-	 * @return a resolved ID
-	 */
-	private static String _getResolvedId(
-		JSPackage jsPackage, String moduleName) {
+	private static class BootstrapFactory {
 
-		StringBundler sb = new StringBundler(5);
+		private BootstrapFactory(JSPackage jsPackage, String name) {
+			_jsPackage = jsPackage;
+			_name = name;
 
-		sb.append(jsPackage.getName());
-		sb.append(StringPool.AT);
-		sb.append(jsPackage.getVersion());
-		sb.append(StringPool.SLASH);
-		sb.append(moduleName);
+			StringBundler sb = new StringBundler(5);
 
-		return sb.toString();
-	}
+			sb.append("/o/js/module/");
+			sb.append(jsPackage.getId());
+			sb.append(StringPool.SLASH);
+			sb.append(name);
 
-	/**
-	 * Composes a resolved URL given the package and module name.
-	 *
-	 * @param  jsPackage the NPM package
-	 * @param  moduleName the module's name
-	 * @return a resolved URL
-	 */
-	private static String _getResolvedURL(
-		JSPackage jsPackage, String moduleName) {
+			_url = sb.toString();
 
-		StringBundler sb = new StringBundler(2);
+			sb.setIndex(0);
 
-		sb.append("/o/js/resolved-module/");
-		sb.append(_getResolvedId(jsPackage, moduleName));
+			sb.append(jsPackage.getName());
+			sb.append(StringPool.AT);
+			sb.append(jsPackage.getVersion());
+			sb.append(StringPool.SLASH);
+			sb.append(name);
 
-		return sb.toString();
-	}
+			_resolvedId = sb.toString();
 
-	/**
-	 * Composes a canonical URL given the package and module name.
-	 *
-	 * @param jsPackage the NPM package
-	 * @param moduleName the module's name
-	 */
-	private static String _getURL(JSPackage jsPackage, String moduleName) {
-		StringBundler sb = new StringBundler(2);
+			sb.setIndex(0);
 
-		sb.append("/o/js/module/");
-		sb.append(ModuleNameUtil.getModuleId(jsPackage, moduleName));
+			sb.append("/o/js/resolved-module/");
+			sb.append(_resolvedId);
 
-		return sb.toString();
+			_resolvedURL = sb.toString();
+		}
+
+		private final JSPackage _jsPackage;
+		private final String _name;
+		private final String _url;
+		private final String _resolvedURL;
+		private final String _resolvedId;
+
 	}
 
 }
