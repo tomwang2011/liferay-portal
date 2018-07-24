@@ -62,10 +62,14 @@ public class SocksProxyServerActivator {
 
 		for (String allowedHostname : StringUtil.split(allowedHostnames)) {
 			try {
-				InetAddress inetAddress = InetAddress.getByName(
+				InetAddress[] inetAddresses = InetAddress.getAllByName(
 					allowedHostname);
 
-				allowedIPAddresses.add(inetAddress.getHostAddress());
+				for (InetAddress inetAddress : inetAddresses) {
+					allowedIPAddresses.add(inetAddress.getHostAddress());
+
+					System.out.println("allowed host: " + inetAddress.getHostAddress());
+				}
 			}
 			catch (UnknownHostException uhe) {
 				if (_log.isWarnEnabled()) {
