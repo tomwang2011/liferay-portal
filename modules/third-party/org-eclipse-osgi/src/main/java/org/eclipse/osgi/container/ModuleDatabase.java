@@ -13,6 +13,8 @@ package org.eclipse.osgi.container;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.*;
@@ -1095,6 +1097,38 @@ public class ModuleDatabase {
 			ModuleRevisionBuilder builder = new ModuleRevisionBuilder();
 			int moduleIndex = in.readInt();
 			String location = readString(in);
+
+			Path path = Paths.get(
+				System.getProperty("module.framework.state.dir"),
+				"liferay.home");
+
+			Properties properties = new Properties();
+
+			File file = path.toFile();
+
+			if (file.exists()) {
+				InputStream inputStream = null;
+
+				try {
+					inputStream = new FileInputStream(path.toFile());
+
+					properties.load(inputStream);
+				}
+				finally {
+					if (inputStream != null) {
+						inputStream.close();
+					}
+				}
+
+				String oldLiferayHome = properties.getProperty("liferay.home");
+
+				String newLiferayHome = System.getProperty("liferay.home");
+
+				if (!oldLiferayHome.equals(newLiferayHome)) {
+					location = location.replace(oldLiferayHome, newLiferayHome);
+				}
+			}
+
 			long id = in.readLong();
 			builder.setSymbolicName(readString(in));
 			builder.setVersion(readVersion(in));
