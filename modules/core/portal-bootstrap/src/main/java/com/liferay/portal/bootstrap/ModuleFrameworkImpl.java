@@ -281,6 +281,10 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.debug("Creating a new OSGi framework instance");
 		}
 
+		System.setProperty(
+			PropsKeys.MODULE_FRAMEWORK_STATE_DIR,
+			PropsValues.MODULE_FRAMEWORK_STATE_DIR);
+
 		_framework = frameworkFactory.newFramework(properties);
 
 		if (_log.isDebugEnabled()) {
