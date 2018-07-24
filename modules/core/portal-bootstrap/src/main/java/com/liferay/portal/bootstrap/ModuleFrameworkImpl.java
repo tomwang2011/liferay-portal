@@ -289,6 +289,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		_framework.init();
 
+		String liferayHome = "liferay.home=".concat(PropsValues.LIFERAY_HOME);
+
+		Files.write(
+			Paths.get(PropsValues.MODULE_FRAMEWORK_STATE_DIR, "liferay.home"),
+			liferayHome.getBytes());
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Binding the OSGi framework to the registry API");
 		}
