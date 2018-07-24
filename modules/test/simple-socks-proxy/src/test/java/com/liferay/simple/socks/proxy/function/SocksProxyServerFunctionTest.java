@@ -44,7 +44,6 @@ import java.util.Collections;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -132,7 +131,6 @@ public class SocksProxyServerFunctionTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testUnallowedDomain() throws Exception {
 		String content = _getContent(_url);
