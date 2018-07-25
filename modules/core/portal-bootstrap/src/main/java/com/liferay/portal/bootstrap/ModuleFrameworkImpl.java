@@ -710,6 +710,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			PropsValues.MODULE_FRAMEWORK_RESOLVER_REVISION_BATCH_SIZE);
 		properties.put("java.security.manager", null);
 		properties.put("org.osgi.framework.security", null);
+		properties.put("osgi.classloader.type", "parallel");
 
 		ProtectionDomain protectionDomain = clazz.getProtectionDomain();
 
