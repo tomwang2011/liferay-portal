@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -47,6 +46,7 @@ import com.liferay.portal.kernel.util.NullSafeStringComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -392,6 +392,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		return sql;
 	}
 
+	@Deprecated
 	protected void appendOrderByComparator(
 		StringBundler sb, String entityAlias,
 		OrderByComparator<T> orderByComparator) {
@@ -400,7 +401,53 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	protected void appendOrderByComparator(
+		com.liferay.petra.string.StringBundler sb, String entityAlias,
+		OrderByComparator<T> orderByComparator) {
+
+		appendOrderByComparator(sb, entityAlias, orderByComparator, false);
+	}
+
+	@Deprecated
+	protected void appendOrderByComparator(
 		StringBundler sb, String entityAlias,
+		OrderByComparator<T> orderByComparator, boolean sqlQuery) {
+
+		sb.append(ORDER_BY_CLAUSE);
+
+		String[] orderByFields = orderByComparator.getOrderByFields();
+
+		int length = orderByFields.length;
+
+		if ((_databaseOrderByMaxColumns > 0) &&
+			(_databaseOrderByMaxColumns < length)) {
+
+			length = _databaseOrderByMaxColumns;
+		}
+
+		for (int i = 0; i < length; i++) {
+			sb.append(getColumnName(entityAlias, orderByFields[i], sqlQuery));
+
+			if ((i + 1) < length) {
+				if (orderByComparator.isAscending(orderByFields[i])) {
+					sb.append(ORDER_BY_ASC_HAS_NEXT);
+				}
+				else {
+					sb.append(ORDER_BY_DESC_HAS_NEXT);
+				}
+			}
+			else {
+				if (orderByComparator.isAscending(orderByFields[i])) {
+					sb.append(ORDER_BY_ASC);
+				}
+				else {
+					sb.append(ORDER_BY_DESC);
+				}
+			}
+		}
+	}
+
+	protected void appendOrderByComparator(
+		com.liferay.petra.string.StringBundler sb, String entityAlias,
 		OrderByComparator<T> orderByComparator, boolean sqlQuery) {
 
 		sb.append(ORDER_BY_CLAUSE);
