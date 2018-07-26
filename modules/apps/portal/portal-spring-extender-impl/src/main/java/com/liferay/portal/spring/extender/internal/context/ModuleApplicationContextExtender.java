@@ -46,6 +46,12 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.sql.DataSource;
 
@@ -67,9 +73,53 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class ModuleApplicationContextExtender extends AbstractExtender {
 
+	public ModuleApplicationContextExtender() {
+		setSynchronous(false);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
+		_futures.set(new ArrayList<>());
+
 		start(bundleContext);
+
+		List<Future<?>> futures = _futures.getAndSet(null);
+
+		for (Future<?> future : futures) {
+			future.get();
+		}
+
+		ThreadPoolExecutor threadPoolExecutor =
+			(ThreadPoolExecutor)getExecutors();
+
+		threadPoolExecutor.setCorePoolSize(0);
+	}
+
+	@Override
+	protected ExecutorService createExecutor() {
+		Runtime runtime = Runtime.getRuntime();
+
+		int availableProcessors = runtime.availableProcessors();
+
+		return new ThreadPoolExecutor(
+			availableProcessors, availableProcessors, 60, TimeUnit.SECONDS,
+			new LinkedBlockingDeque<>(Integer.MAX_VALUE),
+			new ThreadPoolExecutor.CallerRunsPolicy()) {
+
+			@Override
+			public Future<?> submit(Runnable task) {
+				Future<?> future = super.submit(task);
+
+				List<Future<?>> futures = _futures.get();
+
+				if (futures != null) {
+					futures.add(future);
+				}
+
+				return future;
+			}
+
+		};
 	}
 
 	@Deactivate
@@ -139,6 +189,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleApplicationContextExtender.class);
 
+	private AtomicReference<List<Future<?>>> _futures = new AtomicReference<>();
 	private ServiceConfigurator _serviceConfigurator;
 
 	private class ModuleApplicationContextExtension implements Extension {
