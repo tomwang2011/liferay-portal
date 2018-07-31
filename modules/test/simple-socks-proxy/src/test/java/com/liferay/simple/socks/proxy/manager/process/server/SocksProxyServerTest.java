@@ -63,7 +63,7 @@ public class SocksProxyServerTest {
 	}
 
 	@Test
-	public void testCloseWithoutStart() throws Exception {
+	public void testCloseWithoutStart() throws IOException {
 		SocksProxyServer socksProxyServer = new SocksProxyServer(
 			Collections.emptyList(), 10 * Time.MINUTE, _port);
 

@@ -44,7 +44,7 @@ public class SocksProxyServer extends Thread {
 		setName(SocksProxyServer.class.getName());
 	}
 
-	public void close() throws Exception {
+	public void close() throws IOException {
 		ServerSocket serverSocket = _serverSocket;
 
 		if (serverSocket != null) {

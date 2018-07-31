@@ -19,6 +19,7 @@ import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.local.LocalProcessLauncher;
 import com.liferay.simple.socks.proxy.manager.process.server.SocksProxyServer;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.concurrent.ConcurrentMap;
@@ -41,8 +42,8 @@ public class SocksProxyServerCloseProcessCallable
 			try {
 				socksProxyServer.close();
 			}
-			catch (Exception e) {
-				throw new ProcessException(e);
+			catch (IOException ioe) {
+				throw new ProcessException(ioe);
 			}
 		}
 
