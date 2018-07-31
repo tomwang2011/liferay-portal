@@ -15,7 +15,7 @@
 package com.liferay.simple.socks.proxy;
 
 import com.liferay.petra.process.ProcessException;
-import com.liferay.petra.process.local.LocalProcessExecutor;
+import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -77,7 +77,7 @@ public class SocksProxyServerActivator {
 		}
 
 		_socksProxyServerManager = new SocksProxyServerManager(
-			_localProcessExecutor, allowedIPAddresses, shutdownWaitTime,
+			_processExecutor, allowedIPAddresses, shutdownWaitTime,
 			serverSocketPort);
 
 		_socksProxyServerManager.start();
@@ -92,7 +92,7 @@ public class SocksProxyServerActivator {
 		SocksProxyServerActivator.class);
 
 	@Reference
-	private LocalProcessExecutor _localProcessExecutor;
+	private ProcessExecutor _processExecutor;
 
 	private SocksProxyServerManager _socksProxyServerManager;
 
