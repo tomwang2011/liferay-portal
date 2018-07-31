@@ -18,7 +18,7 @@ import com.liferay.petra.concurrent.NoticeableFuture;
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessException;
-import com.liferay.petra.process.local.LocalProcessExecutor;
+import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.simple.socks.proxy.manager.process.SocksProxyServerCloseProcessCallable;
@@ -35,18 +35,17 @@ import java.util.concurrent.TimeUnit;
 public class SocksProxyServerManager {
 
 	public SocksProxyServerManager(
-		LocalProcessExecutor localProcessExecutor,
-		List<String> allowedIPAddress, long shutdownWaitTime,
-		int serverSocketPort) {
+		ProcessExecutor processExecutor, List<String> allowedIPAddress,
+		long shutdownWaitTime, int serverSocketPort) {
 
-		_localProcessExecutor = localProcessExecutor;
+		_processExecutor = processExecutor;
 		_allowedIPAddress = allowedIPAddress;
 		_shutdownWaitTime = shutdownWaitTime;
 		_serverSocketPort = serverSocketPort;
 	}
 
 	public void start() throws ProcessException {
-		_processChannel = _localProcessExecutor.execute(
+		_processChannel = _processExecutor.execute(
 			_processConfig,
 			new SocksProxyServerProcessCallable(
 				_allowedIPAddress, _shutdownWaitTime, _serverSocketPort));
@@ -94,8 +93,8 @@ public class SocksProxyServerManager {
 	}
 
 	private final List<String> _allowedIPAddress;
-	private final LocalProcessExecutor _localProcessExecutor;
 	private ProcessChannel<Serializable> _processChannel;
+	private final ProcessExecutor _processExecutor;
 	private final int _serverSocketPort;
 	private final long _shutdownWaitTime;
 
