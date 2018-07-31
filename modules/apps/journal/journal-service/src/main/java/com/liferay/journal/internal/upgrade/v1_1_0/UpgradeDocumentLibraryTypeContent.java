@@ -16,6 +16,7 @@ package com.liferay.journal.internal.upgrade.v1_1_0;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -181,9 +181,8 @@ public class UpgradeDocumentLibraryTypeContent extends UpgradeProcess {
 		catch (PortalException pe) {
 			_log.error(
 				StringBundler.concat(
-					"Unable to get file entry with group ID ",
-					String.valueOf(groupId), ", folder ID ",
-					String.valueOf(folderId), ", and title ", title),
+					"Unable to get file entry with group ID ", groupId,
+					", folder ID ", folderId, ", and title ", title),
 				pe);
 
 			throw pe;
