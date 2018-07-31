@@ -84,7 +84,7 @@ public class SocksProxyServerActivator {
 	}
 
 	@Deactivate
-	protected void deactivate() throws Exception {
+	protected void deactivate() {
 		_socksProxyServerManager.stop();
 	}
 
