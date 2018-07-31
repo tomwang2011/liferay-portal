@@ -58,7 +58,7 @@ public class SocksProxyServerProcessCallableTest {
 			new SocksProxyServer(Collections.emptyList(), 0, 0) {
 
 				@Override
-				public void close() throws Exception {
+				public void close() throws IOException {
 					super.close();
 
 					throw new IOException();
