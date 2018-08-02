@@ -8,4 +8,5 @@ dependencies {
 	compileOnly project(":apps:headless-apio:organization:organization-apio-api")
 	compileOnly project(":apps:headless-apio:person:person-apio-api")
 	compileOnly project(":apps:headless-apio:site:site-apio-api")
+	compileOnly project(":core:petra:petra-string")
 }
