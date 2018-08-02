@@ -25,6 +25,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,7 +125,7 @@ public class ServiceBeanAopProxy
 
 	@Override
 	public Object getProxy(ClassLoader classLoader) {
-		return ProxyUtil.newProxyInstance(
+		return Proxy.newProxyInstance(
 			classLoader, _advisedSupport.getProxiedInterfaces(), this);
 	}
 
