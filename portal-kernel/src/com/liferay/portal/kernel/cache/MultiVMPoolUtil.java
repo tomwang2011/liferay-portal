@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.cache;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.Serializable;
 
@@ -30,7 +29,7 @@ import java.io.Serializable;
 public class MultiVMPoolUtil {
 
 	public static void clear() {
-		_multiVMPool.clear();
+		_dynamicPortalCacheManager.clearAll();
 	}
 
 	/**
@@ -69,14 +68,15 @@ public class MultiVMPoolUtil {
 	public static <K extends Serializable, V extends Serializable>
 		PortalCache<K, V> getPortalCache(String portalCacheName) {
 
-		return (PortalCache<K, V>)_multiVMPool.getPortalCache(portalCacheName);
+		return (PortalCache<K, V>)_dynamicPortalCacheManager.getPortalCache(
+			portalCacheName);
 	}
 
 	public static <K extends Serializable, V extends Serializable>
 		PortalCache<K, V> getPortalCache(
 			String portalCacheName, boolean blocking) {
 
-		return (PortalCache<K, V>)_multiVMPool.getPortalCache(
+		return (PortalCache<K, V>)_dynamicPortalCacheManager.getPortalCache(
 			portalCacheName, blocking);
 	}
 
@@ -84,14 +84,14 @@ public class MultiVMPoolUtil {
 		PortalCache<K, V> getPortalCache(
 			String portalCacheName, boolean blocking, boolean mvcc) {
 
-		return (PortalCache<K, V>)_multiVMPool.getPortalCache(
+		return (PortalCache<K, V>)_dynamicPortalCacheManager.getPortalCache(
 			portalCacheName, blocking, mvcc);
 	}
 
 	public static <K extends Serializable, V extends Serializable>
 		PortalCacheManager<K, V> getPortalCacheManager() {
 
-		return (PortalCacheManager<K, V>)_multiVMPool.getPortalCacheManager();
+		return (PortalCacheManager<K, V>)_dynamicPortalCacheManager;
 	}
 
 	/**
@@ -104,11 +104,12 @@ public class MultiVMPoolUtil {
 	}
 
 	public static void removePortalCache(String portalCacheName) {
-		_multiVMPool.removePortalCache(portalCacheName);
+		_dynamicPortalCacheManager.removePortalCache(portalCacheName);
 	}
 
-	private static volatile MultiVMPool _multiVMPool =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			MultiVMPool.class, MultiVMPoolUtil.class, "_multiVMPool", true);
+	private static final DynamicPortalCacheManager
+		<? extends Serializable, ? extends Serializable>
+			_dynamicPortalCacheManager =
+				new MultiVMDynamicPortalCacheManager<>();
 
 }
