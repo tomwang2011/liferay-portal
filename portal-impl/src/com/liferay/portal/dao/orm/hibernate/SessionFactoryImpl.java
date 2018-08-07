@@ -55,7 +55,7 @@ public class SessionFactoryImpl implements SessionFactory {
 
 	@Override
 	public Dialect getDialect() throws ORMException {
-		return new DialectImpl(_sessionFactoryImplementor.getDialect());
+		return _dialect;
 	}
 
 	/**
@@ -116,6 +116,8 @@ public class SessionFactoryImpl implements SessionFactory {
 		SessionFactoryImplementor sessionFactoryImplementor) {
 
 		_sessionFactoryImplementor = sessionFactoryImplementor;
+
+		_dialect = new DialectImpl(_sessionFactoryImplementor.getDialect());
 	}
 
 	protected Map<String, Class<?>> getPreloadClassLoaderClasses() {
@@ -153,6 +155,7 @@ public class SessionFactoryImpl implements SessionFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SessionFactoryImpl.class);
 
+	private Dialect _dialect;
 	private ClassLoader _sessionFactoryClassLoader;
 	private SessionFactoryImplementor _sessionFactoryImplementor;
 

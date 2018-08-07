@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service.persistence.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -230,12 +231,20 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	public DB getDB() {
-		return _db;
+		DB db = _db;
+
+		if (db == null) {
+			db = DBManagerUtil.getDB(getDialect(), getDataSource());
+
+			_db = db;
+		}
+
+		return db;
 	}
 
 	@Override
 	public Dialect getDialect() {
-		return _dialect;
+		return _sessionFactory.getDialect();
 	}
 
 	@Override
@@ -310,22 +319,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		_sessionFactory = sessionFactory;
-
-		_dialect = _sessionFactory.getDialect();
-
-		_db = DBManagerUtil.getDB(_dialect, getDataSource());
-
-		DBType dbType = _db.getDBType();
-
-		_databaseOrderByMaxColumns = GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.DATABASE_ORDER_BY_MAX_COLUMNS,
-				new Filter(dbType.getName())));
-
-		databaseInMaxParameters = GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.DATABASE_IN_MAX_PARAMETERS,
-				new Filter(dbType.getName())));
 	}
 
 	@Override
@@ -408,6 +401,24 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		String[] orderByFields = orderByComparator.getOrderByFields();
 
 		int length = orderByFields.length;
+
+		if (!_initialized) {
+			DB db = getDB();
+
+			DBType dbType = db.getDBType();
+
+			_databaseOrderByMaxColumns = GetterUtil.getInteger(
+				PropsUtil.get(
+					PropsKeys.DATABASE_ORDER_BY_MAX_COLUMNS,
+					new Filter(dbType.getName())));
+
+			databaseInMaxParameters = GetterUtil.getInteger(
+				PropsUtil.get(
+					PropsKeys.DATABASE_IN_MAX_PARAMETERS,
+					new Filter(dbType.getName())));
+
+			_initialized = true;
+		}
 
 		if ((_databaseOrderByMaxColumns > 0) &&
 			(_databaseOrderByMaxColumns < length)) {
@@ -602,11 +613,16 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		BasePersistenceImpl.class);
 
 	private int _databaseOrderByMaxColumns;
+
+	@BeanReference(name = "liferayDataSource")
 	private DataSource _dataSource;
-	private DB _db;
+
+	private volatile DB _db;
 	private Map<String, String> _dbColumnNames;
-	private Dialect _dialect;
+	private boolean _initialized;
 	private Class<T> _modelClass;
+
+	@BeanReference(name = "liferaySessionFactory")
 	private SessionFactory _sessionFactory;
 
 	private static class NullModel
