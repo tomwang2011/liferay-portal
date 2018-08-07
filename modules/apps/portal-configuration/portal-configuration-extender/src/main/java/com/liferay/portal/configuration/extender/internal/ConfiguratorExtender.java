@@ -16,6 +16,7 @@ package com.liferay.portal.configuration.extender.internal;
 
 import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
@@ -148,6 +149,13 @@ public class ConfiguratorExtender extends AbstractExtender {
 		ConfigurationAdmin configurationAdmin) {
 
 		_configurationAdmin = configurationAdmin;
+	}
+
+	@Reference(
+		target = "(module.service.lifecycle=start.extensions)", unbind = "-"
+	)
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Override

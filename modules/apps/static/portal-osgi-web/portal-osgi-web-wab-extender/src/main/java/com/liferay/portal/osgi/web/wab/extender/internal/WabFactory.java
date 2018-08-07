@@ -112,7 +112,9 @@ public class WabFactory extends AbstractExtender {
 		_logger.log(Logger.LOG_ERROR, message, t);
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	@Reference(
+		target = "(module.service.lifecycle=start.extensions)", unbind = "-"
+	)
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
