@@ -14,12 +14,12 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 import com.liferay.portal.util.PropsValues;
@@ -138,8 +138,7 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 			catch (BundleException be) {
 				_log.error(
 					StringBundler.concat(
-						"Unable to start ", String.valueOf(bundle), " for ",
-						String.valueOf(file)),
+						"Unable to start ", bundle, " for ", file),
 					be);
 			}
 		}
@@ -195,8 +194,8 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							StringBundler.concat(
-								"Refreshing ", String.valueOf(wrapperBundles),
-								" to update ", String.valueOf(bundle)));
+								"Refreshing ", wrapperBundles, " to update ",
+								bundle));
 					}
 
 					FrameworkEvent frameworkEvent = _refreshBundles(
@@ -207,10 +206,8 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 						_log.error(
 							StringBundler.concat(
-								"Unable to refresh ",
-								String.valueOf(wrapperBundles),
-								" because of framework event ",
-								String.valueOf(frameworkEvent)),
+								"Unable to refresh ", wrapperBundles,
+								" because of framework event ", frameworkEvent),
 							frameworkEvent.getThrowable());
 					}
 				}
