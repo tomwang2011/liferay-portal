@@ -14,6 +14,16 @@
 
 package com.liferay.osgi.felix.util;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
@@ -25,7 +35,7 @@ public abstract class AbstractExtender
 	extends org.apache.felix.utils.extender.AbstractExtender {
 
 	public AbstractExtender() {
-		setSynchronous(true);
+		setSynchronous(false);
 	}
 
 	@Override
@@ -56,6 +66,69 @@ public abstract class AbstractExtender
 		super.setSynchronous(synchronous);
 	}
 
+	@Override
+	protected ExecutorService createExecutor() {
+		Class<? extends AbstractExtender> clazz = getClass();
+
+		String name = clazz.getSimpleName() + "-";
+
+		Runtime runtime = Runtime.getRuntime();
+
+		return new ThreadPoolExecutor(
+			0, runtime.availableProcessors(), 10, TimeUnit.SECONDS,
+			new SynchronousQueue<>(),
+			new ThreadFactory() {
+
+				@Override
+				public Thread newThread(Runnable runnable) {
+					Thread thread = new Thread(
+						runnable, name + _counter.getAndIncrement());
+
+					thread.setDaemon(true);
+
+					return thread;
+				}
+
+				private final AtomicInteger _counter = new AtomicInteger(1);
+
+			},
+			new ThreadPoolExecutor.CallerRunsPolicy()) {
+
+			@Override
+			public Future<?> submit(Runnable runnable) {
+				Future<?> future = super.submit(runnable);
+
+				_futures.add(future);
+
+				return future;
+			}
+
+		};
+	}
+
+	@Override
+	protected void doStart() throws Exception {
+		super.doStart();
+
+		_waitForTasks();
+	}
+
+	@Override
+	protected void doStop() throws Exception {
+		_waitForTasks();
+
+		super.doStop();
+	}
+
+	private void _waitForTasks() throws Exception {
+		Future<?> future = null;
+
+		while ((future = _futures.poll()) != null) {
+			future.get();
+		}
+	}
+
+	private Queue<Future<?>> _futures = new ConcurrentLinkedQueue<>();
 	private boolean _stopped;
 
 }
