@@ -272,7 +272,13 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		FutureTask<Void> springInitTask = new FutureTask<>(
 			() -> {
+				long startTime = System.nanoTime();
+
 				super.contextInitialized(servletContextEvent);
+
+				long totalTime = System.nanoTime() - startTime;
+
+				System.out.println("**** spring time = " + (totalTime / 1000000) + " ****");
 
 				return null;
 			});
@@ -283,6 +289,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		springInitThread.setDaemon(true);
 
 		springInitThread.start();
+
+		long startTime = System.nanoTime();
 
 		try {
 			ModuleFrameworkUtilAdapter.registerContext(
@@ -295,6 +303,10 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+
+		long totalTime = System.nanoTime() - startTime;
+
+		System.out.println("**** osgi time = " + (totalTime / 1000000) + " ****");
 
 		try {
 			springInitTask.get();
