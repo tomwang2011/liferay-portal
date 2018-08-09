@@ -14,6 +14,8 @@
 
 package com.liferay.social.kernel.util;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 import java.util.List;
 
 /**
@@ -47,6 +49,7 @@ public class SocialRelationTypesUtil {
 		_socialRelationTypes = socialRelationTypes;
 	}
 
+	@BeanReference(name = "com.liferay.social.kernel.util.SocialRelationTypes")
 	private static SocialRelationTypes _socialRelationTypes;
 
 }

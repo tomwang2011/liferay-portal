@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Company;
@@ -2454,6 +2455,7 @@ public class PortalUtil {
 		_portal = portal;
 	}
 
+	@BeanReference(name = "com.liferay.portal.util.Portal")
 	private static Portal _portal;
 
 }

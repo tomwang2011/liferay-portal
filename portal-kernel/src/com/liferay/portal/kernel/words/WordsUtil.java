@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.words;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.jazzy.InvalidWord;
 
 import java.util.List;
@@ -55,6 +56,7 @@ public class WordsUtil {
 		_words = words;
 	}
 
+	@BeanReference(name = "com.liferay.portal.kernel.words.Words")
 	private static Words _words;
 
 }

@@ -114,16 +114,26 @@ public class BeanReferenceAnnotationBeanPostProcessor
 			BeanReference beanReference = field.getAnnotation(
 				BeanReference.class);
 
-			String referencedBeanName = null;
-			Class<?> referencedBeanType = null;
-
-			if (beanReference != null) {
-				referencedBeanName = beanReference.name();
-				referencedBeanType = beanReference.type();
-			}
-			else {
+			if (beanReference == null) {
 				continue;
 			}
+
+			ReflectionUtils.makeAccessible(field);
+
+			try {
+				Object value = field.get(targetBean);
+
+				if (value != null) {
+					continue;
+				}
+			}
+			catch (Throwable t) {
+				throw new BeanCreationException(
+					targetBeanName, "Could not inject BeanReference fields", t);
+			}
+
+			String referencedBeanName = beanReference.name();
+			Class<?> referencedBeanType = beanReference.type();
 
 			if (!Object.class.equals(referencedBeanType)) {
 				referencedBeanName = referencedBeanType.getName();
@@ -163,8 +173,6 @@ public class BeanReferenceAnnotationBeanPostProcessor
 
 				_beans.put(referencedBeanName, referencedBean);
 			}
-
-			ReflectionUtils.makeAccessible(field);
 
 			try {
 				field.set(targetBean, referencedBean);

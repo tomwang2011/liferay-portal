@@ -14,6 +14,7 @@
 
 package com.liferay.social.kernel.util;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.social.kernel.model.SocialActivityDefinition;
 
 import java.util.List;
@@ -84,6 +85,7 @@ public class SocialConfigurationUtil {
 		_socialConfiguration = socialConfiguration;
 	}
 
+	@BeanReference(name = "com.liferay.social.kernel.util.SocialConfiguration")
 	private static SocialConfiguration _socialConfiguration;
 
 }

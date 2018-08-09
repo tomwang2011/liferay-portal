@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.json;
 
 import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.kernel.bean.BeanReference;
 
 import java.util.List;
 
@@ -144,6 +145,7 @@ public class JSONFactoryUtil {
 		_jsonFactory = jsonFactory;
 	}
 
+	@BeanReference(name = "com.liferay.portal.kernel.json.JSONFactory")
 	private static JSONFactory _jsonFactory;
 
 }

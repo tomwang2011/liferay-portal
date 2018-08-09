@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 import java.text.Format;
 
 import java.util.Locale;
@@ -107,6 +109,9 @@ public class FastDateFormatFactoryUtil {
 		_fastDateFormatFactory = fastDateFormatFactory;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.util.FastDateFormatFactory"
+	)
 	private static FastDateFormatFactory _fastDateFormatFactory;
 
 }

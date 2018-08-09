@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.permission;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
@@ -48,6 +49,9 @@ public class CommonPermissionUtil {
 		_commonPermission = commonPermission;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.service.permission.CommonPermission"
+	)
 	private static CommonPermission _commonPermission;
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 import javax.servlet.Servlet;
 
 /**
@@ -43,6 +45,9 @@ public class DirectServletRegistryUtil {
 		_directServletRegistry = directServletRegistry;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.servlet.DirectServletRegistry"
+	)
 	private static DirectServletRegistry _directServletRegistry;
 
 }

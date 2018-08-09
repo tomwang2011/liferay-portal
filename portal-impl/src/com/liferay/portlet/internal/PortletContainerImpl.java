@@ -15,6 +15,7 @@
 package com.liferay.portlet.internal;
 
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -998,7 +999,14 @@ public class PortletContainerImpl implements PortletContainer {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletContainerImpl.class);
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconMenu"
+	)
 	private PortletConfigurationIconMenu _portletConfigurationIconMenu;
+
+	@BeanReference(
+		name = "com.liferay.portal.kernel.portlet.toolbar.PortletToolbar"
+	)
 	private PortletToolbar _portletToolbar;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.workflow.permission;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
@@ -37,6 +38,9 @@ public class WorkflowPermissionUtil {
 		_workflowPermission = workflowPermission;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.workflow.permission.WorkflowPermission"
+	)
 	private static WorkflowPermission _workflowPermission;
 
 }

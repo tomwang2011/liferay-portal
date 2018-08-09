@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.permission;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -78,6 +79,9 @@ public class OrganizationPermissionUtil {
 		_organizationPermission = organizationPermission;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.service.permission.OrganizationPermission"
+	)
 	private static OrganizationPermission _organizationPermission;
 
 }

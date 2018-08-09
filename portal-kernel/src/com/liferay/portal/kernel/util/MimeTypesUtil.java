@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 import java.io.File;
 import java.io.InputStream;
 
@@ -118,6 +120,7 @@ public class MimeTypesUtil {
 		_mimeTypes = mimeTypes;
 	}
 
+	@BeanReference(name = "com.liferay.portal.kernel.util.MimeTypes")
 	private static MimeTypes _mimeTypes;
 
 }

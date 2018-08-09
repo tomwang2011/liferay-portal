@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.internal;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletConfigFactory;
 import com.liferay.portal.kernel.portlet.PortletContextFactory;
@@ -121,6 +122,10 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 	}
 
 	private final Map<String, Map<String, PortletConfig>> _pool;
+
+	@BeanReference(
+		name = "com.liferay.portal.kernel.portlet.PortletContextFactory"
+	)
 	private PortletContextFactory _portletContextFactory;
 
 }

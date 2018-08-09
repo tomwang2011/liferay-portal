@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -32,6 +34,7 @@ public class SharedSessionUtil {
 		_sharedSession = sharedSession;
 	}
 
+	@BeanReference(name = "com.liferay.portal.kernel.servlet.SharedSession")
 	private static SharedSession _sharedSession;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.zip;
 
 import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.kernel.bean.BeanReference;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +45,7 @@ public class ZipReaderFactoryUtil {
 		_zipReaderFactory = zipReaderFactory;
 	}
 
+	@BeanReference(name = "com.liferay.portal.kernel.zip.ZipReaderFactory")
 	private static ZipReaderFactory _zipReaderFactory;
 
 }

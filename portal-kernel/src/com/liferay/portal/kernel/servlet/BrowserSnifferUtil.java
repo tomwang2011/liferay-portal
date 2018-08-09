@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -138,6 +140,7 @@ public class BrowserSnifferUtil {
 		_browserSniffer = browserSniffer;
 	}
 
+	@BeanReference(name = "com.liferay.portal.servlet.BrowserSnifferImpl")
 	private static BrowserSniffer _browserSniffer;
 
 }

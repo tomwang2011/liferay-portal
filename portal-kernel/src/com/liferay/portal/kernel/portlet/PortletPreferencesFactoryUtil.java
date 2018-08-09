@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -283,6 +284,9 @@ public class PortletPreferencesFactoryUtil {
 		_portletPreferencesFactory = portletPreferencesFactory;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.portlet.PortletPreferencesFactory"
+	)
 	private static PortletPreferencesFactory _portletPreferencesFactory;
 
 }

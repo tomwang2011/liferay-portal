@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.spring.util;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 import java.util.Map;
 
 /**
@@ -42,6 +44,7 @@ public class SpringFactoryUtil {
 		_springFactory = springFactory;
 	}
 
+	@BeanReference(name = "com.liferay.portal.kernel.spring.util.SpringFactory")
 	private static SpringFactory _springFactory;
 
 }

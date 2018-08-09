@@ -16,6 +16,7 @@ package com.liferay.users.admin.kernel.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
@@ -345,6 +346,7 @@ public class UsersAdminUtil {
 		_usersAdmin = usersAdmin;
 	}
 
+	@BeanReference(name = "com.liferay.users.admin.kernel.util.UsersAdmin")
 	private static UsersAdmin _usersAdmin;
 
 }

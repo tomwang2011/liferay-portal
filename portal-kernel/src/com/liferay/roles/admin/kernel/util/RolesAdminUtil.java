@@ -14,6 +14,7 @@
 
 package com.liferay.roles.admin.kernel.util;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.model.Role;
 
 /**
@@ -41,6 +42,7 @@ public class RolesAdminUtil {
 		_rolesAdmin = rolesAdmin;
 	}
 
+	@BeanReference(name = "com.liferay.roles.admin.kernel.util.RolesAdmin")
 	private static RolesAdmin _rolesAdmin;
 
 }

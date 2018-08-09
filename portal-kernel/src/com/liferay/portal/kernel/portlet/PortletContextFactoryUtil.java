@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.model.Portlet;
 
 import javax.portlet.PortletContext;
@@ -52,6 +53,9 @@ public class PortletContextFactoryUtil {
 		_portletContextFactory = portletContextFactory;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.portlet.PortletContextFactory"
+	)
 	private static PortletContextFactory _portletContextFactory;
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -417,6 +419,7 @@ public class FileUtil {
 		_file = file;
 	}
 
+	@BeanReference(name = "com.liferay.portal.kernel.util.File")
 	private static com.liferay.portal.kernel.util.File _file;
 
 }
