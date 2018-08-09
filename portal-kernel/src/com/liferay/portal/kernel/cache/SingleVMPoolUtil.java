@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.cache;
 
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.Serializable;
 
@@ -27,7 +26,7 @@ import java.io.Serializable;
 public class SingleVMPoolUtil {
 
 	public static void clear() {
-		_singleVMPool.clear();
+		_dynamicPortalCacheManager.clearAll();
 	}
 
 	/**
@@ -66,20 +65,21 @@ public class SingleVMPoolUtil {
 	public static <K extends Serializable, V> PortalCache<K, V> getPortalCache(
 		String portalCacheName) {
 
-		return (PortalCache<K, V>)_singleVMPool.getPortalCache(portalCacheName);
+		return (PortalCache<K, V>)_dynamicPortalCacheManager.getPortalCache(
+			portalCacheName);
 	}
 
 	public static <K extends Serializable, V> PortalCache<K, V> getPortalCache(
 		String portalCacheName, boolean blocking) {
 
-		return (PortalCache<K, V>)_singleVMPool.getPortalCache(
+		return (PortalCache<K, V>)_dynamicPortalCacheManager.getPortalCache(
 			portalCacheName, blocking);
 	}
 
 	public static <K extends Serializable, V> PortalCacheManager<K, V>
 		getPortalCacheManager() {
 
-		return (PortalCacheManager<K, V>)_singleVMPool.getPortalCacheManager();
+		return (PortalCacheManager<K, V>)_dynamicPortalCacheManager;
 	}
 
 	/**
@@ -92,11 +92,12 @@ public class SingleVMPoolUtil {
 	}
 
 	public static void removePortalCache(String portalCacheName) {
-		_singleVMPool.removePortalCache(portalCacheName);
+		_dynamicPortalCacheManager.removePortalCache(portalCacheName);
 	}
 
-	private static volatile SingleVMPool _singleVMPool =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			SingleVMPool.class, SingleVMPoolUtil.class, "_singleVMPool", true);
+	private static final DynamicPortalCacheManager
+		<? extends Serializable, ? extends Serializable>
+			_dynamicPortalCacheManager =
+				new SingleVMDynamicPortalCacheManager<>();
 
 }
