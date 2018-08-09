@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 
@@ -135,6 +136,7 @@ public class PortletURLFactoryUtil {
 		_portletURLFactory = portletURLFactory;
 	}
 
+	@BeanReference(name = "com.liferay.portlet.PortletURLFactory")
 	private static PortletURLFactory _portletURLFactory;
 
 }

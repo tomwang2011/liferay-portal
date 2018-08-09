@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.model.Portlet;
 
 import javax.portlet.PortletException;
@@ -73,6 +74,9 @@ public class PortletInstanceFactoryUtil {
 		_portletInstanceFactory = portletInstanceFactory;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.portlet.PortletInstanceFactory"
+	)
 	private static PortletInstanceFactory _portletInstanceFactory;
 
 }

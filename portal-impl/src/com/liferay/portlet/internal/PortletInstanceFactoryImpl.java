@@ -15,6 +15,7 @@
 package com.liferay.portlet.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.InvokerFilterContainer;
@@ -275,8 +276,16 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 		return invokerPortlet;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.portlet.InvokerPortletFactory"
+	)
 	private InvokerPortletFactory _defaultInvokerPortletFactory;
+
+	@BeanReference(
+		name = "com.liferay.portal.kernel.portlet.InvokerPortletFactory"
+	)
 	private volatile InvokerPortletFactory _invokerPortletFactory;
+
 	private final Map<String, Map<String, InvokerPortlet>> _pool =
 		new ConcurrentHashMap<>();
 	private ServiceTracker<InvokerPortletFactory, InvokerPortletFactory>
