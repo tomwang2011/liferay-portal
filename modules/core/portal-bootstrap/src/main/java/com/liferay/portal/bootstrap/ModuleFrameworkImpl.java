@@ -1491,8 +1491,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
-		frameworkWiring = _framework.adapt(FrameworkWiring.class);
-
 		frameworkWiring.resolveBundles(fragmentBundles);
 
 		return new HashSet<>(Arrays.asList(initialBundles));
