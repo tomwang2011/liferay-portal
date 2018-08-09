@@ -14,6 +14,7 @@
 
 package com.liferay.social.kernel.service.permission;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
@@ -50,6 +51,9 @@ public class SocialRequestPermissionUtil {
 		_socialRequestPermission = socialRequestPermission;
 	}
 
+	@BeanReference(
+		name = "com.liferay.social.kernel.service.permission.SocialRequestPermission"
+	)
 	private static SocialRequestPermission _socialRequestPermission;
 
 }

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.language;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
@@ -360,6 +361,7 @@ public class LanguageUtil {
 		_language = language;
 	}
 
+	@BeanReference(name = "com.liferay.portal.language.LanguageImpl")
 	private static Language _language;
 
 }

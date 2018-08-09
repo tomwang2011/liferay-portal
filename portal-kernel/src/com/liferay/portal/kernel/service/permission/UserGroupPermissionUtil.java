@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.permission;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
@@ -49,6 +50,9 @@ public class UserGroupPermissionUtil {
 		_userGroupPermission = userGroupPermission;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.service.permission.UserGroupPermission"
+	)
 	private static UserGroupPermission _userGroupPermission;
 
 }

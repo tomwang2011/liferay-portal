@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.metadata;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.File;
@@ -59,6 +60,9 @@ public class RawMetadataProcessorUtil {
 		_rawMetadataProcessor = rawMetadataProcessor;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.metadata.RawMetadataProcessor"
+	)
 	private static RawMetadataProcessor _rawMetadataProcessor;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.sites.kernel.util;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -331,6 +332,7 @@ public class SitesUtil {
 		_sites = sites;
 	}
 
+	@BeanReference(name = "com.liferay.sites.kernel.util.Sites")
 	private static Sites _sites;
 
 }

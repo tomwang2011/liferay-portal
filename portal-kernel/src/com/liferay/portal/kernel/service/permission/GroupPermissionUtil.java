@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.permission;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -74,6 +75,9 @@ public class GroupPermissionUtil {
 		_groupPermission = groupPermission;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.service.permission.GroupPermissionImpl"
+	)
 	private static GroupPermission _groupPermission;
 
 }

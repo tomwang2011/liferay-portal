@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.zip;
 
 import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.kernel.bean.BeanReference;
 
 import java.io.File;
 
@@ -40,6 +41,7 @@ public class ZipWriterFactoryUtil {
 		_zipWriterFactory = zipWriterFactory;
 	}
 
+	@BeanReference(name = "com.liferay.portal.kernel.zip.ZipWriterFactory")
 	private static ZipWriterFactory _zipWriterFactory;
 
 }

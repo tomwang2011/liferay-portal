@@ -15,6 +15,7 @@
 package com.liferay.expando.kernel.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.search.Document;
 
 /**
@@ -51,6 +52,9 @@ public class ExpandoBridgeIndexerUtil {
 		_expandoBridgeIndexer = expandoBridgeIndexer;
 	}
 
+	@BeanReference(
+		name = "com.liferay.expando.kernel.util.ExpandoBridgeIndexer"
+	)
 	private static ExpandoBridgeIndexer _expandoBridgeIndexer;
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.jsonwebservice;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 import java.lang.reflect.Method;
 
 import java.util.List;
@@ -121,6 +123,9 @@ public class JSONWebServiceActionsManagerUtil {
 		_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager"
+	)
 	private static JSONWebServiceActionsManager _jsonWebServiceActionsManager;
 
 }

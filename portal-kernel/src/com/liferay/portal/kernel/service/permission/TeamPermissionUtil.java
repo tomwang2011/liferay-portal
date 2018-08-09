@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.permission;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -61,6 +62,9 @@ public class TeamPermissionUtil {
 		_teamPermission = teamPermission;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.service.permission.TeamPermission"
+	)
 	private static TeamPermission _teamPermission;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.permission;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
@@ -49,6 +50,9 @@ public class PasswordPolicyPermissionUtil {
 		_passwordPolicyPermission = passwordPolicyPermission;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.service.permission.PasswordPolicyPermission"
+	)
 	private static PasswordPolicyPermission _passwordPolicyPermission;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.permission;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -332,6 +333,9 @@ public class PortletPermissionUtil {
 		_portletPermission = portletPermission;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.service.permission.PortletPermission"
+	)
 	private static PortletPermission _portletPermission;
 
 }

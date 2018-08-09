@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.license.util;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.license.LicenseInfo;
 
@@ -80,6 +81,9 @@ public class LicenseManagerUtil {
 		_licenseManager = licenseManager;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.license.util.LicenseManager"
+	)
 	private static LicenseManager _licenseManager;
 
 }

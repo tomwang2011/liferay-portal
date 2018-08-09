@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.service.permission;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Account;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -65,6 +66,9 @@ public class AccountPermissionUtil {
 		_accountPermission = accountPermission;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.service.permission.AccountPermission"
+	)
 	private static AccountPermission _accountPermission;
 
 }

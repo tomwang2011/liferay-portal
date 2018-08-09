@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.portletfilerepository;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -376,6 +377,9 @@ public class PortletFileRepositoryUtil {
 		_portletFileRepository = portletFileRepository;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.portletfilerepository.PortletFileRepository"
+	)
 	private static PortletFileRepository _portletFileRepository;
 
 }

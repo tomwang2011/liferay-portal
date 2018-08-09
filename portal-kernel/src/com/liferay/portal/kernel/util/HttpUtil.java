@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -364,6 +366,7 @@ public class HttpUtil {
 		_http = http;
 	}
 
+	@BeanReference(name = "com.liferay.portal.util.HttpImpl")
 	private static Http _http;
 
 }

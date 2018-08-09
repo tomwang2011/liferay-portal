@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.service.permission;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -68,6 +69,9 @@ public class UserGroupRolePermissionUtil {
 		_userGroupRolePermission = userGroupRolePermission;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.service.permission.UserGroupRolePermission"
+	)
 	private static UserGroupRolePermission _userGroupRolePermission;
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.layoutconfiguration.util;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.layoutconfiguration.util.xml.RuntimeLogic;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -106,6 +107,9 @@ public class RuntimePageUtil {
 		_runtimePage = runtimePage;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.layoutconfiguration.util.RuntimePage"
+	)
 	private static RuntimePage _runtimePage;
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 import java.util.Map;
 
 /**
@@ -269,6 +271,7 @@ public class HtmlUtil {
 		_html = html;
 	}
 
+	@BeanReference(name = "com.liferay.portal.util.HtmlImpl")
 	private static Html _html;
 
 }

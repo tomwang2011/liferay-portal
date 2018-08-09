@@ -15,6 +15,7 @@
 package com.liferay.expando.kernel.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.portal.kernel.bean.BeanReference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,6 +45,9 @@ public class ExpandoBridgeFactoryUtil {
 		_expandoBridgeFactory = expandoBridgeFactory;
 	}
 
+	@BeanReference(
+		name = "com.liferay.expando.kernel.util.ExpandoBridgeFactory"
+	)
 	private static ExpandoBridgeFactory _expandoBridgeFactory;
 
 }

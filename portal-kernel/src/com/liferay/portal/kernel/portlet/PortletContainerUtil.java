@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -316,6 +317,9 @@ public class PortletContainerUtil {
 		!StringUtil.equalsIgnoreCase(
 			PropsUtil.get(PropsKeys.PORTLET_EVENT_DISTRIBUTION), "layout");
 
+	@BeanReference(
+		name = "com.liferay.portlet.RestrictPortletContainerWrapper"
+	)
 	private static PortletContainer _portletContainer;
 
 }

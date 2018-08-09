@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.editor.configuration;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
@@ -46,6 +47,9 @@ public class EditorConfigurationFactoryUtil {
 		_editorConfigurationFactory = editorConfigurationFactory;
 	}
 
+	@BeanReference(
+		name = "com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryImpl"
+	)
 	private static EditorConfigurationFactory _editorConfigurationFactory;
 
 }

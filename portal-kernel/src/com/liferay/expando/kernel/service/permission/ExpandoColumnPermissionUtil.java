@@ -15,6 +15,7 @@
 package com.liferay.expando.kernel.service.permission;
 
 import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
@@ -85,6 +86,9 @@ public class ExpandoColumnPermissionUtil {
 		_expandoColumnPermission = expandoColumnPermission;
 	}
 
+	@BeanReference(
+		name = "com.liferay.expando.kernel.service.permission.ExpandoColumnPermission"
+	)
 	private static ExpandoColumnPermission _expandoColumnPermission;
 
 }

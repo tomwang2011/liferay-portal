@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.uuid;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -44,6 +46,7 @@ public class PortalUUIDUtil {
 		_portalUUID = portalUUID;
 	}
 
+	@BeanReference(name = "com.liferay.portal.kernel.uuid.PortalUUID")
 	private static PortalUUID _portalUUID;
 
 }

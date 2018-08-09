@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.xmlrpc;
 
+import com.liferay.portal.kernel.bean.BeanReference;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -42,6 +44,7 @@ public class XmlRpcUtil {
 		_xmlRpc = xmlRpc;
 	}
 
+	@BeanReference(name = "com.liferay.portal.kernel.xmlrpc.XmlRpc")
 	private static XmlRpc _xmlRpc;
 
 }
