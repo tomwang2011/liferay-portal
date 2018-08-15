@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.internal;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,6 +36,8 @@ import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerFieldUpdaterCustomizer;
 
+import java.lang.reflect.Field;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,32 +50,6 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 
 	public FriendlyURLMapperTrackerImpl(Portlet portlet) throws Exception {
 		_portlet = portlet;
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		String filterString = null;
-
-		String portletId = portlet.getPortletId();
-
-		String portletName = portlet.getPortletName();
-
-		if (portletId.equals(portletName)) {
-			filterString = StringBundler.concat(
-				"(&(javax.portlet.name=", portletId, ")(objectClass=",
-				FriendlyURLMapper.class.getName(), "))");
-		}
-		else {
-			filterString = StringBundler.concat(
-				"(&(|(javax.portlet.name=", portletId, ")(javax.portlet.name=",
-				portletName, "))(objectClass=",
-				FriendlyURLMapper.class.getName(), "))");
-		}
-
-		_serviceTracker = registry.trackServices(
-			registry.getFilter(filterString),
-			new FriendlyURLMapperServiceTrackerCustomizer());
-
-		_serviceTracker.open();
 	}
 
 	@Override
@@ -87,11 +62,15 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 			serviceRegistration.unregister();
 		}
 
-		_serviceTracker.close();
+		if (_serviceTracker != null) {
+			_serviceTracker.close();
+		}
 	}
 
 	@Override
 	public FriendlyURLMapper getFriendlyURLMapper() {
+		_init();
+
 		return _friendlyURLMapper;
 	}
 
@@ -157,14 +136,65 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 		return xml;
 	}
 
+	private void _init() {
+		if (_serviceTracker == null) {
+			synchronized (this) {
+				if (_serviceTracker != null) {
+					return;
+				}
+
+				Registry registry = RegistryUtil.getRegistry();
+
+				String filterString = null;
+
+				String portletId = _portlet.getPortletId();
+
+				String portletName = _portlet.getPortletName();
+
+				if (portletId.equals(portletName)) {
+					filterString = StringBundler.concat(
+						"(&(javax.portlet.name=", portletId, ")(objectClass=",
+						FriendlyURLMapper.class.getName(), "))");
+				}
+				else {
+					filterString = StringBundler.concat(
+						"(&(|(javax.portlet.name=", portletId,
+						")(javax.portlet.name=", portletName, "))(objectClass=",
+						FriendlyURLMapper.class.getName(), "))");
+				}
+
+				_serviceTracker = registry.trackServices(
+					registry.getFilter(filterString),
+					new FriendlyURLMapperServiceTrackerCustomizer());
+
+				_serviceTracker.open();
+			}
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLMapperTrackerImpl.class);
+
+	private static final Field _friendlyURLMapperField;
+
+	static {
+		try {
+			_friendlyURLMapperField =
+				FriendlyURLMapperTrackerImpl.class.getDeclaredField(
+					"_friendlyURLMapper");
+
+			_friendlyURLMapperField.setAccessible(true);
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+	}
 
 	private volatile FriendlyURLMapper _friendlyURLMapper;
 	private final Portlet _portlet;
 	private final Map<FriendlyURLMapper, ServiceRegistration<?>>
 		_serviceRegistrations = new ConcurrentHashMap<>();
-	private final ServiceTracker<FriendlyURLMapper, FriendlyURLMapper>
+	private volatile ServiceTracker<FriendlyURLMapper, FriendlyURLMapper>
 		_serviceTracker;
 
 	private class FriendlyURLMapperServiceTrackerCustomizer
@@ -278,11 +308,10 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 			return router;
 		}
 
-		private FriendlyURLMapperServiceTrackerCustomizer() throws Exception {
+		private FriendlyURLMapperServiceTrackerCustomizer() {
 			super(
-				ReflectionUtil.getDeclaredField(
-					FriendlyURLMapperTrackerImpl.class, "_friendlyURLMapper"),
-				FriendlyURLMapperTrackerImpl.this, null);
+				_friendlyURLMapperField, FriendlyURLMapperTrackerImpl.this,
+				null);
 		}
 
 	}
