@@ -145,22 +145,16 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		String portalCacheName = portalCacheConfiguration.getPortalCacheName();
 
-		synchronized (_cacheManager) {
-			if (!_cacheManager.cacheExists(portalCacheName)) {
-				_cacheManager.addCache(portalCacheName);
-			}
-		}
-
-		Cache cache = _cacheManager.getCache(portalCacheName);
-
 		EhcachePortalCacheConfiguration ehcachePortalCacheConfiguration =
 			(EhcachePortalCacheConfiguration)portalCacheConfiguration;
 
 		if (ehcachePortalCacheConfiguration.isRequireSerialization()) {
-			return new SerializableEhcachePortalCache<>(this, cache);
+			return new SerializableEhcachePortalCache<>(
+				this, _createPortalCache(portalCacheName));
 		}
 
-		return new EhcachePortalCache<>(this, cache);
+		return new EhcachePortalCache<>(
+			this, this::_createPortalCache, portalCacheName);
 	}
 
 	@Override
@@ -399,6 +393,16 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		baseEhcachePortalCacheManagerConfigurator;
 	protected MBeanServer mBeanServer;
 	protected volatile Props props;
+
+	private Cache _createPortalCache(String portalCacheName) {
+		synchronized (_cacheManager) {
+			if (!_cacheManager.cacheExists(portalCacheName)) {
+				_cacheManager.addCache(portalCacheName);
+			}
+		}
+
+		return _cacheManager.getCache(portalCacheName);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EhcachePortalCacheManager.class);

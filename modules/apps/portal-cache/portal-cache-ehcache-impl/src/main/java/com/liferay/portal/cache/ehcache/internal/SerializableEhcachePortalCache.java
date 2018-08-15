@@ -40,6 +40,8 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	public List<K> getKeys() {
+		Ehcache ehcache = getEhcache();
+
 		List<?> rawKeys = ehcache.getKeys();
 
 		if (rawKeys.isEmpty()) {
@@ -67,6 +69,8 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected V doGet(K key) {
+		Ehcache ehcache = getEhcache();
+
 		Element element = ehcache.get(new SerializableObjectWrapper(key));
 
 		if (element == null) {
@@ -84,6 +88,8 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 			element.setTimeToLive(timeToLive);
 		}
 
+		Ehcache ehcache = getEhcache();
+
 		ehcache.put(element);
 	}
 
@@ -94,6 +100,8 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
 			element.setTimeToLive(timeToLive);
 		}
+
+		Ehcache ehcache = getEhcache();
 
 		Element oldElement = ehcache.putIfAbsent(element);
 
@@ -106,11 +114,15 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected void doRemove(K key) {
+		Ehcache ehcache = getEhcache();
+
 		ehcache.remove(new SerializableObjectWrapper(key));
 	}
 
 	@Override
 	protected boolean doRemove(K key, V value) {
+		Ehcache ehcache = getEhcache();
+
 		return ehcache.removeElement(createElement(key, value));
 	}
 
@@ -121,6 +133,8 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
 			element.setTimeToLive(timeToLive);
 		}
+
+		Ehcache ehcache = getEhcache();
 
 		Element oldElement = ehcache.replace(element);
 
@@ -138,6 +152,8 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
 			newElement.setTimeToLive(timeToLive);
 		}
+
+		Ehcache ehcache = getEhcache();
 
 		return ehcache.replace(createElement(key, oldValue), newElement);
 	}
