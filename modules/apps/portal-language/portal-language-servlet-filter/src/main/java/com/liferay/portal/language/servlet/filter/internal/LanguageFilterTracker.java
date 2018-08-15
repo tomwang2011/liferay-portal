@@ -72,14 +72,16 @@ public class LanguageFilterTracker {
 		implements ResourceBundleLoader {
 
 		public ServiceTrackerResourceBundleLoader(
-			ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
-				serviceTracker) {
+			BundleContext bundleContext, String filterString) {
 
-			_serviceTracker = serviceTracker;
+			_bundleContext = bundleContext;
+			_filterString = filterString;
 		}
 
 		@Override
 		public ResourceBundle loadResourceBundle(Locale locale) {
+			_init();
+
 			ResourceBundleLoader resourceBundleLoader =
 				_serviceTracker.getService();
 
@@ -109,8 +111,23 @@ public class LanguageFilterTracker {
 			return loadResourceBundle(LocaleUtil.fromLanguageId(languageId));
 		}
 
-		private final ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
-			_serviceTracker;
+		private void _init() {
+			if (_serviceTracker == null) {
+				synchronized (this) {
+					if (_serviceTracker != null) {
+						return;
+					}
+
+					_serviceTracker = ServiceTrackerFactory.open(
+						_bundleContext, _filterString);
+				}
+			}
+		}
+
+		private final BundleContext _bundleContext;
+		private final String _filterString;
+		private volatile ServiceTracker
+			<ResourceBundleLoader, ResourceBundleLoader> _serviceTracker;
 
 	}
 
@@ -235,12 +252,13 @@ public class LanguageFilterTracker {
 						ResourceBundleLoader.class, resourceBundleLoader,
 						properties));
 
-				ServiceTracker<ResourceBundleLoader, ResourceBundleLoader>
-					serviceTracker = ServiceTrackerFactory.open(
-						_bundleContext, _filterString);
+				ServiceTrackerResourceBundleLoader
+					serviceTrackerResourceBundleLoader =
+						new ServiceTrackerResourceBundleLoader(
+							_bundleContext, _filterString);
 
 				Filter filter = new LanguageFilter(
-					new ServiceTrackerResourceBundleLoader(serviceTracker));
+					serviceTrackerResourceBundleLoader);
 
 				Dictionary<String, Object> filterProperties = new Hashtable<>();
 
@@ -267,7 +285,7 @@ public class LanguageFilterTracker {
 						Filter.class, filter, filterProperties));
 
 				return new TrackedServletContextHelper(
-					serviceTracker, serviceRegistrations);
+					serviceTrackerResourceBundleLoader, serviceRegistrations);
 			}
 
 			@Override
@@ -301,15 +319,19 @@ public class LanguageFilterTracker {
 	private class TrackedServletContextHelper {
 
 		public TrackedServletContextHelper(
-			ServiceTracker<?, ?> serviceTracker,
+			ServiceTrackerResourceBundleLoader
+				serviceTrackerResourceBundleLoader,
 			List<ServiceRegistration<?>> serviceRegistrations) {
 
-			_serviceTracker = serviceTracker;
+			_serviceTrackerResourceBundleLoader =
+				serviceTrackerResourceBundleLoader;
 			_serviceRegistrations = serviceRegistrations;
 		}
 
 		public void clean() {
-			_serviceTracker.close();
+			if (_serviceTrackerResourceBundleLoader._serviceTracker != null) {
+				_serviceTrackerResourceBundleLoader._serviceTracker.close();
+			}
 
 			for (ServiceRegistration<?> serviceRegistration :
 					_serviceRegistrations) {
@@ -319,7 +341,8 @@ public class LanguageFilterTracker {
 		}
 
 		private final List<ServiceRegistration<?>> _serviceRegistrations;
-		private ServiceTracker<?, ?> _serviceTracker;
+		private final ServiceTrackerResourceBundleLoader
+			_serviceTrackerResourceBundleLoader;
 
 	}
 
