@@ -167,9 +167,15 @@ public class LPKGBundleTrackerCustomizer
 				while (enumeration.hasMoreElements()) {
 					URL url = enumeration.nextElement();
 
+					String path = url.getPath();
+
+					if (path.startsWith(StringPool.SLASH)) {
+						path = path.substring(1);
+					}
+
 					String location =
 						LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
-							bundle, url.getPath());
+							bundle, path);
 
 					if (_isOverridden(symbolicName, url, location)) {
 						continue;
@@ -206,9 +212,15 @@ public class LPKGBundleTrackerCustomizer
 				while (enumeration.hasMoreElements()) {
 					URL url = enumeration.nextElement();
 
+					String path = url.getPath();
+
+					if (path.startsWith(StringPool.SLASH)) {
+						path = path.substring(1);
+					}
+
 					String location =
 						LPKGInnerBundleLocationUtil.generateInnerBundleLocation(
-							bundle, url.getPath());
+							bundle, path);
 
 					if (_isOverridden(symbolicName, url, location)) {
 						continue;
