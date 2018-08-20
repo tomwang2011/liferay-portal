@@ -16,11 +16,23 @@ package com.liferay.portal.util;
 
 import com.liferay.petra.process.ConsumerOutputProcessor;
 import com.liferay.petra.process.ProcessUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+
+import java.math.BigDecimal;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -41,6 +53,8 @@ public class BrowserLauncher implements Runnable {
 			int responseCode = urlc.getResponseCode();
 
 			if (responseCode == HttpURLConnection.HTTP_OK) {
+				_analyzeGCLog();
+
 				try {
 					launchBrowser();
 				}
@@ -92,6 +106,91 @@ public class BrowserLauncher implements Runnable {
 		ProcessUtil.execute(
 			ConsumerOutputProcessor.INSTANCE, "cmd.exe", "/c", "start",
 			PropsValues.BROWSER_LAUNCHER_URL);
+	}
+
+	private void _analyzeGCLog() throws Exception {
+		System.gc();
+
+		RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
+
+		List<String> arguments = runtimeMxBean.getInputArguments();
+
+		String gcLogFilePath = null;
+
+		for (String argument : arguments) {
+			if (argument.startsWith("-Xloggc:")) {
+				gcLogFilePath = argument.substring(8);
+			}
+		}
+
+		if (gcLogFilePath == null) {
+			System.out.println("##########Unable to find -Xloggc: arg");
+
+			return;
+		}
+
+		for (int i = 0; i < 10; i++) {
+			Thread.sleep(1000);
+
+			String gcLog = new String(
+				Files.readAllBytes(Paths.get(gcLogFilePath)));
+
+			if (!gcLog.contains("Full GC (System.gc())")) {
+				continue;
+			}
+
+			long totalSize = 0;
+			BigDecimal totalTime = new BigDecimal(0);
+
+			for (String line : StringUtil.splitLines(gcLog)) {
+				if (!line.contains("GC (")) {
+					continue;
+				}
+
+				int index = line.indexOf("K->");
+
+				int startIndex = line.lastIndexOf(CharPool.SPACE, index);
+
+				long startSize = Long.parseLong(
+					line.substring(startIndex + 1, index));
+
+				index += 3;
+
+				int endIndex = line.indexOf(CharPool.UPPER_CASE_K, index);
+
+				long endSize = Long.parseLong(line.substring(index, endIndex));
+
+				totalSize += (startSize - endSize);
+
+				if (!line.contains("GC (System.gc())")) {
+					index = line.lastIndexOf(" secs]");
+
+					startIndex = line.lastIndexOf(CharPool.SPACE, index - 1);
+
+					totalTime = totalTime.add(
+						new BigDecimal(line.substring(startIndex + 1, index)));
+				}
+
+				if (line.contains("[Full GC (")) {
+					if (line.contains("[Full GC (System.gc())")) {
+						break;
+					}
+					else {
+						System.out.println(
+							"#####Bad heap setting, " + "found Full GC : " +
+								line);
+					}
+				}
+			}
+
+			System.out.println(
+				"#####Total GCed size : " + totalSize + "K" +
+					", total GC time : " + totalTime + "s");
+
+			return;
+		}
+
+		System.out.println("########Timeout on waiting System.gc()");
 	}
 
 	/**
