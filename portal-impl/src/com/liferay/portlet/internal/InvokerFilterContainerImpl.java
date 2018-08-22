@@ -35,6 +35,7 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.io.Closeable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -67,40 +68,28 @@ public class InvokerFilterContainerImpl
 			Portlet portlet, PortletContext portletContext)
 		throws PortletException {
 
-		String rootPortletId = portlet.getRootPortletId();
+		_rootPortletId = portlet.getRootPortletId();
+
+		_portletContext = portletContext;
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		Filter filter = registry.getFilter(
-			StringBundler.concat(
-				"(&(javax.portlet.name=", rootPortletId, ")(objectClass=",
-				PortletFilter.class.getName(), "))"));
-
-		_serviceTracker = registry.trackServices(
-			filter, new PortletFilterServiceTrackerCustomizer(portletContext));
-
-		_serviceTracker.open();
-
 		Map<String, Object> properties = new HashMap<>();
 
-		properties.put("javax.portlet.name", rootPortletId);
+		properties.put("javax.portlet.name", _rootPortletId);
 		properties.put("preinitialized.filter", Boolean.TRUE);
 
 		Map<String, com.liferay.portal.kernel.model.PortletFilter>
 			portletFilters = portlet.getPortletFilters();
 
-		for (Map.Entry<String, com.liferay.portal.kernel.model.PortletFilter>
-				entry : portletFilters.entrySet()) {
-
-			com.liferay.portal.kernel.model.PortletFilter portletFilterModel =
-				entry.getValue();
+		for (com.liferay.portal.kernel.model.PortletFilter portletFilterModel :
+				portletFilters.values()) {
 
 			PortletFilter portletFilter = PortletFilterFactory.create(
-				portletFilterModel, portletContext);
+				portletFilterModel, _portletContext);
 
-			Map<String, Object> portletFilterProperties = new HashMap<>();
-
-			portletFilterProperties.putAll(properties);
+			Map<String, Object> portletFilterProperties = new HashMap<>(
+				properties);
 
 			portletFilterProperties.put(
 				"filter.lifecycles", portletFilterModel.getLifecycles());
@@ -129,12 +118,11 @@ public class InvokerFilterContainerImpl
 				com.liferay.portal.kernel.model.PortletFilter
 					portletFilterModel = new PortletFilterImpl(
 						portletFilterClassName, portletFilterClassName,
-						Collections.<String>emptySet(),
-						Collections.<String, String>emptyMap(),
+						Collections.emptySet(), Collections.emptyMap(),
 						portlet.getPortletApp());
 
 				PortletFilter portletFilter = PortletFilterFactory.create(
-					portletFilterModel, portletContext);
+					portletFilterModel, _portletContext);
 
 				ServiceRegistration<PortletFilter> serviceRegistration =
 					registry.registerService(
@@ -166,7 +154,9 @@ public class InvokerFilterContainerImpl
 
 		_serviceRegistrationTuples.clear();
 
-		_serviceTracker.close();
+		if (_serviceTracker != null) {
+			_serviceTracker.close();
+		}
 
 		_actionFilters.clear();
 		_eventFilters.clear();
@@ -177,27 +167,60 @@ public class InvokerFilterContainerImpl
 
 	@Override
 	public List<ActionFilter> getActionFilters() {
+		_initFilters();
+
 		return _actionFilters;
 	}
 
 	@Override
 	public List<EventFilter> getEventFilters() {
+		_initFilters();
+
 		return _eventFilters;
 	}
 
 	@Override
 	public List<HeaderFilter> getHeaderFilters() {
+		_initFilters();
+
 		return _headerFilters;
 	}
 
 	@Override
 	public List<RenderFilter> getRenderFilters() {
+		_initFilters();
+
 		return _renderFilters;
 	}
 
 	@Override
 	public List<ResourceFilter> getResourceFilters() {
+		_initFilters();
+
 		return _resourceFilters;
+	}
+
+	private void _initFilters() {
+		if (_serviceTracker == null) {
+			synchronized (this) {
+				if (_serviceTracker != null) {
+					return;
+				}
+
+				Registry registry = RegistryUtil.getRegistry();
+
+				Filter filter = registry.getFilter(
+					StringBundler.concat(
+						"(&(javax.portlet.name=", _rootPortletId,
+						")(objectClass=", PortletFilter.class.getName(), "))"));
+
+				_serviceTracker = registry.trackServices(
+					filter,
+					new PortletFilterServiceTrackerCustomizer(_portletContext));
+
+				_serviceTracker.open();
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -209,13 +232,16 @@ public class InvokerFilterContainerImpl
 		new CopyOnWriteArrayList<>();
 	private final List<HeaderFilter> _headerFilters =
 		new CopyOnWriteArrayList<>();
+	private final PortletContext _portletContext;
 	private final List<RenderFilter> _renderFilters =
 		new CopyOnWriteArrayList<>();
 	private final List<ResourceFilter> _resourceFilters =
 		new CopyOnWriteArrayList<>();
+	private final String _rootPortletId;
 	private final List<ServiceRegistrationTuple> _serviceRegistrationTuples =
-		new CopyOnWriteArrayList<>();
-	private final ServiceTracker<PortletFilter, PortletFilter> _serviceTracker;
+		new ArrayList<>();
+	private volatile ServiceTracker<PortletFilter, PortletFilter>
+		_serviceTracker;
 
 	private static class EmptyInvokerFilterContainer
 		implements Closeable, InvokerFilterContainer {
@@ -253,14 +279,6 @@ public class InvokerFilterContainerImpl
 
 	private static class ServiceRegistrationTuple {
 
-		public ServiceRegistrationTuple(
-			com.liferay.portal.kernel.model.PortletFilter portletFilterModel,
-			ServiceRegistration<PortletFilter> serviceRegistration) {
-
-			_portletFilterModel = portletFilterModel;
-			_serviceRegistration = serviceRegistration;
-		}
-
 		public com.liferay.portal.kernel.model.PortletFilter
 			getPortletFilterModel() {
 
@@ -271,6 +289,14 @@ public class InvokerFilterContainerImpl
 			return _serviceRegistration;
 		}
 
+		private ServiceRegistrationTuple(
+			com.liferay.portal.kernel.model.PortletFilter portletFilterModel,
+			ServiceRegistration<PortletFilter> serviceRegistration) {
+
+			_portletFilterModel = portletFilterModel;
+			_serviceRegistration = serviceRegistration;
+		}
+
 		private final com.liferay.portal.kernel.model.PortletFilter
 			_portletFilterModel;
 		private final ServiceRegistration<PortletFilter> _serviceRegistration;
@@ -279,12 +305,6 @@ public class InvokerFilterContainerImpl
 
 	private class PortletFilterServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<PortletFilter, PortletFilter> {
-
-		public PortletFilterServiceTrackerCustomizer(
-			PortletContext portletContext) {
-
-			_portletContext = portletContext;
-		}
 
 		@Override
 		public PortletFilter addingService(
@@ -396,6 +416,12 @@ public class InvokerFilterContainerImpl
 			}
 
 			portletFilter.destroy();
+		}
+
+		private PortletFilterServiceTrackerCustomizer(
+			PortletContext portletContext) {
+
+			_portletContext = portletContext;
 		}
 
 		private boolean _isDeclaredLifecycle(
