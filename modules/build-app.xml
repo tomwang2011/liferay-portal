@@ -980,6 +980,16 @@
 		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
 
 		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="icon-url=https://www.liferay.com/web/guest/marketplace/-/mp/asset/icon/71985553" />
+
+		<condition property="Liferay-Bundle-Start-Level" value="">
+			<not>
+				<isset property="Liferay-Bundle-Start-Level" />
+			</not>
+		</condition>
+
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="${line.separator}" />
+
+		<echo append="true" file="${lpkg.dir}/liferay-marketplace.properties" message="Liferay-Bundle-Start-Level=${Liferay-Bundle-Start-Level}" />
 	</target>
 
 	<target depends="dist-module-artifacts,get-app-change-log" if="app.ticket.list" name="zip-app-sources">

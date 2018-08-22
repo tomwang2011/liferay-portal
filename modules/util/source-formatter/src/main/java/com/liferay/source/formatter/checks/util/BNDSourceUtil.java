@@ -119,14 +119,14 @@ public class BNDSourceUtil {
 	}
 
 	private static final String[] _APP_BND_DEFINITION_KEYS = {
-		"Liferay-Releng-App-Description", "Liferay-Releng-App-Title",
-		"Liferay-Releng-Bundle", "Liferay-Releng-Category",
-		"Liferay-Releng-Demo-Url", "Liferay-Releng-Deprecated",
-		"Liferay-Releng-Fix-Delivery-Method", "Liferay-Releng-Labs",
-		"Liferay-Releng-Marketplace", "Liferay-Releng-Portal-Required",
-		"Liferay-Releng-Public", "Liferay-Releng-Restart-Required",
-		"Liferay-Releng-Suite", "Liferay-Releng-Support-Url",
-		"Liferay-Releng-Supported"
+		"Liferay-Bundle-Start-Level", "Liferay-Releng-App-Description",
+		"Liferay-Releng-App-Title", "Liferay-Releng-Bundle",
+		"Liferay-Releng-Category", "Liferay-Releng-Demo-Url",
+		"Liferay-Releng-Deprecated", "Liferay-Releng-Fix-Delivery-Method",
+		"Liferay-Releng-Labs", "Liferay-Releng-Marketplace",
+		"Liferay-Releng-Portal-Required", "Liferay-Releng-Public",
+		"Liferay-Releng-Restart-Required", "Liferay-Releng-Suite",
+		"Liferay-Releng-Support-Url", "Liferay-Releng-Supported"
 	};
 
 	private static final String[] _BND_BND_DEFINITION_KEYS = {
