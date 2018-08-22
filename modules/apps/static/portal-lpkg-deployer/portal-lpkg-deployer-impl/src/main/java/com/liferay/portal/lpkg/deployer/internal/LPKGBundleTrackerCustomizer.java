@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.lpkg.StaticLPKGResolver;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -106,9 +108,18 @@ public class LPKGBundleTrackerCustomizer
 			return null;
 		}
 
-		try {
-			Properties properties = _readMarketplaceProperties(bundle);
+		Properties properties = null;
 
+		try {
+			properties = _readMarketplaceProperties(bundle);
+		}
+		catch (IOException ioe) {
+			_log.error(
+				"Unable to read liferay-marketplace.properties for " + bundle,
+				ioe);
+		}
+
+		try {
 			if (properties == null) {
 				return null;
 			}
@@ -155,10 +166,22 @@ public class LPKGBundleTrackerCustomizer
 			return Collections.emptyList();
 		}
 
+		String startLevelString = properties.getProperty(
+			"Liferay-Bundle-Start-Level");
+
+		int lpkgStartLevel =
+			PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL;
+
+		if (Validator.isNotNull(startLevelString)) {
+			lpkgStartLevel = GetterUtil.getInteger(startLevelString);
+		}
+
 		List<Bundle> bundles = new ArrayList<>();
 
 		try {
 			List<Bundle> installedBundles = new ArrayList<>();
+
+			Map<Bundle, Integer> startLevels = new HashMap<>();
 
 			Enumeration<URL> enumeration = bundle.findEntries(
 				"/", "*.jar", false);
@@ -197,6 +220,17 @@ public class LPKGBundleTrackerCustomizer
 					installedBundles.add(newBundle);
 
 					bundles.add(newBundle);
+
+					Dictionary<String, String> headers = newBundle.getHeaders(
+						StringPool.BLANK);
+
+					startLevelString = headers.get(
+						"Liferay-Bundle-Start-Level");
+
+					if (Validator.isNotNull(startLevelString)) {
+						startLevels.put(
+							newBundle, GetterUtil.getInteger(startLevelString));
+					}
 				}
 			}
 
@@ -243,10 +277,14 @@ public class LPKGBundleTrackerCustomizer
 			}
 
 			for (Bundle installedBundle : installedBundles) {
+				int startLevel = lpkgStartLevel;
+
+				if (startLevels.containsKey(installedBundle)) {
+					startLevel = startLevels.get(installedBundle);
+				}
+
 				BundleStartLevelUtil.setStartLevelAndStart(
-					installedBundle,
-					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL,
-					_bundleContext);
+					installedBundle, startLevel, _bundleContext);
 			}
 		}
 		catch (Throwable t) {

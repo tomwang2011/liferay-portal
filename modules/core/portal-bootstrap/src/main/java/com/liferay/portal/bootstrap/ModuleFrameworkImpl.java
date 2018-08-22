@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.Props;
@@ -355,6 +356,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			BundleStartLevel.class);
 
 		bundleStartLevel.setStartLevel(startLevel);
+	}
+
+	@Override
+	public void setFrameworkStartLevel(int startLevel) throws PortalException {
+		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
+			FrameworkStartLevel.class);
+
+		frameworkStartLevel.setStartLevel(startLevel);
 	}
 
 	public void startBundle(
@@ -1590,6 +1599,16 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			BundleStartLevel bundleStartLevel = bundle.adapt(
 				BundleStartLevel.class);
+
+			Dictionary<String, String> headers = bundle.getHeaders(
+				StringPool.BLANK);
+
+			String startLevel = headers.get("Liferay-Bundle-Start-Level");
+
+			if (startLevel != null) {
+				bundleStartLevel.setStartLevel(
+					GetterUtil.getInteger(startLevel));
+			}
 
 			if (bundleStartLevel.getStartLevel() ==
 					PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL) {
