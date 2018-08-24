@@ -1349,6 +1349,14 @@ public class MainServlet extends ActionServlet {
 
 		properties = new HashMap<>();
 
+		properties.put("module.service.lifecycle", "start.extensions");
+
+		registry.registerService(
+			ModuleServiceLifecycle.class, new ModuleServiceLifecycle() {},
+			properties);
+
+		properties = new HashMap<>();
+
 		properties.put("module.service.lifecycle", "system.check");
 		properties.put("service.vendor", ReleaseInfo.getVendor());
 		properties.put("service.version", ReleaseInfo.getVersion());

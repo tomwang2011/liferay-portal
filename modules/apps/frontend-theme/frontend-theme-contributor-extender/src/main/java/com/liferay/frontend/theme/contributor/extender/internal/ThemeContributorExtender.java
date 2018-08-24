@@ -17,6 +17,7 @@ package com.liferay.frontend.theme.contributor.extender.internal;
 import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.IOException;
@@ -41,6 +42,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael Bradford
@@ -93,6 +95,13 @@ public class ThemeContributorExtender extends AbstractExtender {
 	@Override
 	protected void error(String s, Throwable t) {
 		_logger.log(Logger.LOG_ERROR, s, t);
+	}
+
+	@Reference(
+		target = "(module.service.lifecycle=start.extensions)", unbind = "-"
+	)
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Override

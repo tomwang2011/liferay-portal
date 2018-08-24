@@ -17,6 +17,7 @@ package com.liferay.frontend.js.top.head.extender.internal;
 import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -31,6 +32,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera Avellón
@@ -97,6 +99,13 @@ public class TopHeadExtender extends AbstractExtender {
 	@Override
 	protected void error(String s, Throwable t) {
 		_logger.log(Logger.LOG_ERROR, s, t);
+	}
+
+	@Reference(
+		target = "(module.service.lifecycle=start.extensions)", unbind = "-"
+	)
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Override

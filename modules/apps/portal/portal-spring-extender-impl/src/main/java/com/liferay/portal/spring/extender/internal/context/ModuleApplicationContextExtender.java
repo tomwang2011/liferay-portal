@@ -113,7 +113,9 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		InfrastructureUtil infrastructureUtil) {
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	@Reference(
+		target = "(module.service.lifecycle=start.extensions)", unbind = "-"
+	)
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
