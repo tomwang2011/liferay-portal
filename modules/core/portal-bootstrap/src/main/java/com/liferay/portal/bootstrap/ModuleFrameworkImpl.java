@@ -1298,33 +1298,61 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Collections.sort(jarPaths);
 
+		String deployDir = bundleContext.getProperty("lpkg.deployer.dir");
+
+		Set<String> overrideLPKGFileNames = new HashSet<>();
+
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+				Paths.get(deployDir, "override"))) {
+
+			for (Path path : directoryStream) {
+				String fileName = String.valueOf(path.getFileName());
+
+				String pathName = StringUtil.toLowerCase(fileName);
+
+				if (pathName.endsWith("jar")) {
+					overrideLPKGFileNames.add(fileName);
+				}
+			}
+		}
+
 		List<Bundle> refreshBundles = new ArrayList<>();
 
 		for (Bundle bundle : bundleContext.getBundles()) {
 			String location = bundle.getLocation();
 
-			if (!location.contains("protocol=jar&static=true")) {
+			if (location.contains("protocol=jar&static=true")) {
+				URI uri = new URI(location);
+
+				File file = new File(uri.getPath());
+
+				if (jarPaths.contains(file.toPath())) {
+					bundles.put(bundle.getLocation(), bundle);
+
+					continue;
+				}
+
+				bundle.uninstall();
+
+				refreshBundles.add(bundle);
+
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Uninstalled orphan overriding static JAR bundle " +
+							location);
+				}
+
 				continue;
 			}
 
-			URI uri = new URI(location);
+			Matcher matcher = _pattern.matcher(location);
 
-			File file = new File(uri.getPath());
-
-			if (jarPaths.contains(file.toPath())) {
-				bundles.put(bundle.getLocation(), bundle);
-
-				continue;
+			if (matcher.find()) {
+				location = matcher.group(1) + ".jar";
 			}
 
-			bundle.uninstall();
-
-			refreshBundles.add(bundle);
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Uninstalled orphan overriding static JAR bundle " +
-						location);
+			if (overrideLPKGFileNames.contains(location)) {
+				bundle.uninstall();
 			}
 		}
 
@@ -1354,8 +1382,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
-		String deployDir = bundleContext.getProperty("lpkg.deployer.dir");
-
 		for (String staticFileName :
 				StaticLPKGResolver.getStaticLPKGFileNames()) {
 
@@ -1365,36 +1391,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				bundles.putAll(
 					_deployStaticBundlesFromFile(
 						file, overrideStaticFileNames));
-			}
-		}
-
-		Set<String> overrideLPKGFileNames = new HashSet<>();
-
-		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				Paths.get(deployDir, "override"))) {
-
-			for (Path path : directoryStream) {
-				String fileName = String.valueOf(path.getFileName());
-
-				String pathName = StringUtil.toLowerCase(fileName);
-
-				if (pathName.endsWith("jar")) {
-					overrideLPKGFileNames.add(fileName);
-				}
-			}
-		}
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			String location = bundle.getLocation();
-
-			Matcher matcher = _pattern.matcher(location);
-
-			if (matcher.find()) {
-				location = matcher.group(1) + "*.jar";
-			}
-
-			if (overrideLPKGFileNames.contains(location)) {
-				bundle.uninstall();
 			}
 		}
 

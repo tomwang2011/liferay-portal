@@ -298,11 +298,15 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 		List<File> jarFiles = _scanFiles(overrideDirPath, ".jar", true);
 
-		_uninstallOrphanOverridingJars(bundleContext, jarFiles);
+		if (!jarFiles.isEmpty()) {
+			_uninstallOrphanOverridingJars(bundleContext, jarFiles);
+		}
 
 		List<File> warFiles = _scanFiles(overrideDirPath, ".war", true);
 
-		_uninstallOrphanOverridingWars(bundleContext, warFiles);
+		if (!warFiles.isEmpty()) {
+			_uninstallOrphanOverridingWars(bundleContext, warFiles);
+		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Start refreshing uninstalled orphan bundles");
