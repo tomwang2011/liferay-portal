@@ -16,9 +16,11 @@ import java.io.File;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -53,6 +55,9 @@ public class ZipBundleFile extends BundleFile {
 	 * The zip file
 	 */
 	private volatile ZipFile zipFile;
+
+	private volatile List<String> zipFileEntryPaths;
+
 	/**
 	 * The closed flag
 	 */
@@ -321,12 +326,23 @@ public class ZipBundleFile extends BundleFile {
 			if (path.length() > 0 && path.charAt(path.length() - 1) != '/')
 				path = new StringBuilder(path).append("/").toString(); //$NON-NLS-1$
 
+			if (zipFileEntryPaths == null) {
+				List<String> zipFileEntryPaths = new ArrayList<>();
+
+				Enumeration<? extends ZipEntry> entries = zipFile.entries();
+
+				while (entries.hasMoreElements()) {
+					ZipEntry zipEntry = entries.nextElement();
+
+					zipFileEntryPaths.add(zipEntry.getName());
+				}
+
+				this.zipFileEntryPaths = zipFileEntryPaths;
+			}
+
 			LinkedHashSet<String> result = new LinkedHashSet<>();
 			// Get all zip file entries and add the ones of interest.
-			Enumeration<? extends ZipEntry> entries = zipFile.entries();
-			while (entries.hasMoreElements()) {
-				ZipEntry zipEntry = entries.nextElement();
-				String entryPath = zipEntry.getName();
+			for (String entryPath : zipFileEntryPaths) {
 				// Is the entry of possible interest? Note that 
 				// string.startsWith("") == true.
 				if (entryPath.startsWith(path)) {
