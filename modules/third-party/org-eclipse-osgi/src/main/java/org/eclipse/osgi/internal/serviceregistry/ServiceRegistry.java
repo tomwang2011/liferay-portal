@@ -1054,38 +1054,43 @@ public class ServiceRegistry {
 			clazz = filterImpl.getRequiredObjectClass();
 		}
 
-		List<ServiceRegistrationImpl<?>> result;
+		ServiceRegistrationImpl<?>[] serviceRegistrations = null;
+
 		synchronized (this) {
 			if (clazz == null) { /* all services */
-				result = allPublishedServices;
+				serviceRegistrations = allPublishedServices.toArray(new ServiceRegistrationImpl[allPublishedServices.size()]);
 			} else {
 				/* services registered under the class name */
-				result = publishedServicesByClass.get(clazz);
+				List<ServiceRegistrationImpl<?>> publishedServices = publishedServicesByClass.get(clazz);
+
+				if (publishedServices != null) {
+					serviceRegistrations = publishedServices.toArray(new ServiceRegistrationImpl[publishedServices.size()]);
+				}
 			}
 
-			if ((result == null) || result.isEmpty()) {
+			if ((serviceRegistrations == null) || (serviceRegistrations.length == 0)) {
 				List<ServiceRegistrationImpl<?>> empty = Collections.<ServiceRegistrationImpl<?>> emptyList();
 				return empty;
 			}
-
-			result = new LinkedList<>(result); /* make a new list since we don't want to change the real list */
 		}
 
 		if (filter == null) {
-			return result;
+			return Arrays.asList(serviceRegistrations);
 		}
 
-		for (Iterator<ServiceRegistrationImpl<?>> iter = result.iterator(); iter.hasNext();) {
-			ServiceRegistrationImpl<?> registration = iter.next();
+		List<ServiceRegistrationImpl<?>> result = new ArrayList<>();
+
+		for (ServiceRegistrationImpl<?> registration : serviceRegistrations) {
 			ServiceReferenceImpl<?> reference;
 			try {
 				reference = registration.getReferenceImpl();
 			} catch (IllegalStateException e) {
-				iter.remove(); /* service was unregistered after we left the synchronized block above */
+				/* service was unregistered after we left the synchronized block above */
 				continue;
 			}
-			if (!filter.match(reference)) {
-				iter.remove();
+
+			if (filter.match(reference)) {
+				result.add(registration);
 			}
 		}
 		return result;
