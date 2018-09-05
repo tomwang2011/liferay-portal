@@ -2237,6 +2237,12 @@
 			<finder-column name="scope" />
 			<finder-column name="primKey" />
 		</finder>
+		<finder name="C_N_S_R" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column arrayable-operator="OR" name="name" />
+			<finder-column name="scope" />
+			<finder-column arrayable-operator="OR" name="roleId" />
+		</finder>
 		<finder name="C_N_S_P_R" return-type="Collection" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="name" />
