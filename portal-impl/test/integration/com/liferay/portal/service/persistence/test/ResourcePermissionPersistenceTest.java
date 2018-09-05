@@ -232,6 +232,24 @@ public class ResourcePermissionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_N_S_R() throws Exception {
+		_persistence.countByC_N_S_R(RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_N_S_R(0L, "null", 0, 0L);
+
+		_persistence.countByC_N_S_R(0L, (String)null, 0, 0L);
+	}
+
+	@Test
+	public void testCountByC_N_S_RArrayable() throws Exception {
+		_persistence.countByC_N_S_R(RandomTestUtil.nextLong(),
+			new String[] { RandomTestUtil.randomString(), "", "null", null, null },
+			RandomTestUtil.nextInt(),
+			new long[] { RandomTestUtil.nextLong(), 0L });
+	}
+
+	@Test
 	public void testCountByC_N_S_P_R() throws Exception {
 		_persistence.countByC_N_S_P_R(RandomTestUtil.nextLong(), "",
 			RandomTestUtil.nextInt(), "", RandomTestUtil.nextLong());
