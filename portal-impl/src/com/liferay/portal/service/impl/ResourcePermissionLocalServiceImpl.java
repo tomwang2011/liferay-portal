@@ -1267,11 +1267,13 @@ public class ResourcePermissionLocalServiceImpl
 			ResourceActionsUtil.getPortletModelResources(
 				portlet.getRootPortletId()));
 
-		for (String modelResource : modelResources) {
-			if (Validator.isBlank(modelResource)) {
-				continue;
-			}
+		modelResources.removeIf(Validator::isBlank);
 
+		if (modelResources.isEmpty()) {
+			return;
+		}
+
+		for (String modelResource : modelResources) {
 			addResourcePermissions(
 				portlet.getCompanyId(), 0, 0, modelResource, modelResource,
 				false, false, true);
