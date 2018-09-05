@@ -1286,6 +1286,24 @@ public class ResourcePermissionLocalServiceImpl
 			return;
 		}
 
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionPersistence.findByC_N_S_R(
+				portlet.getCompanyId(),
+				modelResources.toArray(new String[modelResources.size()]),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				new long[] {ownerRole.getRoleId(), guestRole.getRoleId()});
+
+		Map<Long, ResourcePermission> resourcePermissionsMap = new HashMap<>();
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			String name = resourcePermission.getName();
+
+			if (name.equals(resourcePermission.getPrimKey())) {
+				resourcePermissionsMap.put(
+					resourcePermission.getRoleId(), resourcePermission);
+			}
+		}
+
 		for (String modelResource : modelResources) {
 			validate(modelResource, false);
 
@@ -1295,14 +1313,6 @@ public class ResourcePermissionLocalServiceImpl
 
 			PermissionThreadLocal.setFlushResourcePermissionEnabled(
 				modelResource, modelResource, false);
-
-			List<ResourcePermission> resourcePermissions =
-				resourcePermissionPersistence.findByC_N_S_P(
-					portlet.getCompanyId(), modelResource,
-					ResourceConstants.SCOPE_INDIVIDUAL, modelResource);
-
-			Map<Long, ResourcePermission> resourcePermissionsMap =
-				_getResourcePermissionsMap(resourcePermissions);
 
 			boolean modified = false;
 
