@@ -3980,17 +3980,22 @@ plugins.includes=</echo>
 			/>
 		</unzip>
 
+		<move
+			file="${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}"
+			tofile="${tstamp.value}/liferay-portal-${lp.version}/tomcat"
+		/>
+
 		<chmod
 			perm="744"
 		>
 			<fileset
-				dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin"
+				dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/bin"
 				includes="*.sh"
 			/>
 		</chmod>
 
 		<parallel>
-			<exec dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin" executable="sh">
+			<exec dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/bin" executable="sh">
 				<arg value="catalina.sh" />
 				<arg value="run" />
 				<env key="LIFERAY_CLEAN_OSGI_STATE" value="true" />
@@ -4003,7 +4008,7 @@ plugins.includes=</echo>
 
 				<sleep seconds="5" />
 
-				<exec dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin" executable="sh">
+				<exec dir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/bin" executable="sh">
 					<arg value="shutdown.sh" />
 				</exec>
 
