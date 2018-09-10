@@ -3976,7 +3976,8 @@ plugins.includes=</echo>
 			<patternset
 				excludes="
 					liferay-portal-${lp.version}/data/hypersonic/**,
-					liferay-portal-${lp.version}/osgi/state/**"
+					liferay-portal-${lp.version}/osgi/state/**,
+					liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/work/**"
 			/>
 		</unzip>
 
@@ -3984,6 +3985,21 @@ plugins.includes=</echo>
 			file="${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}"
 			tofile="${tstamp.value}/liferay-portal-${lp.version}/tomcat"
 		/>
+
+		<ant dir="portal-web" target="compile-tomcat">
+			<property name="app.server.portal.dir" value="${tstamp.value}/liferay-portal-${lp.version}/tomcat/webapps/ROOT" />
+		</ant>
+
+		<copy
+			preservelastmodified="true"
+			todir="${tstamp.value}/liferay-portal-${lp.version}/tomcat/work/Catalina/localhost/ROOT"
+		>
+			<fileset
+				dir="portal-web/classes/${app.server.type}"
+			>
+				<exclude name="**/*.jspc_error" />
+			</fileset>
+		</copy>
 
 		<chmod
 			perm="744"
