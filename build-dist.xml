@@ -4038,16 +4038,20 @@ plugins.includes=</echo>
 			</sequential>
 		</parallel>
 
+		<exec dir="${tstamp.value}" executable="tar">
+			<arg line="-czvf ${project.dir}/dist/liferay-portal-tomcat-${lp.version}.tar.gz liferay-portal-${lp.version}" />
+		</exec>
+
 		<echo>Calling 7-Zip, this will take a few minutes...</echo>
 
-		<exec dir="${tstamp.value}" executable="sh">
-			<arg line="7z a -md1024m ${project.dir}/dist/liferay-portal-tomcat-${lp.version}.7z liferay-portal-${lp.version}/osgi" />
+		<exec dir="${tstamp.value}" executable="7z">
+			<arg line="a -md1024m ${project.dir}/dist/liferay-portal-tomcat-${lp.version}.7z liferay-portal-${lp.version}/osgi" />
 		</exec>
 
 		<delete dir="${tstamp.value}/liferay-portal-${lp.version}/osgi" />
 
-		<exec dir="${tstamp.value}" executable="sh">
-			<arg line="7z a -md1024m ${project.dir}/dist/liferay-portal-tomcat-${lp.version}.7z liferay-portal-${lp.version}" />
+		<exec dir="${tstamp.value}" executable="7z">
+			<arg line="a -md1024m ${project.dir}/dist/liferay-portal-tomcat-${lp.version}.7z liferay-portal-${lp.version}" />
 		</exec>
 
 		<delete dir="${tstamp.value}" />
