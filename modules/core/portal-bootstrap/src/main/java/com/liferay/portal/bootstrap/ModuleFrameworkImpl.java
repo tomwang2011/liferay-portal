@@ -110,6 +110,7 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.framework.hooks.service.ServiceWrapperHook;
 import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.startlevel.BundleStartLevel;
@@ -1567,10 +1568,35 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Props props = PropsUtil.getProps();
 
-		ServiceRegistration<Props> serviceRegistration =
+		ServiceRegistration<?> serviceRegistration =
 			bundleContext.registerService(
 				Props.class, props,
 				_getProperties(props, Props.class.getName()));
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Registered required service as " +
+					serviceRegistration.getReference());
+		}
+
+		ServiceWrapperHook serviceWrapperHook = new ServiceWrapperHook() {
+
+			@Override
+			public Object wrap(
+				BundleContext bundleContext, Object service,
+				Enumeration<String> clazzes) {
+
+				return null;
+			}
+
+		};
+
+		serviceRegistration =
+			bundleContext.registerService(
+				ServiceWrapperHook.class,
+				serviceWrapperHook,
+				_getProperties(
+					serviceWrapperHook, ServiceWrapperHook.class.getName()));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
