@@ -14,14 +14,10 @@
 
 package com.liferay.portal.configuration.metatype.util;
 
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
-
 /**
  * @author Jorge Ferrer
  */
-@RunWith(Enclosed.class)
-public class ParameterMapUtilTest {
+public class ParameterMapUtilTestHelper {
 
 	public static final String PARAMETER_MAP_STRING = "PARAMETER_MAP";
 
@@ -33,7 +29,7 @@ public class ParameterMapUtilTest {
 	public static final String[] TEST_BEAN_STRING_ARRAY =
 		{"TEST_BEAN1", "TEST_BEAN2"};
 
-	private static TestBean _getTestBean() {
+	public static TestBean getTestBean() {
 		return new TestBean() {
 
 			@Override
@@ -69,7 +65,7 @@ public class ParameterMapUtilTest {
 		};
 	}
 
-	private interface TestBean {
+	public interface TestBean {
 
 		public boolean testBoolean1();
 
