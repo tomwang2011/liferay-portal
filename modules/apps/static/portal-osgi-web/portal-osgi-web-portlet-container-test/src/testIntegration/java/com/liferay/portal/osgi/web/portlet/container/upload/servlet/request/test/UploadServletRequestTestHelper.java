@@ -12,27 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.osgi.web.portlet.container.upload.test;
+package com.liferay.portal.osgi.web.portlet.container.upload.servlet.request.test;
 
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
-
 
 /**
  * @author Manuel de la Peña
  */
-@RunWith(Enclosed.class)
-public class UploadServletRequestTest {
+public class UploadServletRequestTestHelper {
 
-	private static void _setUp() throws Exception {
-		_fileNameParameter = RandomTestUtil.randomString();
-	}
-
-	private static final byte[] _BYTES =
+	public static final byte[] BYTES =
 		"Enterprise. Open Source. For Life.".getBytes();
 
-	private static String _fileNameParameter;
+	public static String fileNameParameter;
+
+	public static void setUp() throws Exception {
+		fileNameParameter = RandomTestUtil.randomString();
+	}
 
 }
