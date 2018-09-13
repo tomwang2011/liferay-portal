@@ -13,6 +13,7 @@ package org.eclipse.osgi.internal.serviceregistry;
 
 import java.security.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import org.eclipse.osgi.container.Module;
 import org.eclipse.osgi.container.ModuleRevision;
 import org.eclipse.osgi.framework.eventmgr.*;
@@ -43,6 +44,7 @@ public class ServiceRegistry {
 	static final String eventHookName = EventHook.class.getName();
 	static final String eventListenerHookName = EventListenerHook.class.getName();
 	static final String listenerHookName = ListenerHook.class.getName();
+	static final String serviceWrapperHookName = ServiceWrapperHook.class.getName();
 
 	/** Published services by class name. 
 	 * The {@literal List<ServiceRegistrationImpl<?>>}s are both sorted 
@@ -180,7 +182,7 @@ public class ServiceRegistry {
 	 * @see ServiceRegistration
 	 * @see ServiceFactory
 	 */
-	public ServiceRegistrationImpl<?> registerService(BundleContextImpl context, String[] clazzes, Object service, Dictionary<String, ?> properties) {
+	public ServiceRegistrationImpl<?> registerService(final BundleContextImpl context, String[] clazzes, Object service, Dictionary<String, ?> properties) {
 		if (service == null) {
 			if (debug.DEBUG_SERVICES) {
 				Debug.println("Service object is null"); //$NON-NLS-1$
@@ -223,6 +225,58 @@ public class ServiceRegistry {
 				throw new IllegalArgumentException(NLS.bind(Msg.SERVICE_NOT_INSTANCEOF_CLASS_EXCEPTION, invalidService));
 			}
 		}
+
+		final AtomicReference<Object> serviceReference = new AtomicReference<>(service);
+
+		final Enumeration<String> clazzesEnumeration = Collections.enumeration(Arrays.asList(clazzes));
+
+		final HookContext hookContext = new HookContext() {
+
+			@Override
+			public void call(Object hook, ServiceRegistration<?> hookRegistration) throws Exception {
+				if (hook instanceof ServiceWrapperHook) {
+					Object wrappedService = ((ServiceWrapperHook) hook).wrap(context, serviceReference.get(), clazzesEnumeration);
+
+					if (wrappedService != null) {
+						serviceReference.set(wrappedService);
+					}
+				}
+			}
+
+			@Override
+			public String getHookClassName() {
+				return serviceWrapperHookName;
+			}
+
+			@Override
+			public String getHookMethodName() {
+				return "wrap"; //$NON-NLS-1$
+			}
+
+			@Override
+			public boolean skipRegistration(ServiceRegistration<?> hookRegistration) {
+				return false;
+			}
+
+		};
+
+		if (System.getSecurityManager() == null) {
+			notifyHooksPrivileged(hookContext);
+		}
+		else {
+			AccessController.doPrivileged(new PrivilegedAction<Void>() {
+
+				@Override
+				public Void run() {
+					notifyHooksPrivileged(hookContext);
+
+					return null;
+				}
+
+			});
+		}
+
+		service = serviceReference.get();
 
 		ServiceRegistrationImpl<?> registration = new ServiceRegistrationImpl<>(this, context, clazzes, service);
 		registration.register(properties);
