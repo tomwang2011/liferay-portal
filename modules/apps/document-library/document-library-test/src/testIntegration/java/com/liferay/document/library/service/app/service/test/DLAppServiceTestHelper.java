@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.service.test;
+package com.liferay.document.library.service.app.service.test;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -40,35 +40,44 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.security.permission.DoAsUserThread;
-import com.liferay.portlet.documentlibrary.service.test.BaseDLAppTestCase;
 
 import java.util.Dictionary;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
 
 /**
  * @author Alexander Chow
  */
-@RunWith(Enclosed.class)
-public class DLAppServiceTest extends BaseDLAppTestCase {
+public class DLAppServiceTestHelper {
 
-	protected static FileEntry addFileEntry(long groupId, long folderId)
+	public static final String CONTENT =
+		"Content: Enterprise. Open Source. For Life.";
+
+	public static final String DL_CONFIGURATION_PID =
+		"com.liferay.document.library.configuration.DLConfiguration";
+
+	public static final String FILE_NAME = "Title.txt";
+
+	public static final String STRIPPED_FILE_NAME = "Title";
+
+	public static final Log log = LogFactoryUtil.getLog(
+		DLAppServiceTestHelper.class);
+
+	public static FileEntry addFileEntry(long groupId, long folderId)
 		throws Exception {
 
-		return addFileEntry(groupId, folderId, _FILE_NAME);
+		return addFileEntry(groupId, folderId, FILE_NAME);
 	}
 
-	protected static FileEntry addFileEntry(
+	public static FileEntry addFileEntry(
 			long groupId, long folderId, String fileName)
 		throws Exception {
 
 		return addFileEntry(groupId, folderId, fileName, fileName, null);
 	}
 
-	protected static FileEntry addFileEntry(
+	public static FileEntry addFileEntry(
 			long groupId, long folderId, String fileName, String title,
 			String[] assetTagNames)
 		throws Exception {
@@ -84,7 +93,19 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			serviceContext);
 	}
 
-	protected static AtomicInteger registerDLSyncEventProcessorMessageListener(
+	public static ConfigurationTemporarySwapper
+			getConfigurationTemporarySwapper(String key, Object value)
+		throws Exception {
+
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		dictionary.put(key, value);
+
+		return new ConfigurationTemporarySwapper(
+			DL_CONFIGURATION_PID, dictionary);
+	}
+
+	public static AtomicInteger registerDLSyncEventProcessorMessageListener(
 		final String targetEvent) {
 
 		final AtomicInteger counter = new AtomicInteger();
@@ -107,7 +128,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		return counter;
 	}
 
-	protected static int runUserThreads(DoAsUserThread[] doAsUserThreads)
+	public static int runUserThreads(DoAsUserThread[] doAsUserThreads)
 		throws Exception {
 
 		for (DoAsUserThread doAsUserThread : doAsUserThreads) {
@@ -129,7 +150,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		return successCount;
 	}
 
-	protected static void search(
+	public static void search(
 			FileEntry fileEntry, String keywords, boolean expected)
 		throws Exception {
 
@@ -167,7 +188,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		Assert.assertEquals(hits.toString(), expected, found);
 	}
 
-	protected static void searchFile(long groupId, long folderId)
+	public static void searchFile(long groupId, long folderId)
 		throws Exception {
 
 		FileEntry fileEntry = addFileEntry(groupId, folderId);
@@ -178,7 +199,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		DLAppServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
 	}
 
-	protected static FileEntry updateFileEntry(
+	public static FileEntry updateFileEntry(
 			long groupId, long fileEntryId, String fileName,
 			boolean majorVersion)
 		throws Exception {
@@ -191,27 +212,5 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			StringPool.BLANK, StringPool.BLANK, majorVersion,
 			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
 	}
-
-	private static ConfigurationTemporarySwapper
-			_getConfigurationTemporarySwapper(String key, Object value)
-		throws Exception {
-
-		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
-
-		dictionary.put(key, value);
-
-		return new ConfigurationTemporarySwapper(
-			_DL_CONFIGURATION_PID, dictionary);
-	}
-
-	private static final String _DL_CONFIGURATION_PID =
-		"com.liferay.document.library.configuration.DLConfiguration";
-
-	private static final String _FILE_NAME = "Title.txt";
-
-	private static final String _STRIPPED_FILE_NAME = "Title";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DLAppServiceTest.class);
 
 }
