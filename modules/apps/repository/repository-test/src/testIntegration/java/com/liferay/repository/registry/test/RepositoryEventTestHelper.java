@@ -20,16 +20,12 @@ import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
-
 /**
  * @author Adolfo Pérez
  */
-@RunWith(Enclosed.class)
-public class RepositoryEventTest {
+public class RepositoryEventTestHelper {
 
-	protected static <S extends RepositoryEventType, T>
+	public static <S extends RepositoryEventType, T>
 		AtomicInteger registerCounterRepositoryEventListener(
 			RepositoryEventRegistry repositoryEventRegistry,
 			Class<S> eventClass, Class<T> modelClass) {
@@ -45,7 +41,7 @@ public class RepositoryEventTest {
 		return count;
 	}
 
-	protected static <S extends RepositoryEventType, T>
+	public static <S extends RepositoryEventType, T>
 		AtomicInteger registerCounterRepositoryEventListener(
 			RepositoryEventRegistry repositoryEventRegistry,
 			Class<S> eventClass, Class<T> modelClass, AtomicInteger count) {
@@ -59,7 +55,7 @@ public class RepositoryEventTest {
 		return count;
 	}
 
-	private static class AlwaysFailingRepositoryEventListener
+	public static class AlwaysFailingRepositoryEventListener
 		<S extends RepositoryEventType, T>
 			implements RepositoryEventListener<S, T> {
 
@@ -70,7 +66,7 @@ public class RepositoryEventTest {
 
 	}
 
-	private static class CounterRepositoryEventListener
+	public static class CounterRepositoryEventListener
 		<S extends RepositoryEventType, T>
 			implements RepositoryEventListener<S, T> {
 
@@ -87,7 +83,7 @@ public class RepositoryEventTest {
 
 	}
 
-	private static class NoOpRepositoryEventListener
+	public static class NoOpRepositoryEventListener
 		<S extends RepositoryEventType, T>
 			implements RepositoryEventListener<S, T> {
 
