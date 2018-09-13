@@ -1472,17 +1472,19 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (bundle.getBundleId() == 0) {
-				continue;
-			}
+		if (!overrideLPKGFileNames.isEmpty()) {
+			for (Bundle bundle : bundleContext.getBundles()) {
+				if (bundle.getBundleId() == 0) {
+					continue;
+				}
 
-			String location = bundle.getLocation();
+				String location = bundle.getLocation();
 
-			location = _extractFileName(location);
+				location = _extractFileName(location);
 
-			if (overrideLPKGFileNames.contains(location)) {
-				bundle.uninstall();
+				if (overrideLPKGFileNames.contains(location)) {
+					bundle.uninstall();
+				}
 			}
 		}
 
