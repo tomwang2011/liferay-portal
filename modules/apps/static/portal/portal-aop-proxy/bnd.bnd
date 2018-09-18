@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal AOP Proxy
+Bundle-SymbolicName: com.liferay.portal.aop.proxy
+Bundle-Version: 1.0.0
