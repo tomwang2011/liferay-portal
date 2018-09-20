@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 		"json.web.service.context.name=comment",
 		"json.web.service.context.path=Comment"
 	},
-	service = CommentManagerJSONWS.class
+	service = {}
 )
 @JSONWebService
 public class CommentManagerJSONWS extends BaseServiceImpl {
