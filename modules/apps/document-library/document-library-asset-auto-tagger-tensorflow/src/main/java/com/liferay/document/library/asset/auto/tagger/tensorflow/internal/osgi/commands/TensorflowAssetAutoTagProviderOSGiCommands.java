@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 			TensorflowAssetAutoTagProviderOSGiCommands.RESET_PROCESS_COUNTER,
 		"osgi.command.scope=" + TensorflowAssetAutoTagProviderOSGiCommands.SCOPE
 	},
-	service = TensorflowAssetAutoTagProviderOSGiCommands.class
+	service = {}
 )
 public class TensorflowAssetAutoTagProviderOSGiCommands {
 
