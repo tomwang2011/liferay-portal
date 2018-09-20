@@ -30,10 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Kocsis
  */
-@Component(
-	immediate = true,
-	service = {ExportImportServiceUpgrade.class, UpgradeStepRegistrator.class}
-)
+@Component(immediate = true, service = UpgradeStepRegistrator.class)
 public class ExportImportServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
