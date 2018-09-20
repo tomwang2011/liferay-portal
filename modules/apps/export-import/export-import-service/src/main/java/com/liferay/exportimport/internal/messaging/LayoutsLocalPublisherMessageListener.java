@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 		"destination.name=" + DestinationNames.LAYOUTS_LOCAL_PUBLISHER,
 		"message.status.destination.name=" + DestinationNames.MESSAGE_BUS_MESSAGE_STATUS
 	},
-	service = LayoutsLocalPublisherMessageListener.class
+	service = {}
 )
 @ProviderType
 public class LayoutsLocalPublisherMessageListener
