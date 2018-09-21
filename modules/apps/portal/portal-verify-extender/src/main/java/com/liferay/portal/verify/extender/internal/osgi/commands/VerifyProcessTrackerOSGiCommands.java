@@ -74,7 +74,7 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.function=show", "osgi.command.function=showReports",
 		"osgi.command.scope=verify"
 	},
-	service = VerifyProcessTrackerOSGiCommands.class
+	service = {}
 )
 public class VerifyProcessTrackerOSGiCommands {
 
