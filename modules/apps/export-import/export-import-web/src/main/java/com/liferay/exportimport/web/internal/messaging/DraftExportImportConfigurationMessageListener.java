@@ -58,10 +58,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Levente Hudák
  * @author Daniel Kocsis
  */
-@Component(
-	immediate = true,
-	service = DraftExportImportConfigurationMessageListener.class
-)
+@Component(immediate = true, service = {})
 public class DraftExportImportConfigurationMessageListener
 	extends BaseMessageListener {
 
