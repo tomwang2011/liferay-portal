@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = CompositeTaskAssignmentSelector.class)
+@Component(immediate = true, service = {})
 public class CompositeTaskAssignmentSelector implements TaskAssignmentSelector {
 
 	@Override
