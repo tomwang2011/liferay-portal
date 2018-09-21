@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.function=addImportArticlePermissions",
 		"osgi.command.scope=knowledgeBase"
 	},
-	service = KnowledgeBaseOSGiCommands.class
+	service = {}
 )
 public class KnowledgeBaseOSGiCommands {
 
