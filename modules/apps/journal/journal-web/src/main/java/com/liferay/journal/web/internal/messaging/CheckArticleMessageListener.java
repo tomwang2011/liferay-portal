@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	configurationPid = "com.liferay.journal.configuration.JournalServiceConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = CheckArticleMessageListener.class
+	service = {}
 )
 public class CheckArticleMessageListener extends BaseMessageListener {
 
