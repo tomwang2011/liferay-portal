@@ -54,7 +54,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
  * @author Ray Augé
  * @author Iván Zaera Avellón
  */
-@Component(immediate = true, service = JSPortletExtender.class)
+@Component(immediate = true, service = {})
 public class JSPortletExtender {
 
 	@Activate
