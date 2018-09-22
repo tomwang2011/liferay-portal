@@ -107,7 +107,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Raymond Augé
  */
-@Component(immediate = true, service = PortletTracker.class)
+@Component(immediate = true, service = {})
 public class PortletTracker
 	implements ServiceTrackerCustomizer
 		<Portlet, com.liferay.portal.kernel.model.Portlet> {
