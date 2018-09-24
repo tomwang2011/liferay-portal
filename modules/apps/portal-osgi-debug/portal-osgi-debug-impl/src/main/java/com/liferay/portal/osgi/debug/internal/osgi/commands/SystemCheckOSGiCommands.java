@@ -39,7 +39,7 @@ import org.osgi.util.tracker.ServiceTracker;
 @Component(
 	immediate = true,
 	property = {"osgi.command.function=check", "osgi.command.scope=system"},
-	service = SystemCheckOSGiCommands.class
+	service = {}
 )
 public class SystemCheckOSGiCommands {
 

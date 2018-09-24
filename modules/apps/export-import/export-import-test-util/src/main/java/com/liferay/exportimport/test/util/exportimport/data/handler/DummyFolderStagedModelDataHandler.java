@@ -33,11 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Akos Thurzo
  */
-@Component(
-	immediate = true,
-	service =
-		{DummyFolderStagedModelDataHandler.class, StagedModelDataHandler.class}
-)
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class DummyFolderStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DummyFolder> {
 

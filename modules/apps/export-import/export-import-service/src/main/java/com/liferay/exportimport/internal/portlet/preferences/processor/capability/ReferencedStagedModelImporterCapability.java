@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "name=ReferencedStagedModelImporter",
-	service = {Capability.class, ReferencedStagedModelImporterCapability.class}
+	service = Capability.class
 )
 @ProviderType
 public class ReferencedStagedModelImporterCapability implements Capability {

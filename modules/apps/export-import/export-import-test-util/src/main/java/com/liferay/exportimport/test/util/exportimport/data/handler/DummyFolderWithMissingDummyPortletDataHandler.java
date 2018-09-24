@@ -41,13 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Akos Thurzo
  */
-@Component(
-	immediate = true,
-	service = {
-		DummyFolderWithMissingDummyPortletDataHandler.class,
-		PortletDataHandler.class
-	}
-)
+@Component(immediate = true, service = PortletDataHandler.class)
 public class DummyFolderWithMissingDummyPortletDataHandler
 	extends BasePortletDataHandler {
 

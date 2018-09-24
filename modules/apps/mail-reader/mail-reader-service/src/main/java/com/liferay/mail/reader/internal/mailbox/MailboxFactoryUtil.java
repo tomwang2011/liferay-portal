@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true, property = "javax.portlet.name=" + MailPortletKeys.MAIL,
-	service = MailboxFactoryUtil.class
+	service = {}
 )
 public class MailboxFactoryUtil {
 

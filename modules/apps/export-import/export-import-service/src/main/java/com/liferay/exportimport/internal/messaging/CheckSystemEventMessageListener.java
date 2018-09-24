@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Akos Thurzo
  */
-@Component(immediate = true, service = CheckSystemEventMessageListener.class)
+@Component(immediate = true, service = {})
 public class CheckSystemEventMessageListener extends BaseMessageListener {
 
 	@Activate

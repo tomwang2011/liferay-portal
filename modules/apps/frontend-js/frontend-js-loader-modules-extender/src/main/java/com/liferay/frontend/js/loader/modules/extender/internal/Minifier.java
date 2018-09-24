@@ -16,15 +16,12 @@ package com.liferay.frontend.js.loader.modules.extender.internal;
 
 import com.liferay.portal.minifier.MinifierUtil;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = Minifier.class)
 public class Minifier {
 
-	public String minify(String resourceName, String content) {
+	public static String minify(String resourceName, String content) {
 		return MinifierUtil.minifyJavaScript(resourceName, content);
 	}
 

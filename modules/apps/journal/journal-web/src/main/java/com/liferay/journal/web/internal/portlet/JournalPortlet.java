@@ -197,7 +197,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {JournalPortlet.class, Portlet.class}
+	service = Portlet.class
 )
 public class JournalPortlet extends MVCPortlet {
 

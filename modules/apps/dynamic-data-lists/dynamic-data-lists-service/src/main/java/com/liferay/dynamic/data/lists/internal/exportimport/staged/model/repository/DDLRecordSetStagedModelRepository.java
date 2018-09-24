@@ -47,8 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet",
-	service =
-		{DDLRecordSetStagedModelRepository.class, StagedModelRepository.class}
+	service = StagedModelRepository.class
 )
 public class DDLRecordSetStagedModelRepository
 	implements StagedModelRepository<DDLRecordSet> {

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  * @author Michael C. Han
  */
-@Component(immediate = true, service = KaleoActivator.class)
+@Component(immediate = true, service = {})
 public class KaleoActivator {
 
 	@Activate

@@ -454,7 +454,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 
 		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
 
-		printWriter.write(_minifier.minify("/o/js_loader_modules", content));
+		printWriter.write(Minifier.minify("/o/js_loader_modules", content));
 
 		printWriter.close();
 	}
@@ -464,10 +464,6 @@ public class JSLoaderModulesServlet extends HttpServlet {
 	private volatile Details _details;
 	private JSLoaderModulesTracker _jsLoaderModulesTracker;
 	private Logger _logger;
-
-	@Reference
-	private Minifier _minifier;
-
 	private NPMRegistry _npmRegistry;
 
 	@Reference

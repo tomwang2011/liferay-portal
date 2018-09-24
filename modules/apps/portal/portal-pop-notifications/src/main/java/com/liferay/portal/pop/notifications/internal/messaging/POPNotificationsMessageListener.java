@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = POPNotificationsMessageListener.class)
+@Component(immediate = true, service = {})
 public class POPNotificationsMessageListener extends BaseMessageListener {
 
 	@Activate

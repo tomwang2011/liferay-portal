@@ -36,10 +36,7 @@ import org.quartz.TriggerBuilder;
 /**
  * @author Tina Tian
  */
-@Component(
-	enabled = false, immediate = true,
-	service = {QuartzTriggerFactory.class, TriggerFactory.class}
-)
+@Component(enabled = false, immediate = true, service = TriggerFactory.class)
 public class QuartzTriggerFactory implements TriggerFactory {
 
 	@Override
