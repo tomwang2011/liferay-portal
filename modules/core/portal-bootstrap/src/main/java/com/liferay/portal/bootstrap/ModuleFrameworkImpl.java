@@ -103,6 +103,7 @@ import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
@@ -114,6 +115,7 @@ import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
 import org.osgi.framework.wiring.BundleRevision;
 import org.osgi.framework.wiring.FrameworkWiring;
+import org.osgi.util.tracker.BundleTracker;
 
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.context.ApplicationContext;
@@ -402,9 +404,48 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		_framework.start();
 
-		_setUpPrerequisiteFrameworkServices(_framework.getBundleContext());
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		_setUpPrerequisiteFrameworkServices(bundleContext);
+
+		BundleTracker<String> bundleTracker = new BundleTracker<String>(
+			bundleContext, ~Bundle.UNINSTALLED, null) {
+
+			@Override
+			public String addingBundle(Bundle bundle, BundleEvent bundleEvent) {
+				String symbolicName = bundle.getSymbolicName();
+
+				List<Bundle> bundles = _bundles.get(symbolicName);
+
+				if (bundles == null) {
+					bundles = new ArrayList<>();
+
+					_bundles.put(symbolicName, bundles);
+				}
+
+				bundles.add(bundle);
+
+				return symbolicName;
+			}
+
+			@Override
+			public void removedBundle(
+				Bundle bundle, BundleEvent bundleEvent, String symbolicName) {
+
+				List<Bundle> bundles = _bundles.get(symbolicName);
+
+				bundles.remove(bundle);
+			}
+
+		};
+
+		bundleTracker.open();
 
 		Set<Bundle> initialBundles = _setUpInitialBundles();
+
+		bundleTracker.close();
+
+		_bundles.clear();
 
 		_startDynamicBundles(initialBundles);
 
@@ -639,8 +680,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			Bundle bundle = null;
 
 			if (location.contains("static=true")) {
-				bundle = _getStaticBundle(
-					bundleContext, unsyncBufferedInputStream, location);
+				bundle = _getStaticBundle(unsyncBufferedInputStream, location);
 			}
 			else {
 				bundle = getBundle(bundleContext, unsyncBufferedInputStream);
@@ -1032,9 +1072,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return properties;
 	}
 
-	private Bundle _getStaticBundle(
-			BundleContext bundleContext, InputStream inputStream,
-			String location)
+	private Bundle _getStaticBundle(InputStream inputStream, String location)
 		throws PortalException {
 
 		try {
@@ -1067,7 +1105,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			Version bundleVersion = Version.parseVersion(
 				bundleVersionAttributeValue);
 
-			for (Bundle bundle : bundleContext.getBundles()) {
+			List<Bundle> bundles = _bundles.get(bundleSymbolicName);
+
+			if (bundles == null) {
+				return null;
+			}
+
+			for (Bundle bundle : _bundles.get(bundleSymbolicName)) {
 				if (bundleSymbolicName.equals(bundle.getSymbolicName())) {
 					Version curBundleVersion = Version.parseVersion(
 						String.valueOf(bundle.getVersion()));
@@ -1769,6 +1813,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleFrameworkImpl.class);
+
+	private final Map<String, List<Bundle>> _bundles =
+		new ConcurrentHashMap<>();
 
 	private Framework _framework;
 	private final Map<ApplicationContext, List<ServiceRegistration<?>>>
