@@ -28,6 +28,7 @@ import java.util.Objects;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 
 /**
@@ -35,19 +36,24 @@ import org.osgi.framework.ServiceReference;
  */
 public class CheckBookingsMessageListenerTestUtil {
 
-	public static void setUp() {
+	public static void setUp() throws InvalidSyntaxException {
 		Bundle bundle = FrameworkUtil.getBundle(
 			CalendarBookingLocalServiceTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		ServiceReference<?> serviceReference =
-			bundleContext.getServiceReference(
-				"com.liferay.calendar.web.internal.messaging." +
-					"CheckBookingsMessageListener");
+		ServiceReference<?>[] serviceReferences =
+			bundleContext.getServiceReferences(
+				"com.liferay.portal.kernel.messaging.MessageListener",
+				"(component.name=*.CheckBookingsMessageListener)");
+
+		if (serviceReferences == null) {
+			throw new RuntimeException(
+				"Cannot find CheckBookingsMessageListener in services");
+		}
 
 		_checkBookingMessageListener = bundleContext.getService(
-			serviceReference);
+			serviceReferences[0]);
 
 		ReflectionTestUtil.setFieldValue(
 			_checkBookingMessageListener, "_calendarBookingLocalService",
