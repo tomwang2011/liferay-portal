@@ -19,6 +19,7 @@ import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
@@ -36,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Fabio Pezzutto
  * @author Eduardo Lundgren
  */
-@Component(immediate = true, service = {})
+@Component(immediate = true, service = MessageListener.class)
 public class CheckBookingsMessageListener extends BaseMessageListener {
 
 	@Activate
