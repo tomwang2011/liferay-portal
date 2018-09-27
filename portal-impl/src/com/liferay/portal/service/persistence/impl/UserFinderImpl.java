@@ -340,6 +340,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 					StringUtil.merge(userGroupIds)
 				});
 
+			System.out.println("*******************sql: " + sql);
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
 			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
