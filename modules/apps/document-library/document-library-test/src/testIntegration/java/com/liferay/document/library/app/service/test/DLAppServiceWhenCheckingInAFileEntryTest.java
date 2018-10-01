@@ -67,11 +67,11 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 	@Test
 	public void shouldCallWorkflowHandler() throws Exception {
 		try (WorkflowHandlerInvocationCounter<FileEntry>
-				 workflowHandlerInvocationCounter =
-				 new WorkflowHandlerInvocationCounter<>(
-					 DLFileEntryConstants.getClassName())) {
+				workflowHandlerInvocationCounter =
+					new WorkflowHandlerInvocationCounter<>(
+						DLFileEntryConstants.getClassName())) {
 
-			FileEntry fileEntry = addFileEntry(
+			FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 				group.getGroupId(), parentFolder.getFolderId());
 
 			Assert.assertEquals(
@@ -80,8 +80,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 					"updateStatus", int.class, Map.class));
 
 			ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId());
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 			DLAppServiceUtil.checkOutFileEntry(
 				fileEntry.getFileEntryId(), serviceContext);
@@ -91,7 +90,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 				workflowHandlerInvocationCounter.getCount(
 					"updateStatus", int.class, Map.class));
 
-			updateFileEntry(
+			DLAppServiceTestUtil.updateFileEntry(
 				group.getGroupId(), fileEntry.getFileEntryId(),
 				RandomTestUtil.randomString(), true);
 
@@ -113,10 +112,11 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 
 	@Test
 	public void shouldFireSyncEvent() throws Exception {
-		AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
-			DLSyncConstants.EVENT_UPDATE);
+		AtomicInteger counter =
+			DLAppServiceTestUtil.registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_UPDATE);
 
-		FileEntry fileEntry = addFileEntry(
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), parentFolder.getFolderId());
 
 		ServiceContext serviceContext =
@@ -189,7 +189,7 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 	public void shouldUpdateTagNamesWithNoVersionIncrement()
 		throws Exception {
 
-		FileEntry fileEntry = addFileEntry(
+		FileEntry fileEntry = DLAppServiceTestUtil.addFileEntry(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
 			new String[] {"tag1", "tag2"});
