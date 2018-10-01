@@ -24,7 +24,7 @@ import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.document.library.uad.test.DLFileEntryUADTestHelper;
+import com.liferay.document.library.uad.test.DLFileEntryUADTestUtil;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBThreadLocalService;
@@ -67,7 +67,7 @@ public class DLFileEntryUADAnonymizerTest
 
 	@After
 	public void tearDown() throws Exception {
-		DLFileEntryUADTestHelper.cleanUpDependencies(
+		DLFileEntryUADTestUtil.cleanUpDependencies(
 			_dlAppLocalService, _dlFileEntryLocalService, _dlFolderLocalService,
 			_dlFileEntries);
 
@@ -177,7 +177,7 @@ public class DLFileEntryUADAnonymizerTest
 	protected DLFileEntry addBaseModel(long userId, boolean deleteAfterTestRun)
 		throws Exception {
 
-		DLFileEntry dlFileEntry = DLFileEntryUADTestHelper.addDLFileEntry(
+		DLFileEntry dlFileEntry = DLFileEntryUADTestUtil.addDLFileEntry(
 			_dlAppLocalService, _dlFileEntryLocalService, _dlFolderLocalService,
 			userId);
 
@@ -192,7 +192,7 @@ public class DLFileEntryUADAnonymizerTest
 	protected void deleteBaseModels(List<DLFileEntry> baseModels)
 		throws Exception {
 
-		DLFileEntryUADTestHelper.cleanUpDependencies(
+		DLFileEntryUADTestUtil.cleanUpDependencies(
 			_dlAppLocalService, _dlFileEntryLocalService, _dlFolderLocalService,
 			baseModels);
 	}
