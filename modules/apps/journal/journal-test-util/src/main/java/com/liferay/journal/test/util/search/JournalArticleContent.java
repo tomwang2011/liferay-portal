@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.test.journal.util;
+package com.liferay.journal.test.util.search;
 
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;

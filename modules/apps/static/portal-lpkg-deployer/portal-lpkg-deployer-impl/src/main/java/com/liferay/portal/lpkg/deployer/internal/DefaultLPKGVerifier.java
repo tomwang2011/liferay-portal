@@ -25,16 +25,21 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.Version;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.BundleTracker;
 
 /**
  * @author Shuyang Zhou
@@ -44,7 +49,40 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+		_bundleTracker = new BundleTracker<String>(
+			bundleContext, ~Bundle.UNINSTALLED, null) {
+
+			@Override
+			public String addingBundle(Bundle bundle, BundleEvent event) {
+				String symbolicName = bundle.getSymbolicName();
+
+				List<Bundle> bundles = _bundles.computeIfAbsent(
+					symbolicName, key -> new ArrayList<>());
+
+				bundles.add(bundle);
+
+				return symbolicName;
+			}
+
+			@Override
+			public void removedBundle(
+				Bundle bundle, BundleEvent event, String symbolicName) {
+
+				List<Bundle> bundles = _bundles.get(symbolicName);
+
+				bundles.remove(bundle);
+			}
+
+		};
+
+		_bundleTracker.open();
+	}
+
+	@Deactivate
+	public void deactivate() {
+		_bundleTracker.close();
+
+		_bundles.clear();
 	}
 
 	@Override
@@ -94,7 +132,10 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 
 			List<Bundle> oldBundles = new ArrayList<>();
 
-			for (Bundle bundle : _bundleContext.getBundles()) {
+			for (Bundle bundle :
+					_bundles.computeIfAbsent(
+						symbolicName, key -> new ArrayList<>())) {
+
 				if (!symbolicName.equals(bundle.getSymbolicName())) {
 					continue;
 				}
@@ -126,7 +167,9 @@ public class DefaultLPKGVerifier implements LPKGVerifier {
 		}
 	}
 
-	private BundleContext _bundleContext;
+	private final Map<String, List<Bundle>> _bundles =
+		new ConcurrentHashMap<>();
+	private BundleTracker<String> _bundleTracker;
 
 	@Reference
 	private LPKGIndexValidator _lpkgIndexValidator;

@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.search.test.journal.util;
+package com.liferay.journal.test.util.search;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolderConstants;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 
@@ -30,9 +31,14 @@ import java.util.Map;
  */
 public class JournalArticleSearchFixture {
 
+	public JournalArticleSearchFixture(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+	}
+
 	public JournalArticle addArticle(
-			JournalArticleBlueprint journalArticleBlueprint)
-		throws Exception {
+		JournalArticleBlueprint journalArticleBlueprint) {
 
 		long userId = journalArticleBlueprint.getUserId();
 		long groupId = journalArticleBlueprint.getGroupId();
@@ -43,18 +49,16 @@ public class JournalArticleSearchFixture {
 		String ddmStructureKey = "BASIC-WEB-CONTENT";
 		String ddmTemplateKey = "BASIC-WEB-CONTENT";
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId, userId);
+		ServiceContext serviceContext = getServiceContext(groupId, userId);
 
 		if (journalArticleBlueprint.isWorkflowEnabled()) {
 			serviceContext.setWorkflowAction(
 				journalArticleBlueprint.getWorkflowAction());
 		}
 
-		JournalArticle journalArticle =
-			JournalArticleLocalServiceUtil.addArticle(
-				userId, groupId, folderId, titleMap, descriptionMap,
-				contentString, ddmStructureKey, ddmTemplateKey, serviceContext);
+		JournalArticle journalArticle = addArticle(
+			userId, groupId, folderId, titleMap, descriptionMap, contentString,
+			ddmStructureKey, ddmTemplateKey, serviceContext);
 
 		_journalArticles.add(journalArticle);
 
@@ -74,7 +78,7 @@ public class JournalArticleSearchFixture {
 	public JournalArticle updateArticle(JournalArticle journalArticle)
 		throws Exception {
 
-		journalArticle = JournalArticleLocalServiceUtil.updateArticle(
+		journalArticle = _journalArticleLocalService.updateArticle(
 			journalArticle.getUserId(), journalArticle.getGroupId(),
 			journalArticle.getFolderId(), journalArticle.getArticleId(),
 			journalArticle.getVersion(), journalArticle.getTitleMap(),
@@ -88,6 +92,32 @@ public class JournalArticleSearchFixture {
 		return journalArticle;
 	}
 
+	protected JournalArticle addArticle(
+		long userId, long groupId, long folderId, Map<Locale, String> titleMap,
+		Map<Locale, String> descriptionMap, String contentString,
+		String ddmStructureKey, String ddmTemplateKey,
+		ServiceContext serviceContext) {
+
+		try {
+			return _journalArticleLocalService.addArticle(
+				userId, groupId, folderId, titleMap, descriptionMap,
+				contentString, ddmStructureKey, ddmTemplateKey, serviceContext);
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
+
+	protected ServiceContext getServiceContext(long groupId, long userId) {
+		try {
+			return ServiceContextTestUtil.getServiceContext(groupId, userId);
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
+
+	private final JournalArticleLocalService _journalArticleLocalService;
 	private final List<JournalArticle> _journalArticles = new ArrayList<>();
 
 }

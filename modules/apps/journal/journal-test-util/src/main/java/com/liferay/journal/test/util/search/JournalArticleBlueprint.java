@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.search.test.journal.util;
+package com.liferay.journal.test.util.search;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -37,12 +38,17 @@ public class JournalArticleBlueprint {
 		return journalArticleTitle.getValues();
 	}
 
-	public long getUserId() throws Exception {
+	public long getUserId() {
 		if (userId > 0) {
 			return userId;
 		}
 
-		return TestPropsValues.getUserId();
+		try {
+			return TestPropsValues.getUserId();
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(pe);
+		}
 	}
 
 	public int getWorkflowAction() {
