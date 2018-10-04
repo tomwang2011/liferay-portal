@@ -12,53 +12,50 @@
  * details.
  */
 
-package com.liferay.message.boards.uad.test;
+package com.liferay.wiki.uad.test;
 
-import com.liferay.message.boards.model.MBCategory;
-import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.util.List;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.service.WikiNodeLocalService;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author William Newbury
  */
-@Component(immediate = true, service = MBCategoryUADTestHelper.class)
-public class MBCategoryUADTestHelper {
+public class WikiNodeUADTestUtil {
 
-	public MBCategory addMBCategory(long userId) throws Exception {
+	public static WikiNode addWikiNode(
+			WikiNodeLocalService wikiNodeLocalService, long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId());
 
-		return _mbCategoryLocalService.addCategory(
-			userId, 0, RandomTestUtil.randomString(),
+		return wikiNodeLocalService.addNode(
+			userId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	public MBCategory addMBCategoryWithStatusByUserId(
-			long userId, long statusByUserId)
+	public static WikiNode addWikiNodeWithStatusByUserId(
+			WikiNodeLocalService wikiNodeLocalService, long userId,
+			long statusByUserId)
 		throws Exception {
 
-		MBCategory mbCategory = addMBCategory(userId);
+		WikiNode wikiNode = addWikiNode(wikiNodeLocalService, userId);
 
-		return _mbCategoryLocalService.updateStatus(
-			statusByUserId, mbCategory.getCategoryId(),
-			WorkflowConstants.STATUS_APPROVED);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId());
+
+		wikiNodeLocalService.updateStatus(
+			statusByUserId, wikiNode, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
+
+		return wikiNode;
 	}
-
-	public void cleanUpDependencies(List<MBCategory> mbCategories)
-		throws Exception {
-	}
-
-	@Reference
-	private MBCategoryLocalService _mbCategoryLocalService;
 
 }
