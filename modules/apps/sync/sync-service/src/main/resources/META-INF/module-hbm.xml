@@ -6,62 +6,62 @@
 	<import class="com.liferay.sync.model.SyncDLFileVersionDiff" />
 	<import class="com.liferay.sync.model.SyncDLObject" />
 	<class name="com.liferay.sync.model.impl.SyncDeviceImpl" table="SyncDevice">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="syncDeviceId" type="long">
+		<id access="com.liferay.sync.model.impl.hibernate.SyncDeviceModelAccessors$SyncDeviceIdAccessor" name="syncDeviceId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="buildNumber" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="featureSet" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="hostname" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDeviceModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDeviceModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDeviceModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDeviceModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDeviceModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDeviceModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDeviceModelAccessors$TypeAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDeviceModelAccessors$BuildNumberAccessor" name="buildNumber" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDeviceModelAccessors$FeatureSetAccessor" name="featureSet" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDeviceModelAccessors$HostnameAccessor" name="hostname" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDeviceModelAccessors$StatusAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.sync.model.impl.SyncDLFileVersionDiffImpl" table="SyncDLFileVersionDiff">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="syncDLFileVersionDiffId" type="long">
+		<id access="com.liferay.sync.model.impl.hibernate.SyncDLFileVersionDiffModelAccessors$SyncDLFileVersionDiffIdAccessor" name="syncDLFileVersionDiffId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="sourceFileVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="targetFileVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="dataFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="size_" name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="expirationDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLFileVersionDiffModelAccessors$FileEntryIdAccessor" name="fileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLFileVersionDiffModelAccessors$SourceFileVersionIdAccessor" name="sourceFileVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLFileVersionDiffModelAccessors$TargetFileVersionIdAccessor" name="targetFileVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLFileVersionDiffModelAccessors$DataFileEntryIdAccessor" name="dataFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLFileVersionDiffModelAccessors$SizeAccessor" column="size_" name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLFileVersionDiffModelAccessors$ExpirationDateAccessor" name="expirationDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.sync.model.impl.SyncDLObjectImpl" table="SyncDLObject">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="syncDLObjectId" type="long">
+		<id access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$SyncDLObjectIdAccessor" name="syncDLObjectId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="repositoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="parentFolderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="treePath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="extension" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="mimeType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="changeLog" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="extraSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="versionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="size_" name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="checksum" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="event" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lanTokenKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPermissionChangeDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lockExpirationDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lockUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lockUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="typePK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="typeUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$CreateTimeAccessor" name="createTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$ModifiedTimeAccessor" name="modifiedTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$RepositoryIdAccessor" name="repositoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$ParentFolderIdAccessor" name="parentFolderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$TreePathAccessor" name="treePath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$ExtensionAccessor" name="extension" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$MimeTypeAccessor" name="mimeType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$ChangeLogAccessor" name="changeLog" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$ExtraSettingsAccessor" name="extraSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$VersionIdAccessor" name="versionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$SizeAccessor" column="size_" name="size" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$ChecksumAccessor" name="checksum" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$EventAccessor" name="event" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$LanTokenKeyAccessor" name="lanTokenKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$LastPermissionChangeDateAccessor" name="lastPermissionChangeDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$LockExpirationDateAccessor" name="lockExpirationDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$LockUserIdAccessor" name="lockUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$LockUserNameAccessor" name="lockUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$TypeAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$TypePKAccessor" name="typePK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.sync.model.impl.hibernate.SyncDLObjectModelAccessors$TypeUuidAccessor" name="typeUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

@@ -12,81 +12,81 @@
 	<import class="com.liferay.portal.tools.service.builder.test.model.VersionedEntry" />
 	<import class="com.liferay.portal.tools.service.builder.test.model.VersionedEntryVersion" />
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryImpl" table="BigDecimalEntry">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="bigDecimalEntryId" type="long">
+		<id access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.BigDecimalEntryModelAccessors$BigDecimalEntryIdAccessor" name="bigDecimalEntryId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="bigDecimalValue" type="org.hibernate.type.BigDecimalType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.BigDecimalEntryModelAccessors$BigDecimalValueAccessor" name="bigDecimalValue" type="org.hibernate.type.BigDecimalType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryImpl" table="LocalizedEntry">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="localizedEntryId" type="long">
+		<id access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LocalizedEntryModelAccessors$LocalizedEntryIdAccessor" name="localizedEntryId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="defaultLanguageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LocalizedEntryModelAccessors$DefaultLanguageIdAccessor" name="defaultLanguageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.portal.tools.service.builder.test.model.impl.LocalizedEntryLocalizationImpl" table="LocalizedEntryLocalization">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="localizedEntryLocalizationId" type="long">
+		<id access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LocalizedEntryLocalizationModelAccessors$LocalizedEntryLocalizationIdAccessor" name="localizedEntryLocalizationId" type="long">
 			<generator class="assigned" />
 		</id>
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="localizedEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LocalizedEntryLocalizationModelAccessors$LocalizedEntryIdAccessor" name="localizedEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LocalizedEntryLocalizationModelAccessors$LanguageIdAccessor" name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LocalizedEntryLocalizationModelAccessors$TitleAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LocalizedEntryLocalizationModelAccessors$ContentAccessor" name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.LVEntryImpl" table="LVEntry">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lvEntryId" type="long">
+		<id access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryModelAccessors$LvEntryIdAccessor" name="lvEntryId" type="long">
 			<generator class="assigned" />
 		</id>
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="headId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="defaultLanguageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryModelAccessors$HeadIdAccessor" name="headId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryModelAccessors$DefaultLanguageIdAccessor" name="defaultLanguageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.portal.tools.service.builder.test.model.impl.LVEntryLocalizationImpl" table="LVEntryLocalization">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lvEntryLocalizationId" type="long">
+		<id access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryLocalizationModelAccessors$LvEntryLocalizationIdAccessor" name="lvEntryLocalizationId" type="long">
 			<generator class="assigned" />
 		</id>
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="headId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lvEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryLocalizationModelAccessors$HeadIdAccessor" name="headId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryLocalizationModelAccessors$LvEntryIdAccessor" name="lvEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryLocalizationModelAccessors$LanguageIdAccessor" name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryLocalizationModelAccessors$TitleAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryLocalizationModelAccessors$ContentAccessor" name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.LVEntryLocalizationVersionImpl" table="LVEntryLocalizationVersion">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lvEntryLocalizationVersionId" type="long">
+		<id access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryLocalizationVersionModelAccessors$LvEntryLocalizationVersionIdAccessor" name="lvEntryLocalizationVersionId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lvEntryLocalizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lvEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryLocalizationVersionModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryLocalizationVersionModelAccessors$LvEntryLocalizationIdAccessor" name="lvEntryLocalizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryLocalizationVersionModelAccessors$LvEntryIdAccessor" name="lvEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryLocalizationVersionModelAccessors$LanguageIdAccessor" name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryLocalizationVersionModelAccessors$TitleAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryLocalizationVersionModelAccessors$ContentAccessor" name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.LVEntryVersionImpl" table="LVEntryVersion">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lvEntryVersionId" type="long">
+		<id access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryVersionModelAccessors$LvEntryVersionIdAccessor" name="lvEntryVersionId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="defaultLanguageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lvEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryVersionModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryVersionModelAccessors$DefaultLanguageIdAccessor" name="defaultLanguageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryVersionModelAccessors$LvEntryIdAccessor" name="lvEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.LVEntryVersionModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryImpl" table="VersionedEntry">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="versionedEntryId" type="long">
+		<id access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.VersionedEntryModelAccessors$VersionedEntryIdAccessor" name="versionedEntryId" type="long">
 			<generator class="assigned" />
 		</id>
 		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="headId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.VersionedEntryModelAccessors$HeadIdAccessor" name="headId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.VersionedEntryModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.portal.tools.service.builder.test.model.impl.VersionedEntryVersionImpl" table="VersionedEntryVersion">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="versionedEntryVersionId" type="long">
+		<id access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.VersionedEntryVersionModelAccessors$VersionedEntryVersionIdAccessor" name="versionedEntryVersionId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="versionedEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.VersionedEntryVersionModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.VersionedEntryVersionModelAccessors$VersionedEntryIdAccessor" name="versionedEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.tools.service.builder.test.model.impl.hibernate.VersionedEntryVersionModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

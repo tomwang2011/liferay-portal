@@ -5,32 +5,32 @@
 	<import class="com.liferay.marketplace.model.App" />
 	<import class="com.liferay.marketplace.model.Module" />
 	<class name="com.liferay.marketplace.model.impl.AppImpl" table="Marketplace_App">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="appId" type="long">
+		<id access="com.liferay.marketplace.model.impl.hibernate.AppModelAccessors$AppIdAccessor" name="appId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="remoteAppId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="category" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="iconURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="required" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.AppModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.AppModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.AppModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.AppModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.AppModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.AppModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.AppModelAccessors$RemoteAppIdAccessor" name="remoteAppId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.AppModelAccessors$TitleAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.AppModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.AppModelAccessors$CategoryAccessor" name="category" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.AppModelAccessors$IconURLAccessor" name="iconURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.AppModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.AppModelAccessors$RequiredAccessor" name="required" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.marketplace.model.impl.ModuleImpl" table="Marketplace_Module">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="moduleId" type="long">
+		<id access="com.liferay.marketplace.model.impl.hibernate.ModuleModelAccessors$ModuleIdAccessor" name="moduleId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="appId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="bundleSymbolicName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="bundleVersion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="contextName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.ModuleModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.ModuleModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.ModuleModelAccessors$AppIdAccessor" name="appId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.ModuleModelAccessors$BundleSymbolicNameAccessor" name="bundleSymbolicName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.ModuleModelAccessors$BundleVersionAccessor" name="bundleVersion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.marketplace.model.impl.hibernate.ModuleModelAccessors$ContextNameAccessor" name="contextName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

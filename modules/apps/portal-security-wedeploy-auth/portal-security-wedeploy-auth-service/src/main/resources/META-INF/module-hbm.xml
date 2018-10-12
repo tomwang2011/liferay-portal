@@ -5,30 +5,30 @@
 	<import class="com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp" />
 	<import class="com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthToken" />
 	<class name="com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthAppImpl" table="WeDeployAuth_WeDeployAuthApp">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="weDeployAuthAppId" type="long">
+		<id access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthAppModelAccessors$WeDeployAuthAppIdAccessor" name="weDeployAuthAppId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="redirectURI" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="clientId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="clientSecret" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthAppModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthAppModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthAppModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthAppModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthAppModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthAppModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthAppModelAccessors$RedirectURIAccessor" name="redirectURI" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthAppModelAccessors$ClientIdAccessor" name="clientId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthAppModelAccessors$ClientSecretAccessor" name="clientSecret" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.security.wedeploy.auth.model.impl.WeDeployAuthTokenImpl" table="WeDeployAuth_WeDeployAuthToken">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="weDeployAuthTokenId" type="long">
+		<id access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthTokenModelAccessors$WeDeployAuthTokenIdAccessor" name="weDeployAuthTokenId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="clientId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="token" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthTokenModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthTokenModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthTokenModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthTokenModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthTokenModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthTokenModelAccessors$ClientIdAccessor" name="clientId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthTokenModelAccessors$TokenAccessor" name="token" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.security.wedeploy.auth.model.impl.hibernate.WeDeployAuthTokenModelAccessors$TypeAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 </hibernate-mapping>
