@@ -7,96 +7,96 @@
 	<import class="com.liferay.calendar.model.CalendarNotificationTemplate" />
 	<import class="com.liferay.calendar.model.CalendarResource" />
 	<class name="com.liferay.calendar.model.impl.CalendarImpl" table="Calendar">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="calendarId" type="long">
+		<id access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$CalendarIdAccessor" name="calendarId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="calendarResourceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="timeZoneId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="color" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="defaultCalendar" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="enableComments" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="enableRatings" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$CalendarResourceIdAccessor" name="calendarResourceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$TimeZoneIdAccessor" name="timeZoneId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$ColorAccessor" name="color" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$DefaultCalendarAccessor" name="defaultCalendar" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$EnableCommentsAccessor" name="enableComments" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$EnableRatingsAccessor" name="enableRatings" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.calendar.model.impl.CalendarBookingImpl" table="CalendarBooking">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="calendarBookingId" type="long">
+		<id access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$CalendarBookingIdAccessor" name="calendarBookingId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="calendarId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="calendarResourceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="parentCalendarBookingId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="recurringCalendarBookingId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.CamelCasePropertyAccessor" name="vEventUid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="location" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="startTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="endTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="allDay" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="recurrence" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="firstReminder" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="firstReminderType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="secondReminder" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="secondReminderType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$CalendarIdAccessor" name="calendarId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$CalendarResourceIdAccessor" name="calendarResourceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$ParentCalendarBookingIdAccessor" name="parentCalendarBookingId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$RecurringCalendarBookingIdAccessor" name="recurringCalendarBookingId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$VEventUidAccessor" name="vEventUid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$TitleAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$LocationAccessor" name="location" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$StartTimeAccessor" name="startTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$EndTimeAccessor" name="endTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$AllDayAccessor" name="allDay" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$RecurrenceAccessor" name="recurrence" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$FirstReminderAccessor" name="firstReminder" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$FirstReminderTypeAccessor" name="firstReminderType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$SecondReminderAccessor" name="secondReminder" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$SecondReminderTypeAccessor" name="secondReminderType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$StatusAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$StatusByUserIdAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$StatusByUserNameAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarBookingModelAccessors$StatusDateAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.calendar.model.impl.CalendarNotificationTemplateImpl" table="CalendarNotificationTemplate">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="calendarNotificationTemplateId" type="long">
+		<id access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$CalendarNotificationTemplateIdAccessor" name="calendarNotificationTemplateId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="calendarId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="notificationType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="notificationTypeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="notificationTemplateType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="subject" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="body" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$CalendarIdAccessor" name="calendarId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$NotificationTypeAccessor" name="notificationType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$NotificationTypeSettingsAccessor" name="notificationTypeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$NotificationTemplateTypeAccessor" name="notificationTemplateType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$SubjectAccessor" name="subject" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$BodyAccessor" name="body" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarNotificationTemplateModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.calendar.model.impl.CalendarResourceImpl" table="CalendarResource">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="calendarResourceId" type="long">
+		<id access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$CalendarResourceIdAccessor" name="calendarResourceId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="code_" name="code" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$ClassNameIdAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$ClassPKAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$ClassUuidAccessor" name="classUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$CodeAccessor" column="code_" name="code" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$ActiveAccessor" column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.calendar.model.impl.hibernate.CalendarResourceModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>

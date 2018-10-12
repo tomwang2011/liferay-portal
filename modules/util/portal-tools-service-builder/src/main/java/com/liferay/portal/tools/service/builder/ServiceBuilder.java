@@ -735,6 +735,10 @@ public class ServiceBuilder {
 							_createHbm(entity);
 							_createHbmUtil(entity);
 
+							if (isVersionGTE_7_2_0()) {
+								_createModelAccessors(entity);
+							}
+
 							_createPersistenceImpl(entity);
 							_createPersistence(entity);
 							_createPersistenceUtil(entity);
@@ -1870,6 +1874,16 @@ public class ServiceBuilder {
 		return false;
 	}
 
+	public boolean isVersionGTE_7_2_0() {
+		if (_dtdVersion.isLaterVersionThan("7.2.0") ||
+			_dtdVersion.isSameVersionAs("7.2.0")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isVersionLTE_7_1_0() {
 		if (_dtdVersion.isPreviousVersionThan("7.1.0") ||
 			_dtdVersion.isSameVersionAs("7.1.0")) {
@@ -2720,6 +2734,25 @@ public class ServiceBuilder {
 		_write(
 			modelFile, content, _author, _jalopySettings, _modifiedFileNames,
 			_apiPackagePath + ".model");
+	}
+
+	private void _createModelAccessors(Entity entity) throws Exception {
+		Map<String, Object> context = _getContext();
+
+		context.put("entity", entity);
+
+		// Content
+
+		String content = _processTemplate(_tplModelAccessors, context);
+
+		// Write file
+
+		File file = new File(
+			StringBundler.concat(
+				_outputPath, "/model/impl/hibernate/", entity.getName(),
+				"ModelAccessors.java"));
+
+		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
 	private void _createModelCache(Entity entity) throws Exception {
@@ -7170,6 +7203,7 @@ public class ServiceBuilder {
 	private String _tplJsonJs = _TPL_ROOT + "json_js.ftl";
 	private String _tplJsonJsMethod = _TPL_ROOT + "json_js_method.ftl";
 	private String _tplModel = _TPL_ROOT + "model.ftl";
+	private String _tplModelAccessors = _TPL_ROOT + "model_accessors.ftl";
 	private String _tplModelCache = _TPL_ROOT + "model_cache.ftl";
 	private String _tplModelHintsXml = _TPL_ROOT + "model_hints_xml.ftl";
 	private String _tplModelImpl = _TPL_ROOT + "model_impl.ftl";

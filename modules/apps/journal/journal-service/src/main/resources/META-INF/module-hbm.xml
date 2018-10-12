@@ -9,119 +9,119 @@
 	<import class="com.liferay.journal.model.JournalFeed" />
 	<import class="com.liferay.journal.model.JournalFolder" />
 	<class name="com.liferay.journal.model.impl.JournalArticleImpl" table="JournalArticle">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="id_" name="id" type="long">
+		<id access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$IdAccessor" column="id_" name="id" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="resourcePrimKey" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="folderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="treePath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="urlTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="content" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="DDMTemplateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="defaultLanguageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="layoutUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="displayDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="expirationDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="reviewDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="indexable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="smallImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="smallImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="smallImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$ResourcePrimKeyAccessor" name="resourcePrimKey" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$FolderIdAccessor" name="folderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$ClassNameIdAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$ClassPKAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$TreePathAccessor" name="treePath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$ArticleIdAccessor" name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$UrlTitleAccessor" name="urlTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$ContentAccessor" name="content" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$DDMStructureKeyAccessor" name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$DDMTemplateKeyAccessor" name="DDMTemplateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$DefaultLanguageIdAccessor" name="defaultLanguageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$LayoutUuidAccessor" name="layoutUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$DisplayDateAccessor" name="displayDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$ExpirationDateAccessor" name="expirationDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$ReviewDateAccessor" name="reviewDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$IndexableAccessor" name="indexable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$SmallImageAccessor" name="smallImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$SmallImageIdAccessor" name="smallImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$SmallImageURLAccessor" name="smallImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$StatusAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$StatusByUserIdAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$StatusByUserNameAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleModelAccessors$StatusDateAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.journal.model.impl.JournalArticleLocalizationImpl" table="JournalArticleLocalization">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="articleLocalizationId" type="long">
+		<id access="com.liferay.journal.model.impl.hibernate.JournalArticleLocalizationModelAccessors$ArticleLocalizationIdAccessor" name="articleLocalizationId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="articlePK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleLocalizationModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleLocalizationModelAccessors$ArticlePKAccessor" name="articlePK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleLocalizationModelAccessors$TitleAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleLocalizationModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleLocalizationModelAccessors$LanguageIdAccessor" name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.journal.model.impl.JournalArticleResourceImpl" table="JournalArticleResource">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="resourcePrimKey" type="long">
+		<id access="com.liferay.journal.model.impl.hibernate.JournalArticleResourceModelAccessors$ResourcePrimKeyAccessor" name="resourcePrimKey" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleResourceModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleResourceModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleResourceModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalArticleResourceModelAccessors$ArticleIdAccessor" name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.journal.model.impl.JournalContentSearchImpl" table="JournalContentSearch">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="contentSearchId" type="long">
+		<id access="com.liferay.journal.model.impl.hibernate.JournalContentSearchModelAccessors$ContentSearchIdAccessor" name="contentSearchId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="privateLayout" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="layoutId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="portletId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalContentSearchModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalContentSearchModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalContentSearchModelAccessors$PrivateLayoutAccessor" name="privateLayout" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalContentSearchModelAccessors$LayoutIdAccessor" name="layoutId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalContentSearchModelAccessors$PortletIdAccessor" name="portletId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalContentSearchModelAccessors$ArticleIdAccessor" name="articleId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.journal.model.impl.JournalFeedImpl" table="JournalFeed">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="id_" name="id" type="long">
+		<id access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$IdAccessor" column="id_" name="id" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="feedId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="DDMTemplateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="DDMRendererTemplateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="delta" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="orderByCol" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="orderByType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="targetLayoutFriendlyUrl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="targetPortletId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="contentField" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="feedFormat" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="feedVersion" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$FeedIdAccessor" name="feedId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$DDMStructureKeyAccessor" name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$DDMTemplateKeyAccessor" name="DDMTemplateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$DDMRendererTemplateKeyAccessor" name="DDMRendererTemplateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$DeltaAccessor" name="delta" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$OrderByColAccessor" name="orderByCol" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$OrderByTypeAccessor" name="orderByType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$TargetLayoutFriendlyUrlAccessor" name="targetLayoutFriendlyUrl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$TargetPortletIdAccessor" name="targetPortletId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$ContentFieldAccessor" name="contentField" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$FeedFormatAccessor" name="feedFormat" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$FeedVersionAccessor" name="feedVersion" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFeedModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.journal.model.impl.JournalFolderImpl" table="JournalFolder">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="folderId" type="long">
+		<id access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$FolderIdAccessor" name="folderId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="parentFolderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="treePath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="restrictionType" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$ParentFolderIdAccessor" name="parentFolderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$TreePathAccessor" name="treePath" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$RestrictionTypeAccessor" name="restrictionType" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$StatusAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$StatusByUserIdAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$StatusByUserNameAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.journal.model.impl.hibernate.JournalFolderModelAccessors$StatusDateAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>

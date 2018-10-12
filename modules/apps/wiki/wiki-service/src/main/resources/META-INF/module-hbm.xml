@@ -6,61 +6,61 @@
 	<import class="com.liferay.wiki.model.WikiPage" />
 	<import class="com.liferay.wiki.model.WikiPageResource" />
 	<class name="com.liferay.wiki.model.impl.WikiNodeImpl" table="WikiNode">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="nodeId" type="long">
+		<id access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$NodeIdAccessor" name="nodeId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPostDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$LastPostDateAccessor" name="lastPostDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$StatusAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$StatusByUserIdAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$StatusByUserNameAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiNodeModelAccessors$StatusDateAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.wiki.model.impl.WikiPageImpl" table="WikiPage">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="pageId" type="long">
+		<id access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$PageIdAccessor" name="pageId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="resourcePrimKey" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="nodeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="minorEdit" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="content" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="summary" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="format" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="head" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="parentTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="redirectTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$ResourcePrimKeyAccessor" name="resourcePrimKey" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$NodeIdAccessor" name="nodeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$TitleAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$MinorEditAccessor" name="minorEdit" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$ContentAccessor" name="content" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$SummaryAccessor" name="summary" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$FormatAccessor" name="format" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$HeadAccessor" name="head" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$ParentTitleAccessor" name="parentTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$RedirectTitleAccessor" name="redirectTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$StatusAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$StatusByUserIdAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$StatusByUserNameAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageModelAccessors$StatusDateAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.wiki.model.impl.WikiPageResourceImpl" table="WikiPageResource">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="resourcePrimKey" type="long">
+		<id access="com.liferay.wiki.model.impl.hibernate.WikiPageResourceModelAccessors$ResourcePrimKeyAccessor" name="resourcePrimKey" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="nodeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageResourceModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageResourceModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageResourceModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageResourceModelAccessors$NodeIdAccessor" name="nodeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.wiki.model.impl.hibernate.WikiPageResourceModelAccessors$TitleAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 </hibernate-mapping>

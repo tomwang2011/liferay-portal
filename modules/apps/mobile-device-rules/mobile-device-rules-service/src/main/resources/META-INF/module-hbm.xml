@@ -7,73 +7,73 @@
 	<import class="com.liferay.mobile.device.rules.model.MDRRuleGroup" />
 	<import class="com.liferay.mobile.device.rules.model.MDRRuleGroupInstance" />
 	<class name="com.liferay.mobile.device.rules.model.impl.MDRActionImpl" table="MDRAction">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="actionId" type="long">
+		<id access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$ActionIdAccessor" name="actionId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ruleGroupInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$ClassNameIdAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$ClassPKAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$RuleGroupInstanceIdAccessor" name="ruleGroupInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$TypeAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$TypeSettingsAccessor" name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRActionModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.mobile.device.rules.model.impl.MDRRuleImpl" table="MDRRule">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ruleId" type="long">
+		<id access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleModelAccessors$RuleIdAccessor" name="ruleId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ruleGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleModelAccessors$RuleGroupIdAccessor" name="ruleGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleModelAccessors$TypeAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleModelAccessors$TypeSettingsAccessor" name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.mobile.device.rules.model.impl.MDRRuleGroupImpl" table="MDRRuleGroup">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ruleGroupId" type="long">
+		<id access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupModelAccessors$RuleGroupIdAccessor" name="ruleGroupId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.mobile.device.rules.model.impl.MDRRuleGroupInstanceImpl" table="MDRRuleGroupInstance">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ruleGroupInstanceId" type="long">
+		<id access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupInstanceModelAccessors$RuleGroupInstanceIdAccessor" name="ruleGroupInstanceId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="ruleGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupInstanceModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupInstanceModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupInstanceModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupInstanceModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupInstanceModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupInstanceModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupInstanceModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupInstanceModelAccessors$ClassNameIdAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupInstanceModelAccessors$ClassPKAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupInstanceModelAccessors$RuleGroupIdAccessor" name="ruleGroupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupInstanceModelAccessors$PriorityAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.mobile.device.rules.model.impl.hibernate.MDRRuleGroupInstanceModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>

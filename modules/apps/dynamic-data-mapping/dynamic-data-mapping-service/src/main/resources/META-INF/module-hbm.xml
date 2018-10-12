@@ -18,261 +18,261 @@
 	<import class="com.liferay.dynamic.data.mapping.model.DDMTemplateLink" />
 	<import class="com.liferay.dynamic.data.mapping.model.DDMTemplateVersion" />
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMContentImpl" table="DDMContent">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="contentId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMContentModelAccessors$ContentIdAccessor" name="contentId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="data_" name="data" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMContentModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMContentModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMContentModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMContentModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMContentModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMContentModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMContentModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMContentModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMContentModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMContentModelAccessors$DataAccessor" column="data_" name="data" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceImpl" table="DDMDataProviderInstance">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="dataProviderInstanceId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceModelAccessors$DataProviderInstanceIdAccessor" name="dataProviderInstanceId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="definition" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceModelAccessors$DefinitionAccessor" name="definition" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceModelAccessors$TypeAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkImpl" table="DDMDataProviderInstanceLink">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="dataProviderInstanceLinkId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceLinkModelAccessors$DataProviderInstanceLinkIdAccessor" name="dataProviderInstanceLinkId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="dataProviderInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceLinkModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceLinkModelAccessors$DataProviderInstanceIdAccessor" name="dataProviderInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMDataProviderInstanceLinkModelAccessors$StructureIdAccessor" name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceImpl" table="DDMFormInstance">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="formInstanceId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$FormInstanceIdAccessor" name="formInstanceId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="versionUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="versionUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="settings_" name="settings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$VersionUserIdAccessor" name="versionUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$VersionUserNameAccessor" name="versionUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$StructureIdAccessor" name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$SettingsAccessor" column="settings_" name="settings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordImpl" table="DDMFormInstanceRecord">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="formInstanceRecordId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$FormInstanceRecordIdAccessor" name="formInstanceRecordId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="versionUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="versionUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="formInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="formInstanceVersion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="storageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$VersionUserIdAccessor" name="versionUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$VersionUserNameAccessor" name="versionUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$FormInstanceIdAccessor" name="formInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$FormInstanceVersionAccessor" name="formInstanceVersion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$StorageIdAccessor" name="storageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordVersionImpl" table="DDMFormInstanceRecordVersion">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="formInstanceRecordVersionId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$FormInstanceRecordVersionIdAccessor" name="formInstanceRecordVersionId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="formInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="formInstanceVersion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="formInstanceRecordId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="storageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$FormInstanceIdAccessor" name="formInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$FormInstanceVersionAccessor" name="formInstanceVersion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$FormInstanceRecordIdAccessor" name="formInstanceRecordId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$StatusAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$StatusByUserIdAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$StatusByUserNameAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$StatusDateAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceRecordVersionModelAccessors$StorageIdAccessor" name="storageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionImpl" table="DDMFormInstanceVersion">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="formInstanceVersionId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$FormInstanceVersionIdAccessor" name="formInstanceVersionId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="formInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="settings_" name="settings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$FormInstanceIdAccessor" name="formInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$StructureVersionIdAccessor" name="structureVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$SettingsAccessor" column="settings_" name="settings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$StatusAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$StatusByUserIdAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$StatusByUserNameAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMFormInstanceVersionModelAccessors$StatusDateAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkImpl" table="DDMStorageLink">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="storageLinkId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStorageLinkModelAccessors$StorageLinkIdAccessor" name="storageLinkId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStorageLinkModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStorageLinkModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStorageLinkModelAccessors$ClassNameIdAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStorageLinkModelAccessors$ClassPKAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStorageLinkModelAccessors$StructureIdAccessor" name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStorageLinkModelAccessors$StructureVersionIdAccessor" name="structureVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl" table="DDMStructure">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$StructureIdAccessor" name="structureId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="versionUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="versionUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="parentStructureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="definition" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="storageType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$VersionUserIdAccessor" name="versionUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$VersionUserNameAccessor" name="versionUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$ParentStructureIdAccessor" name="parentStructureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$ClassNameIdAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$StructureKeyAccessor" name="structureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$DefinitionAccessor" name="definition" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$StorageTypeAccessor" name="storageType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$TypeAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutImpl" table="DDMStructureLayout">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureLayoutId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLayoutModelAccessors$StructureLayoutIdAccessor" name="structureLayoutId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="definition" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLayoutModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLayoutModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLayoutModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLayoutModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLayoutModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLayoutModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLayoutModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLayoutModelAccessors$StructureVersionIdAccessor" name="structureVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLayoutModelAccessors$DefinitionAccessor" name="definition" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkImpl" table="DDMStructureLink">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureLinkId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLinkModelAccessors$StructureLinkIdAccessor" name="structureLinkId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLinkModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLinkModelAccessors$ClassNameIdAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLinkModelAccessors$ClassPKAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureLinkModelAccessors$StructureIdAccessor" name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionImpl" table="DDMStructureVersion">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureVersionId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$StructureVersionIdAccessor" name="structureVersionId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="parentStructureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="definition" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="storageType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$StructureIdAccessor" name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$ParentStructureIdAccessor" name="parentStructureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$DefinitionAccessor" name="definition" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$StorageTypeAccessor" name="storageType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$TypeAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$StatusAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$StatusByUserIdAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$StatusByUserNameAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMStructureVersionModelAccessors$StatusDateAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl" table="DDMTemplate">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="templateId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$TemplateIdAccessor" name="templateId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="versionUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="versionUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="resourceClassNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="templateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="mode_" name="mode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="language" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="script" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="cacheable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="smallImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="smallImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="smallImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$UuidAccessor" column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$VersionUserIdAccessor" name="versionUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$VersionUserNameAccessor" name="versionUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$ModifiedDateAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$ClassNameIdAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$ClassPKAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$ResourceClassNameIdAccessor" name="resourceClassNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$TemplateKeyAccessor" name="templateKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$TypeAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$ModeAccessor" column="mode_" name="mode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$LanguageAccessor" name="language" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$ScriptAccessor" name="script" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$CacheableAccessor" name="cacheable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$SmallImageAccessor" name="smallImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$SmallImageIdAccessor" name="smallImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$SmallImageURLAccessor" name="smallImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateModelAccessors$LastPublishDateAccessor" name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkImpl" table="DDMTemplateLink">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="templateLinkId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateLinkModelAccessors$TemplateLinkIdAccessor" name="templateLinkId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="templateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateLinkModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateLinkModelAccessors$ClassNameIdAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateLinkModelAccessors$ClassPKAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateLinkModelAccessors$TemplateIdAccessor" name="templateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionImpl" table="DDMTemplateVersion">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="templateVersionId" type="long">
+		<id access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$TemplateVersionIdAccessor" name="templateVersionId" type="long">
 			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="templateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="language" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="script" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$GroupIdAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$CompanyIdAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$UserIdAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$UserNameAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$CreateDateAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$ClassNameIdAccessor" name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$ClassPKAccessor" name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$TemplateIdAccessor" name="templateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$VersionAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$NameAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$DescriptionAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$LanguageAccessor" name="language" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$ScriptAccessor" name="script" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$StatusAccessor" name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$StatusByUserIdAccessor" name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$StatusByUserNameAccessor" name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.dynamic.data.mapping.model.impl.hibernate.DDMTemplateVersionModelAccessors$StatusDateAccessor" name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>
