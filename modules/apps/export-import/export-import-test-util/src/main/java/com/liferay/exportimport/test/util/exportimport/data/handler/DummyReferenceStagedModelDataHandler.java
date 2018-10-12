@@ -28,12 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Akos Thurzo
  */
-@Component(
-	immediate = true,
-	service = {
-		DummyReferenceStagedModelDataHandler.class, StagedModelDataHandler.class
-	}
-)
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class DummyReferenceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DummyReference> {
 

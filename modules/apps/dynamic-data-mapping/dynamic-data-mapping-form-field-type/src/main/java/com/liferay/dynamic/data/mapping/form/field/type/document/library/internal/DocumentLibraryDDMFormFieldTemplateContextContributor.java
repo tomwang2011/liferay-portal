@@ -56,10 +56,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true, property = "ddm.form.field.type.name=document_library",
-	service = {
-		DDMFormFieldTemplateContextContributor.class,
-		DocumentLibraryDDMFormFieldTemplateContextContributor.class
-	}
+	service = DDMFormFieldTemplateContextContributor.class
 )
 public class DocumentLibraryDDMFormFieldTemplateContextContributor
 	implements DDMFormFieldTemplateContextContributor {
