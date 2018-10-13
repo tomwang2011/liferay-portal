@@ -38,10 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(
-	enabled = false, immediate = true,
-	service = AuditRouterProxyBeanConfigurator.class
-)
+@Component(enabled = false, immediate = true, service = {})
 public class AuditRouterProxyBeanConfigurator {
 
 	@Activate

@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  * @author Philip Jones
  */
-@Component(immediate = true, service = PluginRepositoriesMessageListener.class)
+@Component(immediate = true, service = {})
 public class PluginRepositoriesMessageListener extends BaseMessageListener {
 
 	@Activate

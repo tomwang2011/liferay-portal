@@ -30,7 +30,7 @@ import org.osgi.service.component.runtime.ServiceComponentRuntime;
 	property = {
 		"osgi.command.function=softCircularDependency", "osgi.command.scope=ds"
 	},
-	service = SoftCircularDependencyOSGiCommands.class
+	service = {}
 )
 public class SoftCircularDependencyOSGiCommands {
 

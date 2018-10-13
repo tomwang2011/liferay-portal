@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 		"json.web.service.context.name=sync-web",
 		"json.web.service.context.path=SyncDLObject"
 	},
-	service = SyncDLObject.class
+	service = {}
 )
 @JSONWebService
 public class SyncDLObject {

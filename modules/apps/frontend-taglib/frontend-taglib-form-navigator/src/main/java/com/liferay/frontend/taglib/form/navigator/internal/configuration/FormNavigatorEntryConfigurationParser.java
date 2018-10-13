@@ -39,8 +39,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.frontend.taglib.form.navigator.internal.configuration.FormNavigatorConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
-	service = FormNavigatorEntryConfigurationParser.class
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class FormNavigatorEntryConfigurationParser {
 

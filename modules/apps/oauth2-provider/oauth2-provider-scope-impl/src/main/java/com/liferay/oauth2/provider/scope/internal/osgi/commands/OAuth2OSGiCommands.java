@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"osgi.command.function=listScopes", "osgi.command.scope=oauth2"
 	},
-	service = OAuth2OSGiCommands.class
+	service = {}
 )
 public class OAuth2OSGiCommands {
 

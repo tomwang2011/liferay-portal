@@ -43,7 +43,7 @@ import org.osgi.service.jaxrs.runtime.dto.RuntimeDTO;
 @Component(
 	immediate = true,
 	property = {"osgi.command.function=check", "osgi.command.scope=jaxrs"},
-	service = JaxRsServiceRuntimeOSGiCommands.class
+	service = {}
 )
 public class JaxRsServiceRuntimeOSGiCommands {
 

@@ -40,7 +40,7 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 @Component(
 	immediate = true,
 	property = {"osgi.command.function=check", "osgi.command.scope=http"},
-	service = HttpServiceRuntimeOSGiCommands.class
+	service = {}
 )
 public class HttpServiceRuntimeOSGiCommands {
 
