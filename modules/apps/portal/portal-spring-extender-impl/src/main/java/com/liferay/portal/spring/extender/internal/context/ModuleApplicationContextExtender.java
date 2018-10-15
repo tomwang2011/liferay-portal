@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -113,13 +112,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 	protected void setSaxReaderUtil(SAXReaderUtil saxReaderUtil) {
 	}
 
-	@Reference(target = "(original.bean=true)", unbind = "-")
-	protected void setServiceConfigurator(
-		ServiceConfigurator serviceConfigurator) {
-
-		_serviceConfigurator = serviceConfigurator;
-	}
-
 	@Override
 	protected void warn(Bundle bundle, String s, Throwable throwable) {
 		if (_log.isWarnEnabled()) {
@@ -129,8 +121,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModuleApplicationContextExtender.class);
-
-	private ServiceConfigurator _serviceConfigurator;
 
 	private class ModuleApplicationContextExtension implements Extension {
 
@@ -158,8 +148,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			Bundle bundle = bundleContext.getBundle();
 
 			_component.setImplementation(
-				new ModuleApplicationContextRegistrator(
-					_bundle, bundle, _serviceConfigurator));
+				new ModuleApplicationContextRegistrator(_bundle, bundle));
 
 			ClassLoader classLoader = new BundleResolverClassLoader(
 				_bundle, bundle);
