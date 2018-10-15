@@ -47,7 +47,6 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -283,18 +282,31 @@ public class MethodInterceptorCacheManager {
 								methodInterceptorFactoryProvider.getClass()));
 					}
 				}
+				else {
+					index++;
+				}
 
-				List<MethodInterceptorFactory> list = new ArrayList<>(
-					Arrays.asList(
-						_methodInterceptorCacheInitializer.
-							_methodInterceptorFactories));
+				int newLength = methodInterceptorFactories.length + 1;
 
-				list.add(index, methodInterceptorFactory);
+				MethodInterceptorFactory[] newMethodInterceptorFactories =
+					new MethodInterceptorFactory[newLength];
+
+				System.arraycopy(
+					methodInterceptorFactories, 0,
+					newMethodInterceptorFactories, 0, index);
+
+				newMethodInterceptorFactories[index] = methodInterceptorFactory;
+
+				if (index < methodInterceptorFactories.length) {
+					System.arraycopy(
+						methodInterceptorFactories, index,
+						newMethodInterceptorFactories, index + 1,
+						newLength - index);
+				}
 
 				_methodInterceptorCacheInitializer =
 					new MethodInterceptorCacheInitializer(
-						list.toArray(
-							new MethodInterceptorFactory[list.size()]));
+						newMethodInterceptorFactories);
 
 				_updateMethodInterceptorCaches();
 			}
@@ -316,17 +328,41 @@ public class MethodInterceptorCacheManager {
 			Registry registry = RegistryUtil.getRegistry();
 
 			synchronized (MethodInterceptorCacheManager.class) {
-				List<MethodInterceptorFactory> list = new ArrayList<>(
-					Arrays.asList(
-						_methodInterceptorCacheInitializer.
-							_methodInterceptorFactories));
+				MethodInterceptorFactory[] methodInterceptorFactories =
+					_methodInterceptorCacheInitializer.
+						_methodInterceptorFactories;
 
-				list.remove(methodInterceptorFactory);
+				int index = -1;
+
+				for (int i = 1; i < methodInterceptorFactories.length; i++) {
+					if (methodInterceptorFactories[i] ==
+							methodInterceptorFactory) {
+
+						index = i;
+
+						break;
+					}
+				}
+
+				int newLength = methodInterceptorFactories.length - 1;
+
+				MethodInterceptorFactory[] newMethodInterceptorFactories =
+					new MethodInterceptorFactory[newLength];
+
+				System.arraycopy(
+					methodInterceptorFactories, 0,
+					newMethodInterceptorFactories, 0, index);
+
+				if (index < newLength) {
+					System.arraycopy(
+						methodInterceptorFactories, index + 1,
+						newMethodInterceptorFactories, index,
+						newLength - index);
+				}
 
 				_methodInterceptorCacheInitializer =
 					new MethodInterceptorCacheInitializer(
-						list.toArray(
-							new MethodInterceptorFactory[list.size()]));
+						newMethodInterceptorFactories);
 
 				_updateMethodInterceptorCaches();
 			}
