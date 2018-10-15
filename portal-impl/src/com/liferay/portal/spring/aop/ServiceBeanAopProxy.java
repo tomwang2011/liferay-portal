@@ -14,9 +14,11 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.portal.internal.spring.aop.MethodInvocationImpl;
 import com.liferay.portal.kernel.spring.aop.AdvisedSupport;
 import com.liferay.portal.kernel.spring.aop.AopProxy;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.transaction.TransactionsUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -25,24 +27,21 @@ import org.aopalliance.intercept.MethodInterceptor;
 
 /**
  * @author Shuyang Zhou
+ * @deprecated As of Judson (7.1.x), replaced by {@link MethodInterceptorProxyImpl}
  */
+@Deprecated
 public class ServiceBeanAopProxy
 	implements AdvisedSupportProxy, AopProxy, InvocationHandler {
 
+	/**
+	 * @deprecated As of Judson (7.1.x), replaced by {@link AdvisedSupportUtil#
+	 *             getAdvisedSupport(Object)}
+	 */
+	@Deprecated
 	public static AdvisedSupport getAdvisedSupport(Object proxy)
 		throws Exception {
 
-		InvocationHandler invocationHandler = ProxyUtil.getInvocationHandler(
-			proxy);
-
-		if (invocationHandler instanceof AdvisedSupportProxy) {
-			AdvisedSupportProxy advisableSupportProxy =
-				(AdvisedSupportProxy)invocationHandler;
-
-			return advisableSupportProxy.getAdvisedSupport();
-		}
-
-		return null;
+		return AdvisedSupportUtil.getAdvisedSupport(proxy);
 	}
 
 	/**
@@ -108,21 +107,19 @@ public class ServiceBeanAopProxy
 	public Object invoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			new ServiceBeanMethodInvocation(
-				_advisedSupport.getTarget(), method, arguments);
+		MethodInvocationImpl methodInvocation = new MethodInvocationImpl(
+			_advisedSupport.getTarget(), method, arguments);
 
-		if (_enabled) {
-			serviceBeanMethodInvocation.setMethodInterceptors(
+		if (TransactionsUtil.isEnabled()) {
+			methodInvocation.setMethodInterceptors(
 				_serviceBeanAopCacheManager.getMethodInterceptors(
-					serviceBeanMethodInvocation));
+					methodInvocation));
 		}
 		else {
-			serviceBeanMethodInvocation.setMethodInterceptors(
-				_emptyMethodInterceptors);
+			methodInvocation.setMethodInterceptors(_emptyMethodInterceptors);
 		}
 
-		return serviceBeanMethodInvocation.proceed();
+		return methodInvocation.proceed();
 	}
 
 	public void setServiceBeanAopCacheManager(
@@ -144,7 +141,6 @@ public class ServiceBeanAopProxy
 
 	private static final MethodInterceptor[] _emptyMethodInterceptors =
 		new MethodInterceptor[0];
-	private static boolean _enabled = true;
 
 	private final AdvisedSupport _advisedSupport;
 	private volatile ServiceBeanAopCacheManager _serviceBeanAopCacheManager;

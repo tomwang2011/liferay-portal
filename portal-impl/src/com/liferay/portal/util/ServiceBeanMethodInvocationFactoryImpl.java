@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.internal.spring.aop.MethodInvocationImpl;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactory;
@@ -32,7 +33,10 @@ import org.aopalliance.intercept.MethodInterceptor;
 /**
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
+ * @deprecated As of Judson (7.1.x), replaced by {@link
+ *             com.liferay.portal.spring.transaction.TransactionInvokerImpl}
  */
+@Deprecated
 public class ServiceBeanMethodInvocationFactoryImpl
 	implements ServiceBeanMethodInvocationFactory {
 
@@ -47,16 +51,16 @@ public class ServiceBeanMethodInvocationFactoryImpl
 				"Method interceptor bean IDs array is empty");
 		}
 
-		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
-			new ServiceBeanMethodInvocation(target, method, arguments);
+		MethodInvocationImpl methodInvocation = new MethodInvocationImpl(
+			target, method, arguments);
 
 		MethodInterceptor[] methodInterceptors = _getMethodInterceptors(
 			methodInterceptorBeanIds);
 
-		serviceBeanMethodInvocation.setMethodInterceptors(methodInterceptors);
+		methodInvocation.setMethodInterceptors(methodInterceptors);
 
 		try {
-			return serviceBeanMethodInvocation.proceed();
+			return methodInvocation.proceed();
 		}
 		catch (Throwable t) {
 			if (t instanceof Exception) {
