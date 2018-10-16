@@ -110,7 +110,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.supported-public-render-parameter=tags",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {AssetPublisherPortlet.class, Portlet.class}
+	service = Portlet.class
 )
 public class AssetPublisherPortlet extends MVCPortlet {
 
