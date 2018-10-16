@@ -19,11 +19,11 @@ import com.liferay.apio.architect.custom.actions.PostRoute;
 /**
  * @author Javier Gamarra
  */
-public class UploadFileRoute extends PostRoute {
+public class EvaluateContextPostRoute extends PostRoute {
 
 	@Override
 	public String getName() {
-		return "upload-file";
+		return "evaluate-context";
 	}
 
 }

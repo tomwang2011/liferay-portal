@@ -73,6 +73,24 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 				serviceReferenceCollector.getServiceReferences());
 		}
 
+		Map.Entry<String, Attrs> entry = analyzer.getBundleSymbolicName();
+
+		String bundleSymbolicName = entry.getKey();
+
+		if (jar.getResource("portlet.properties") != null) {
+			serviceReferences.add(
+				"com.liferay.portal.kernel.configuration.Configuration " +
+					"(&(configuration.bundle.symbolic.name=" +
+						bundleSymbolicName + ")(name=portlet))");
+		}
+
+		if (jar.getResource("service.properties") != null) {
+			serviceReferences.add(
+				"com.liferay.portal.kernel.configuration.Configuration " +
+					"(&(configuration.bundle.symbolic.name=" +
+						bundleSymbolicName + ")(name=service))");
+		}
+
 		String releaseInfo = getReleaseInfo(analyzer);
 
 		if (!releaseInfo.equals("")) {

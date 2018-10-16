@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.forms.apio.internal.architect.route;
+package com.liferay.workflow.apio.internal.architect.route;
 
 import com.liferay.apio.architect.custom.actions.PostRoute;
 
 /**
- * @author Javier Gamarra
+ * @author Sarai Díaz
  */
-public class EvaluateContextRoute extends PostRoute {
+public class AssignToMePostRoute extends PostRoute {
 
 	@Override
 	public String getName() {
-		return "evaluate-context";
+		return "assign-to-me";
 	}
 
 }
