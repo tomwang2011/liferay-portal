@@ -835,10 +835,7 @@ public class ServiceBuilder {
 							_createBaseUADAnonymizer(entity);
 							_createBaseUADExporter(entity);
 							_createUADAnonymizer(entity);
-							_createUADAnonymizerTest(entity);
 							_createUADExporter(entity);
-							_createUADExporterTest(entity);
-							//_createUADTestHelper(entity);
 
 							if (ListUtil.isEmpty(
 									entity.
@@ -851,7 +848,6 @@ public class ServiceBuilder {
 							else {
 								_createBaseUADDisplay(entity);
 								_createUADDisplay(entity);
-								_createUADDisplayTest(entity);
 							}
 						}
 						else {
@@ -3847,26 +3843,6 @@ public class ServiceBuilder {
 		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
-	private void _createUADAnonymizerTest(Entity entity) throws Exception {
-		File file = new File(
-			StringBundler.concat(
-				entity.getUADTestIntegrationOutputPath(),
-				"/uad/anonymizer/test/", entity.getName(),
-				"UADAnonymizerTest.java"));
-
-		if (file.exists()) {
-			return;
-		}
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		String content = _processTemplate(_tplUADAnonymizerTest, context);
-
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
-	}
-
 	private void _createUADBnd(String uadApplicationName) throws Exception {
 		List<Entity> entities = _uadApplicationEntities.get(uadApplicationName);
 
@@ -3937,25 +3913,6 @@ public class ServiceBuilder {
 		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
-	private void _createUADDisplayTest(Entity entity) throws Exception {
-		File file = new File(
-			StringBundler.concat(
-				entity.getUADTestIntegrationOutputPath(), "/uad/display/test/",
-				entity.getName(), "UADDisplayTest.java"));
-
-		if (file.exists()) {
-			return;
-		}
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		String content = _processTemplate(_tplUADDisplayTest, context);
-
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
-	}
-
 	private void _createUADExporter(Entity entity) throws Exception {
 		File file = new File(
 			StringBundler.concat(
@@ -3971,25 +3928,6 @@ public class ServiceBuilder {
 		context.put("entity", entity);
 
 		String content = _processTemplate(_tplUADExporter, context);
-
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
-	}
-
-	private void _createUADExporterTest(Entity entity) throws Exception {
-		File file = new File(
-			StringBundler.concat(
-				entity.getUADTestIntegrationOutputPath(), "/uad/exporter/test/",
-				entity.getName(), "UADExporterTest.java"));
-
-		if (file.exists()) {
-			return;
-		}
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		String content = _processTemplate(_tplUADExporterTest, context);
 
 		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
@@ -4021,26 +3959,6 @@ public class ServiceBuilder {
 		String content = _processTemplate(_tplUADTestBnd, context);
 
 		ToolsUtil.writeFileRaw(file, content, _modifiedFileNames);
-	}
-
-	@SuppressWarnings("unused")
-	private void _createUADTestHelper(Entity entity) throws Exception {
-		File file = new File(
-			StringBundler.concat(
-				entity.getUADTestIntegrationOutputPath(), "/uad/test/",
-				entity.getName(), "UADTestHelper.java"));
-
-		if (file.exists()) {
-			return;
-		}
-
-		Map<String, Object> context = _getContext();
-
-		context.put("entity", entity);
-
-		String content = _processTemplate(_tplUADTestHelper, context);
-
-		_write(file, content, _author, _jalopySettings, _modifiedFileNames);
 	}
 
 	private void _deleteFile(String fileName) {
@@ -7055,16 +6973,11 @@ public class ServiceBuilder {
 		_TPL_ROOT + "servlet_context_util.ftl";
 	private String _tplSpringXml = _TPL_ROOT + "spring_xml.ftl";
 	private String _tplUADAnonymizer = _TPL_ROOT + "uad_anonymizer.ftl";
-	private String _tplUADAnonymizerTest =
-		_TPL_ROOT + "uad_anonymizer_test.ftl";
 	private String _tplUADBnd = _TPL_ROOT + "uad_bnd.ftl";
 	private String _tplUADConstants = _TPL_ROOT + "uad_constants.ftl";
 	private String _tplUADDisplay = _TPL_ROOT + "uad_display.ftl";
-	private String _tplUADDisplayTest = _TPL_ROOT + "uad_display_test.ftl";
 	private String _tplUADExporter = _TPL_ROOT + "uad_exporter.ftl";
-	private String _tplUADExporterTest = _TPL_ROOT + "uad_exporter_test.ftl";
 	private String _tplUADTestBnd = _TPL_ROOT + "uad_test_bnd.ftl";
-	private String _tplUADTestHelper = _TPL_ROOT + "uad_test_helper.ftl";
 	private Map<String, List<Entity>> _uadApplicationEntities = new HashMap<>();
 	private String _uadDirName;
 
